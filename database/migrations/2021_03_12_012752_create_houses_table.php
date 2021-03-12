@@ -15,15 +15,16 @@ class CreateHousesTable extends Migration
     {
         Schema::create('houses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id');
+            $table->unsignedInteger('user_id');
             $table->string('title');
             $table->string('information');
             $table->float('price');
             $table->float('dimension');
-            $table->json('interested_id');
+            $table->json('interested');
             $table->json('images');
-            $table->integer('status_id');
-
+            $table->unsignedInteger('status_id');
+            $table->unsignedInteger('categorie_id');
+            $table->unsignedInteger('city');
             $table->timestamps();
         });
     }
