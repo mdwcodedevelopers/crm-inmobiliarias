@@ -10,10 +10,10 @@ class HouseController extends Controller
 {
     public function index(Request $request){
         $search = $request->search;
-        $houses = House::orderBy('updated_at', 'desc')->where('user_id', '=', "auth()->id")->paginate(5);
+        $houses = House::orderBy('updated_at', 'desc')->paginate(20);
         $total = House::count();
         return response()->json([
-            'notes' => $houses,
+            'houses' => $houses,
             'total' => $total,
             'pagination' => [
                 'total'         => $houses->total(),
