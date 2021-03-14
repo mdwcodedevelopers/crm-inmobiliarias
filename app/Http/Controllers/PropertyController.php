@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\House;
+use App\Property;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class HouseController extends Controller
+class PropertyController extends Controller
 {
     public function index(Request $request){
         $search = $request->search;
-        $houses = House::orderBy('updated_at', 'desc')->paginate(20);
-        $total = House::count();
+        $Properties = Property::orderBy('updated_at', 'desc')->paginate(20);
+        $total = Property::count();
         return response()->json([
-            'houses' => $houses,
+            'Properties' => $Properties,
             'total' => $total,
             'pagination' => [
-                'total'         => $houses->total(),
-                'current_page'  => $houses->currentPage(),
-                'per_page'      => $houses->perPage(),
-                'last_page'     => $houses->lastPage(),
-                'from'          => $houses->firstItem(),
-                'to'            => $houses->lastItem(),
+                'total'         => $Properties->total(),
+                'current_page'  => $Properties->currentPage(),
+                'per_page'      => $Properties->perPage(),
+                'last_page'     => $Properties->lastPage(),
+                'from'          => $Properties->firstItem(),
+                'to'            => $Properties->lastItem(),
             ],
             'search' => $search
         ]);
     }
+    // queda por actualizar
     public function store(Request $request)
     {
-        House::create([
+        Property::create([
             'user_id'=>auth()->id(),
             'title'=>$request['title'],
             'information'=>$request['information'],
@@ -38,9 +39,10 @@ class HouseController extends Controller
             'images'=>json_encode($request['images'])
         ]);
     }
+    // queda por actualizar
     public function update(Request $request, $id)
     {
-        $house = House::find($id);
+        $house = Property::find($id);
         $house->update([
             'user_id'=>auth()->id(),
             'title'=>$request['title'],
@@ -52,6 +54,7 @@ class HouseController extends Controller
         ]);
         return response()->json("success", 200);
     }
+    // queda por actualizar
     public function addImages(Request $request)
     {
         $imageName = time().'.'.$request->file->getClientOriginalExtension();
@@ -60,9 +63,10 @@ class HouseController extends Controller
 
     	return response()->json(['success'=>$path]);
     }
+    // queda por actualizar
     public function destroy($id)
     {
-        $house = House::find($id);
+        $house = Property::find($id);
         $house->delete();
 
         return response()->json("success", 200);
