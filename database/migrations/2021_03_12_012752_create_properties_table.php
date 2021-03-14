@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHousesTable extends Migration
+class CreatePropertiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,20 @@ class CreateHousesTable extends Migration
      */
     public function up()
     {
-        Schema::create('houses', function (Blueprint $table) {
+        Schema::create('properties', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->string('information');
             $table->float('price');
             $table->float('dimension');
-            $table->json('interested');
-            $table->json('images');
-            $table->unsignedInteger('status_id');
-            $table->unsignedInteger('categorie_id');
-            $table->unsignedInteger('city');
+            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('categorie_id');
+            $table->unsignedBigInteger('city');
             $table->timestamps();
+
+            $table->foreign('status_id')->references('id')->on('status')->onDelete('set null');
+            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null');
         });
     }
 
@@ -36,6 +37,6 @@ class CreateHousesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('houses');
+        Schema::dropIfExists('properties');
     }
 }
