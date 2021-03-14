@@ -20,8 +20,6 @@ class CreateHousesTable extends Migration
             $table->string('information');
             $table->float('price');
             $table->float('dimension');
-            $table->json('interested');
-            $table->json('images');
             $table->unsignedInteger('status_id');
             $table->unsignedInteger('categorie_id');
             $table->unsignedInteger('city');
@@ -36,6 +34,6 @@ class CreateHousesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('houses');
+        Schema::dropIfExists('propierties');
     }
 }
