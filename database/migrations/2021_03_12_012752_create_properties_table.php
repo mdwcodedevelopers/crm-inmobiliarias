@@ -24,6 +24,9 @@ class CreatePropertiesTable extends Migration
             $table->unsignedBigInteger('categorie_id');
             $table->unsignedBigInteger('city');
             $table->timestamps();
+
+            $table->foreign('status_id')->references('id')->on('status')->onDelete('set null');
+            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null');
         });
     }
 
