@@ -13,7 +13,11 @@ class Property extends Model
         'price',
         'dimension',
         'status_id',
-        'user_id',
         'title'
     ];
+
+    public function users() 
+    {
+        return $this->belongsToMany('App\User');
+    }
 }
