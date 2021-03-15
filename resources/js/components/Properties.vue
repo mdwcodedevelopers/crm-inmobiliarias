@@ -1,38 +1,12 @@
 <template>
     <div class="container">
-        <v-carousel
-        cycle
-        height="400"
-        hide-delimiter-background
-        show-arrows-on-hover
-      >
-        <v-carousel-item
-          v-for="(slide, i) in slides"
-          :key="i"
-        >
-          <v-sheet
-            :color="colors[i]"
-            height="100%"
-          >
-            <v-row
-              class="fill-height"
-              align="center"
-              justify="center"
-            >
-              <div class="display-3">
-                {{ slide }} Slide
-              </div>
-            </v-row>
-          </v-sheet>
-        </v-carousel-item>
-      </v-carousel>
       <v-row align="center">
       <v-col
         class="d-flex"
         cols="12"
         sm="6"
       >
-        <v-select
+         <v-select
           :items="items"
           label="Ciudad"
         ></v-select>
@@ -104,6 +78,15 @@
     export default {
       data: () => ({
         page: 1,
+        paginate: {
+                total: 0,
+                current_page: 0,
+                per_page: 0,
+                last_page: 0,
+                from: 0,
+                to: 0
+            },
+        properties:[],
         cards: [
           { title: 'Pre-fab homes', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 4 },
           { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 4 },
@@ -134,5 +117,18 @@
           'Fifth',
         ],
       }),
+      methods:{
+          index(page,search){
+            axios.get("/api-properties?page=" + page + "&search=" + search).then((response) => {
+                console.log(response.data.Properties);
+
+                this.properties = response.data.Properties.data;
+                this.paginate = response.data.pagination.data;
+            });
+          }
+      },
+      created(){
+          this.index(0,'');
+      }
     }
   </script>

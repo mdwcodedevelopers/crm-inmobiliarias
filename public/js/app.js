@@ -2066,41 +2066,136 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      desserts: [{
-        name: 'Frozen Yogurt',
-        calories: 159
-      }, {
-        name: 'Ice cream sandwich',
-        calories: 237
-      }, {
-        name: 'Eclair',
-        calories: 262
-      }, {
-        name: 'Cupcake',
-        calories: 305
-      }, {
-        name: 'Gingerbread',
-        calories: 356
-      }, {
-        name: 'Jelly bean',
-        calories: 375
-      }, {
-        name: 'Lollipop',
-        calories: 392
-      }, {
-        name: 'Honeycomb',
-        calories: 408
-      }, {
-        name: 'Donut',
-        calories: 452
-      }, {
-        name: 'KitKat',
-        calories: 518
-      }]
+      drawer: false,
+      group: null
     };
+  },
+  watch: {
+    group: function group() {
+      this.drawer = false;
+    }
   }
 });
 
@@ -2226,36 +2321,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       page: 1,
+      paginate: {
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0
+      },
+      properties: [],
       cards: [{
         title: 'Pre-fab homes',
         src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg',
@@ -2308,6 +2386,20 @@ __webpack_require__.r(__webpack_exports__);
       colors: ['indigo', 'warning', 'pink darken-2', 'red lighten-1', 'deep-purple accent-4'],
       slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth']
     };
+  },
+  methods: {
+    index: function index(page, search) {
+      var _this = this;
+
+      axios.get("/api-properties?page=" + page + "&search=" + search).then(function (response) {
+        console.log(response.data.Properties);
+        _this.properties = response.data.Properties.data;
+        _this.paginate = response.data.pagination.data;
+      });
+    }
+  },
+  created: function created() {
+    this.index(0, '');
   }
 });
 
@@ -38617,41 +38709,318 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-simple-table", {
-    scopedSlots: _vm._u([
-      {
-        key: "default",
-        fn: function() {
-          return [
-            _c("thead", [
-              _c("tr", [
-                _c("th", { staticClass: "text-left" }, [
-                  _vm._v("\n          Name\n        ")
-                ]),
-                _vm._v(" "),
-                _c("th", { staticClass: "text-left" }, [
-                  _vm._v("\n          Calories\n        ")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.desserts, function(item) {
-                return _c("tr", { key: item.name }, [
-                  _c("td", [_vm._v(_vm._s(item.name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.calories))])
-                ])
-              }),
-              0
-            )
-          ]
+  return _c(
+    "v-card",
+    { staticClass: "align-start overflow-hidden" },
+    [
+      _c(
+        "v-app-bar",
+        { attrs: { color: "#2979FF", dark: "" } },
+        [
+          _c("v-app-bar-nav-icon", {
+            on: {
+              click: function($event) {
+                $event.stopPropagation()
+                _vm.drawer = !_vm.drawer
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("v-toolbar-title", [_vm._v("Propiedades")]),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { icon: "" } },
+            [_c("v-icon", [_vm._v("mdi-magnify")])],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-navigation-drawer",
+        {
+          attrs: { absolute: "", bottom: "", temporary: "" },
+          model: {
+            value: _vm.drawer,
+            callback: function($$v) {
+              _vm.drawer = $$v
+            },
+            expression: "drawer"
+          }
         },
-        proxy: true
-      }
-    ])
-  })
+        [
+          _c(
+            "v-list",
+            { attrs: { nav: "", dense: "" } },
+            [
+              _c(
+                "v-list-item-group",
+                {
+                  attrs: { "active-class": "deep-purple--text text--accent-4" },
+                  model: {
+                    value: _vm.group,
+                    callback: function($$v) {
+                      _vm.group = $$v
+                    },
+                    expression: "group"
+                  }
+                },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("Dashboard")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("Oportunidades")])],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card-text",
+        [
+          _c(
+            "v-list",
+            { attrs: { "two-line": "", subheader: "" } },
+            [
+              _c("v-subheader", [_vm._v("General")]),
+              _vm._v(" "),
+              _c(
+                "v-list-item",
+                [
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [_vm._v("Profile photo")]),
+                      _vm._v(" "),
+                      _c("v-list-item-subtitle", [
+                        _vm._v("Change your Google+ profile photo")
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item",
+                [
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", [_vm._v("Show your status")]),
+                      _vm._v(" "),
+                      _c("v-list-item-subtitle", [
+                        _vm._v("Your status is visible to everyone")
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-list",
+            { attrs: { subheader: "", "two-line": "", flat: "" } },
+            [
+              _c("v-subheader", [_vm._v("Hangout notifications")]),
+              _vm._v(" "),
+              _c(
+                "v-list-item-group",
+                {
+                  attrs: { multiple: "" },
+                  model: {
+                    value: _vm.settings,
+                    callback: function($$v) {
+                      _vm.settings = $$v
+                    },
+                    expression: "settings"
+                  }
+                },
+                [
+                  _c("v-list-item", {
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(ref) {
+                          var active = ref.active
+                          return [
+                            _c(
+                              "v-list-item-action",
+                              [
+                                _c("v-checkbox", {
+                                  attrs: {
+                                    "input-value": active,
+                                    color: "primary"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-item-content",
+                              [
+                                _c("v-list-item-title", [
+                                  _vm._v("Notifications")
+                                ]),
+                                _vm._v(" "),
+                                _c("v-list-item-subtitle", [
+                                  _vm._v("Allow notifications")
+                                ])
+                              ],
+                              1
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("v-list-item", {
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(ref) {
+                          var active = ref.active
+                          return [
+                            _c(
+                              "v-list-item-action",
+                              [
+                                _c("v-checkbox", {
+                                  attrs: {
+                                    "input-value": active,
+                                    color: "primary"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-item-content",
+                              [
+                                _c("v-list-item-title", [_vm._v("Sound")]),
+                                _vm._v(" "),
+                                _c("v-list-item-subtitle", [
+                                  _vm._v("Hangouts message")
+                                ])
+                              ],
+                              1
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("v-list-item", {
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(ref) {
+                          var active = ref.active
+                          return [
+                            _c(
+                              "v-list-item-action",
+                              [
+                                _c("v-checkbox", {
+                                  attrs: {
+                                    "input-value": active,
+                                    color: "primary"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-item-content",
+                              [
+                                _c("v-list-item-title", [
+                                  _vm._v("Video sounds")
+                                ]),
+                                _vm._v(" "),
+                                _c("v-list-item-subtitle", [
+                                  _vm._v("Hangouts video call")
+                                ])
+                              ],
+                              1
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("v-list-item", {
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(ref) {
+                          var active = ref.active
+                          return [
+                            _c(
+                              "v-list-item-action",
+                              [
+                                _c("v-checkbox", {
+                                  attrs: {
+                                    "input-value": active,
+                                    color: "primary"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-item-content",
+                              [
+                                _c("v-list-item-title", [_vm._v("Invites")]),
+                                _vm._v(" "),
+                                _c("v-list-item-subtitle", [
+                                  _vm._v("Notify when receiving invites")
+                                ])
+                              ],
+                              1
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38714,51 +39083,6 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c(
-        "v-carousel",
-        {
-          attrs: {
-            cycle: "",
-            height: "400",
-            "hide-delimiter-background": "",
-            "show-arrows-on-hover": ""
-          }
-        },
-        _vm._l(_vm.slides, function(slide, i) {
-          return _c(
-            "v-carousel-item",
-            { key: i },
-            [
-              _c(
-                "v-sheet",
-                { attrs: { color: _vm.colors[i], height: "100%" } },
-                [
-                  _c(
-                    "v-row",
-                    {
-                      staticClass: "fill-height",
-                      attrs: { align: "center", justify: "center" }
-                    },
-                    [
-                      _c("div", { staticClass: "display-3" }, [
-                        _vm._v(
-                          "\n            " +
-                            _vm._s(slide) +
-                            " Slide\n          "
-                        )
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        }),
-        1
-      ),
-      _vm._v(" "),
       _c(
         "v-row",
         { attrs: { align: "center" } },
