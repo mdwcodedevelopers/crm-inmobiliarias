@@ -11,10 +11,11 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
-
+Route::resources(['api-properties' => PropertyController::class]);
 Route::get('/home', 'HomeController@index')->name('home');

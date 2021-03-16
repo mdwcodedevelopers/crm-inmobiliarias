@@ -5,10 +5,11 @@
  */
 
 require('./bootstrap');
-
+import '@mdi/font/css/materialdesignicons.css'
 window.Vue = require('vue');
 import Vuetify from 'vuetify';
 Vue.use(Vuetify);
+import colors from 'vuetify/lib/util/colors'
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -20,9 +21,9 @@ Vue.use(Vuetify);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('properties', require('./components/Properties.vue').default);
-
+Vue.component('footer-component', require('./components/Footer.vue').default);
+Vue.component('dashboard', require('./components/Dashboard.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -31,4 +32,14 @@ Vue.component('properties', require('./components/Properties.vue').default);
 
 const app = new Vue({
     el: '#app',
+    vuetify: new Vuetify(),
+    theme: {
+        themes: {
+          light: {
+            primary: colors.red.darken1,
+            secondary: colors.red.lighten4,
+            accent: colors.indigo.base,
+          },
+        },
+      },
 });
