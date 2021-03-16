@@ -35,30 +35,19 @@
                   gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                   height="200px"
                 >
-                <v-chip
-                class="mt-4 ml-4"
-                color="#38c172"
-                text-color="#fff"
-              >
-                En venta
-              </v-chip>
+
                 </v-img>
                 <v-card-title v-text="card.title"></v-card-title>
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
-
-                  <v-btn icon>
-                    <v-icon>mdi-heart</v-icon>
-                  </v-btn>
-
-                  <v-btn icon>
-                    <v-icon>mdi-bookmark</v-icon>
-                  </v-btn>
-
-                  <v-btn icon>
-                    <v-icon>mdi-share-variant</v-icon>
-                  </v-btn>
+                  <v-chip
+                  class="mt-2 ml-4"
+                  color="#38c172"
+                  text-color="#fff"
+                >
+                  En venta
+                </v-chip>
                 </v-card-actions>
               </v-card>
             </v-col>

@@ -29,37 +29,71 @@
           color="#2979FF"
           dark
         >
+
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-toolbar-title>Mobiliaria</v-toolbar-title>
         <v-spacer></v-spacer>
 
         @guest
-        <v-btn>
-            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+        <v-btn color="#388E3C" small>
+            <a class="text-white" href="{{ route('login') }}">{{ __('Iniciar sesión') }}</a>
           </v-btn>
         @if (Route::has('register'))
-        <v-btn>
-            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+        <v-btn small color="#fff" class="mx-2">
+            <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
           </v-btn>
         @endif
     @else
-    <v-btn >
+    <v-btn small>
         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             {{ Auth::user()->name }} <span class="caret"></span>
         </a>
       </v-btn>
-      <v-btn >
-        <a class="dropdown-item" href="{{ route('logout') }}"
+      <v-btn color="#E53935" class="mx-2" small>
+        <a class="text-white" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Salir') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" >
                                         @csrf
                                     </form>
       </v-btn>
     @endguest
         </v-app-bar>
+        <v-navigation-drawer
+        v-model="drawer"
+        absolute
+        bottom
+        temporary
+      >
+        <v-list
+          nav
+          dense
+        >
+          <v-list-item-group
+            v-model="group"
+            active-class="deep-purple--text text--accent-4"
+          >
+            <v-list-item>
+              <v-list-item-title>Foo</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title>Bar</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title>Fizz</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title>Buzz</v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
 
         {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">

@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class RegisterController extends Controller
 {
@@ -71,9 +73,31 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'phone' => $data['phone'],
-            'pronvince' => $data['pronvince'],
-            'direction' => $data['direction'],
         ]);
     }
+    public function register(Request $request)
+        {
+                $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6',
+            ]);
+
+            if($validator->fails()){
+                    return response()->json($validator->errors()->toJson(), 400);
+            }
+
+            $user = User::create([
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'password' => Hash::make($request->get('password')),
+                'phone' => $request->get('phone'),
+                'pronvince' => $request->get('pronvince'),
+                'direction' => $request->get('direction'),
+            ]);
+
+            $token = JWTAuth::fromUser($user);
+
+            return response()->json(compact('user','token'),201);
+        }
 }
