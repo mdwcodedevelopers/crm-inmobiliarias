@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <v-card
-        class="mx-auto"
+        class="mx-auto my-3"
         max-width="400"
       >
         <v-img
@@ -37,8 +37,9 @@
             Explore
           </v-btn>
         </v-card-actions>
-      </v-card><v-card
-      class="mx-auto"
+      </v-card>
+      <v-card
+      class="mx-auto my-3"
       max-width="400"
     >
       <v-img

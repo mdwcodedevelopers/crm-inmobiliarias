@@ -2092,6 +2092,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -37854,7 +37855,7 @@ var render = function() {
     [
       _c(
         "v-card",
-        { staticClass: "mx-auto", attrs: { "max-width": "400" } },
+        { staticClass: "mx-auto my-3", attrs: { "max-width": "400" } },
         [
           _c(
             "v-img",
@@ -37895,9 +37896,10 @@ var render = function() {
         ],
         1
       ),
+      _vm._v(" "),
       _c(
         "v-card",
-        { staticClass: "mx-auto", attrs: { "max-width": "400" } },
+        { staticClass: "mx-auto my-3", attrs: { "max-width": "400" } },
         [
           _c(
             "v-img",
@@ -95169,8 +95171,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp2\htdocs\crm-inmobiliarias\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp2\htdocs\crm-inmobiliarias\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/josbert/Plantillas/Proyectos Freelancer/CRM inmobiliario/crm-inmobiliarias/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/josbert/Plantillas/Proyectos Freelancer/CRM inmobiliario/crm-inmobiliarias/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
