@@ -18,7 +18,7 @@ class CreateImagesTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('url');
-            $table->unsignedBigInteger('propierty_id');
+            $table->unsignedBigInteger('property_id');
             $table->timestamps();
 
             $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
