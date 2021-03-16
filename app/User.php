@@ -38,6 +38,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /** 
+     * Relacion muchos a muchos con el modelo Property
+     */
     public function properties()
     {
         return $this->belongsToMany('App\Property');

@@ -20,13 +20,11 @@ class CreatePropertiesTable extends Migration
             $table->string('information');
             $table->float('price');
             $table->float('dimension');
-            $table->unsignedBigInteger('status_id');
-            $table->unsignedBigInteger('categorie_id');
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->unsignedBigInteger('categorie_id')->nullable();
             $table->unsignedBigInteger('city');
             $table->timestamps();
-
-            $table->foreign('status_id')->references('id')->on('status')->onDelete('set null');
-            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null');
+            
         });
     }
 
