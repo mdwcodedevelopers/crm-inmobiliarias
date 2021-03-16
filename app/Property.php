@@ -25,15 +25,18 @@ class Property extends Model
     }
 
     /** 
-     * Relacion uno a uno con el modelo Status
+     * Relacion uno a muchos con el modelo Status
      */
     public function status()
     {
-        return $this->hasOne('App\Status');
+        return $this->hasMany('App\Status');
     }
 
+    /** 
+     * Relacion muchos a muchos con el modelo Categorie 
+     */
     public function categories()
     {
-        return $this->hasMany('App\Categorie');
+        return $this->belongsToMany('App\Categorie');
     }
 }
