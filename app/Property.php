@@ -24,5 +24,16 @@ class Property extends Model
         return $this->belongsToMany('App\User');
     }
 
-    
+    /** 
+     * Relacion uno a uno con el modelo Status
+     */
+    public function status()
+    {
+        return $this->hasOne('App\Status');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany('App\Categorie');
+    }
 }
