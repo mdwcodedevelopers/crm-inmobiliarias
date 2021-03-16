@@ -14,7 +14,7 @@ class AddRelationshipToProperties extends Migration
     public function up()
     {
         Schema::table('properties', function (Blueprint $table) {
-            
+
             $table->foreign('status_id')->references('id')->on('status')->onDelete('set null');
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null');
         });
