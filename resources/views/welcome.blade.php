@@ -3,8 +3,10 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="">
-            <properties/>
+        <div class="m-4">
+            {{-- <properties/> --}}
+            {{-- <table-component/> --}}
+            <barra-component>
         </div>
         <!--<footer-component/>-->
         {{-- <div class="col-md-8">

@@ -15,9 +15,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@authenticate');
-Route::group(['middleware' => ['jwt.verify']], function() {
-});
+
+Auth::routes();
 Route::resources(['api-properties' => PropertyController::class]);
 Route::get('/home', 'HomeController@index')->name('home');

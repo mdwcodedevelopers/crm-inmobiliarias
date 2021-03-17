@@ -1,133 +1,158 @@
 <template>
+    <v-card
+      class="align-start overflow-hidden"
+
+    >
+      <v-app-bar
+        color="#2979FF"
+        dark
+      >
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+
+        <v-toolbar-title>Propiedades</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+      </v-app-bar>
+
+      <v-navigation-drawer
+        v-model="drawer"
+        absolute
+        bottom
+        temporary
+      >
+        <v-list
+          nav
+          dense
+        >
+          <v-list-item-group
+            v-model="group"
+            active-class="deep-purple--text text--accent-4"
+          >
+            <v-list-item>
+              <v-list-item-title>Dashboard</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title>Oportunidades</v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+
       <v-card-text>
         <v-list
         two-line
         subheader
       >
-        <v-subheader>Nueva propiedad</v-subheader>
-        <v-row
-        no-gutters
-        style="flex-wrap: nowrap;"
+        <v-subheader>General</v-subheader>
+
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>Profile photo</v-list-item-title>
+            <v-list-item-subtitle>Change your Google+ profile photo</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>Show your status</v-list-item-title>
+            <v-list-item-subtitle>Your status is visible to everyone</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+
+      <v-list
+        subheader
+        two-line
+        flat
       >
-        <v-col
-          cols="1"
-          style="min-width: 100px; max-width: 100%;"
-          class="flex-grow-1 flex-shrink-0"
+        <v-subheader>Hangout notifications</v-subheader>
+
+        <v-list-item-group
+          v-model="settings"
+          multiple
         >
-          <v-card
-            class="pa-2"
-            outlined
-            tile
-          >
           <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Nombre</v-list-item-title>
-              <v-text-field
-              v-model="firstname"
-              :rules="nameRules"
-              :counter="100"
-              label=""
-              required
-            ></v-text-field>
-            <v-list-item-title>Ciudad</v-list-item-title>
-            <v-text-field
-            v-model="firstname"
-            :rules="nameRules"
-            :counter="100"
-            label=""
-            required
-          ></v-text-field>
-            </v-list-item-content>
+            <template v-slot:default="{ active, }">
+              <v-list-item-action>
+                <v-checkbox
+                  :input-value="active"
+                  color="primary"
+                ></v-checkbox>
+              </v-list-item-action>
+
+              <v-list-item-content>
+                <v-list-item-title>Notifications</v-list-item-title>
+                <v-list-item-subtitle>Allow notifications</v-list-item-subtitle>
+              </v-list-item-content>
+            </template>
           </v-list-item>
-          </v-card>
-        </v-col>
-        <v-col
-          cols="5"
-          style="min-width: 100px;"
-          class="flex-grow-0 flex-shrink-1"
-        >
-          <v-card
-            class="pa-2"
-            outlined
-            tile
-          >
+
           <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Información</v-list-item-title>
-              <v-text-field
-              v-model="firstname"
-              :rules="nameRules"
-              :counter="300"
-              label=""
-              required
-            ></v-text-field>
-            <v-list-item-title>Dimensión</v-list-item-title>
-            <v-text-field
-            v-model="firstname"
-            :rules="nameRules"
-            :counter="10"
-            label=""
-            required
-          ></v-text-field>
-            </v-list-item-content>
+            <template v-slot:default="{ active }">
+              <v-list-item-action>
+                <v-checkbox
+                  :input-value="active"
+                  color="primary"
+                ></v-checkbox>
+              </v-list-item-action>
+
+              <v-list-item-content>
+                <v-list-item-title>Sound</v-list-item-title>
+                <v-list-item-subtitle>Hangouts message</v-list-item-subtitle>
+              </v-list-item-content>
+            </template>
           </v-list-item>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row
-        no-gutters
-        style="flex-wrap: nowrap;"
-      >
-        <v-col
-          cols="1"
-          style="min-width: 100px; max-width: 100%;"
-          class="flex-grow-1 flex-shrink-0"
-        >
-          <v-card
-            class="pa-2"
-            outlined
-            tile
-          >
+
           <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Tipo de venta</v-list-item-title>
-              <v-text-field
-              v-model="firstname"
-              :rules="nameRules"
-              :counter="100"
-              label=""
-              required
-            ></v-text-field>
-            </v-list-item-content>
+            <template v-slot:default="{ active }">
+              <v-list-item-action>
+                <v-checkbox
+                  :input-value="active"
+                  color="primary"
+                ></v-checkbox>
+              </v-list-item-action>
+
+              <v-list-item-content>
+                <v-list-item-title>Video sounds</v-list-item-title>
+                <v-list-item-subtitle>Hangouts video call</v-list-item-subtitle>
+              </v-list-item-content>
+            </template>
           </v-list-item>
-          </v-card>
-        </v-col>
-        <v-col
-          cols="5"
-          style="min-width: 100px;"
-          class="flex-grow-0 flex-shrink-1"
-        >
-          <v-card
-            class="pa-2"
-            outlined
-            tile
-          >
-          </v-card>
-        </v-col>
-      </v-row>
+
+          <v-list-item>
+            <template v-slot:default="{ active }">
+              <v-list-item-action>
+                <v-checkbox
+                  :input-value="active"
+                  color="primary"
+                ></v-checkbox>
+              </v-list-item-action>
+
+              <v-list-item-content>
+                <v-list-item-title>Invites</v-list-item-title>
+                <v-list-item-subtitle>Notify when receiving invites</v-list-item-subtitle>
+              </v-list-item-content>
+            </template>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
       </v-card-text>
+    </v-card>
   </template>
   <script>
     export default {
       data: () => ({
-        drawer: true,
+        drawer: false,
         group: null,
       }),
 
       watch: {
         group () {
-          this.drawer = true
+          this.drawer = false
         },
       },
     }

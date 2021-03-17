@@ -23,7 +23,8 @@ import colors from 'vuetify/lib/util/colors'
 
 Vue.component('properties', require('./components/Properties.vue').default);
 Vue.component('footer-component', require('./components/Footer.vue').default);
-Vue.component('dashboard', require('./components/Dashboard.vue').default);
+Vue.component('table-component', require('./components/Table.vue').default);
+Vue.component('barra-component', require('./components/Barra.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
