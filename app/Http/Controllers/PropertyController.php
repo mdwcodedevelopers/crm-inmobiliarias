@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Property;
+use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -10,7 +11,8 @@ class PropertyController extends Controller
 {
     public function index(Request $request){
         $search = $request->search;
-        $Properties = Property::orderBy('updated_at', 'desc')->paginate(20);
+        $Properties = Property::orderBy('updated_at', 'desc')->join('status','status.id','properties.status_id')
+        ->paginate(20);
         $total = Property::count();
         return response()->json([
             'Properties' => $Properties,

@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="m-4">
-            {{-- <properties/> --}}
+            <properties/>
             {{-- <table-component/> --}}
-            <barra-component>
+            {{-- <barra-component> --}}
         </div>
         <!--<footer-component/>-->
         {{-- <div class="col-md-8">
