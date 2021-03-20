@@ -132,7 +132,6 @@
           <v-footer
           color=""
         >
-
             <v-btn
             v-for="link in links"
             :key="link"
