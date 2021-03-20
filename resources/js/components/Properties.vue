@@ -114,7 +114,7 @@
                     text-color="#fff"
                     class="mr-3"
                   >
-                    ARS {{card.price}}
+                     {{card.price}}
                   </v-chip>
                 </v-card-actions>
               </v-card>
