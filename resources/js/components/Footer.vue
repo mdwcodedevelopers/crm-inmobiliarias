@@ -22,7 +22,6 @@
           'Acerca de nosotros',
           'Propiedades',
           'Contacto',
-
         ],
       }),
     }
