@@ -2184,6 +2184,124 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2196,7 +2314,8 @@ __webpack_require__.r(__webpack_exports__);
         to: 0
       },
       properties: [],
-      search: ''
+      search: '',
+      dialog: false
     };
   },
   methods: {
@@ -2208,6 +2327,21 @@ __webpack_require__.r(__webpack_exports__);
         console.log(_this.properties);
         _this.paginate = response.data.pagination;
       });
+    },
+    delete_model: function delete_model(id) {
+      console.log(id);
+      var r = confirm("You will erase a Propertie, are you sure?");
+
+      if (r == true) {
+        axios["delete"]("/api-properties/" + id).then(function (response) {
+          console.log(response);
+
+          if (response.status == 200) {
+            //     this.$toast.open("Post successfully deleted!");
+            window.location.href = "/home";
+          }
+        });
+      }
     }
   },
   created: function created() {
@@ -2230,6 +2364,11 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: 'Dimensión',
         value: 'dimension'
+      }, {
+        text: 'Actions',
+        value: 'action',
+        sortable: false,
+        align: 'center'
       } // { text: 'Status', value: 'status' },
       // { text: 'Categoria', value: 'categorie' },
       ];
@@ -43929,6 +44068,30 @@ var render = function() {
                 ]
               },
               proxy: true
+            },
+            {
+              key: "item.action",
+              fn: function(ref) {
+                var item = ref.item
+                return [
+                  _c("v-btn", { attrs: { color: "#66BB6A" } }, [
+                    _vm._v("edit")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "#E53935" },
+                      on: {
+                        click: function($event) {
+                          return _vm.delete_model(item.id)
+                        }
+                      }
+                    },
+                    [_vm._v("delete")]
+                  )
+                ]
+              }
             }
           ])
         },
@@ -43945,6 +44108,231 @@ var render = function() {
           ]
         ],
         2
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        { attrs: { justify: "center" } },
+        [
+          _c(
+            "v-dialog",
+            {
+              attrs: { persistent: "", "max-width": "600px" },
+              scopedSlots: _vm._u([
+                {
+                  key: "activator",
+                  fn: function(ref) {
+                    var on = ref.on
+                    var attrs = ref.attrs
+                    return [
+                      _c(
+                        "v-btn",
+                        _vm._g(
+                          _vm._b(
+                            { attrs: { color: "primary", dark: "" } },
+                            "v-btn",
+                            attrs,
+                            false
+                          ),
+                          on
+                        ),
+                        [_vm._v("\n              Open Dialog\n            ")]
+                      )
+                    ]
+                  }
+                }
+              ]),
+              model: {
+                value: _vm.dialog,
+                callback: function($$v) {
+                  _vm.dialog = $$v
+                },
+                expression: "dialog"
+              }
+            },
+            [
+              _vm._v(" "),
+              _c(
+                "v-card",
+                [
+                  _c("v-card-title", [
+                    _c("span", { staticClass: "headline" }, [
+                      _vm._v("User Profile")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-container",
+                        [
+                          _c(
+                            "v-row",
+                            [
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", sm: "6", md: "4" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Legal first name*",
+                                      required: ""
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", sm: "6", md: "4" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Legal middle name",
+                                      hint:
+                                        "example of helper text only on focus"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", sm: "6", md: "4" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Legal last name*",
+                                      hint: "example of persistent helper text",
+                                      "persistent-hint": "",
+                                      required: ""
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: { label: "Email*", required: "" }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Password*",
+                                      type: "password",
+                                      required: ""
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", sm: "6" } },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      items: ["0-17", "18-29", "30-54", "54+"],
+                                      label: "Age*",
+                                      required: ""
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", sm: "6" } },
+                                [
+                                  _c("v-autocomplete", {
+                                    attrs: {
+                                      items: [
+                                        "Skiing",
+                                        "Ice hockey",
+                                        "Soccer",
+                                        "Basketball",
+                                        "Hockey",
+                                        "Reading",
+                                        "Writing",
+                                        "Coding",
+                                        "Basejump"
+                                      ],
+                                      label: "Interests",
+                                      multiple: ""
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("small", [_vm._v("*indicates required field")])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "blue darken-1", text: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialog = false
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Close\n              ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "blue darken-1", text: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialog = false
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Save\n              ")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
       )
     ],
     1

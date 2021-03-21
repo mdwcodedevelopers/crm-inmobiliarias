@@ -9,7 +9,7 @@ class Status extends Model
     protected $fillable=[
         'name',
     ];
-
+    protected $table='status';
     /**
      * Relacion uno a muchos con el modelo Property
      */

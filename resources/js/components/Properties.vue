@@ -163,7 +163,8 @@ export default {
                 this.properties = response.data.Properties.data;
                 this.paginate = response.data.pagination;
             });
-        }
+        },
+
     },
     created() {
         this.index(0, '');

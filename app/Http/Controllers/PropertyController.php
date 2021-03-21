@@ -12,7 +12,7 @@ class PropertyController extends Controller
 
     public function index(Request $request){
         $search = $request->search;
-        $Properties = Property::orderBy('updated_at', 'desc')->join('status','status.id','properties.status_id')->paginate(20);
+        $Properties = Status::orderBy('updated_at', 'desc')->join('properties','properties.status_id','status.id')->paginate(20);
         $total = Property::count();
         return response()->json([
             'Properties' => $Properties,
@@ -30,7 +30,7 @@ class PropertyController extends Controller
     }
     public function properties(Request $request){
         $search = $request->search;
-        $Properties = Property::where('user_id',auth()->id())->orderBy('updated_at', 'desc')->join('status','status.id','properties.status_id')->paginate(20);
+        $Properties = Status::orderBy('updated_at', 'desc')->where('user_id',auth()->id())->join('properties','properties.status_id','status.id')->orderBy('updated_at', 'desc')->paginate(20);
         $total = Property::count();
         return response()->json([
             'Properties' => $Properties,
@@ -55,8 +55,10 @@ class PropertyController extends Controller
             'information'=>$request['information'],
             'price'=>$request['price'],
             'dimension'=>$request['dimension'],
-            'interested'=>[],
-            'images'=>json_encode($request['images'])
+            'status_id'=>$request['status'],
+            'd'=>$request['dimension'],
+            // 'interested'=>[],
+            // 'images'=>json_encode($request['images'])
         ]);
     }
     // queda por actualizar
