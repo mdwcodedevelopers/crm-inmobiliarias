@@ -28,6 +28,24 @@ class PropertyController extends Controller
             'search' => $search
         ]);
     }
+    public function properties(Request $request){
+        $search = $request->search;
+        $Properties = Property::where('user_id',auth()->id())->orderBy('updated_at', 'desc')->join('status','status.id','properties.status_id')->paginate(20);
+        $total = Property::count();
+        return response()->json([
+            'Properties' => $Properties,
+            'total' => $total,
+            'pagination' => [
+                'total'         => $Properties->total(),
+                'current_page'  => $Properties->currentPage(),
+                'per_page'      => $Properties->perPage(),
+                'last_page'     => $Properties->lastPage(),
+                'from'          => $Properties->firstItem(),
+                'to'            => $Properties->lastItem(),
+            ],
+            'search' => $search
+        ]);
+    }
     // queda por actualizar
     public function store(Request $request)
     {
