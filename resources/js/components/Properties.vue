@@ -4,9 +4,9 @@
             <slide class="py-4">
                 <v-card color="#0D47A1" class="mx-auto text-white" max-width="344">
                     <v-card-text>
-                        <p class="display-4 text--primary text-white">
+                        <h1 class="text-white">
                             Bienvenidos a la familia Cánepa
-                        </p>
+                        </h1>
                     </v-card-text>
                     <h3 class="mx-2 ">Somos la inmobiliaria con más de 40 años en el mercado.</h3>
                 </v-card>
@@ -14,9 +14,9 @@
             <slide class="py-4">
                 <v-card color="#fff" class="mx-auto " max-width="344">
                     <v-card-text>
-                        <p class=" text--primary">
+                        <h5 class=" text--primary">
                             Desarrollamos viviendas, edificios, barrios; pero sobre todo, desarrollamos sueños.
-                        </p>
+                        </h5>
                     </v-card-text>
                 </v-card>
             </slide>
@@ -65,35 +65,6 @@
             <div class="text-center">
                 <v-pagination v-model="page" color="#2979FF" :length="paginate.last_page" circle></v-pagination>
             </div>
-            <v-row>
-                <div class="text-center">
-                    <v-chip class="ma-2" label>
-                        Label
-                    </v-chip>
-
-                    <v-chip class="ma-2" color="pink" label text-color="white">
-                        <v-icon left>
-                            mdi-label
-                        </v-icon>
-                        Tags
-                    </v-chip>
-
-                    <v-chip class="ma-2" color="primary" label>
-                        <v-icon left>
-                            mdi-account-circle-outline
-                        </v-icon>
-                        John Leider
-                    </v-chip>
-
-                    <v-chip class="ma-2" close color="cyan" label text-color="white">
-                        <v-icon left>
-                            mdi-twitter
-                        </v-icon>
-                        New Tweets
-                    </v-chip>
-                </div>
-
-            </v-row>
             <v-row>
                 <v-footer color="">
                     <v-btn v-for="link in links" :key="link" color="white" text rounded>
@@ -159,7 +130,7 @@ export default {
     }),
     methods: {
         index(page, search) {
-            axios.get("/api-properties-user?page=" + page + "&search=" + search).then((response) => {
+            axios.get("/api-properties?page=" + page + "&search=" + search).then((response) => {
                 this.properties = response.data.Properties.data;
                 this.paginate = response.data.pagination;
             });

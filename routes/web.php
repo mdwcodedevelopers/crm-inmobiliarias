@@ -20,3 +20,5 @@ Auth::routes();
 Route::resources(['api-properties' => PropertyController::class]);
 Route::get('/api-properties-user', 'PropertyController@properties');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
+Route::get('/categories', 'CategorieController@categories')->name('categories');

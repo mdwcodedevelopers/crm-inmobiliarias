@@ -13,30 +13,32 @@ class Property extends Model
         'price',
         'dimension',
         'status_id',
-        'title'
+        'title',
+        'categorie_id',
+        'city'
     ];
 
-    /** 
+    /**
      * Relacion muchos a muchos con el modelo User
      */
-    public function users() 
-    {
-        return $this->belongsToMany('App\User');
-    }
+    // public function users()
+    // {
+    //     return $this->belongsToMany('App\User');
+    // }
 
-    /** 
-     * Relacion uno a muchos con el modelo Status
-     */
-    public function status()
-    {
-        return $this->hasMany('App\Status');
-    }
+    // /**
+    //  * Relacion uno a muchos con el modelo Status
+    //  */
+    // public function status()
+    // {
+    //     return $this->hasMany('App\Status');
+    // }
 
-    /** 
-     * Relacion muchos a muchos con el modelo Categorie 
-     */
-    public function categories()
-    {
-        return $this->belongsToMany('App\Categorie');
-    }
+    // /**
+    //  * Relacion muchos a muchos con el modelo Categorie
+    //  */
+    // public function categories()
+    // {
+    //     return $this->belongsToMany('App\Categorie');
+    // }
 }

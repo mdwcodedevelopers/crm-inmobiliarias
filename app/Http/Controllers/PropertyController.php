@@ -29,21 +29,11 @@ class PropertyController extends Controller
         ]);
     }
     public function properties(Request $request){
-        $search = $request->search;
-        $Properties = Status::orderBy('updated_at', 'desc')->where('user_id',auth()->id())->join('properties','properties.status_id','status.id')->orderBy('updated_at', 'desc')->paginate(20);
+        $Properties = Status::orderBy('updated_at', 'desc')->where('user_id',auth()->id())->join('properties','properties.status_id','status.id')->orderBy('updated_at', 'desc')->get();
         $total = Property::count();
         return response()->json([
             'Properties' => $Properties,
-            'total' => $total,
-            'pagination' => [
-                'total'         => $Properties->total(),
-                'current_page'  => $Properties->currentPage(),
-                'per_page'      => $Properties->perPage(),
-                'last_page'     => $Properties->lastPage(),
-                'from'          => $Properties->firstItem(),
-                'to'            => $Properties->lastItem(),
-            ],
-            'search' => $search
+            'total' => $total
         ]);
     }
     // queda por actualizar
@@ -55,8 +45,9 @@ class PropertyController extends Controller
             'information'=>$request['information'],
             'price'=>$request['price'],
             'dimension'=>$request['dimension'],
-            'status_id'=>$request['status'],
-            'd'=>$request['dimension'],
+            'status_id'=>1,
+            'categorie_id'=>1,
+            'city'=>1
             // 'interested'=>[],
             // 'images'=>json_encode($request['images'])
         ]);

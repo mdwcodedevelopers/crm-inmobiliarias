@@ -34,4 +34,7 @@ class CategorieController extends Controller
 
         return response()->json("success", 200);
     }
+    public function categories(){
+        return view('categories');
+    }
 }

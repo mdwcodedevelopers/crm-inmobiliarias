@@ -6,14 +6,11 @@
 
 require('./bootstrap');
 import '@mdi/font/css/materialdesignicons.css'
-import VueAgile from 'vue-agile';
-
 window.Vue = require('vue');
 import Vuetify from 'vuetify';
 import VueCarousel from 'vue-carousel';
 Vue.use(VueCarousel);
 Vue.use(Vuetify);
-Vue.use(VueAgile);
 import colors from 'vuetify/lib/util/colors'
 /**
  * The following block of code may be used to automatically register your
@@ -27,7 +24,9 @@ import colors from 'vuetify/lib/util/colors'
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('properties', require('./components/Properties.vue').default);
+Vue.component('properties-user', require('./components/PropertiesUser.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
+Vue.component('categories', require('./components/Categories.vue').default);
 Vue.component('barra-component', require('./components/Barra.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -38,9 +37,6 @@ Vue.component('barra-component', require('./components/Barra.vue').default);
 const app = new Vue({
     el: '#app',
     vuetify: new Vuetify(),
-    components: {
-		agile: VueAgile,
-	},
     theme: {
         themes: {
           light: {
