@@ -2560,24 +2560,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2604,7 +2586,8 @@ __webpack_require__.r(__webpack_exports__);
       price_edit: '',
       dimension_edit: '',
       error: '',
-      id_delete: ''
+      id_delete: '',
+      propiedad_eliminar: ''
     };
   },
   methods: {
@@ -2635,25 +2618,28 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    // edit() {
-    //     axios.put("/api-properties/" + this.id_edit, {
-    //         title: this.title,
-    //         information: this.information,
-    //         price: this.price,
-    //         dimension: this.dimension
-    //     }).then((response) => {
-    //         if (response.status == 200) {
-    //             this.index(0, '');
-    //             this.title = '';
-    //             this.information = '';
-    //             this.price = '';
-    //             this.dimension = '';
-    //             this.dialog = false;
-    //         }
-    //     });
-    // },
-    delete_model: function delete_model() {
+    edit_model: function edit_model() {
       var _this3 = this;
+
+      axios.put("/api-properties/" + this.id_edit, {
+        title: this.title_edit,
+        information: this.information_edit,
+        price: this.price_edit,
+        dimension: this.dimension_edit
+      }).then(function (response) {
+        if (response.status == 200) {
+          _this3.index(0, '');
+
+          _this3.title_edit = '';
+          _this3.information_edit = '';
+          _this3.price_edit = '';
+          _this3.dimension_edit = '';
+          _this3.dialogedit = false;
+        }
+      });
+    },
+    delete_model: function delete_model() {
+      var _this4 = this;
 
       console.log("sdsadsad");
       console.log(this.id_delete);
@@ -2661,21 +2647,26 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response);
 
         if (response.status == 200) {
-          _this3.index(0, '');
+          _this4.index(0, '');
 
-          _this3.dialog = false;
+          _this4.dialog = false;
         } else {
-          _this3.error = "Error al añadir propiedad";
+          _this4.error = "Error al añadir propiedad";
         }
       });
     },
-    edit: function edit() {
+    edit: function edit(id, title, info, price, dimension) {
       this.dialogedit = true;
+      this.id_edit = id;
+      this.title_edit = title;
+      this.information_edit = info;
+      this.price_edit = price;
+      this.dimension_edit = dimension;
     },
-    delete_dialog: function delete_dialog(id) {
+    delete_dialog: function delete_dialog(id, title) {
       this.id_delete = id;
-      console.log(this.id_delete);
       this.dialogdelete = true;
+      this.propiedad_eliminar = title;
     }
   },
   created: function created() {
@@ -40625,7 +40616,13 @@ var render = function() {
                       attrs: { color: "#66BB6A" },
                       on: {
                         click: function($event) {
-                          return _vm.edit(item.id)
+                          return _vm.edit(
+                            item.id,
+                            item.title,
+                            item.dimension,
+                            item.price,
+                            item.information
+                          )
                         }
                       }
                     },
@@ -40645,7 +40642,7 @@ var render = function() {
                       attrs: { color: "#E53935" },
                       on: {
                         click: function($event) {
-                          return _vm.delete_dialog(item.id)
+                          return _vm.delete_dialog(item.id, item.title)
                         }
                       }
                     },
@@ -40723,11 +40720,11 @@ var render = function() {
                                     _c("v-text-field", {
                                       attrs: { label: "Titulo", required: "" },
                                       model: {
-                                        value: _vm.title,
+                                        value: _vm.title_edit,
                                         callback: function($$v) {
-                                          _vm.title = $$v
+                                          _vm.title_edit = $$v
                                         },
-                                        expression: "title"
+                                        expression: "title_edit"
                                       }
                                     })
                                   ],
@@ -40741,11 +40738,11 @@ var render = function() {
                                     _c("v-text-field", {
                                       attrs: { label: "Dimensiones" },
                                       model: {
-                                        value: _vm.dimension,
+                                        value: _vm.dimension_edit,
                                         callback: function($$v) {
-                                          _vm.dimension = $$v
+                                          _vm.dimension_edit = $$v
                                         },
-                                        expression: "dimension"
+                                        expression: "dimension_edit"
                                       }
                                     })
                                   ],
@@ -40763,11 +40760,11 @@ var render = function() {
                                         required: ""
                                       },
                                       model: {
-                                        value: _vm.price,
+                                        value: _vm.price_edit,
                                         callback: function($$v) {
-                                          _vm.price = $$v
+                                          _vm.price_edit = $$v
                                         },
-                                        expression: "price"
+                                        expression: "price_edit"
                                       }
                                     })
                                   ],
@@ -40784,11 +40781,11 @@ var render = function() {
                                         required: ""
                                       },
                                       model: {
-                                        value: _vm.information,
+                                        value: _vm.information_edit,
                                         callback: function($$v) {
-                                          _vm.information = $$v
+                                          _vm.information_edit = $$v
                                         },
-                                        expression: "information"
+                                        expression: "information_edit"
                                       }
                                     })
                                   ],
@@ -40823,7 +40820,7 @@ var render = function() {
                             attrs: { color: "danger" },
                             on: {
                               click: function($event) {
-                                _vm.dialog = false
+                                _vm.dialogedit = false
                               }
                             }
                           },
@@ -40837,7 +40834,7 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.delete_model()
+                                return _vm.edit_model()
                               }
                             }
                           },
@@ -40880,116 +40877,13 @@ var render = function() {
                   [
                     _c("v-card-title", [
                       _c("span", { staticClass: "headline" }, [
-                        _vm._v("Eliminar propiedad")
+                        _vm._v(
+                          "Desea eliminar: " + _vm._s(_vm.propiedad_eliminar)
+                        )
                       ])
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "v-card-text",
-                      [
-                        _c(
-                          "v-container",
-                          { attrs: { "grid-list-md": "" } },
-                          [
-                            _c(
-                              "v-layout",
-                              { attrs: { wrap: "" } },
-                              [
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md4: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: { label: "Titulo", required: "" },
-                                      model: {
-                                        value: _vm.title,
-                                        callback: function($$v) {
-                                          _vm.title = $$v
-                                        },
-                                        expression: "title"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md4: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: { label: "Dimensiones" },
-                                      model: {
-                                        value: _vm.dimension,
-                                        callback: function($$v) {
-                                          _vm.dimension = $$v
-                                        },
-                                        expression: "dimension"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md4: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: {
-                                        label: "Precio",
-                                        "persistent-hint": "",
-                                        required: ""
-                                      },
-                                      model: {
-                                        value: _vm.price,
-                                        callback: function($$v) {
-                                          _vm.price = $$v
-                                        },
-                                        expression: "price"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: {
-                                        label: "Información de la propiedad",
-                                        required: ""
-                                      },
-                                      model: {
-                                        value: _vm.information,
-                                        callback: function($$v) {
-                                          _vm.information = $$v
-                                        },
-                                        expression: "information"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c("v-flex", { attrs: { xs12: "" } }, [
-                                  _vm._v(
-                                    "\n                                    " +
-                                      _vm._s(_vm.error) +
-                                      "\n                                "
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    ),
+                    _c("v-card-text"),
                     _vm._v(" "),
                     _c(
                       "v-card-actions",
@@ -40999,10 +40893,9 @@ var render = function() {
                         _c(
                           "v-btn",
                           {
-                            attrs: { color: "danger" },
                             on: {
                               click: function($event) {
-                                _vm.dialog = false
+                                _vm.dialogdelete = false
                               }
                             }
                           },
@@ -41012,7 +40905,8 @@ var render = function() {
                         _c(
                           "v-btn",
                           {
-                            attrs: { color: "success" },
+                            staticClass: "text-white",
+                            attrs: { color: "#E53935" },
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
