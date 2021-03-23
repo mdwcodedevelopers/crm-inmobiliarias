@@ -15,9 +15,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/propertie/{id}', function () {
-    return view('propertie');
-});
+Route::get('/property/{id}','PropertyController@property');
 Route::resources(['api-properties' => PropertyController::class]);
 Auth::routes();
 

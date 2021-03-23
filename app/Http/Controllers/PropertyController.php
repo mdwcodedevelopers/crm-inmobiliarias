@@ -56,8 +56,8 @@ class PropertyController extends Controller
     }
     public function update(Request $request,$id)
     {
-        $house = Property::find($id);
-        $house->update([
+        $property = Property::find($id);
+        $property->update([
             'user_id'=>auth()->id(),
             'title'=>$request['title'],
             'information'=>$request['information'],
@@ -69,15 +69,19 @@ class PropertyController extends Controller
         ]);
         return response()->json("success");
     }
-    public function show(Request $request, $id)
+    public function property($id)
     {
-        $house = Property::find($id);
-        return response()->json($house);
+        $property = Property::find($id);
+        return view('property',['property'=>$property,
+        'id'=>$id]);
+        // return response()->json(
+            // ['property'=>$property,
+            // 'id'=>$id]);
     }
     public function destroy($id)
     {
-        $house = Property::find($id);
-        $house->delete();
+        $property = Property::find($id);
+        $property->delete();
 
         return response()->json("success", 200);
     }
