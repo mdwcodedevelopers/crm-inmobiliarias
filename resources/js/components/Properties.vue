@@ -24,9 +24,7 @@
 
             </slide>
         </carousel>
-        <v-alert dense color="#2196F3" class="text-white">
-            Nuestras propiedades
-        </v-alert>
+
        <v-row align="center">
 
             <v-col class="d-flex" cols="12" sm="4">
@@ -34,7 +32,7 @@
             </v-col>
             <v-col class="d-flex" cols="12" sm="6">
 
-                <v-text-field label="Buscar propiedades"></v-text-field>
+                <v-text-field label="Buscar propiedades" v-model="search"></v-text-field>
             </v-col>
             <v-col class="d-flex" cols="12" sm="2">
 
@@ -43,7 +41,9 @@
             </v-col>
 
             </v-row>
-
+            <v-alert dense color="#2196F3" class="text-white">
+                Propiedades disponibles: {{total}}
+            </v-alert>
             <v-container fluid>
 
                 <v-row>
@@ -92,6 +92,7 @@ export default {
             from: 0,
             to: 0
         },
+        total:0,
         search:'',
         properties: [],
         links: [
@@ -109,6 +110,7 @@ export default {
             axios.get("/api-properties?page=" +this.paginate.current_page + "&search=" + this.search).then((response) => {
                 this.properties = response.data.Properties.data;
                 this.paginate = response.data.pagination;
+                this.total=response.data.total;
             });
             console.log(this.search)
         },

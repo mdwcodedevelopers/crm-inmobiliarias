@@ -24,6 +24,7 @@ import colors from 'vuetify/lib/util/colors'
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('properties', require('./components/Properties.vue').default);
+Vue.component('propertie', require('./components/SinglePropertie.vue').default);
 Vue.component('properties-user', require('./components/PropertiesUser.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('categories', require('./components/Categories.vue').default);

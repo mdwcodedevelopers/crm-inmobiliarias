@@ -15,8 +15,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/propertie/{id}', function () {
+    return view('propertie');
+});
 Route::resources(['api-properties' => PropertyController::class]);
-Route::put('api-properties-put/{id}','PropertyController@update');
 Auth::routes();
 
 Route::get('/api-properties-user', 'PropertyController@properties');

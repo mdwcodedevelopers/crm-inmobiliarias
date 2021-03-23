@@ -12,7 +12,8 @@ class PropertyController extends Controller
 
     public function index(Request $request){
         $search = $request->search;
-        $Properties = Status::orderBy('updated_at', 'desc')->where('information','LIKE',"%$search%")
+        $Properties = Status::orderBy('updated_at', 'desc')->where('title','LIKE',"%$search%")
+        // ->where('information','LIKE',"%$search%")
         ->join('properties','properties.status_id','status.id')->paginate(9);
         $total = Property::count();
         return response()->json([
