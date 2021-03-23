@@ -5,10 +5,7 @@
         </v-carousel>
         {{property.title}}
     </div>
-
 </template>
-
-
 <script>
 export default {
     props:{
@@ -32,7 +29,6 @@ export default {
         }
     },
     created(){
-        console.log(this.property)
     }
 }
 </script>
