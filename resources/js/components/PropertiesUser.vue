@@ -40,7 +40,7 @@
                 </v-dialog>
             </v-layout>
         </template>
-        <v-data-table :headers="headers" :items="properties" item-key="name" class="elevation-1" :search="search">
+        <v-data-table :headers="headers" :items="properties" item-key="propeties-user" class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
             </template>
@@ -85,7 +85,7 @@
                                         <v-text-field label="Dimensiones" v-model="dimension_edit"></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md4>
-                                        <v-text-field label="Precio" v-model="price_edit" persistent-hint required></v-text-field>
+                                        <v-text-field label="Precio" v-model="price_edit"  required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field label="Información de la propiedad" v-model="information_edit" required></v-text-field>
@@ -99,7 +99,7 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="danger" @click="dialogedit = false">Cancelar</v-btn>
-                            <v-btn color="success" @click.prevent="edit_model()">Eliminar</v-btn>
+                            <v-btn color="success" @click.prevent="edit_model()">Editar</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -183,13 +183,13 @@ export default {
             });
         },
         edit_model() {
-
-            axios.put("/api-properties/" + this.id_edit, {
+            const edit={
                 title: this.title_edit,
                 information: this.information_edit,
                 price: this.price_edit,
                 dimension: this.dimension_edit
-            }).then((response) => {
+            };
+            axios.put("/api-properties/"+this.id_edit ,{edit} ).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
                     this.title_edit = '';
@@ -201,13 +201,12 @@ export default {
             });
         },
         delete_model() {
-            console.log("sdsadsad");
             console.log(this.id_delete);
             axios.delete("/api-properties/" + this.id_delete).then((response) => {
                 console.log(response);
                 if (response.status == 200) {
                     this.index(0, '');
-                    this.dialog = false;
+                    this.dialogdelete = false;
                 } else {
                     this.error = "Error al añadir propiedad";
                 }

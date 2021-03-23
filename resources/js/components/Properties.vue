@@ -27,22 +27,27 @@
         <v-alert dense color="#2196F3" class="text-white">
             Nuestras propiedades
         </v-alert>
-        <v-card class="mx-auto my-3" max-width="400" <v-row align="center">
+       <v-row align="center">
 
-            <v-col class="d-flex" cols="12" sm="6">
+            <v-col class="d-flex" cols="12" sm="4">
                 <v-select :items="items" label="Ciudad"></v-select>
             </v-col>
             <v-col class="d-flex" cols="12" sm="6">
 
-                <v-text-field label="Buscar propiedades" append-icon="mdi-magnify"></v-text-field>
-                <v-btn @click="index()"></v-btn>
+                <v-text-field label="Buscar propiedades"></v-text-field>
             </v-col>
+            <v-col class="d-flex" cols="12" sm="2">
+
+                <v-btn @click="index()" color="success" rounded><v-icon>mdi-magnify</v-icon> </v-btn>
+
+            </v-col>
+
             </v-row>
 
             <v-container fluid>
 
                 <v-row>
-                    <v-col v-for="card in properties" :key="card.title" cols="4">
+                    <v-col v-for="card in properties" :key="card.id" cols="4">
                         <h3 class="text-center venta mt-3">{{card.name}}</h3>
                         <v-card>
                             <v-img src="https://cdn.vuetifyjs.com/images/cards/house.jpg" class="" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="200px">
@@ -62,16 +67,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-            <div class="text-center">
-                <v-pagination v-model="page" color="#2979FF" :length="paginate.last_page" circle></v-pagination>
-            </div>
-            <v-row>
-                <v-footer color="">
-                    <v-btn v-for="link in links" :key="link" color="white" text rounded>
-                        {{link}}
-                    </v-btn>
-                </v-footer>
-            </v-row>
+            <v-pagination v-model="paginate.current_page"     @input="onPageChange()" :total-visible="10"  :length="paginate.last_page" circle></v-pagination>
 
     </v-container>
 </template>
@@ -90,57 +86,39 @@ export default {
 
         paginate: {
             total: 0,
-            current_page: 0,
+            current_page: 1,
             per_page: 0,
             last_page: 0,
             from: 0,
             to: 0
         },
+        search:'',
         properties: [],
         links: [
             'Home',
             'Acerca de nosotros',
             'Propiedades',
             'Contacto',
-            '',
 
         ],
-        colors: [
-            'primary',
-            'secondary',
-            'yellow darken-2',
-            'red',
-            'orange',
-        ],
         model: 0,
-        colors: [
-            '#38c172',
-            '#38c172',
-            '#38c172',
-            '#38c172',
-            '#38c172',
-        ],
-        slides: [
-            'First',
-            'Second',
-            'Third',
-            'Fourth',
-            'Fifth',
-        ],
+        items:['sads']
     }),
     methods: {
-        index(page, search) {
-            axios.get("/api-properties?page=" + page + "&search=" + search).then((response) => {
+        index() {
+            axios.get("/api-properties?page=" +this.paginate.current_page + "&search=" + this.search).then((response) => {
                 this.properties = response.data.Properties.data;
                 this.paginate = response.data.pagination;
             });
+            console.log(this.search)
         },
-
+        onPageChange() {
+            this.index();
+        }
     },
     created() {
         this.index(0, '');
     },
-
 
 }
 </script>

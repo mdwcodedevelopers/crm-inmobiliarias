@@ -2208,11 +2208,232 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      dialog: false
+      paginate: {
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0
+      },
+      properties: [],
+      search: '',
+      dialog: false,
+      dialogedit: false,
+      dialogdelete: false,
+      title: '',
+      information: '',
+      price: '',
+      dimension: '',
+      id_edit: '',
+      title_edit: '',
+      information_edit: '',
+      price_edit: '',
+      dimension_edit: '',
+      error: '',
+      id_delete: '',
+      propiedad_eliminar: ''
     };
+  },
+  methods: {
+    index: function index(page, search) {
+      var _this = this;
+
+      axios.get("/api-properties-user?page=" + page + "&search=" + search).then(function (response) {
+        _this.properties = response.data.Properties;
+      });
+    },
+    create: function create() {
+      var _this2 = this;
+
+      axios.post("/api-properties", {
+        title: this.title,
+        information: this.information,
+        price: this.price,
+        dimension: this.dimension
+      }).then(function (response) {
+        if (response.status == 200) {
+          _this2.index(0, '');
+
+          _this2.title = '';
+          _this2.information = '';
+          _this2.price = '';
+          _this2.dimension = '';
+          _this2.dialog = false;
+        }
+      });
+    },
+    edit_model: function edit_model() {
+      var _this3 = this;
+
+      var edit = {
+        title: this.title_edit,
+        information: this.information_edit,
+        price: this.price_edit,
+        dimension: this.dimension_edit
+      };
+      axios.put("/api-properties-put/" + this.id_edit, {
+        edit: edit
+      }).then(function (response) {
+        if (response.status == 200) {
+          _this3.index(0, '');
+
+          _this3.title_edit = '';
+          _this3.information_edit = '';
+          _this3.price_edit = '';
+          _this3.dimension_edit = '';
+          _this3.dialogedit = false;
+        }
+      });
+    },
+    delete_model: function delete_model() {
+      var _this4 = this;
+
+      console.log("sdsadsad");
+      console.log(this.id_delete);
+      axios["delete"]("/api-properties/" + this.id_delete).then(function (response) {
+        console.log(response);
+
+        if (response.status == 200) {
+          _this4.index(0, '');
+
+          _this4.dialog = false;
+        } else {
+          _this4.error = "Error al añadir propiedad";
+        }
+      });
+    },
+    edit: function edit(id, title, info, price, dimension) {
+      this.dialogedit = true;
+      this.id_edit = id;
+      this.title_edit = title;
+      this.information_edit = info;
+      this.price_edit = price;
+      this.dimension_edit = dimension;
+    },
+    delete_dialog: function delete_dialog(id, title) {
+      this.id_delete = id;
+      this.dialogdelete = true;
+      this.propiedad_eliminar = title;
+    }
+  },
+  created: function created() {
+    this.index(0, '');
+  },
+  computed: {
+    headers: function headers() {
+      return [{
+        text: 'Propiedad',
+        align: 'start',
+        sortable: true,
+        value: 'title'
+      }, // { text: 'Ciudad', value: 'city' },
+      {
+        text: 'Información',
+        value: 'information'
+      }, {
+        text: 'Precio',
+        value: 'price'
+      }, {
+        text: 'Dimensión',
+        value: 'dimension'
+      }, {
+        text: 'Actions',
+        value: 'action',
+        sortable: false,
+        align: 'center'
+      }];
+    }
   }
 });
 
@@ -2301,12 +2522,6 @@ var gradients = [['#42b3f4']];
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_carousel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-carousel */ "./node_modules/vue-carousel/dist/vue-carousel.min.js");
 /* harmony import */ var vue_carousel__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_carousel__WEBPACK_IMPORTED_MODULE_0__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
 //
 //
 //
@@ -2388,31 +2603,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Slide: vue_carousel__WEBPACK_IMPORTED_MODULE_0__["Slide"]
   },
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       paginate: {
         total: 0,
-        current_page: 0,
+        current_page: 1,
         per_page: 0,
         last_page: 0,
         from: 0,
         to: 0
       },
+      search: '',
       properties: [],
-      links: ['Home', 'Acerca de nosotros', 'Propiedades', 'Contacto', ''],
-      colors: ['primary', 'secondary', 'yellow darken-2', 'red', 'orange'],
-      model: 0
-    }, _defineProperty(_ref, "colors", ['#38c172', '#38c172', '#38c172', '#38c172', '#38c172']), _defineProperty(_ref, "slides", ['First', 'Second', 'Third', 'Fourth', 'Fifth']), _ref;
+      links: ['Home', 'Acerca de nosotros', 'Propiedades', 'Contacto'],
+      model: 0,
+      items: ['sads']
+    };
   },
   methods: {
-    index: function index(page, search) {
+    index: function index() {
       var _this = this;
 
-      axios.get("/api-properties?page=" + page + "&search=" + search).then(function (response) {
+      axios.get("/api-properties?page=" + this.paginate.current_page + "&search=" + this.search).then(function (response) {
         _this.properties = response.data.Properties.data;
         _this.paginate = response.data.pagination;
       });
+      console.log(this.search);
+    },
+    onPageChange: function onPageChange() {
+      this.index();
     }
   },
   created: function created() {
@@ -2621,11 +2839,14 @@ __webpack_require__.r(__webpack_exports__);
     edit_model: function edit_model() {
       var _this3 = this;
 
-      axios.put("/api-properties/" + this.id_edit, {
+      var edit = {
         title: this.title_edit,
         information: this.information_edit,
         price: this.price_edit,
         dimension: this.dimension_edit
+      };
+      axios.put("/api-properties/" + this.id_edit, {
+        edit: edit
       }).then(function (response) {
         if (response.status == 200) {
           _this3.index(0, '');
@@ -2641,7 +2862,6 @@ __webpack_require__.r(__webpack_exports__);
     delete_model: function delete_model() {
       var _this4 = this;
 
-      console.log("sdsadsad");
       console.log(this.id_delete);
       axios["delete"]("/api-properties/" + this.id_delete).then(function (response) {
         console.log(response);
@@ -2649,7 +2869,7 @@ __webpack_require__.r(__webpack_exports__);
         if (response.status == 200) {
           _this4.index(0, '');
 
-          _this4.dialog = false;
+          _this4.dialogdelete = false;
         } else {
           _this4.error = "Error al añadir propiedad";
         }
@@ -39894,492 +40114,6 @@ var render = function() {
     "div",
     { staticClass: "text-center" },
     [
-      _c(
-        "v-dialog",
-        {
-          attrs: { width: "500" },
-          scopedSlots: _vm._u([
-            {
-              key: "activator",
-              fn: function(ref) {
-                var on = ref.on
-                var attrs = ref.attrs
-                return [
-                  _c(
-                    "v-btn",
-                    _vm._g(
-                      _vm._b(
-                        { attrs: { color: "red lighten-2", dark: "" } },
-                        "v-btn",
-                        attrs,
-                        false
-                      ),
-                      on
-                    ),
-                    [_vm._v("\n        Click Me\n      ")]
-                  )
-                ]
-              }
-            }
-          ]),
-          model: {
-            value: _vm.dialog,
-            callback: function($$v) {
-              _vm.dialog = $$v
-            },
-            expression: "dialog"
-          }
-        },
-        [
-          _vm._v(" "),
-          _c(
-            "v-card",
-            [
-              _c("v-card-title", { staticClass: "headline grey lighten-2" }, [
-                _vm._v("\n        Privacy Policy\n      ")
-              ]),
-              _vm._v(" "),
-              _c("v-card-text", [
-                _vm._v(
-                  "\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n      "
-                )
-              ]),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                [
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "primary", text: "" },
-                      on: {
-                        click: function($event) {
-                          _vm.dialog = false
-                        }
-                      }
-                    },
-                    [_vm._v("\n          I accept\n        ")]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9&":
-/*!************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9& ***!
-  \************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card text-white bg-success mb-4",
-              staticStyle: { "max-width": "15rem" }
-            },
-            [
-              _c("div", { staticClass: "card-header text-center" }, [
-                _vm._v("Propiedades Vendidas")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("h5", { staticClass: "card-title text-center" }, [
-                  _vm._v("5")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card text-white bg-info",
-              staticStyle: { "max-width": "15rem" }
-            },
-            [
-              _c("div", { staticClass: "card-header text-center" }, [
-                _vm._v("Interesados")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("h5", { staticClass: "card-title text-center" }, [
-                  _vm._v("16")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card text-white bg-warning",
-              staticStyle: { "max-width": "15rem" }
-            },
-            [
-              _c("div", { staticClass: "card-header text-center" }, [
-                _vm._v("Categorias")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("h5", { staticClass: "card-title text-center" }, [
-                  _vm._v("16")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card text-white bg-success mb-4",
-              staticStyle: { "max-width": "15rem" }
-            },
-            [
-              _c("div", { staticClass: "card-header text-center" }, [
-                _vm._v("Mensajes")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("h5", { staticClass: "card-title text-center" }, [
-                  _vm._v("52")
-                ])
-              ])
-            ]
-          )
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Properties.vue?vue&type=template&id=28512f44&":
-/*!*************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Properties.vue?vue&type=template&id=28512f44& ***!
-  \*************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-container",
-    [
-      _c(
-        "carousel",
-        [
-          _c(
-            "slide",
-            { staticClass: "py-4" },
-            [
-              _c(
-                "v-card",
-                {
-                  staticClass: "mx-auto text-white",
-                  attrs: { color: "#0D47A1", "max-width": "344" }
-                },
-                [
-                  _c("v-card-text", [
-                    _c("h1", { staticClass: "text-white" }, [
-                      _vm._v(
-                        "\n                        Bienvenidos a la familia Cánepa\n                    "
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "mx-2 " }, [
-                    _vm._v(
-                      "Somos la inmobiliaria con más de 40 años en el mercado."
-                    )
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "slide",
-            { staticClass: "py-4" },
-            [
-              _c(
-                "v-card",
-                {
-                  staticClass: "mx-auto ",
-                  attrs: { color: "#fff", "max-width": "344" }
-                },
-                [
-                  _c("v-card-text", [
-                    _c("h5", { staticClass: " text--primary" }, [
-                      _vm._v(
-                        "\n                        Desarrollamos viviendas, edificios, barrios; pero sobre todo, desarrollamos sueños.\n                    "
-                      )
-                    ])
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("slide", { staticClass: "py-4" })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-alert",
-        { staticClass: "text-white", attrs: { dense: "", color: "#2196F3" } },
-        [_vm._v("\n        Nuestras propiedades\n    ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "v-row",
-        { attrs: { align: "center" } },
-        [
-          _c(
-            "v-col",
-            { staticClass: "d-flex", attrs: { cols: "12", sm: "6" } },
-            [_c("v-select", { attrs: { items: _vm.items, label: "Ciudad" } })],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { staticClass: "d-flex", attrs: { cols: "12", sm: "6" } },
-            [
-              _c("v-text-field", {
-                attrs: {
-                  label: "Buscar propiedades",
-                  "append-icon": "mdi-magnify"
-                }
-              }),
-              _vm._v(" "),
-              _c("v-btn", {
-                on: {
-                  click: function($event) {
-                    return _vm.index()
-                  }
-                }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        { attrs: { fluid: "" } },
-        [
-          _c(
-            "v-row",
-            _vm._l(_vm.properties, function(card) {
-              return _c(
-                "v-col",
-                { key: card.title, attrs: { cols: "4" } },
-                [
-                  _c("h3", { staticClass: "text-center venta mt-3" }, [
-                    _vm._v(_vm._s(card.name))
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card",
-                    [
-                      _c("v-img", {
-                        attrs: {
-                          src:
-                            "https://cdn.vuetifyjs.com/images/cards/house.jpg",
-                          gradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)",
-                          height: "200px"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("v-card-title", {
-                        domProps: { textContent: _vm._s(card.title) }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [
-                          _c(
-                            "v-chip",
-                            {
-                              staticClass: "mr-1",
-                              attrs: { color: "#2979FF", "text-color": "#fff" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(card.dimension) +
-                                  " mt2\n                            "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-chip",
-                            {
-                              staticClass: "mr-3",
-                              attrs: { color: "#38c172", "text-color": "#fff" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(card.price) +
-                                  "\n                            "
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            }),
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "text-center" },
-        [
-          _c("v-pagination", {
-            attrs: {
-              color: "#2979FF",
-              length: _vm.paginate.last_page,
-              circle: ""
-            },
-            model: {
-              value: _vm.page,
-              callback: function($$v) {
-                _vm.page = $$v
-              },
-              expression: "page"
-            }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-row",
-        [
-          _c(
-            "v-footer",
-            { attrs: { color: "" } },
-            _vm._l(_vm.links, function(link) {
-              return _c(
-                "v-btn",
-                { key: link, attrs: { color: "white", text: "", rounded: "" } },
-                [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(link) +
-                      "\n                "
-                  )
-                ]
-              )
-            }),
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PropertiesUser.vue?vue&type=template&id=012b87c9&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PropertiesUser.vue?vue&type=template&id=012b87c9& ***!
-  \*****************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "text-center" },
-    [
       [
         _c(
           "v-layout",
@@ -40754,11 +40488,7 @@ var render = function() {
                                   { attrs: { xs12: "", sm6: "", md4: "" } },
                                   [
                                     _c("v-text-field", {
-                                      attrs: {
-                                        label: "Precio",
-                                        "persistent-hint": "",
-                                        required: ""
-                                      },
+                                      attrs: { label: "Precio", required: "" },
                                       model: {
                                         value: _vm.price_edit,
                                         callback: function($$v) {
@@ -40839,6 +40569,937 @@ var render = function() {
                             }
                           },
                           [_vm._v("Eliminar")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      _vm._v(" "),
+      [
+        _c(
+          "v-layout",
+          { attrs: { row: "", "justify-center": "" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "600px" },
+                model: {
+                  value: _vm.dialogdelete,
+                  callback: function($$v) {
+                    _vm.dialogdelete = $$v
+                  },
+                  expression: "dialogdelete"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", [
+                      _c("span", { staticClass: "headline" }, [
+                        _vm._v(
+                          "Desea eliminar: " + _vm._s(_vm.propiedad_eliminar)
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("v-card-text"),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.dialogdelete = false
+                              }
+                            }
+                          },
+                          [_vm._v("Cancelar")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            staticClass: "text-white",
+                            attrs: { color: "#E53935" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.delete_model()
+                              }
+                            }
+                          },
+                          [_vm._v("Eliminar")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card text-white bg-success mb-4",
+              staticStyle: { "max-width": "15rem" }
+            },
+            [
+              _c("div", { staticClass: "card-header text-center" }, [
+                _vm._v("Propiedades Vendidas")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("h5", { staticClass: "card-title text-center" }, [
+                  _vm._v("5")
+                ])
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card text-white bg-info",
+              staticStyle: { "max-width": "15rem" }
+            },
+            [
+              _c("div", { staticClass: "card-header text-center" }, [
+                _vm._v("Interesados")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("h5", { staticClass: "card-title text-center" }, [
+                  _vm._v("16")
+                ])
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card text-white bg-warning",
+              staticStyle: { "max-width": "15rem" }
+            },
+            [
+              _c("div", { staticClass: "card-header text-center" }, [
+                _vm._v("Categorias")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("h5", { staticClass: "card-title text-center" }, [
+                  _vm._v("16")
+                ])
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card text-white bg-success mb-4",
+              staticStyle: { "max-width": "15rem" }
+            },
+            [
+              _c("div", { staticClass: "card-header text-center" }, [
+                _vm._v("Mensajes")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("h5", { staticClass: "card-title text-center" }, [
+                  _vm._v("52")
+                ])
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Properties.vue?vue&type=template&id=28512f44&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Properties.vue?vue&type=template&id=28512f44& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    [
+      _c(
+        "carousel",
+        [
+          _c(
+            "slide",
+            { staticClass: "py-4" },
+            [
+              _c(
+                "v-card",
+                {
+                  staticClass: "mx-auto text-white",
+                  attrs: { color: "#0D47A1", "max-width": "344" }
+                },
+                [
+                  _c("v-card-text", [
+                    _c("h1", { staticClass: "text-white" }, [
+                      _vm._v(
+                        "\n                        Bienvenidos a la familia Cánepa\n                    "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("h3", { staticClass: "mx-2 " }, [
+                    _vm._v(
+                      "Somos la inmobiliaria con más de 40 años en el mercado."
+                    )
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "slide",
+            { staticClass: "py-4" },
+            [
+              _c(
+                "v-card",
+                {
+                  staticClass: "mx-auto ",
+                  attrs: { color: "#fff", "max-width": "344" }
+                },
+                [
+                  _c("v-card-text", [
+                    _c("h5", { staticClass: " text--primary" }, [
+                      _vm._v(
+                        "\n                        Desarrollamos viviendas, edificios, barrios; pero sobre todo, desarrollamos sueños.\n                    "
+                      )
+                    ])
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("slide", { staticClass: "py-4" })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-alert",
+        { staticClass: "text-white", attrs: { dense: "", color: "#2196F3" } },
+        [_vm._v("\n        Nuestras propiedades\n    ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        { attrs: { align: "center" } },
+        [
+          _c(
+            "v-col",
+            { staticClass: "d-flex", attrs: { cols: "12", sm: "4" } },
+            [_c("v-select", { attrs: { items: _vm.items, label: "Ciudad" } })],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { staticClass: "d-flex", attrs: { cols: "12", sm: "6" } },
+            [_c("v-text-field", { attrs: { label: "Buscar propiedades" } })],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { staticClass: "d-flex", attrs: { cols: "12", sm: "2" } },
+            [
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "success", rounded: "" },
+                  on: {
+                    click: function($event) {
+                      return _vm.index()
+                    }
+                  }
+                },
+                [_c("v-icon", [_vm._v("mdi-magnify")])],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { attrs: { fluid: "" } },
+        [
+          _c(
+            "v-row",
+            _vm._l(_vm.properties, function(card) {
+              return _c(
+                "v-col",
+                { key: card.id, attrs: { cols: "4" } },
+                [
+                  _c("h3", { staticClass: "text-center venta mt-3" }, [
+                    _vm._v(_vm._s(card.name))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-img", {
+                        attrs: {
+                          src:
+                            "https://cdn.vuetifyjs.com/images/cards/house.jpg",
+                          gradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)",
+                          height: "200px"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-card-title", {
+                        domProps: { textContent: _vm._s(card.title) }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        [
+                          _c(
+                            "v-chip",
+                            {
+                              staticClass: "mr-1",
+                              attrs: { color: "#2979FF", "text-color": "#fff" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(card.dimension) +
+                                  " mt2\n                            "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-chip",
+                            {
+                              staticClass: "mr-3",
+                              attrs: { color: "#38c172", "text-color": "#fff" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(card.price) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            }),
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-pagination", {
+        attrs: {
+          "total-visible": 10,
+          length: _vm.paginate.last_page,
+          circle: ""
+        },
+        on: {
+          input: function($event) {
+            return _vm.onPageChange()
+          }
+        },
+        model: {
+          value: _vm.paginate.current_page,
+          callback: function($$v) {
+            _vm.$set(_vm.paginate, "current_page", $$v)
+          },
+          expression: "paginate.current_page"
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PropertiesUser.vue?vue&type=template&id=012b87c9&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PropertiesUser.vue?vue&type=template&id=012b87c9& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "text-center" },
+    [
+      [
+        _c(
+          "v-layout",
+          { attrs: { row: "", "justify-center": "" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "600px" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "activator",
+                    fn: function(ref) {
+                      var on = ref.on
+                      return [
+                        _c(
+                          "v-btn",
+                          _vm._g({ attrs: { color: "success", dark: "" } }, on),
+                          [_vm._v("Nueva propiedad")]
+                        )
+                      ]
+                    }
+                  }
+                ]),
+                model: {
+                  value: _vm.dialog,
+                  callback: function($$v) {
+                    _vm.dialog = $$v
+                  },
+                  expression: "dialog"
+                }
+              },
+              [
+                _vm._v(" "),
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", [
+                      _c("span", { staticClass: "headline" }, [
+                        _vm._v("Crear propiedad")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-text",
+                      [
+                        _c(
+                          "v-container",
+                          { attrs: { "grid-list-md": "" } },
+                          [
+                            _c(
+                              "v-layout",
+                              { attrs: { wrap: "" } },
+                              [
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "", sm6: "", md4: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: { label: "Titulo", required: "" },
+                                      model: {
+                                        value: _vm.title,
+                                        callback: function($$v) {
+                                          _vm.title = $$v
+                                        },
+                                        expression: "title"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "", sm6: "", md4: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: { label: "Dimensiones" },
+                                      model: {
+                                        value: _vm.dimension,
+                                        callback: function($$v) {
+                                          _vm.dimension = $$v
+                                        },
+                                        expression: "dimension"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "", sm6: "", md4: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "Precio",
+                                        "persistent-hint": "",
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.price,
+                                        callback: function($$v) {
+                                          _vm.price = $$v
+                                        },
+                                        expression: "price"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "Información de la propiedad",
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.information,
+                                        callback: function($$v) {
+                                          _vm.information = $$v
+                                        },
+                                        expression: "information"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c("v-flex", { attrs: { xs12: "" } }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(_vm.error) +
+                                      "\n                                "
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "danger" },
+                            on: {
+                              click: function($event) {
+                                _vm.dialog = false
+                              }
+                            }
+                          },
+                          [_vm._v("Cancelar")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "success" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.create()
+                              }
+                            }
+                          },
+                          [_vm._v("Crear")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      _vm._v(" "),
+      _c(
+        "v-data-table",
+        {
+          staticClass: "elevation-1",
+          attrs: {
+            headers: _vm.headers,
+            items: _vm.properties,
+            "item-key": "propeties-user",
+            search: _vm.search
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "top",
+              fn: function() {
+                return [
+                  _c("v-text-field", {
+                    staticClass: "mx-4",
+                    attrs: { label: "Buscar" },
+                    model: {
+                      value: _vm.search,
+                      callback: function($$v) {
+                        _vm.search = $$v
+                      },
+                      expression: "search"
+                    }
+                  })
+                ]
+              },
+              proxy: true
+            },
+            {
+              key: "item.action",
+              fn: function(ref) {
+                var item = ref.item
+                return [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "#66BB6A" },
+                      on: {
+                        click: function($event) {
+                          return _vm.edit(
+                            item.id,
+                            item.title,
+                            item.dimension,
+                            item.price,
+                            item.information
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("v-icon", { attrs: { color: "#fff" } }, [
+                        _vm._v(
+                          "\n                    mdi-pencil\n                "
+                        )
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "#E53935" },
+                      on: {
+                        click: function($event) {
+                          return _vm.delete_dialog(item.id, item.title)
+                        }
+                      }
+                    },
+                    [
+                      _c("v-icon", { attrs: { color: "#fff" } }, [
+                        _vm._v(
+                          "\n                    mdi-delete\n                "
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          [
+            _c("tr", [
+              _c("td"),
+              _vm._v(" "),
+              _c("td"),
+              _vm._v(" "),
+              _c("td", { attrs: { colspan: "4" } })
+            ])
+          ]
+        ],
+        2
+      ),
+      _vm._v(" "),
+      [
+        _c(
+          "v-layout",
+          { attrs: { row: "", "justify-center": "" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "600px" },
+                model: {
+                  value: _vm.dialogedit,
+                  callback: function($$v) {
+                    _vm.dialogedit = $$v
+                  },
+                  expression: "dialogedit"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", [
+                      _c("span", { staticClass: "headline" }, [
+                        _vm._v("Editar propiedad")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-text",
+                      [
+                        _c(
+                          "v-container",
+                          { attrs: { "grid-list-md": "" } },
+                          [
+                            _c(
+                              "v-layout",
+                              { attrs: { wrap: "" } },
+                              [
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "", sm6: "", md4: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: { label: "Titulo", required: "" },
+                                      model: {
+                                        value: _vm.title_edit,
+                                        callback: function($$v) {
+                                          _vm.title_edit = $$v
+                                        },
+                                        expression: "title_edit"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "", sm6: "", md4: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: { label: "Dimensiones" },
+                                      model: {
+                                        value: _vm.dimension_edit,
+                                        callback: function($$v) {
+                                          _vm.dimension_edit = $$v
+                                        },
+                                        expression: "dimension_edit"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "", sm6: "", md4: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: { label: "Precio", required: "" },
+                                      model: {
+                                        value: _vm.price_edit,
+                                        callback: function($$v) {
+                                          _vm.price_edit = $$v
+                                        },
+                                        expression: "price_edit"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "Información de la propiedad",
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.information_edit,
+                                        callback: function($$v) {
+                                          _vm.information_edit = $$v
+                                        },
+                                        expression: "information_edit"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c("v-flex", { attrs: { xs12: "" } }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(_vm.error) +
+                                      "\n                                "
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "danger" },
+                            on: {
+                              click: function($event) {
+                                _vm.dialogedit = false
+                              }
+                            }
+                          },
+                          [_vm._v("Cancelar")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "success" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.edit_model()
+                              }
+                            }
+                          },
+                          [_vm._v("Editar")]
                         )
                       ],
                       1

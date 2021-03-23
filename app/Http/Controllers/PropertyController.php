@@ -12,7 +12,8 @@ class PropertyController extends Controller
 
     public function index(Request $request){
         $search = $request->search;
-        $Properties = Status::orderBy('updated_at', 'desc')->join('properties','properties.status_id','status.id')->paginate(20);
+        $Properties = Status::orderBy('updated_at', 'desc')->where('information','LIKE',"%$search%")
+        ->join('properties','properties.status_id','status.id')->paginate(9);
         $total = Property::count();
         return response()->json([
             'Properties' => $Properties,
@@ -52,8 +53,7 @@ class PropertyController extends Controller
             // 'images'=>json_encode($request['images'])
         ]);
     }
-    // queda por actualizar
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
         $house = Property::find($id);
         $house->update([
@@ -62,21 +62,17 @@ class PropertyController extends Controller
             'information'=>$request['information'],
             'price'=>$request['price'],
             'dimension'=>$request['dimension'],
-            'interested'=>[],
-            'images'=>json_encode($request['images'])
+            'status_id'=>1,
+            'categorie_id'=>1,
+            'city'=>1
         ]);
-        return response()->json("success", 200);
+        return response()->json("success");
     }
-    // queda por actualizar
-    public function addImages(Request $request)
+    public function show(Request $request, $id)
     {
-        $imageName = time().'.'.$request->file->getClientOriginalExtension();
-        $path = 'images/'.$imageName;
-        $request->file->move(public_path('images'), $imageName);
-
-    	return response()->json(['success'=>$path]);
+        $house = Property::find($id);
+        return response()->json($house);
     }
-    // queda por actualizar
     public function destroy($id)
     {
         $house = Property::find($id);
