@@ -6,15 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
 {
+    protected $table='status';
     protected $fillable=[
         'name',
     ];
-    protected $table='status';
-    /**
-     * Relacion uno a muchos con el modelo Property
-     */
-    public function property()
-    {
-        return $this->belongsTo('App\Property');
-    }
 }

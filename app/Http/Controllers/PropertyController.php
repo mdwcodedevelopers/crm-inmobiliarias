@@ -12,10 +12,11 @@ class PropertyController extends Controller
 
     public function index(Request $request){
         $search = $request->search;
-        $Properties = Status::orderBy('updated_at', 'desc')->where('title','LIKE',"%$search%")
+        $Properties = Status::orderBy('properties.updated_at', 'desc')->where('title','LIKE',"%$search%")
         // ->where('information','LIKE',"%$search%")
         ->join('properties','properties.status_id','status.id')->paginate(9);
         $total = Property::count();
+
         return response()->json([
             'Properties' => $Properties,
             'total' => $total,
@@ -31,11 +32,14 @@ class PropertyController extends Controller
         ]);
     }
     public function properties(Request $request){
-        $Properties = Status::orderBy('updated_at', 'desc')->where('user_id',auth()->id())->join('properties','properties.status_id','status.id')->orderBy('updated_at', 'desc')->get();
+        $status=Status::get();
+        $Properties = Status::orderBy('properties.updated_at', 'desc')->where('user_id',auth()->id())->join('properties','properties.status_id','status.id')->get();
         $total = Property::count();
         return response()->json([
             'Properties' => $Properties,
-            'total' => $total
+            'total' => $total,
+            'status'=>$status,
+
         ]);
     }
     // queda por actualizar
@@ -56,13 +60,24 @@ class PropertyController extends Controller
     }
     public function update(Request $request,$id)
     {
+        // $property = Property::find($id);
+        // $property->update([
+        //     'user_id'=>auth()->id(),
+        //     'title'=>$request['title'],
+        //     'information'=>$request['information'],
+        //     'price'=>$request['price'],
+        //     'dimension'=>$request['dimension'],
+        //     'status_id'=>1,
+        //     'categorie_id'=>1,
+        //     'city'=>1
+        // ]);
         $property = Property::find($id);
         $property->update([
             'user_id'=>auth()->id(),
-            'title'=>$request['title'],
-            'information'=>$request['information'],
-            'price'=>$request['price'],
-            'dimension'=>$request['dimension'],
+            'title'=>$request->title,
+            'information'=>$request->information,
+            'price'=>$request->price,
+            'dimension'=>$request->dimension,
             'status_id'=>1,
             'categorie_id'=>1,
             'city'=>1
@@ -71,12 +86,9 @@ class PropertyController extends Controller
     }
     public function property($id)
     {
-        $property = Property::find($id);
-        return view('property',['property'=>$property,
-        'id'=>$id]);
-        // return response()->json(
-            // ['property'=>$property,
-            // 'id'=>$id]);
+        $property= Status::orderBy('updated_at', 'desc')->where('properties.id','=',"$id")
+        ->join('properties','properties.status_id','status.id')->first();
+        return view('property',['property'=>$property]);
     }
     public function destroy($id)
     {

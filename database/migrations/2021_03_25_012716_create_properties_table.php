@@ -22,9 +22,9 @@ class CreatePropertiesTable extends Migration
             $table->float('dimension');
             $table->unsignedBigInteger('status_id')->nullable();
             $table->unsignedBigInteger('categorie_id')->nullable();
-            $table->unsignedBigInteger('city');
+            $table->unsignedBigInteger('city')->nullable();
+            $table->unsignedBigInteger('currency')->nullable();
             $table->timestamps();
-            
         });
     }
 

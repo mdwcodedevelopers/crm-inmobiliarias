@@ -47,7 +47,7 @@
             <v-container fluid>
 
                 <v-row>
-                    <v-col v-for="card in properties" :key="card.id" cols="4">
+                    <v-col  v-for="card in properties" :key="card.id" cols="4" >
                         <h3 class="text-center venta mt-3">{{card.name}}</h3>
                         <v-card>
                             <v-img src="https://cdn.vuetifyjs.com/images/cards/house.jpg" class="" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="200px">
@@ -62,6 +62,14 @@
                                 <v-chip color="#38c172" text-color="#fff" class="mr-3">
                                     {{card.price}}
                                 </v-chip>
+                                <v-btn
+                                class="ma-2"
+                                outlined
+                                color="indigo"
+                                @click="show(card.id)"
+                              >
+                                Ver más
+                              </v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-col>
@@ -116,6 +124,9 @@ export default {
         },
         onPageChange() {
             this.index();
+        },
+        show(id){
+            window.location.href ='/property/'+id;
         }
     },
     created() {

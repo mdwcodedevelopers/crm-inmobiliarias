@@ -22,8 +22,23 @@
                                     <v-flex xs12 sm6 md4>
                                         <v-text-field label="Precio" v-model="price" persistent-hint required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12>
+                                    <v-flex xs12 sm6 md6>
                                         <v-text-field label="Información de la propiedad" v-model="information" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md6>
+                                        <v-select
+                                        v-model="status"
+                                        :items="status"
+                                        item-text="state"
+                                        item-value="name"
+                                        label="Select"
+                                        persistent-hint
+                                        return-string
+                                        single-line
+                                      ></v-select>
+
+                                        </v-select>
+
                                     </v-flex>
                                     <v-flex xs12>
                                         {{error}}
@@ -140,6 +155,7 @@ export default {
                 to: 0
             },
             properties: [],
+            status:[],
             search: '',
             dialog: false,
             dialogedit: false,
@@ -155,13 +171,16 @@ export default {
             dimension_edit: '',
             error: '',
             id_delete: '',
-            propiedad_eliminar:''
+            propiedad_eliminar:'',
+            status:'',
         }
     },
     methods: {
         index(page, search) {
             axios.get("/api-properties-user?page=" + page + "&search=" + search).then((response) => {
                 this.properties = response.data.Properties;
+                this.status= response.data.status;
+                console.log(this.status)
             });
         },
         create() {
@@ -184,12 +203,13 @@ export default {
         },
         edit_model() {
             const edit={
-                title: this.title_edit,
-                information: this.information_edit,
-                price: this.price_edit,
-                dimension: this.dimension_edit
+
             };
-            axios.put("/api-properties/"+this.id_edit ,{edit} ).then((response) => {
+            axios.put("/api-properties/"+this.id_edit ,{title: this.title_edit,
+                dimension: this.dimension_edit,
+                information: this.information_edit,
+                price: this.price_edit
+                } ).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
                     this.title_edit = '';
@@ -212,7 +232,7 @@ export default {
                 }
             });
         },
-        edit(id,title,info,price,dimension) {
+        edit(id,title,dimension,price,info) {
             this.dialogedit = true;
             this.id_edit=id;
             this.title_edit=title;

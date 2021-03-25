@@ -9,15 +9,15 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ secure_asset('js/app.js') }}" defer></script>
+    <!--    <script src="{{ secure_asset('js/app.js') }}" defer></script>-->
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    <!--     <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet"> -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -49,11 +49,15 @@
                                 </li>
                             @endif
                         @else
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('home') }}">{{ __('Dashboard') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('categories') }}">{{ __('Categorias') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('status') }}">{{ __('Status') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('properties-user') }}">{{ __('Propiedades') }}</a>

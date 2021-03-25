@@ -12,13 +12,14 @@ class StatusController extends Controller
         $status = Status::get();
         return response()->json([
             'status' => $status,
-        ]);
+    ]);
     }
     public function store(Request $request)
     {
         Status::create([
             'name'=>$request['name']
         ]);
+
     }
     public function update(Request $request, $id)
     {
