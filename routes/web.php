@@ -12,9 +12,7 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','WelcomeController@index');
 Route::get('/property/{id}','PropertyController@property');
 Route::resources(['api-properties' => PropertyController::class,
 'api-status'=>StatusController::class]);

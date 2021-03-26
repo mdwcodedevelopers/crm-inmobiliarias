@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if($user=User::find(auth()->id())){
+            if($user->rol_id==3){
+                return view('welcome',['rol'=>$user->rol_id]);
+            }else{
+                return view('home',['rol'=>$user->rol_id]);
+            }
+        }
+        else{
+            return view('welcome');
+        }
     }
 }

@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+
     <div class="">
-        <status/>
+        <nav-admin />
     </div>
-</div>
+    <div class="">
+
+        <status />
+    </div>
 @endsection

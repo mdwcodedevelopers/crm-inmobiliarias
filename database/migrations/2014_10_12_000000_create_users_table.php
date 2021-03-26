@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('direction');
             $table->string('phone');
             $table->string('password');
+            $table->unsignedBigInteger('rol_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

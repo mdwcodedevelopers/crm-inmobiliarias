@@ -18,4 +18,10 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
+    // protected function redirectTo($request)
+    // {
+    //     if (! $request->user()->hasRole($role)) {
+    //         return redirect('home');
+    //     }
+    // }
 }

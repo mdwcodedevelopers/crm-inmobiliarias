@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+@guest
+<div class="">
+    <nav-guest />
+
+</div>
+@else
+<div class="">
+    <nav-admin />
+
+</div>
+@endguest
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

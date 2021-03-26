@@ -26,18 +26,13 @@
                                         <v-text-field label="Información de la propiedad" v-model="information" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-select
-                                        v-model="status"
-                                        :items="status"
-                                        item-text="state"
-                                        item-value="name"
-                                        label="Select"
-                                        persistent-hint
-                                        return-string
-                                        single-line
-                                      ></v-select>
+                                        <label for="">Estatus</label>
+                                        <select class="form-control" placeholder="Estado" v-model="status_id">
+                                            <option v-for="item in status" :value="item.id">
+                                               {{ item.name }}
+                                            </option>
+                                        </select>
 
-                                        </v-select>
 
                                     </v-flex>
                                     <v-flex xs12>
@@ -102,8 +97,18 @@
                                     <v-flex xs12 sm6 md4>
                                         <v-text-field label="Precio" v-model="price_edit"  required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12>
+                                    <v-flex xs12 sm6 md6>
                                         <v-text-field label="Información de la propiedad" v-model="information_edit" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md6>
+                                        <label for="">Estatus</label>
+                                        <select class="form-control " placeholder="Estado" v-model="status_id_edit">
+                                            <option v-for="item in status" :value="item.id">
+                                               {{ item.name }}
+                                            </option>
+                                        </select>
+
+
                                     </v-flex>
                                     <v-flex xs12>
                                         {{error}}
@@ -172,7 +177,8 @@ export default {
             error: '',
             id_delete: '',
             propiedad_eliminar:'',
-            status:'',
+            status_id:'',
+            status_id_edit:''
         }
     },
     methods: {
@@ -180,16 +186,16 @@ export default {
             axios.get("/api-properties-user?page=" + page + "&search=" + search).then((response) => {
                 this.properties = response.data.Properties;
                 this.status= response.data.status;
-                console.log(this.status)
             });
         },
         create() {
-
+            console.log(this.status_id);
             axios.post("/api-properties", {
                 title: this.title,
                 information: this.information,
                 price: this.price,
-                dimension: this.dimension
+                dimension: this.dimension,
+                status: this.status_id
             }).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
@@ -197,7 +203,9 @@ export default {
                     this.information = '';
                     this.price = '';
                     this.dimension = '';
+                    this.status_id_edit = '';
                     this.dialog = false;
+
                 }
             });
         },
@@ -208,7 +216,8 @@ export default {
             axios.put("/api-properties/"+this.id_edit ,{title: this.title_edit,
                 dimension: this.dimension_edit,
                 information: this.information_edit,
-                price: this.price_edit
+                price: this.price_edit,
+                status: this.status_id_edit
                 } ).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
@@ -216,6 +225,7 @@ export default {
                     this.information_edit = '';
                     this.price_edit = '';
                     this.dimension_edit = '';
+                    this.status_id_edit = '';
                     this.dialogedit = false;
                 }
             });
@@ -269,6 +279,10 @@ export default {
                 {
                     text: 'Dimensión',
                     value: 'dimension'
+                },
+                {
+                    text: 'Estatus',
+                    value: 'name'
                 },
                 {
                     text: 'Actions',

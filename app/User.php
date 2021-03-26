@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','pronvince','phone','direction'
+        'name', 'email', 'password','pronvince','phone','direction','rol_id'
     ];
 
     /**
@@ -38,7 +38,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /** 
+    /**
      * Relacion muchos a muchos con el modelo Property
      */
     public function properties()
@@ -46,7 +46,7 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Property');
     }
 
-    /** 
+    /**
      * Relacion uno a uno con en modelo Company
      */
     public function company()
@@ -54,7 +54,7 @@ class User extends Authenticatable
         return $this->hasOne('App\Company');
     }
 
-    /** 
+    /**
      * Relacion muchos a muchos con en modelo Roles
      */
     public function user()

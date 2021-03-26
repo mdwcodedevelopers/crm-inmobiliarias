@@ -11,6 +11,6 @@ class PropertiesUserController extends Controller
         $this->middleware('auth');
     }
     public function index(){
-        return view('properties');
+        return view('home');
     }
 }

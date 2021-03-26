@@ -25,6 +25,10 @@ import colors from 'vuetify/lib/util/colors'
 
 Vue.component('properties', require('./components/Properties.vue').default);
 Vue.component('propertie', require('./components/Property.vue').default);
+Vue.component('nav-guest', require('./components/Navs/NavGuest.vue').default);
+Vue.component('nav-admin', require('./components/Navs/NavAdmin.vue').default);
+Vue.component('nav-user', require('./components/Navs/NavUser.vue').default);
+Vue.component('nav-agent', require('./components/Navs/NavAgent.vue').default);
 Vue.component('status', require('./components/Status.vue').default);
 Vue.component('properties-user', require('./components/PropertiesUser.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);

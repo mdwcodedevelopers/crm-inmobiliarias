@@ -1,10 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
     <div class="">
-            <dashboard/>
-
+        {{-- @if ($rol==1)
+        <div class="">
+            <nav-admin />
+        </div>
+        @endif
+        @if ($rol==2)
+        <div class="">
+            <nav-agent />
+        </div>
+        @endif
+        @endif --}}
+        <dashboard />
     </div>
-</div>
 @endsection

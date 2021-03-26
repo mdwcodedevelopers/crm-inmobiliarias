@@ -51,7 +51,7 @@ class PropertyController extends Controller
             'information'=>$request['information'],
             'price'=>$request['price'],
             'dimension'=>$request['dimension'],
-            'status_id'=>1,
+            'status_id'=>$request['status'],
             'categorie_id'=>1,
             'city'=>1
             // 'interested'=>[],
@@ -60,17 +60,6 @@ class PropertyController extends Controller
     }
     public function update(Request $request,$id)
     {
-        // $property = Property::find($id);
-        // $property->update([
-        //     'user_id'=>auth()->id(),
-        //     'title'=>$request['title'],
-        //     'information'=>$request['information'],
-        //     'price'=>$request['price'],
-        //     'dimension'=>$request['dimension'],
-        //     'status_id'=>1,
-        //     'categorie_id'=>1,
-        //     'city'=>1
-        // ]);
         $property = Property::find($id);
         $property->update([
             'user_id'=>auth()->id(),
@@ -78,7 +67,7 @@ class PropertyController extends Controller
             'information'=>$request->information,
             'price'=>$request->price,
             'dimension'=>$request->dimension,
-            'status_id'=>1,
+            'status_id'=>$request->status,
             'categorie_id'=>1,
             'city'=>1
         ]);
@@ -86,7 +75,7 @@ class PropertyController extends Controller
     }
     public function property($id)
     {
-        $property= Status::orderBy('updated_at', 'desc')->where('properties.id','=',"$id")
+        $property= Status::orderBy('properties.updated_at', 'desc')->where('properties.id','=',"$id")
         ->join('properties','properties.status_id','status.id')->first();
         return view('property',['property'=>$property]);
     }

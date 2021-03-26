@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <carousel>
+        <!--<carousel>
             <slide class="py-4">
                 <v-card color="#0D47A1" class="mx-auto text-white" max-width="344">
                     <v-card-text>
@@ -23,7 +23,7 @@
             <slide class="py-4">
 
             </slide>
-        </carousel>
+        </carousel>-->
 
        <v-row align="center">
 

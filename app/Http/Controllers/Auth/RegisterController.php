@@ -74,6 +74,7 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'pronvince' => $data['pronvince'],
             'direction' => $data['direction'],
+            'rol_id'=>3
         ]);
     }
 }
