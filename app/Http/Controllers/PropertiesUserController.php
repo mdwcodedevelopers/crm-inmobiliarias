@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class PropertiesUserController extends Controller
@@ -11,6 +12,7 @@ class PropertiesUserController extends Controller
         $this->middleware('auth');
     }
     public function index(){
-        return view('home');
+        $user=User::find(auth()->id());
+        return view('properties',['rol'=>$user->rol_id]);
     }
 }

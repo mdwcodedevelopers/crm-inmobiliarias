@@ -30,6 +30,7 @@ Vue.component('nav-admin', require('./components/Navs/NavAdmin.vue').default);
 Vue.component('nav-user', require('./components/Navs/NavUser.vue').default);
 Vue.component('nav-agent', require('./components/Navs/NavAgent.vue').default);
 Vue.component('status', require('./components/Status.vue').default);
+Vue.component('currency', require('./components/Currency.vue').default);
 Vue.component('properties-user', require('./components/PropertiesUser.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('categories', require('./components/Categories.vue').default);

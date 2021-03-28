@@ -14,11 +14,14 @@
 
 Route::get('/','WelcomeController@index');
 Route::get('/property/{id}','PropertyController@property');
+Route::get('/currency','CurrencyController@view');
 Route::resources(['api-properties' => PropertyController::class,
-'api-status'=>StatusController::class]);
+'api-status'=>StatusController::class,
+'api-currency'=>CurrencyController::class,]);
 Auth::routes();
 
 Route::get('/api-properties-user', 'PropertyController@properties');
+Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');

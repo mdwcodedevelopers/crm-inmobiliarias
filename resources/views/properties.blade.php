@@ -5,7 +5,7 @@
         <div class="">
             <nav-admin />
         </div>
-        <properties-user />
+        <properties-user :rol="{{$rol}}"/>
 
     </div>
 @endsection

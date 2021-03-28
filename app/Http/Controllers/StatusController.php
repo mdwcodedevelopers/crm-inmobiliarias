@@ -17,7 +17,7 @@ class StatusController extends Controller
     public function store(Request $request)
     {
         Status::create([
-            'name'=>$request['name']
+            'status'=>$request['name']
         ]);
 
     }
@@ -25,7 +25,7 @@ class StatusController extends Controller
     {
         $status = Status::find($id);
         $status->update([
-            'name'=>$request['name']
+            'status'=>$request['name']
         ]);
         return response()->json("success", 200);
     }

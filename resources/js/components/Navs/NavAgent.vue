@@ -17,7 +17,7 @@
                         <a href="/users">Usuarios</a>
                     </v-list-item>
                     <v-list-item>
-                        <a href="/properties-admin">Propiedades</a>
+                        <a href="/properties-user">Propiedades</a>
                     </v-list-item>
                     <v-list-item>
                         <a href="/tickets">Tickets</a>

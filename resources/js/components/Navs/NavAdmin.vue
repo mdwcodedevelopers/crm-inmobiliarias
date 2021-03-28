@@ -16,11 +16,18 @@
                     <v-list-item>
                         <a href="/users">Usuarios</a>
                     </v-list-item>
+
+                    <v-list-item>
+                        <a href="/currency">Monedas</a>
+                    </v-list-item>
                     <v-list-item>
                         <a href="/">Trabajadores de la empresa</a>
                     </v-list-item>
                     <v-list-item>
-                        <a href="/properties-admin">Propiedades</a>
+                        <a href="/properties-user">Propiedades</a>
+                    </v-list-item>
+                    <v-list-item>
+                        <a href="/status">Estatus de propiedades</a>
                     </v-list-item>
                     <v-list-item>
                         <a href="/tickets">Tickets</a>

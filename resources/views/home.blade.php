@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="">
-        {{-- @if ($rol==1)
+        @if ($rol==1)
         <div class="">
             <nav-admin />
         </div>
@@ -12,7 +12,6 @@
             <nav-agent />
         </div>
         @endif
-        @endif --}}
         <dashboard />
     </div>
 @endsection

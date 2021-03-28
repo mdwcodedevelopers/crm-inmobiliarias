@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Currency;
 use App\Property;
 use App\Status;
 use Illuminate\Http\Request;
@@ -33,16 +34,33 @@ class PropertyController extends Controller
     }
     public function properties(Request $request){
         $status=Status::get();
+        $currency=Currency::get();
         $Properties = Status::orderBy('properties.updated_at', 'desc')->where('user_id',auth()->id())->join('properties','properties.status_id','status.id')->get();
         $total = Property::count();
         return response()->json([
             'Properties' => $Properties,
             'total' => $total,
             'status'=>$status,
-
+            'currency'=>$currency
         ]);
     }
-    // queda por actualizar
+    public function propertiesAdmin(Request $request){
+        $status=Status::get();
+        $currency=Currency::get();
+        // $Properties = Status::orderBy('properties.updated_at', 'desc')->join('properties','properties.status_id','status.id')->select('*')
+        // ->join('users','properties.user_id','users.id')->select('users.name AS username')->select('*')
+        // ->get();
+        $Properties = Property::orderBy('properties.updated_at', 'desc')->join('status','properties.status_id','status.id')->select('*')
+        ->join('users','properties.user_id','users.id')
+        ->get();
+        $total = Property::count();
+        return response()->json([
+            'Properties' => $Properties,
+            'total' => $total,
+            'status'=>$status,
+            'currency'=>$currency
+        ]);
+    }
     public function store(Request $request)
     {
         Property::create([

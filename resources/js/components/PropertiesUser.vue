@@ -23,16 +23,24 @@
                                         <v-text-field label="Precio" v-model="price" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
+                                        <label for="">Estatus</label>
+                                        <select class="form-control " placeholder="Estado" v-model="status_id_edit">
+                                            <option v-for="item in currency" :value="item.id">
+                                                {{ item.currency }}
+                                            </option>
+                                        </select>
+
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md6>
                                         <v-text-field label="Información de la propiedad" v-model="information" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                         <label for="">Estatus</label>
-                                        <select class="form-control" placeholder="Estado" v-model="status_id">
+                                        <select class="form-control" placeholder="Estado" v-model="status_id" required>
                                             <option v-for="item in status" :value="item.id">
-                                               {{ item.name }}
+                                                {{ item.name }}
                                             </option>
                                         </select>
-
 
                                     </v-flex>
                                     <v-flex xs12>
@@ -88,14 +96,23 @@
                         <v-card-text>
                             <v-container grid-list-md>
                                 <v-layout wrap>
-                                    <v-flex xs12 sm6 md4>
+                                    <v-flex xs12 sm6 md6>
                                         <v-text-field label="Titulo" v-model="title_edit" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md4>
+                                    <v-flex xs12 sm6 md6>
                                         <v-text-field label="Dimensiones" v-model="dimension_edit"></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md4>
-                                        <v-text-field label="Precio" v-model="price_edit"  required></v-text-field>
+                                    <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Precio" v-model="price_edit" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md6>
+                                        <label for="">Estatus</label>
+                                        <select class="form-control " placeholder="Estado" v-model="status_id_edit">
+                                            <option v-for="item in currency" :value="item.id">
+                                                {{ item.currency }}
+                                            </option>
+                                        </select>
+
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                         <v-text-field label="Información de la propiedad" v-model="information_edit" required></v-text-field>
@@ -104,10 +121,9 @@
                                         <label for="">Estatus</label>
                                         <select class="form-control " placeholder="Estado" v-model="status_id_edit">
                                             <option v-for="item in status" :value="item.id">
-                                               {{ item.name }}
+                                                {{ item.name }}
                                             </option>
                                         </select>
-
 
                                     </v-flex>
                                     <v-flex xs12>
@@ -149,6 +165,9 @@
 
 <script>
 export default {
+    props: {
+        rol: Number
+    },
     data() {
         return {
             paginate: {
@@ -160,7 +179,8 @@ export default {
                 to: 0
             },
             properties: [],
-            status:[],
+            status: [],
+            currency:[],
             search: '',
             dialog: false,
             dialogedit: false,
@@ -176,17 +196,27 @@ export default {
             dimension_edit: '',
             error: '',
             id_delete: '',
-            propiedad_eliminar:'',
-            status_id:'',
-            status_id_edit:''
+            propiedad_eliminar: '',
+            status_id: '',
+            status_id_edit: ''
         }
     },
     methods: {
         index(page, search) {
-            axios.get("/api-properties-user?page=" + page + "&search=" + search).then((response) => {
-                this.properties = response.data.Properties;
-                this.status= response.data.status;
-            });
+            if (this.rol == 2) {
+                axios.get("/api-properties-user?&search=" + search).then((response) => {
+                    this.properties = response.data.Properties;
+                    this.status = response.data.status;
+                    this.currency=response.data.currency;
+                });
+            } else {
+                axios.get("/api-properties-admin?search=" + search).then((response) => {
+                    this.properties = response.data.Properties;
+                    this.status = response.data.status;
+                    this.currency=response.data.currency;
+
+                });
+            }
         },
         create() {
             console.log(this.status_id);
@@ -210,15 +240,13 @@ export default {
             });
         },
         edit_model() {
-            const edit={
-
-            };
-            axios.put("/api-properties/"+this.id_edit ,{title: this.title_edit,
+            axios.put("/api-properties/" + this.id_edit, {
+                title: this.title_edit,
                 dimension: this.dimension_edit,
                 information: this.information_edit,
                 price: this.price_edit,
                 status: this.status_id_edit
-                } ).then((response) => {
+            }).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
                     this.title_edit = '';
@@ -242,18 +270,18 @@ export default {
                 }
             });
         },
-        edit(id,title,dimension,price,info) {
+        edit(id, title, dimension, price, info) {
             this.dialogedit = true;
-            this.id_edit=id;
-            this.title_edit=title;
-            this.information_edit=info;
-            this.price_edit= price;
-            this.dimension_edit= dimension;
+            this.id_edit = id;
+            this.title_edit = title;
+            this.information_edit = info;
+            this.price_edit = price;
+            this.dimension_edit = dimension;
         },
-        delete_dialog(id,title) {
+        delete_dialog(id, title) {
             this.id_delete = id;
             this.dialogdelete = true;
-            this.propiedad_eliminar=title;
+            this.propiedad_eliminar = title;
         }
     },
     created() {
@@ -261,7 +289,44 @@ export default {
     },
     computed: {
         headers() {
-            return [{
+            if(this.rol==1){
+                return [{
+                    text: 'Propiedad',
+                    align: 'start',
+                    sortable: true,
+                    value: 'title',
+                },
+                // { text: 'Ciudad', value: 'city' },
+                {
+                    text: 'Información',
+                    value: 'information'
+                },
+                {
+                    text: 'Precio',
+                    value: 'price'
+                },
+                {
+                    text: 'Dimensión',
+                    value: 'dimension'
+                },
+                {
+                    text: 'Estatus',
+                    value: 'status'
+                },
+                {
+                    text: 'Usuario',
+                    value: 'name'
+                },
+                {
+                    text: 'Acciones',
+                    value: 'action',
+                    sortable: false,
+                    align: 'center'
+                },
+            ]
+            }
+            else{
+                return [{
                     text: 'Propiedad',
                     align: 'start',
                     sortable: true,
@@ -285,12 +350,14 @@ export default {
                     value: 'name'
                 },
                 {
-                    text: 'Actions',
+                    text: 'Acciones',
                     value: 'action',
                     sortable: false,
                     align: 'center'
                 },
             ]
+            }
+
         },
     },
 }
