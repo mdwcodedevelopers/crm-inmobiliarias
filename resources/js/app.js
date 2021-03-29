@@ -23,6 +23,9 @@ import colors from 'vuetify/lib/util/colors'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('contact-card', require('./components/Contact-card.vue').default);
+Vue.component('oportunities', require('./components/Oportunities.vue').default);
+Vue.component('oportunities-table', require('./components/Oportunities-table.vue').default);
 Vue.component('properties', require('./components/Properties.vue').default);
 Vue.component('propertie', require('./components/Property.vue').default);
 Vue.component('nav-guest', require('./components/Navs/NavGuest.vue').default);

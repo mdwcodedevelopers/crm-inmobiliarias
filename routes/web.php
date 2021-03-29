@@ -27,3 +27,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
 Route::get('/categories', 'CategorieController@categories')->name('categories');
 Route::get('/status', 'StatusViewController@index')->name('status');
+
+
+Route::resource('/interesed', OportunityController::class);
