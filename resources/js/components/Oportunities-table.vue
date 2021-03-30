@@ -1,7 +1,8 @@
 <template>
   <v-data-table
+    v-model="selected"
     :headers="headers"
-    item-key="name"
+    item-key="id"
     group-by="status"
     show-select
     :items="datas"
@@ -20,6 +21,10 @@
           vertical
         ></v-divider>
         <v-btn small text>
+          <v-icon
+          >
+            mdi-email
+          </v-icon>
             Enviar Email
         </v-btn>
          <v-divider
@@ -28,6 +33,10 @@
           vertical
         ></v-divider>
         <v-btn small text>
+            <v-icon
+            >
+              mdi-source-branch
+            </v-icon>
             Cambiar estado
         </v-btn>       
          <v-divider
@@ -36,6 +45,10 @@
           vertical
         ></v-divider>
         <v-btn small text>
+            <v-icon
+            >
+              mdi-gavel
+            </v-icon>
             Cerrar Oportunidad
         </v-btn> 
          <v-divider
@@ -44,6 +57,10 @@
           vertical
         ></v-divider>
         <v-btn small text>
+            <v-icon
+            >
+              mdi-account-supervisor
+            </v-icon>
             Reasignar Oportunidades
         </v-btn> 
         <v-divider
@@ -61,7 +78,6 @@
         ></v-select>
         </div>
 
-        <v-spacer></v-spacer>
         <v-dialog
           v-model="dialog"
           max-width="500px"
@@ -148,6 +164,9 @@
         </v-dialog>
       </v-toolbar>
     </template>
+
+
+  
     <template v-slot:item.actions="{ item }">
       <v-icon
         small

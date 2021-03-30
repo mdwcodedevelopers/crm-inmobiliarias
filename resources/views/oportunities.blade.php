@@ -3,7 +3,7 @@
 @section('content')
     <div class="">
         <div class="">
-            <nav-admin />
+            <nav-admin title="Oportunidades" />
         </div>
         <oportunities />
 

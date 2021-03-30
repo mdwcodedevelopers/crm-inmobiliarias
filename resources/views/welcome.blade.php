@@ -10,7 +10,7 @@
         @else
         @if ($rol==1)
         <div class="">
-            <nav-admin />
+            <nav-admin title="home" />
         </div>
         @endif
         @if ($rol==2)
