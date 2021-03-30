@@ -149,6 +149,7 @@ export default {
                 if (response.status == 200) {
                     this.index();
                     this.name = '';
+                    this.dialog=false;
                 }
             });
         },

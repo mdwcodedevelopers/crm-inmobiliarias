@@ -5,7 +5,10 @@
         <div class="">
             <nav-admin />
         </div>
-        <properties-user :rol="{{$rol}}"/>
+        <div class="container">
+            <properties-user :rol="{{$rol}}"/>
+
+        </div>
 
     </div>
 @endsection
