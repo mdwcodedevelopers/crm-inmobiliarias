@@ -19,7 +19,7 @@
           class="mx-4"
           inset
           vertical
-        ></v-divider>
+        ></v-divider> 
         <v-btn small text>
           <v-icon
           >
@@ -211,6 +211,7 @@
           <contact-card :contact="item.contact"></contact-card>
         </v-list>
       </v-menu>
+      
     </template>
 
 
