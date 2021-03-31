@@ -11,6 +11,7 @@
     <template v-slot:top>
       <v-toolbar
         flat
+        height="100px"
       >
         <v-btn small text>
             Ocultar para reasignar
@@ -20,7 +21,7 @@
           inset
           vertical
         ></v-divider> 
-        <v-btn small text>
+        <v-btn small text @click="sendEmail(selected[0].contact)">
           <v-icon
           >
             mdi-email
@@ -78,111 +79,107 @@
         ></v-select>
         </div>
 
-        <v-dialog
-          v-model="dialog"
-          max-width="500px"
-        >
-            <!-- Popup de crear nota -->
-          <v-card>
-            <v-card-title>
-              <span class="headline">Nueva</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                  <v-text-field
-                      v-model="editedItem.contact"
-                      label="Contacto"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.name"
-                      label="Nombre"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.vigency"
-                      label="Vigencia"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-            
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="close"
-              >
-                Cancelar
-              </v-btn>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="save"
-              >
-                Guardar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <!-- Popup de historial de cambios -->
-        <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </v-toolbar>
     </template>
 
 
-  
     <template v-slot:item.actions="{ item }">
-      <v-icon
-        small
-        class="mr-2"
-        @click="editItem(item)"
-      >
-        mdi-comment
-      </v-icon>
-      <v-icon
-        small
-        @click="deleteItem(item)"
-      >
-        mdi-history
-      </v-icon>
+
+        <template>
+
+            <v-dialog
+              v-model="noteDialog"
+              width="500"
+            >
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn 
+                    color="#66BB6A" 
+                    v-bind="attrs"
+                    v-on="on"
+                    >
+                  <v-icon color="#fff" >
+                      mdi-comment
+                  </v-icon>
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="headline grey lighten-2">
+                  Nueva Nota
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col
+                        cols="12"
+                        sm="12"
+                      >
+                        <v-text-field
+                          v-model="newNote.title"
+                          label="Titulo de Nota"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        sm="12"
+                      >
+                        <v-text-field
+                          v-model="newNote.description"
+                          label="Descripcion de Nota"
+                        ></v-text-field>
+                      </v-col>
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="noteDialog = false">Cancelar</v-btn>
+                        <v-btn color="blue darken-1" text @click="saveNote(newNote)">Guardar</v-btn>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                       
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+        </template>
+
+        <template>
+            <v-dialog
+              v-model="historyDialog"
+              width="500"
+            >
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn 
+                    color="#66BB6A" 
+                    v-bind="attrs"
+                    v-on="on"
+                    >
+                  <v-icon color="#fff" >
+                      mdi-history
+                  </v-icon>
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="headline grey lighten-2">
+                  Historial de cambios
+                </v-card-title>
+
+                <v-card-text>
+                  <ul>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                    <li>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
+                    <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+                  </ul>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+          </div>
+        </template>
     </template>
-    <template v-slot:no-data>
+        
+    
+    <template v-slot:no-data> 
       <v-btn
         color="primary"
         @click="initialize"
@@ -231,14 +228,30 @@
   </v-data-table>
 </template>
 
+<style scoped>
+  .v-toolbar__content{
+    display: flex;
+    align-items: center;
+  }
+</style>
+
 <script>
   export default {
     props:{
         oportunities:Object,
     },
     data: () => ({
-      datas:[], 
-      dialog: false,
+      datas:[],
+      selected: [],
+      users:[],
+      newNote: [
+          {
+            title: null,
+            description: null,
+          }
+      ],
+      noteDialog: false,
+      historyDialog: false,
       dialogDelete: false,
       headers:[
                 {
@@ -265,34 +278,12 @@
                     value: 'updated_at'
                 },
             ],
-      status:[],
-      editedIndex: -1,
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
     }),
 
     computed: {
     },
 
     watch: {
-      dialog (val) {
-        val || this.close()
-      },
-      dialogDelete (val) {
-        val || this.closeDelete()
-      },
     },
 
     created () {
@@ -303,48 +294,14 @@
       initialize () {
         this.datas = this.oportunities
       },
-
-      editItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
+      saveNote (note) {
+        console.log(note.title);
+        console.log(note.description);
+        this.noteDialog = false;
       },
-
-      deleteItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialogDelete = true
-      },
-
-      deleteItemConfirm () {
-        this.desserts.splice(this.editedIndex, 1)
-        this.closeDelete()
-      },
-
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
-      closeDelete () {
-        this.dialogDelete = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        } else {
-          this.desserts.push(this.editedItem)
-        }
-        this.close()
-      },
+      sendEmail(item){
+        console.log(item);
+      }
     },
   }
 </script>

@@ -2,7 +2,7 @@
     <div class="text-center p-4 d-flex align-items-center flex-column">
         <div>
             <ul class="d-flex list-status">
-                <li>
+                <li class="white">
                     <span>0</span> 
                     <p>Sin contactar</p>
                 </li>
