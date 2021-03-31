@@ -41,25 +41,6 @@ class User extends Authenticatable
     /**
      * Relacion muchos a muchos con el modelo Property
      */
-    public function properties()
-    {
-        return $this->belongsToMany('App\Property');
-    }
 
-    /**
-     * Relacion uno a uno con en modelo Company
-     */
-    public function company()
-    {
-        return $this->hasOne('App\Company');
-    }
-
-    /**
-     * Relacion muchos a muchos con en modelo Roles
-     */
-    public function user()
-    {
-        return $this->belongsToMany('App\Roles');
-    }
 
 }

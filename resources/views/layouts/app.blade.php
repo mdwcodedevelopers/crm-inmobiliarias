@@ -22,13 +22,22 @@
 <body>
     <div id="app">
 
-        <main class="">
-            <v-app>
+        <main class="fondo">
+            <v-app class="fondo">
+                <div class="h-full" style="background-color:#ECEFF1" >
                 @yield('content')
+
+                </div>
 
             </v-app>
         </main>
         </v-card>
     </div>
 </body>
+<style>
+    .fondo{
+        background-color:#CFD8DC;
+    }
+    </style>
+
 </html>

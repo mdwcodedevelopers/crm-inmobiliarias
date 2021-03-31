@@ -4,9 +4,9 @@
             <v-layout row justify-center>
                 <v-dialog v-model="dialog" persistent max-width="600px">
                     <template v-slot:activator="{ on }">
-                        <v-btn color="success" dark v-on="on">Nueva propiedad</v-btn>
+                        <v-btn color="success" class="my-4" dark v-on="on">Agregar propiedad <v-icon>mdi-home-circle</v-icon> </v-btn>
                     </template>
-                    <v-card>
+                    <v-card class="my-4">
                         <v-card-title>
                             <span class="headline">Crear propiedad</span>
                         </v-card-title>
@@ -81,7 +81,7 @@
                 </v-btn>
                 <v-btn color="warning" @click="delete_dialog(item.id,item.title)">
                     <v-icon color="#fff">
-                        mdi-photo
+                        mdi-file-image
                     </v-icon>
                 </v-btn>
                 <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
@@ -303,7 +303,11 @@ export default {
     computed: {
         headers() {
             if(this.rol==1){
-                return [{
+                return [
+                {
+                    text: 'Imagen',
+                    value: 'image'
+                },{
                     text: 'Propiedad',
                     align: 'start',
                     sortable: true,

@@ -1,10 +1,10 @@
 <template>
     <div class="text-center">
-        <template>
+        <template >
             <v-layout row justify-center>
                 <v-dialog v-model="dialog" persistent max-width="600px">
                     <template v-slot:activator="{ on }" >
-                        <v-btn color="success" class="my-4" dark v-on="on">Nuevo usuario</v-btn>
+                        <v-btn color="success" class="my-4" dark v-on="on">Crear usuario  <v-icon>mdi-account-multiple-plus </v-icon></v-btn>
                     </template>
                     <v-card>
                         <v-card-title>
@@ -14,21 +14,34 @@
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Nombre" v-model="title" required></v-text-field>
+                                        <v-text-field label="Nombre" v-model="name" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Correo" v-model="title" required></v-text-field>
+                                        <v-text-field label="Correo" v-model="email" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Correo" v-model="title" required></v-text-field>
+                                        <v-text-field label="Telefono" v-model="phone" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-select
-                                        v-model="rol"
+                                        <v-text-field label="Provincia" v-model="province" required></v-text-field>
+                                    </v-flex>  <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Dirección" v-model="direction" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md6>
+                                        <!-- <v-select
+                                        v-model="rol_id"
+                                        :item-value="roles.id"
                                         :items="roles"
                                         label="Rol de usuario"
                                         single-line
-                                      ></v-select>
+                                      ></v-select> -->
+                                      <select class="form-control mt-2" placeholder="Estado" v-model="rol_id">
+                                        <option selected disabled>Moneda
+                                        </option>
+                                        <option v-for="item in roles" :value="item.id" >
+                                            {{ item.rol }}
+                                        </option>
+                                    </select>
                                     </v-flex>
                                     <v-flex xs12>
                                         {{error}}
@@ -45,8 +58,8 @@
                 </v-dialog>
             </v-layout>
         </template>
-        <v-card>
-            <card-title class="display-1 mt-2">Administradores</card-title>
+        <v-card class="my-4">
+            <card-title class="display-1 mt-2" color="blue">Administradores</card-title>
             <v-data-table :headers="headers" :items="admins" item-key="propeties-user" class="elevation-1" :search="search">
                 <template v-slot:top>
                     <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
@@ -66,7 +79,7 @@
                             mdi-pencil
                         </v-icon>
                     </v-btn>
-                    <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
+                    <v-btn color="#E53935" @click="delete_dialog(item.id)">
                         <v-icon color="#fff">
                             mdi-delete
                         </v-icon>
@@ -76,7 +89,7 @@
             </v-data-table>
         </v-card>
 
-        <v-card>
+        <v-card class="my-4">
             <card-title class="display-1">Agentes</card-title>
             <v-data-table :headers="headers" :items="agents" item-key="propeties-user" class="elevation-1" :search="search">
                 <template v-slot:top>
@@ -106,7 +119,7 @@
 
             </v-data-table>
         </v-card>
-        <v-card>
+        <v-card class="my-4">
             <card-title class="display-1">Usuarios</card-title>
             <v-data-table :headers="usersheader" :items="users" item-key="propeties-user" class="elevation-1" :search="search">
                 <template v-slot:top>
@@ -223,39 +236,30 @@ export default {
     },
     data() {
         return {
-            // properties: [],
-            // status: [],
-            // currency: [],
-            // search: '',
             dialog: false,
             dialogedit: false,
             dialogdelete: false,
-            // title: '',
-            // currency_id: '',
-            // information: '',
-            // price: '',
-            // dimension: '',
-            // id_edit: '',
-            // title_edit: '',
-            // information_edit: '',
-            // price_edit: '',
-            // dimension_edit: '',
-            // currency_id_edit: '',
-            // error: '',
-            // id_delete: '',
+            id_edit: '',
+            error: '',
+            id_delete: '',
             // propiedad_eliminar: '',
-            // status_id: '',
-            // status_id_edit: ''
             admins:[],
             agents:[],
             users:[],
             search:'',
-            roles:['Superadmin','Agente','Usuario'],
+            roles:[],
             name:'',
-            rol:'',
+            rol_id:'',
             email:'',
-
-
+            phone:'',
+            province:'',
+            direction:'',
+            name_edit:'',
+            rol_id_edit:'',
+            email_edit:'',
+            phone_edit:'',
+            province_edit:'',
+            direction_edit:''
         }
     },
     methods: {
@@ -264,60 +268,64 @@ export default {
                 this.admins = response.data.admins;
                 this.agents = response.data.agents;
                 this.users = response.data.users;
+                this.roles=response.data.roles;
                 console.log(this.admins)
             });
 
         },
         create() {
-            // console.log(this.status_id);
-            // axios.post("/api-images", {
-            //     title: this.title,
-            //     information: this.information,
-            // }).then((response) => {
-            //     if (response.status == 200) {
-            //         this.index(0, '');
-            //         this.title = '';
-            //         this.information = '';
-            //         this.price = '';
-            //         this.dimension = '';
-            //         this.status_id_edit = '';
-            //         this.dialog = false;
-            //         this.currency_id = '';
-            //     }
-            // });
+            axios.post("/api-users", {
+                name: this.name,
+                email: this.email,
+                rol_id:this.rol_id,
+                phone:this.phone,
+                pronvince:this.province,
+                direction:this.direction
+            }).then((response) => {
+                if (response.status == 200){
+                    this.index();
+                    this.dialog = false;
+                    this.name="";
+                    this.email="";
+                    this.rol_id="";
+                    this.phone="";
+                    this.province="";
+                    this.direction="";
+                }
+            });
         },
         edit_model() {
-            // axios.put("/api-properties/" + this.id_edit, {
-            //     title: this.title_edit,
-            //     dimension: this.dimension_edit,
-            //     information: this.information_edit,
-            //     price: this.price_edit,
-            //     status: this.status_id_edit,
-            //     currency_id: this.currency_id_edit
-            // }).then((response) => {
-            //     if (response.status == 200) {
-            //         this.index(0, '');
-            //         this.title_edit = '';
-            //         this.information_edit = '';
-            //         this.price_edit = '';
-            //         this.dimension_edit = '';
-            //         this.status_id_edit = '';
-            //         this.dialogedit = false;
-            //         this.currency_id_edit = ''
-            //     }
-            // });
+            axios.put("/api-users/" + this.id_edit, {
+                name: this.name_edit,
+                email: this.email_edit,
+                rol_id:this.rol_id_edit,
+                phone:this.phone_edit,
+                pronvince:this.province_edit,
+                direction:this.direction_edit
+            }).then((response) => {
+                if (response.status == 200) {
+                    this.index();
+                    this.dialogedit = false;
+                    this.name_edit="";
+                    this.email_edit="";
+                    this.rol_id_edit="";
+                    this.phone_edit="";
+                    this.province_edit="";
+                    this.direction_edit="";
+                }
+            });
         },
         delete_model() {
             // console.log(this.id_delete);
-            // axios.delete("/api-properties/" + this.id_delete).then((response) => {
-            //     console.log(response);
-            //     if (response.status == 200) {
-            //         this.index(0, '');
-            //         this.dialogdelete = false;
-            //     } else {
-            //         this.error = "Error al añadir propiedad";
-            //     }
-            // });
+            axios.delete("/api-users/" + this.id_delete).then((response) => {
+                console.log(response);
+                if (response.status == 200) {
+                    this.index(0, '');
+                    this.dialogdelete = false;
+                } else {
+                    this.error = "Error al añadir propiedad";
+                }
+            });
         },
         edit(id, title, dimension, price, info) {
             // this.dialogedit = true;
@@ -328,10 +336,10 @@ export default {
             // this.dimension_edit = dimension;
             // console.log(this.id_edit)
         },
-        delete_dialog(id, title) {
-            // this.id_delete = id;
-            // this.dialogdelete = true;
-            // this.propiedad_eliminar = title;
+        delete_dialog(id) {
+             console.log("sadsad");
+            this.id_delete = id;
+            this.dialogdelete = true;
         },
     },
     created() {

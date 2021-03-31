@@ -4284,6 +4284,9 @@ __webpack_require__.r(__webpack_exports__);
     headers: function headers() {
       if (this.rol == 1) {
         return [{
+          text: 'Imagen',
+          value: 'image'
+        }, {
           text: 'Propiedad',
           align: 'start',
           sortable: true,
@@ -4884,43 +4887,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rol: Number
   },
   data: function data() {
     return {
-      // properties: [],
-      // status: [],
-      // currency: [],
-      // search: '',
       dialog: false,
       dialogedit: false,
       dialogdelete: false,
-      // title: '',
-      // currency_id: '',
-      // information: '',
-      // price: '',
-      // dimension: '',
-      // id_edit: '',
-      // title_edit: '',
-      // information_edit: '',
-      // price_edit: '',
-      // dimension_edit: '',
-      // currency_id_edit: '',
-      // error: '',
-      // id_delete: '',
+      id_edit: '',
+      error: '',
+      id_delete: '',
       // propiedad_eliminar: '',
-      // status_id: '',
-      // status_id_edit: ''
       admins: [],
       agents: [],
       users: [],
       search: '',
-      roles: ['Superadmin', 'Agente', 'Usuario'],
+      roles: [],
       name: '',
-      rol: '',
-      email: ''
+      rol_id: '',
+      email: '',
+      phone: '',
+      province: '',
+      direction: '',
+      name_edit: '',
+      rol_id_edit: '',
+      email_edit: '',
+      phone_edit: '',
+      province_edit: '',
+      direction_edit: ''
     };
   },
   methods: {
@@ -4931,56 +4940,73 @@ __webpack_require__.r(__webpack_exports__);
         _this.admins = response.data.admins;
         _this.agents = response.data.agents;
         _this.users = response.data.users;
+        _this.roles = response.data.roles;
         console.log(_this.admins);
       });
     },
-    create: function create() {// console.log(this.status_id);
-      // axios.post("/api-images", {
-      //     title: this.title,
-      //     information: this.information,
-      // }).then((response) => {
-      //     if (response.status == 200) {
-      //         this.index(0, '');
-      //         this.title = '';
-      //         this.information = '';
-      //         this.price = '';
-      //         this.dimension = '';
-      //         this.status_id_edit = '';
-      //         this.dialog = false;
-      //         this.currency_id = '';
-      //     }
-      // });
+    create: function create() {
+      var _this2 = this;
+
+      axios.post("/api-users", {
+        name: this.name,
+        email: this.email,
+        rol_id: this.rol_id,
+        phone: this.phone,
+        pronvince: this.province,
+        direction: this.direction
+      }).then(function (response) {
+        if (response.status == 200) {
+          _this2.index();
+
+          _this2.dialog = false;
+          _this2.name = "";
+          _this2.email = "";
+          _this2.rol_id = "";
+          _this2.phone = "";
+          _this2.province = "";
+          _this2.direction = "";
+        }
+      });
     },
-    edit_model: function edit_model() {// axios.put("/api-properties/" + this.id_edit, {
-      //     title: this.title_edit,
-      //     dimension: this.dimension_edit,
-      //     information: this.information_edit,
-      //     price: this.price_edit,
-      //     status: this.status_id_edit,
-      //     currency_id: this.currency_id_edit
-      // }).then((response) => {
-      //     if (response.status == 200) {
-      //         this.index(0, '');
-      //         this.title_edit = '';
-      //         this.information_edit = '';
-      //         this.price_edit = '';
-      //         this.dimension_edit = '';
-      //         this.status_id_edit = '';
-      //         this.dialogedit = false;
-      //         this.currency_id_edit = ''
-      //     }
-      // });
+    edit_model: function edit_model() {
+      var _this3 = this;
+
+      axios.put("/api-users/" + this.id_edit, {
+        name: this.name_edit,
+        email: this.email_edit,
+        rol_id: this.rol_id_edit,
+        phone: this.phone_edit,
+        pronvince: this.province_edit,
+        direction: this.direction_edit
+      }).then(function (response) {
+        if (response.status == 200) {
+          _this3.index();
+
+          _this3.dialogedit = false;
+          _this3.name_edit = "";
+          _this3.email_edit = "";
+          _this3.rol_id_edit = "";
+          _this3.phone_edit = "";
+          _this3.province_edit = "";
+          _this3.direction_edit = "";
+        }
+      });
     },
-    delete_model: function delete_model() {// console.log(this.id_delete);
-      // axios.delete("/api-properties/" + this.id_delete).then((response) => {
-      //     console.log(response);
-      //     if (response.status == 200) {
-      //         this.index(0, '');
-      //         this.dialogdelete = false;
-      //     } else {
-      //         this.error = "Error al añadir propiedad";
-      //     }
-      // });
+    delete_model: function delete_model() {
+      var _this4 = this;
+
+      // console.log(this.id_delete);
+      axios["delete"]("/api-users/" + this.id_delete).then(function (response) {
+        console.log(response);
+
+        if (response.status == 200) {
+          _this4.index(0, '');
+
+          _this4.dialogdelete = false;
+        } else {
+          _this4.error = "Error al añadir propiedad";
+        }
+      });
     },
     edit: function edit(id, title, dimension, price, info) {// this.dialogedit = true;
       // this.id_edit = id;
@@ -4990,9 +5016,10 @@ __webpack_require__.r(__webpack_exports__);
       // this.dimension_edit = dimension;
       // console.log(this.id_edit)
     },
-    delete_dialog: function delete_dialog(id, title) {// this.id_delete = id;
-      // this.dialogdelete = true;
-      // this.propiedad_eliminar = title;
+    delete_dialog: function delete_dialog(id) {
+      console.log("sadsad");
+      this.id_delete = id;
+      this.dialogdelete = true;
     }
   },
   created: function created() {
@@ -45345,8 +45372,18 @@ var render = function() {
                       return [
                         _c(
                           "v-btn",
-                          _vm._g({ attrs: { color: "success", dark: "" } }, on),
-                          [_vm._v("Nueva propiedad")]
+                          _vm._g(
+                            {
+                              staticClass: "my-4",
+                              attrs: { color: "success", dark: "" }
+                            },
+                            on
+                          ),
+                          [
+                            _vm._v("Agregar propiedad "),
+                            _c("v-icon", [_vm._v("mdi-home-circle")])
+                          ],
+                          1
                         )
                       ]
                     }
@@ -45364,6 +45401,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "v-card",
+                  { staticClass: "my-4" },
                   [
                     _c("v-card-title", [
                       _c("span", { staticClass: "headline" }, [
@@ -45750,7 +45788,7 @@ var render = function() {
                     [
                       _c("v-icon", { attrs: { color: "#fff" } }, [
                         _vm._v(
-                          "\n                    mdi-photo\n                "
+                          "\n                    mdi-file-image\n                "
                         )
                       ])
                     ],
@@ -46843,7 +46881,11 @@ var render = function() {
                             },
                             on
                           ),
-                          [_vm._v("Nuevo usuario")]
+                          [
+                            _vm._v("Crear usuario  "),
+                            _c("v-icon", [_vm._v("mdi-account-multiple-plus ")])
+                          ],
+                          1
                         )
                       ]
                     }
@@ -46886,11 +46928,11 @@ var render = function() {
                                     _c("v-text-field", {
                                       attrs: { label: "Nombre", required: "" },
                                       model: {
-                                        value: _vm.title,
+                                        value: _vm.name,
                                         callback: function($$v) {
-                                          _vm.title = $$v
+                                          _vm.name = $$v
                                         },
-                                        expression: "title"
+                                        expression: "name"
                                       }
                                     })
                                   ],
@@ -46904,11 +46946,11 @@ var render = function() {
                                     _c("v-text-field", {
                                       attrs: { label: "Correo", required: "" },
                                       model: {
-                                        value: _vm.title,
+                                        value: _vm.email,
                                         callback: function($$v) {
-                                          _vm.title = $$v
+                                          _vm.email = $$v
                                         },
-                                        expression: "title"
+                                        expression: "email"
                                       }
                                     })
                                   ],
@@ -46920,39 +46962,136 @@ var render = function() {
                                   { attrs: { xs12: "", sm6: "", md6: "" } },
                                   [
                                     _c("v-text-field", {
-                                      attrs: { label: "Correo", required: "" },
-                                      model: {
-                                        value: _vm.title,
-                                        callback: function($$v) {
-                                          _vm.title = $$v
-                                        },
-                                        expression: "title"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md6: "" } },
-                                  [
-                                    _c("v-select", {
                                       attrs: {
-                                        items: _vm.roles,
-                                        label: "Rol de usuario",
-                                        "single-line": ""
+                                        label: "Telefono",
+                                        required: ""
                                       },
                                       model: {
-                                        value: _vm.rol,
+                                        value: _vm.phone,
                                         callback: function($$v) {
-                                          _vm.rol = $$v
+                                          _vm.phone = $$v
                                         },
-                                        expression: "rol"
+                                        expression: "phone"
                                       }
                                     })
                                   ],
                                   1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "", sm6: "", md6: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "Provincia",
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.province,
+                                        callback: function($$v) {
+                                          _vm.province = $$v
+                                        },
+                                        expression: "province"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "", sm6: "", md6: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        label: "Dirección",
+                                        required: ""
+                                      },
+                                      model: {
+                                        value: _vm.direction,
+                                        callback: function($$v) {
+                                          _vm.direction = $$v
+                                        },
+                                        expression: "direction"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-flex",
+                                  { attrs: { xs12: "", sm6: "", md6: "" } },
+                                  [
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.rol_id,
+                                            expression: "rol_id"
+                                          }
+                                        ],
+                                        staticClass: "form-control mt-2",
+                                        attrs: { placeholder: "Estado" },
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.rol_id = $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          {
+                                            attrs: {
+                                              selected: "",
+                                              disabled: ""
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "Moneda\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _vm._l(_vm.roles, function(item) {
+                                          return _c(
+                                            "option",
+                                            { domProps: { value: item.id } },
+                                            [
+                                              _vm._v(
+                                                "\n                                        " +
+                                                  _vm._s(item.rol) +
+                                                  "\n                                    "
+                                              )
+                                            ]
+                                          )
+                                        })
+                                      ],
+                                      2
+                                    )
+                                  ]
                                 ),
                                 _vm._v(" "),
                                 _c("v-flex", { attrs: { xs12: "" } }, [
@@ -47019,10 +47158,13 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-card",
+        { staticClass: "my-4" },
         [
-          _c("card-title", { staticClass: "display-1 mt-2" }, [
-            _vm._v("Administradores")
-          ]),
+          _c(
+            "card-title",
+            { staticClass: "display-1 mt-2", attrs: { color: "blue" } },
+            [_vm._v("Administradores")]
+          ),
           _vm._v(" "),
           _c(
             "v-data-table",
@@ -47091,7 +47233,7 @@ var render = function() {
                           attrs: { color: "#E53935" },
                           on: {
                             click: function($event) {
-                              return _vm.delete_dialog(item.id, item.title)
+                              return _vm.delete_dialog(item.id)
                             }
                           }
                         },
@@ -47129,6 +47271,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-card",
+        { staticClass: "my-4" },
         [
           _c("card-title", { staticClass: "display-1" }, [_vm._v("Agentes")]),
           _vm._v(" "),
@@ -47237,6 +47380,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-card",
+        { staticClass: "my-4" },
         [
           _c("card-title", { staticClass: "display-1" }, [_vm._v("Usuarios")]),
           _vm._v(" "),

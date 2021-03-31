@@ -53,6 +53,7 @@ class PropertyController extends Controller
         join('status','properties.status_id','status.id')
         ->join('users','properties.user_id','users.id')
         ->join('currency','currency.id','properties.currency_id')
+        // ->join('images','images.property_id','properties.currency_id')
         ->select('properties.id','properties.information','properties.title','properties.price','properties.dimension','status.status','users.name','currency.currency')->
         get();
         $total = Property::count();
