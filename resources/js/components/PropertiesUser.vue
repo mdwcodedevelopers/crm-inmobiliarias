@@ -4,27 +4,28 @@
             <v-layout row justify-center>
                 <v-dialog v-model="dialog" persistent max-width="600px">
                     <template v-slot:activator="{ on }">
-                        <v-btn color="success" dark v-on="on">Nueva propiedad</v-btn>
+                        <v-btn color="success" class="my-4" dark v-on="on">Agregar propiedad <v-icon>mdi-home-circle</v-icon> </v-btn>
                     </template>
-                    <v-card>
+                    <v-card class="my-4">
                         <v-card-title>
                             <span class="headline">Crear propiedad</span>
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-md>
                                 <v-layout wrap>
-                                    <v-flex xs12 sm6 md4>
+                                    <v-flex xs12 sm6 md6>
                                         <v-text-field label="Titulo" v-model="title" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md4>
+                                    <v-flex xs12 sm6 md6>
                                         <v-text-field label="Dimensiones" v-model="dimension"></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md4>
+                                    <v-flex xs12 sm6 md6>
                                         <v-text-field label="Precio" v-model="price" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <label for="">Estatus</label>
-                                        <select class="form-control " placeholder="Estado" v-model="status_id_edit">
+                                        <select class="form-control mt-2" placeholder="Estado" v-model="currency_id">
+                                            <option selected disabled>Moneda
+                                            </option>
                                             <option v-for="item in currency" :value="item.id">
                                                 {{ item.currency }}
                                             </option>
@@ -35,10 +36,11 @@
                                         <v-text-field label="Información de la propiedad" v-model="information" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <label for="">Estatus</label>
-                                        <select class="form-control" placeholder="Estado" v-model="status_id" required>
+                                        <select class="form-control mt-2" placeholder="Estado" v-model="status_id" required>
+                                            <option selected disabled>Estatus
+                                            </option>
                                             <option v-for="item in status" :value="item.id">
-                                                {{ item.name }}
+                                                {{ item.status }}
                                             </option>
                                         </select>
 
@@ -77,7 +79,11 @@
                         mdi-pencil
                     </v-icon>
                 </v-btn>
-
+                <v-btn color="warning" @click="delete_dialog(item.id,item.title)">
+                    <v-icon color="#fff">
+                        mdi-file-image
+                    </v-icon>
+                </v-btn>
                 <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
                     <v-icon color="#fff">
                         mdi-delete
@@ -103,12 +109,13 @@
                                         <v-text-field label="Dimensiones" v-model="dimension_edit"></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Precio" v-model="price_edit" required></v-text-field>
+                                        <v-text-field label="Precio" v-model="price_edit" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <label for="">Estatus</label>
-                                        <select class="form-control " placeholder="Estado" v-model="status_id_edit">
-                                            <option v-for="item in currency" :value="item.id">
+                                        <select class="form-control mt-2" placeholder="Estado" @click="prueba()" v-model="currency_id_edit">
+                                            <option selected disabled>Moneda
+                                            </option>
+                                            <option v-for="item in currency" :value="item.id" >
                                                 {{ item.currency }}
                                             </option>
                                         </select>
@@ -118,10 +125,11 @@
                                         <v-text-field label="Información de la propiedad" v-model="information_edit" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <label for="">Estatus</label>
-                                        <select class="form-control " placeholder="Estado" v-model="status_id_edit">
+                                        <select class="form-control mt-2" placeholder="Estado" v-model="status_id_edit" required>
+                                            <option selected disabled>Estatus
+                                            </option>
                                             <option v-for="item in status" :value="item.id">
-                                                {{ item.name }}
+                                                {{ item.status }}
                                             </option>
                                         </select>
 
@@ -186,6 +194,7 @@ export default {
             dialogedit: false,
             dialogdelete: false,
             title: '',
+            currency_id:'',
             information: '',
             price: '',
             dimension: '',
@@ -194,6 +203,7 @@ export default {
             information_edit: '',
             price_edit: '',
             dimension_edit: '',
+            currency_id_edit:'',
             error: '',
             id_delete: '',
             propiedad_eliminar: '',
@@ -220,12 +230,9 @@ export default {
         },
         create() {
             console.log(this.status_id);
-            axios.post("/api-properties", {
+            axios.post("/api-images", {
                 title: this.title,
                 information: this.information,
-                price: this.price,
-                dimension: this.dimension,
-                status: this.status_id
             }).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
@@ -235,7 +242,7 @@ export default {
                     this.dimension = '';
                     this.status_id_edit = '';
                     this.dialog = false;
-
+                    this.currency_id='';
                 }
             });
         },
@@ -245,7 +252,8 @@ export default {
                 dimension: this.dimension_edit,
                 information: this.information_edit,
                 price: this.price_edit,
-                status: this.status_id_edit
+                status: this.status_id_edit,
+                currency_id:this.currency_id_edit
             }).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
@@ -255,6 +263,7 @@ export default {
                     this.dimension_edit = '';
                     this.status_id_edit = '';
                     this.dialogedit = false;
+                    this.currency_id_edit=''
                 }
             });
         },
@@ -277,11 +286,15 @@ export default {
             this.information_edit = info;
             this.price_edit = price;
             this.dimension_edit = dimension;
+            console.log(this.id_edit)
         },
         delete_dialog(id, title) {
             this.id_delete = id;
             this.dialogdelete = true;
             this.propiedad_eliminar = title;
+        },
+        prueba(){
+            console.log(this.currency_id_edit);
         }
     },
     created() {
@@ -290,7 +303,11 @@ export default {
     computed: {
         headers() {
             if(this.rol==1){
-                return [{
+                return [
+                {
+                    text: 'Imagen',
+                    value: 'image'
+                },{
                     text: 'Propiedad',
                     align: 'start',
                     sortable: true,
@@ -316,6 +333,10 @@ export default {
                 {
                     text: 'Usuario',
                     value: 'name'
+                },
+                {
+                    text: 'Moneda',
+                    value: 'currency'
                 },
                 {
                     text: 'Acciones',
@@ -348,6 +369,10 @@ export default {
                 {
                     text: 'Estatus',
                     value: 'name'
+                },
+                {
+                    text: 'Moneda',
+                    value: 'currency'
                 },
                 {
                     text: 'Acciones',

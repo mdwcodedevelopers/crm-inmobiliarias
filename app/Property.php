@@ -15,6 +15,7 @@ class Property extends Model
         'status_id',
         'title',
         'categorie_id',
+        'currency_id',
         'city'
     ];
 

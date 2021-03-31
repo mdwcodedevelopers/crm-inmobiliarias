@@ -35,7 +35,9 @@ class PropertyController extends Controller
     public function properties(Request $request){
         $status=Status::get();
         $currency=Currency::get();
-        $Properties = Status::orderBy('properties.updated_at', 'desc')->where('user_id',auth()->id())->join('properties','properties.status_id','status.id')->get();
+        $Properties = Status::orderBy('properties.updated_at', 'desc')->where('user_id',auth()->id())->join('properties','properties.status_id','status.id')
+        ->select('properties.id','properties.information','properties.title','properties.price','properties.dimension','status.status','users.name','currency.currency')
+        ->get();
         $total = Property::count();
         return response()->json([
             'Properties' => $Properties,
@@ -47,12 +49,13 @@ class PropertyController extends Controller
     public function propertiesAdmin(Request $request){
         $status=Status::get();
         $currency=Currency::get();
-        // $Properties = Status::orderBy('properties.updated_at', 'desc')->join('properties','properties.status_id','status.id')->select('*')
-        // ->join('users','properties.user_id','users.id')->select('users.name AS username')->select('*')
-        // ->get();
-        $Properties = Property::orderBy('properties.updated_at', 'desc')->join('status','properties.status_id','status.id')->select('*')
+        $Properties = Property::
+        join('status','properties.status_id','status.id')
         ->join('users','properties.user_id','users.id')
-        ->get();
+        ->join('currency','currency.id','properties.currency_id')
+        // ->join('images','images.property_id','properties.currency_id')
+        ->select('properties.id','properties.information','properties.title','properties.price','properties.dimension','status.status','users.name','currency.currency')->
+        get();
         $total = Property::count();
         return response()->json([
             'Properties' => $Properties,
@@ -71,9 +74,8 @@ class PropertyController extends Controller
             'dimension'=>$request['dimension'],
             'status_id'=>$request['status'],
             'categorie_id'=>1,
-            'city'=>1
-            // 'interested'=>[],
-            // 'images'=>json_encode($request['images'])
+            'city'=>1,
+            'currency_id'=>$request['currency_id']
         ]);
     }
     public function update(Request $request,$id)
@@ -81,13 +83,14 @@ class PropertyController extends Controller
         $property = Property::find($id);
         $property->update([
             'user_id'=>auth()->id(),
-            'title'=>$request->title,
-            'information'=>$request->information,
-            'price'=>$request->price,
-            'dimension'=>$request->dimension,
-            'status_id'=>$request->status,
+            'title'=>$request['title'],
+            'information'=>$request['information'],
+            'price'=>$request['price'],
+            'dimension'=>$request['dimension'],
+            'status_id'=>$request['status'],
             'categorie_id'=>1,
-            'city'=>1
+            'city'=>1,
+            'currency_id'=>$request['currency_id']
         ]);
         return response()->json("success");
     }

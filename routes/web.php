@@ -14,10 +14,14 @@
 
 Route::get('/','WelcomeController@index');
 Route::get('/property/{id}','PropertyController@property');
+Route::get('/property-images/{id}','ImageController@images');
 Route::get('/currency','CurrencyController@view');
+Route::get('/users','UsersController@view');
 Route::resources(['api-properties' => PropertyController::class,
 'api-status'=>StatusController::class,
-'api-currency'=>CurrencyController::class,]);
+'api-currency'=>CurrencyController::class,
+'api-images'=>ImageController::class,
+'api-users'=>UsersController::class]);
 Auth::routes();
 
 Route::get('/api-properties-user', 'PropertyController@properties');
