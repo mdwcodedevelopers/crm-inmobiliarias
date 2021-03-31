@@ -2,7 +2,7 @@
   <v-card class="d-flex">
     <v-img
     height="100%"
-    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+    :src="img"
     ></v-img>
     <div>
         <v-toolbar
@@ -37,16 +37,33 @@
                     <v-list-item-group
                         color="primary"
                     >
-                        <v-list-item
-                        v-for="(item, i) in items"
-                        :key="i"
-                        >
-                        <v-list-item-icon>
-                            <v-icon v-text="item.icon"></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title v-text="item.text"></v-list-item-title>
-                        </v-list-item-content>
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <v-icon >mdi-email</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="email"></v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <v-icon >mdi-phone</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="tel1"></v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <v-icon > mdi-cellphone</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="tel2"></v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+
                         </v-list-item>
                     </v-list-item-group>
                     </v-list>
@@ -76,17 +93,25 @@
   </v-card>
 </template>
 
+<style scoped>
+    .v-menu__content{
+        min-width: 790px !important;
+    }
+</style>
+
+
 <script>
     export default {
         data: () => ({
-            items: [
-                { text: 'maildeprueba@mail.com', icon: 'mdi-email' },
-                { text: '11 1213 1415', icon: 'mdi-phone' },
-                { text: '11 1213 1415', icon: 'mdi-cellphone' },
-            ],
+            items: [],
             }),
         props:{
-            contact:String,
+            img: String,
+            contact: String,
+            tel1: String,
+            tel2: String,
+            email: String,
         },
-    }
+        
+        }
 </script>

@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\StatusOpportunity;
+use App\StatusOportunity;
 
-
-class StatusOpportunitySeeder extends Seeder
+class StatusOportunitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -39,7 +38,7 @@ class StatusOpportunitySeeder extends Seeder
         ];
 
         foreach ($status as $key => $value) {
-            StatusOpportunity::create($value);
+            StatusOportunity::create($value);
         }
     }
 }

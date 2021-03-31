@@ -208,7 +208,12 @@
           </a>
         </template>
         <v-list>
-          <contact-card :contact="item.contact"></contact-card>
+          <contact-card 
+              :contact="item.contact"
+              :img="item.img_contact"
+              :tel1="item.tel_1"
+              :tel2="item.tel_2"
+              :email="item.email"></contact-card>
         </v-list>
       </v-menu>
       
@@ -228,7 +233,11 @@
 
 <script>
   export default {
+    props:{
+        oportunities:Object,
+    },
     data: () => ({
+      datas:[], 
       dialog: false,
       dialogDelete: false,
       headers:[
@@ -253,12 +262,10 @@
                 },
                 {
                     text: 'Ultima Actualización',
-                    value: 'date'
+                    value: 'updated_at'
                 },
-                ],
-      desserts: [],
-      users:[
-      ],
+            ],
+      status:[],
       editedIndex: -1,
       editedItem: {
         name: '',
@@ -294,57 +301,7 @@
 
     methods: {
       initialize () {
-        this.datas = [
-          {
-            id: 1,
-            name: 'Alquiler - Departamento (Auto-guardado)',
-            contact: 'Contacto de prueba',
-            vigency: 6.0,
-            date: '29/01/2021 11:57',
-            status: 'Sin contactar'
-          },
-          {
-            id: 2,
-            name: 'Alquiler - Departamento (Auto-guardado)',
-            contact: 'Contacto de prueba 2',
-            vigency: 18.0,
-            date: '30/01/2021 11:57',
-            status: 'Sin Seguimiento'
-          },
-          {
-            id: 3,
-            name: 'Alquiler - Departamento (Auto-guardado)',
-            contact: 'Contacto de prueba 3',
-            vigency: 80.0,
-            date: '29/05/2021 11:57',
-            status: 'Esperando Respuesta'
-          },
-          {
-            id: 4,
-            name: 'Alquiler - Departamento (Auto-guardado)',
-            contact: 'Contacto de prueba 4',
-            vigency: 96.0,
-            date: '29/01/2020 11:57',
-            status: 'Evolucionando'
-
-          },
-          {
-            id: 5,
-            name: 'Alquiler - Departamento (Auto-guardado)',
-            contact: 'Contacto de prueba 6',
-            vigency: 60.0,
-            date: '29/05/2021 11:57',
-            status: 'Sin Seguimiento'
-          },
-          {
-            id: 6,
-            name: 'Alquiler - Departamento (Auto-guardado)',
-            contact: 'Contacto de prueba 7',
-            vigency: 61.0,
-            date: '29/01/2021 11:57',
-            status: 'Sin Seguimiento'
-          }
-        ]
+        this.datas = this.oportunities
       },
 
       editItem (item) {

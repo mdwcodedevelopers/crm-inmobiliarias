@@ -23,7 +23,7 @@ class Oportunity extends Model
      */
     public function notes()
     {
-         return $this->hasOne('App\NoteOportunity');
+         return $this->hasMany('App\NoteOportunity');
     }
 
      /** 
@@ -31,8 +31,16 @@ class Oportunity extends Model
      */
     public function status()
     {
-         return $this->belongsTo('App\StatusOpportunity');
+         return $this->belongsTo('App\StatusOportunity','status_id');
     }
+    /** 
+     * Relacion muchos a uno con el modelo status_oportunities
+     */
+    public function user()
+    {
+         return $this->belongsTo('App\User','user_id');
+    }
+
 
 
 }

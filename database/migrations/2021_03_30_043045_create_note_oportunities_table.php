@@ -14,7 +14,7 @@ class CreateNoteOportunitiesTable extends Migration
     public function up()
     {
         Schema::create('note_oportunities', function (Blueprint $table) {
-            $table->bigIncrements('id')->unique();
+            $table->bigIncrements('note_id')->unique();
             $table->string('title');
             $table->text('description');
             $table->integer('oportunity_id');

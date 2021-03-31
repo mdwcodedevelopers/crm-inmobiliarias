@@ -5,7 +5,7 @@
         <div class="">
             <nav-admin title="Oportunidades" />
         </div>
-        <oportunities />
+        <oportunities :oportunities="{{$oportunities}}" />
 
     </div>
 @endsection

@@ -62,4 +62,12 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Roles');
     }
 
+    /** 
+     * Relacion uno a muchos con el modelo Oportunity
+     */
+    public function notes()
+    {
+         return $this->hasMany('App\Oportunity');
+    }
+
 }

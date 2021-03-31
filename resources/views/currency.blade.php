@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="">
-        <nav-admin :title="Monedas" />
+        <nav-admin title="Monedas" />
     </div>
     <div class="">
         <currency />

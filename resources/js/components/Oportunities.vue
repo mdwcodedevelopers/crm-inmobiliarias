@@ -32,7 +32,7 @@
                 </li>
             </ul>
         </div>
-        <oportunities-table> </oportunities-table>
+        <oportunities-table :oportunities="oportunities"> </oportunities-table>
     </div>
 </template>
 
@@ -51,5 +51,9 @@
 
 <script>
 export default {
+    props:{
+        oportunities:Object,
+    }
+
 }
 </script>

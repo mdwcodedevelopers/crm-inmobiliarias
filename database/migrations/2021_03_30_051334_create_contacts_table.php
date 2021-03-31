@@ -11,11 +11,12 @@ class CreateContactsTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {['id','name', 'tel_1', 'tel_2'];
+    public function up(){
         Schema::create('contacts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('img_path');
+            $table->string('email')->unique();;
             $table->string('tel_1');
             $table->string('tel_2')->nullable();
             $table->timestamps();
