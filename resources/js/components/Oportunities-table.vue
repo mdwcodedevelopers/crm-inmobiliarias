@@ -21,49 +21,272 @@
           inset
           vertical
         ></v-divider> 
-        <v-btn small text @click="sendEmail(selected[0].contact)">
-          <v-icon
-          >
-            mdi-email
-          </v-icon>
-            Enviar Email
-        </v-btn>
+
+       <!-- Modal de email -->
+       <template>
+            <v-dialog
+              v-model="emailDialog"
+              width="600"
+            >
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn 
+                    :disabled="selected.length=== 0"
+                    small
+                    text
+                    v-bind="attrs"
+                    v-on="on"
+                    >
+                   <v-icon
+                    >
+                    mdi-email
+                </v-icon>
+                Enviar Email
+                </v-btn>
+            </template>
+
+              <v-card>
+                <v-card-title class="headline grey lighten-2">
+                  Enviar Email
+                </v-card-title>
+
+                <v-card-text>
+                  <v-row>
+                    <v-col
+                        cols="12"
+                        sm="12"
+                      >
+                      <v-text-field
+                          disabled
+                          label="mail@mail.com"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col
+                        cols="12"
+                        sm="12"
+                      >
+                      <v-textarea
+                        v-model="emailText"
+                        label="Texto de email"
+                      ></v-textarea>
+                      </v-col>
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="emailDialog = false">Cancelar</v-btn>
+                        <v-btn color="blue darken-1" text @click="sendEmail(selected)">Enviar mensaje</v-btn>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+          </div>
+       </template>          
+
          <v-divider
           class="mx-4"
           inset
           vertical
         ></v-divider>
-        <v-btn small text>
-            <v-icon
+      
+       <!-- Modal de status --> 
+       <template>
+            <v-dialog
+              v-model="statusDialog"
+              width="600"
             >
-              mdi-source-branch
-            </v-icon>
-            Cambiar estado
-        </v-btn>       
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn 
+                    :disabled="selected.length=== 0"
+                    small
+                    text
+                    v-bind="attrs"
+                    v-on="on"
+                    >
+                   <v-icon
+                    >
+                  mdi-source-branch
+                </v-icon>
+                Cambiar estado
+                </v-btn>
+            </template>
+
+              <v-card>
+                <v-card-title class="headline grey lighten-2">
+                  <small>
+                    Está a punto de cambiar un estado. ¿Está seguro?
+                  </small> 
+                </v-card-title>
+
+                <v-card-text>
+                  <v-row>
+                    <v-col
+                      >
+                      <v-select
+                        v-model="newStatus"
+                        :items="status"
+                        label=" Seleccione estado"
+                      ></v-select>
+                    </v-col>
+                      
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="statusDialog = false">Cancelar</v-btn>
+                        <v-btn color="blue darken-1" text @click="changeStatus()">Cambiar</v-btn>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+          </div>
+       </template> 
+
          <v-divider
           class="mx-4"
           inset
           vertical
         ></v-divider>
-        <v-btn small text>
-            <v-icon
+
+
+        <!-- Modal de cerrar oportunidad --> 
+       <template>
+            <v-dialog
+              v-model="closeDialog"
+              width="600"
             >
-              mdi-gavel
-            </v-icon>
-            Cerrar Oportunidad
-        </v-btn> 
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn 
+                    :disabled="selected.length=== 0"
+                    small
+                    text
+                    v-bind="attrs"
+                    v-on="on"
+                    >
+                   <v-icon
+                    >
+                  mdi-gavel
+                </v-icon>
+                Cerrar Oportunidad
+                </v-btn>
+            </template>
+
+              <v-card>
+                <v-card-title class="headline grey lighten-2">
+                  <small>
+                    Está a punto de cerrar {{selected.length}} oportunidades. ¿Está seguro?
+                  </small> 
+                </v-card-title>
+
+                <v-card-text>
+                  <v-row>
+                    <v-col
+                    cols=12
+                    sd=12
+                      >
+                      <p style="margin-top: 20px">Motivo :</p>
+                      <v-select
+                        v-model="newStatus"
+                        :items="reasons"
+                        label=" Seleccione una opción"
+                      ></v-select>
+                    </v-col>
+                    
+                    <v-col
+                    cols=12
+                    sd=12
+                      >
+                      <v-textarea
+                        label="Descripcion"
+                      ></v-textarea>
+                    </v-col>
+                      
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="closeDialog = false">Cancelar</v-btn>
+                        <v-btn color="blue darken-1" text @click="closeOportunity()">Cerrar oportunidades</v-btn>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+          </div>
+       </template> 
+
          <v-divider
           class="mx-4"
           inset
           vertical
         ></v-divider>
-        <v-btn small text>
-            <v-icon
+
+        <!-- Modal de reasignar --> 
+       <template>
+            <v-dialog
+              v-model="statusReassign"
+              width="600"
             >
-              mdi-account-supervisor
-            </v-icon>
-            Reasignar Oportunidades
-        </v-btn> 
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn 
+                    :disabled="selected.length=== 0"
+                    small
+                    text
+                    v-bind="attrs"
+                    v-on="on"
+                    >
+                   <v-icon
+                    >
+                  mdi-account-supervisor
+                </v-icon>
+                Reasignar Oportunidades
+                </v-btn>
+            </template>
+
+              <v-card>
+                <v-card-title class="headline grey lighten-2">
+                  <small>
+                    Está a punto de reasignar {{selected.length}} contactos. ¿Está seguro?
+                  </small> 
+                </v-card-title>
+
+                <v-card-text>
+                  <v-row>
+                    <v-col
+                    cols=12
+                    sm=4
+                      >
+                      <h4 style="margin-top:10px;">Nuevo agente:</h4>
+                      
+                    </v-col>
+                    <v-col
+                    cols=12
+                    sm=6
+                      >
+                      <v-select
+                        v-model="newUser"
+                        :items="users"
+                        label=" Seleccione agente"
+                      ></v-select>
+                    </v-col>
+                      
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="statusReassign = false">Cancelar</v-btn>
+                        <v-btn color="blue darken-1" text @click="assignUser()">Cambiar</v-btn>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+          </div>
+       </template> 
+
+        
+     
         <v-divider
           class="mx-4"
           inset
@@ -74,8 +297,10 @@
             Ver oportunidades de
             </b>
             <v-select
+          v-model="userSelected"
           :items="users"
-          label="usuarios"
+          label=" Seleccione usuario"
+          @change="changeUser()"
         ></v-select>
         </div>
 
@@ -132,7 +357,7 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="noteDialog = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text @click="saveNote(newNote)">Guardar</v-btn>
+                        <v-btn color="blue darken-1" text @click="saveNote()">Guardar</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                        
@@ -180,15 +405,10 @@
         
     
     <template v-slot:no-data> 
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
+        <h3>Seleccione un usuario para ver sus oportunidades</h3>
     </template>
     
-    <template v-slot:item.contact="{ item }">
+    <template v-slot:item.contact="{ item } ">
      <v-menu
         top
         offset-y
@@ -238,12 +458,16 @@
 <script>
   export default {
     props:{
-        oportunities:Object,
+        oportunities:Array,
     },
     data: () => ({
       datas:[],
-      selected: [],
-      users:[],
+      selected: [ ],
+      userSelected: [],
+      newStatus:[],
+      newUser:[],
+      users:["Juan", "Pedro"],
+      emailText:[],
       newNote: [
           {
             title: null,
@@ -253,7 +477,15 @@
       noteDialog: false,
       historyDialog: false,
       dialogDelete: false,
-      headers:[
+      emailDialog: false,
+      statusDialog: false,
+      closeDialog: false,
+      statusReassign: false,
+    }),
+
+    computed: {
+       headers(){
+              return[
                 {
                     text: 'Contacto',
                     value: 'contact'
@@ -277,30 +509,64 @@
                     text: 'Ultima Actualización',
                     value: 'updated_at'
                 },
-            ],
-    }),
-
-    computed: {
+            ]
+         },
+            status(){
+              return[
+                'Sin contactar', 
+                'Sin seguimiento', 
+                'Pendiente contactar',
+                'Esperando respuesta',
+                'Evolucionando',
+                'Tomar acción',
+                'Congelado'
+            ]
+         },
+            reasons(){
+              return[
+                'Compró con nosotros', 
+                'Alquiló con nosotros', 
+                'Compró con otro',
+                'Alquiló con otro',
+                'Fantasma',
+                'Busqueda suspendida',
+                'Tasación exitosa (Ingreso a la propiedad)',
+                'Tasación suspendida (No ingreso a la propiedad)',
+                'Otro',
+              ]
+            }
     },
 
     watch: {
     },
 
-    created () {
-      this.initialize()
-    },
-
     methods: {
       initialize () {
-        this.datas = this.oportunities
+        // this.datas = this.oportunities
       },
-      saveNote (note) {
-        console.log(note.title);
-        console.log(note.description);
+      saveNote () {
+        console.log(this.newNote.title);
+        console.log(this.newNote.description);
         this.noteDialog = false;
       },
       sendEmail(item){
-        console.log(item);
+        item.forEach(element => {
+          console.log(element.email);
+        });
+        this.emailDialog=false;
+      },
+      changeUser(){
+        this.datas = this.oportunities
+
+      },
+      changeStatus(){
+        this.statusDialog = false
+      },
+      closeOportunity(){
+        this.closeDialog = false
+      },
+      assignUser(){
+        this.statusReassign = false
       }
     },
   }

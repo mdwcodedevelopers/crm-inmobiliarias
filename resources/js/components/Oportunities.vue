@@ -2,31 +2,31 @@
     <div class="text-center p-4 d-flex align-items-center flex-column">
         <div>
             <ul class="d-flex list-status">
-                <li class="white">
+                <li class="blue-grey">
                     <span>0</span> 
                     <p>Sin contactar</p>
                 </li>
-                <li class="yellow lighten-2">
+                <li class="yellow darken-3">
                     <span>0</span> 
                     <p>Sin seguimiento</p>
                 </li>
-                <li class="red lighten-2">
+                <li class="red darken-1">
                     <span>0</span> 
                     <p>Pendiente contactar</p>
                 </li>
-                <li class="deep-orange lighten-2">
+                <li class="deep-orange darken-1">
                     <span>0</span> 
                     <p>Esperando respuesta</p>
                 </li>
-                <li class="light-green lighten-2">
+                <li class="light-green darken-1">
                     <span>0</span> 
                     <p>Evolucionando</p>
                 </li>    
-                <li class="cyan lighten-2">
+                <li class="cyan darken-1">
                     <span>0</span> 
                     <p>Tomar acción</p>
                 </li>
-                <li class="teal lighten-2">
+                <li class="teal darken-1">
                     <span>0</span> 
                     <p>Congelado</p>
                 </li>
@@ -42,7 +42,8 @@
     }
     .list-status li{
         padding: 20px 20px;
-        font-weight: 600;
+        color: rgb(250, 240, 240);
+        font-weight: 500;
     }
 
     
@@ -52,7 +53,7 @@
 <script>
 export default {
     props:{
-        oportunities:Object,
+        oportunities:Array,
     }
 
 }

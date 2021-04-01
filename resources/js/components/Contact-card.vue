@@ -10,7 +10,13 @@
         color="primary"
         dark
         >
-        <v-toolbar-title>{{contact}}</v-toolbar-title>
+        <v-toolbar-title>{{contact}} </v-toolbar-title>
+        <v-btn
+              icon
+              color="grey"
+            >
+              <v-icon>mdi-star</v-icon>
+            </v-btn>
         </v-toolbar>
         <v-tabs vertical>
         
@@ -42,7 +48,7 @@
                                     <v-icon >mdi-email</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-title v-text="email"></v-list-item-title>
+                                    <v-list-item v-text="email"></v-list-item>
                                 </v-list-item-content>
                             </v-list-item>
 
@@ -51,7 +57,7 @@
                                     <v-icon >mdi-phone</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-title v-text="tel1"></v-list-item-title>
+                                    <v-list-item v-text="tel1"></v-list-item>
                                 </v-list-item-content>
                             </v-list-item>
 
@@ -60,7 +66,7 @@
                                     <v-icon > mdi-cellphone</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-title v-text="tel2"></v-list-item-title>
+                                    <v-list-item v-text="tel2"></v-list-item>
                                 </v-list-item-content>
                             </v-list-item>
 

@@ -2550,6 +2550,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3657,15 +3663,239 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    oportunities: Object
+    oportunities: Array
   },
   data: function data() {
     return {
       datas: [],
       selected: [],
-      users: [],
+      userSelected: [],
+      newStatus: [],
+      newUser: [],
+      users: ["Juan", "Pedro"],
+      emailText: [],
       newNote: [{
         title: null,
         description: null
@@ -3673,7 +3903,15 @@ __webpack_require__.r(__webpack_exports__);
       noteDialog: false,
       historyDialog: false,
       dialogDelete: false,
-      headers: [{
+      emailDialog: false,
+      statusDialog: false,
+      closeDialog: false,
+      statusReassign: false
+    };
+  },
+  computed: {
+    headers: function headers() {
+      return [{
         text: 'Contacto',
         value: 'contact'
       }, {
@@ -3691,25 +3929,41 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: 'Ultima Actualización',
         value: 'updated_at'
-      }]
-    };
-  },
-  computed: {},
-  watch: {},
-  created: function created() {
-    this.initialize();
-  },
-  methods: {
-    initialize: function initialize() {
-      this.datas = this.oportunities;
+      }];
     },
-    saveNote: function saveNote(note) {
-      console.log(note.title);
-      console.log(note.description);
+    status: function status() {
+      return ['Sin contactar', 'Sin seguimiento', 'Pendiente contactar', 'Esperando respuesta', 'Evolucionando', 'Tomar acción', 'Congelado'];
+    },
+    reasons: function reasons() {
+      return ['Compró con nosotros', 'Alquiló con nosotros', 'Compró con otro', 'Alquiló con otro', 'Fantasma', 'Busqueda suspendida', 'Tasación exitosa (Ingreso a la propiedad)', 'Tasación suspendida (No ingreso a la propiedad)', 'Otro'];
+    }
+  },
+  watch: {},
+  methods: {
+    initialize: function initialize() {// this.datas = this.oportunities
+    },
+    saveNote: function saveNote() {
+      console.log(this.newNote.title);
+      console.log(this.newNote.description);
       this.noteDialog = false;
     },
     sendEmail: function sendEmail(item) {
-      console.log(item);
+      item.forEach(function (element) {
+        console.log(element.email);
+      });
+      this.emailDialog = false;
+    },
+    changeUser: function changeUser() {
+      this.datas = this.oportunities;
+    },
+    changeStatus: function changeStatus() {
+      this.statusDialog = false;
+    },
+    closeOportunity: function closeOportunity() {
+      this.closeDialog = false;
+    },
+    assignUser: function assignUser() {
+      this.statusReassign = false;
     }
   }
 });
@@ -3776,9 +4030,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    oportunities: Object
+    oportunities: Array
   }
 });
 
@@ -9550,7 +9805,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.list-status[data-v-767de1ce]{\n    list-style: none;\n}\n.list-status li[data-v-767de1ce]{\n    padding: 20px 20px;\n    font-weight: 600;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.list-status[data-v-767de1ce]{\n    list-style: none;\n}\n.list-status li[data-v-767de1ce]{\n    padding: 20px 20px;\n    color: rgb(250, 240, 240);\n    font-weight: 500;\n}\n\n\n", ""]);
 
 // exports
 
@@ -42961,7 +43216,16 @@ var render = function() {
           _c(
             "v-toolbar",
             { attrs: { flat: "", color: "primary", dark: "" } },
-            [_c("v-toolbar-title", [_vm._v(_vm._s(_vm.contact))])],
+            [
+              _c("v-toolbar-title", [_vm._v(_vm._s(_vm.contact) + " ")]),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                { attrs: { icon: "", color: "grey" } },
+                [_c("v-icon", [_vm._v("mdi-star")])],
+                1
+              )
+            ],
             1
           ),
           _vm._v(" "),
@@ -43028,7 +43292,7 @@ var render = function() {
                                       _c(
                                         "v-list-item-content",
                                         [
-                                          _c("v-list-item-title", {
+                                          _c("v-list-item", {
                                             domProps: {
                                               textContent: _vm._s(_vm.email)
                                             }
@@ -43052,7 +43316,7 @@ var render = function() {
                                       _c(
                                         "v-list-item-content",
                                         [
-                                          _c("v-list-item-title", {
+                                          _c("v-list-item", {
                                             domProps: {
                                               textContent: _vm._s(_vm.tel1)
                                             }
@@ -43080,7 +43344,7 @@ var render = function() {
                                       _c(
                                         "v-list-item-content",
                                         [
-                                          _c("v-list-item-title", {
+                                          _c("v-list-item", {
                                             domProps: {
                                               textContent: _vm._s(_vm.tel2)
                                             }
@@ -44759,73 +45023,673 @@ var render = function() {
                   attrs: { inset: "", vertical: "" }
                 }),
                 _vm._v(" "),
-                _c(
-                  "v-btn",
-                  {
-                    attrs: { small: "", text: "" },
-                    on: {
-                      click: function($event) {
-                        return _vm.sendEmail(_vm.selected[0].contact)
+                [
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { width: "600" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "activator",
+                          fn: function(ref) {
+                            var on = ref.on
+                            var attrs = ref.attrs
+                            return [
+                              _c(
+                                "v-btn",
+                                _vm._g(
+                                  _vm._b(
+                                    {
+                                      attrs: {
+                                        disabled: _vm.selected.length === 0,
+                                        small: "",
+                                        text: ""
+                                      }
+                                    },
+                                    "v-btn",
+                                    attrs,
+                                    false
+                                  ),
+                                  on
+                                ),
+                                [
+                                  _c("v-icon", [
+                                    _vm._v(
+                                      "\n                  mdi-email\n              "
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    "\n              Enviar Email\n              "
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          }
+                        }
+                      ]),
+                      model: {
+                        value: _vm.emailDialog,
+                        callback: function($$v) {
+                          _vm.emailDialog = $$v
+                        },
+                        expression: "emailDialog"
                       }
-                    }
-                  },
-                  [
-                    _c("v-icon", [_vm._v("\n          mdi-email\n        ")]),
-                    _vm._v("\n          Enviar Email\n      ")
-                  ],
-                  1
-                ),
+                    },
+                    [
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        [
+                          _c(
+                            "v-card-title",
+                            { staticClass: "headline grey lighten-2" },
+                            [
+                              _vm._v(
+                                "\n                Enviar Email\n              "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          disabled: "",
+                                          label: "mail@mail.com"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "12" } },
+                                    [
+                                      _c("v-textarea", {
+                                        attrs: { label: "Texto de email" },
+                                        model: {
+                                          value: _vm.emailText,
+                                          callback: function($$v) {
+                                            _vm.emailText = $$v
+                                          },
+                                          expression: "emailText"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card-actions",
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "blue darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.emailDialog = false
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Cancelar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "blue darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.sendEmail(_vm.selected)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Enviar mensaje")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-spacer")
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
                 _vm._v(" "),
                 _c("v-divider", {
                   staticClass: "mx-4",
                   attrs: { inset: "", vertical: "" }
                 }),
                 _vm._v(" "),
-                _c(
-                  "v-btn",
-                  { attrs: { small: "", text: "" } },
-                  [
-                    _c("v-icon", [
-                      _vm._v("\n            mdi-source-branch\n          ")
-                    ]),
-                    _vm._v("\n          Cambiar estado\n      ")
-                  ],
-                  1
-                ),
+                [
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { width: "600" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "activator",
+                          fn: function(ref) {
+                            var on = ref.on
+                            var attrs = ref.attrs
+                            return [
+                              _c(
+                                "v-btn",
+                                _vm._g(
+                                  _vm._b(
+                                    {
+                                      attrs: {
+                                        disabled: _vm.selected.length === 0,
+                                        small: "",
+                                        text: ""
+                                      }
+                                    },
+                                    "v-btn",
+                                    attrs,
+                                    false
+                                  ),
+                                  on
+                                ),
+                                [
+                                  _c("v-icon", [
+                                    _vm._v(
+                                      "\n                mdi-source-branch\n              "
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    "\n              Cambiar estado\n              "
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          }
+                        }
+                      ]),
+                      model: {
+                        value: _vm.statusDialog,
+                        callback: function($$v) {
+                          _vm.statusDialog = $$v
+                        },
+                        expression: "statusDialog"
+                      }
+                    },
+                    [
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        [
+                          _c(
+                            "v-card-title",
+                            { staticClass: "headline grey lighten-2" },
+                            [
+                              _c("small", [
+                                _vm._v(
+                                  "\n                  Está a punto de cambiar un estado. ¿Está seguro?\n                "
+                                )
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    [
+                                      _c("v-select", {
+                                        attrs: {
+                                          items: _vm.status,
+                                          label: " Seleccione estado"
+                                        },
+                                        model: {
+                                          value: _vm.newStatus,
+                                          callback: function($$v) {
+                                            _vm.newStatus = $$v
+                                          },
+                                          expression: "newStatus"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card-actions",
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "blue darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.statusDialog = false
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Cancelar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "blue darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.changeStatus()
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Cambiar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-spacer")
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
                 _vm._v(" "),
                 _c("v-divider", {
                   staticClass: "mx-4",
                   attrs: { inset: "", vertical: "" }
                 }),
                 _vm._v(" "),
-                _c(
-                  "v-btn",
-                  { attrs: { small: "", text: "" } },
-                  [
-                    _c("v-icon", [
-                      _vm._v("\n            mdi-gavel\n          ")
-                    ]),
-                    _vm._v("\n          Cerrar Oportunidad\n      ")
-                  ],
-                  1
-                ),
+                [
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { width: "600" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "activator",
+                          fn: function(ref) {
+                            var on = ref.on
+                            var attrs = ref.attrs
+                            return [
+                              _c(
+                                "v-btn",
+                                _vm._g(
+                                  _vm._b(
+                                    {
+                                      attrs: {
+                                        disabled: _vm.selected.length === 0,
+                                        small: "",
+                                        text: ""
+                                      }
+                                    },
+                                    "v-btn",
+                                    attrs,
+                                    false
+                                  ),
+                                  on
+                                ),
+                                [
+                                  _c("v-icon", [
+                                    _vm._v(
+                                      "\n                mdi-gavel\n              "
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    "\n              Cerrar Oportunidad\n              "
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          }
+                        }
+                      ]),
+                      model: {
+                        value: _vm.closeDialog,
+                        callback: function($$v) {
+                          _vm.closeDialog = $$v
+                        },
+                        expression: "closeDialog"
+                      }
+                    },
+                    [
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        [
+                          _c(
+                            "v-card-title",
+                            { staticClass: "headline grey lighten-2" },
+                            [
+                              _c("small", [
+                                _vm._v(
+                                  "\n                  Está a punto de cerrar " +
+                                    _vm._s(_vm.selected.length) +
+                                    " oportunidades. ¿Está seguro?\n                "
+                                )
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sd: "12" } },
+                                    [
+                                      _c(
+                                        "p",
+                                        {
+                                          staticStyle: { "margin-top": "20px" }
+                                        },
+                                        [_vm._v("Motivo :")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-select", {
+                                        attrs: {
+                                          items: _vm.reasons,
+                                          label: " Seleccione una opción"
+                                        },
+                                        model: {
+                                          value: _vm.newStatus,
+                                          callback: function($$v) {
+                                            _vm.newStatus = $$v
+                                          },
+                                          expression: "newStatus"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sd: "12" } },
+                                    [
+                                      _c("v-textarea", {
+                                        attrs: { label: "Descripcion" }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card-actions",
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "blue darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.closeDialog = false
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Cancelar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "blue darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.closeOportunity()
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Cerrar oportunidades")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-spacer")
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
                 _vm._v(" "),
                 _c("v-divider", {
                   staticClass: "mx-4",
                   attrs: { inset: "", vertical: "" }
                 }),
                 _vm._v(" "),
-                _c(
-                  "v-btn",
-                  { attrs: { small: "", text: "" } },
-                  [
-                    _c("v-icon", [
-                      _vm._v("\n            mdi-account-supervisor\n          ")
-                    ]),
-                    _vm._v("\n          Reasignar Oportunidades\n      ")
-                  ],
-                  1
-                ),
+                [
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { width: "600" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "activator",
+                          fn: function(ref) {
+                            var on = ref.on
+                            var attrs = ref.attrs
+                            return [
+                              _c(
+                                "v-btn",
+                                _vm._g(
+                                  _vm._b(
+                                    {
+                                      attrs: {
+                                        disabled: _vm.selected.length === 0,
+                                        small: "",
+                                        text: ""
+                                      }
+                                    },
+                                    "v-btn",
+                                    attrs,
+                                    false
+                                  ),
+                                  on
+                                ),
+                                [
+                                  _c("v-icon", [
+                                    _vm._v(
+                                      "\n                mdi-account-supervisor\n              "
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    "\n              Reasignar Oportunidades\n              "
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          }
+                        }
+                      ]),
+                      model: {
+                        value: _vm.statusReassign,
+                        callback: function($$v) {
+                          _vm.statusReassign = $$v
+                        },
+                        expression: "statusReassign"
+                      }
+                    },
+                    [
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        [
+                          _c(
+                            "v-card-title",
+                            { staticClass: "headline grey lighten-2" },
+                            [
+                              _c("small", [
+                                _vm._v(
+                                  "\n                  Está a punto de reasignar " +
+                                    _vm._s(_vm.selected.length) +
+                                    " contactos. ¿Está seguro?\n                "
+                                )
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "4" } },
+                                    [
+                                      _c(
+                                        "h4",
+                                        {
+                                          staticStyle: { "margin-top": "10px" }
+                                        },
+                                        [_vm._v("Nuevo agente:")]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "6" } },
+                                    [
+                                      _c("v-select", {
+                                        attrs: {
+                                          items: _vm.users,
+                                          label: " Seleccione agente"
+                                        },
+                                        model: {
+                                          value: _vm.newUser,
+                                          callback: function($$v) {
+                                            _vm.newUser = $$v
+                                          },
+                                          expression: "newUser"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card-actions",
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "blue darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.statusReassign = false
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Cancelar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "blue darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.assignUser()
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Cambiar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-spacer")
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
                 _vm._v(" "),
                 _c("v-divider", {
                   staticClass: "mx-4",
@@ -44840,13 +45704,25 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("v-select", {
-                      attrs: { items: _vm.users, label: "usuarios" }
+                      attrs: { items: _vm.users, label: " Seleccione usuario" },
+                      on: {
+                        change: function($event) {
+                          return _vm.changeUser()
+                        }
+                      },
+                      model: {
+                        value: _vm.userSelected,
+                        callback: function($$v) {
+                          _vm.userSelected = $$v
+                        },
+                        expression: "userSelected"
+                      }
                     })
                   ],
                   1
                 )
               ],
-              1
+              2
             )
           ]
         },
@@ -44995,7 +45871,7 @@ var render = function() {
                                           },
                                           on: {
                                             click: function($event) {
-                                              return _vm.saveNote(_vm.newNote)
+                                              return _vm.saveNote()
                                             }
                                           }
                                         },
@@ -45121,11 +45997,9 @@ var render = function() {
         key: "no-data",
         fn: function() {
           return [
-            _c(
-              "v-btn",
-              { attrs: { color: "primary" }, on: { click: _vm.initialize } },
-              [_vm._v("\n      Reset\n    ")]
-            )
+            _c("h3", [
+              _vm._v("Seleccione un usuario para ver sus oportunidades")
+            ])
           ]
         },
         proxy: true
@@ -45265,43 +46139,43 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", [
       _c("ul", { staticClass: "d-flex list-status" }, [
-        _c("li", { staticClass: "white" }, [
+        _c("li", { staticClass: "blue-grey" }, [
           _c("span", [_vm._v("0")]),
           _vm._v(" "),
           _c("p", [_vm._v("Sin contactar")])
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "yellow lighten-2" }, [
+        _c("li", { staticClass: "yellow darken-3" }, [
           _c("span", [_vm._v("0")]),
           _vm._v(" "),
           _c("p", [_vm._v("Sin seguimiento")])
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "red lighten-2" }, [
+        _c("li", { staticClass: "red darken-1" }, [
           _c("span", [_vm._v("0")]),
           _vm._v(" "),
           _c("p", [_vm._v("Pendiente contactar")])
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "deep-orange lighten-2" }, [
+        _c("li", { staticClass: "deep-orange darken-1" }, [
           _c("span", [_vm._v("0")]),
           _vm._v(" "),
           _c("p", [_vm._v("Esperando respuesta")])
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "light-green lighten-2" }, [
+        _c("li", { staticClass: "light-green darken-1" }, [
           _c("span", [_vm._v("0")]),
           _vm._v(" "),
           _c("p", [_vm._v("Evolucionando")])
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "cyan lighten-2" }, [
+        _c("li", { staticClass: "cyan darken-1" }, [
           _c("span", [_vm._v("0")]),
           _vm._v(" "),
           _c("p", [_vm._v("Tomar acción")])
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "teal lighten-2" }, [
+        _c("li", { staticClass: "teal darken-1" }, [
           _c("span", [_vm._v("0")]),
           _vm._v(" "),
           _c("p", [_vm._v("Congelado")])
