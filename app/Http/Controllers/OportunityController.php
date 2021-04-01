@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Oportunity;
 use App\StatusOportunity;
 use Illuminate\Http\Request;
@@ -19,14 +20,16 @@ class OportunityController extends Controller
      */
     public function index(Request $request)
     {   
-        // $search = isset($request->search) ? $request->search : "";
 
         
-        $oportunities = Oportunity::selectRaw('oportunities.id, oportunities.name, oportunities.vigency, oportunities.updated_at,  contacts.name AS contact, contacts.tel_1 AS tel_1,
-          contacts.tel_2 AS tel_2, contacts.email AS email, contacts.img_path AS img_contact, status_oportunities.name AS status, users.name AS user' )
-        ->join('contacts', 'oportunities.contact_id', '=', 'contacts.id')
-        ->join('users', 'oportunities.user_id', '=', 'users.id')
-        ->join('status_oportunities', 'oportunities.status_id', '=', 'status_oportunities.id')->get();
+        $users = User::selectRaw('id, name')->get();
+        $status = StatusOportunity::selectRaw('name,color')->get();
+
+        // $oportunities = Oportunity::selectRaw('oportunities.id, oportunities.name, oportunities.vigency, oportunities.updated_at,  contacts.name AS contact, contacts.tel_1 AS tel_1,
+        //   contacts.tel_2 AS tel_2, contacts.email AS email, contacts.img_path AS img_contact, status_oportunities.name AS status, users.name AS user' )
+        // ->join('contacts', 'oportunities.contact_id', '=', 'contacts.id')
+        // ->join('users', 'oportunities.user_id', '=', 'users.id')
+        // ->join('status_oportunities', 'oportunities.status_id', '=', 'status_oportunities.id')->get();
         // ->where('traceabilities.status', '1')->whereNotNull('traceabilities.warehouse_return');
 
         // if( $search!= "" ):
@@ -35,7 +38,7 @@ class OportunityController extends Controller
 
         // $oportunities = Oportunity::get();
         // return view('oportunities', compact('oportunities','search'));;
-        return view('oportunities', compact('oportunities'));;
+        return view('oportunities', compact('users', 'status'));;
     }
 
     /**
@@ -56,7 +59,7 @@ class OportunityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -67,7 +70,14 @@ class OportunityController extends Controller
      */
     public function show($id)
     {
-        //
+        $oportunities = Oportunity::selectRaw('oportunities.id, oportunities.name, oportunities.vigency, oportunities.updated_at,  contacts.name AS contact, contacts.tel_1 AS tel_1,
+          contacts.tel_2 AS tel_2, contacts.email AS email, contacts.img_path AS img_contact, status_oportunities.name AS status, users.name AS user' )
+        ->join('contacts', 'oportunities.contact_id', '=', 'contacts.id')
+        ->join('users', 'oportunities.user_id', '=', 'users.id')
+        ->join('status_oportunities', 'oportunities.status_id', '=', 'status_oportunities.id')
+        ->where('oportunities.user_id', $id)->get();
+        
+        return compact('oportunities');
     }
 
     /**

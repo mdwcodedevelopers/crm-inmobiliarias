@@ -3883,9 +3883,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    oportunities: Array
+    users: Array
   },
   data: function data() {
     return {
@@ -3894,7 +3895,6 @@ __webpack_require__.r(__webpack_exports__);
       userSelected: [],
       newStatus: [],
       newUser: [],
-      users: ["Juan", "Pedro"],
       emailText: [],
       newNote: [{
         title: null,
@@ -3954,7 +3954,16 @@ __webpack_require__.r(__webpack_exports__);
       this.emailDialog = false;
     },
     changeUser: function changeUser() {
-      this.datas = this.oportunities;
+      var _this = this;
+
+      var index = this.users.findIndex(function (x) {
+        return x.name === _this.userSelected;
+      });
+      var id_user = this.users[index].id;
+      axios.get('/interesed/' + id_user).then(function (response) {
+        _this.datas = response.data.oportunities;
+        console.log(response.data.oportunities);
+      });
     },
     changeStatus: function changeStatus() {
       this.statusDialog = false;
@@ -4007,33 +4016,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    oportunities: Array
+    users: Array,
+    status: Array
   }
 });
 
@@ -45704,7 +45690,11 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("v-select", {
-                      attrs: { items: _vm.users, label: " Seleccione usuario" },
+                      attrs: {
+                        items: _vm.users,
+                        "item-text": "name",
+                        label: " Seleccione usuario"
+                      },
                       on: {
                         change: function($event) {
                           return _vm.changeUser()
@@ -46125,65 +46115,27 @@ var render = function() {
     "div",
     { staticClass: "text-center p-4 d-flex align-items-center flex-column" },
     [
-      _vm._m(0),
+      _c("div", [
+        _c(
+          "ul",
+          { staticClass: "d-flex list-status" },
+          _vm._l(_vm.status, function(state) {
+            return _c("li", { style: { backgroundColor: state.color } }, [
+              _c("span", [_vm._v("0")]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(state.name))])
+            ])
+          }),
+          0
+        )
+      ]),
       _vm._v(" "),
-      _c("oportunities-table", { attrs: { oportunities: _vm.oportunities } })
+      _c("oportunities-table", { attrs: { users: _vm.users } })
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("ul", { staticClass: "d-flex list-status" }, [
-        _c("li", { staticClass: "blue-grey" }, [
-          _c("span", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Sin contactar")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "yellow darken-3" }, [
-          _c("span", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Sin seguimiento")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "red darken-1" }, [
-          _c("span", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Pendiente contactar")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "deep-orange darken-1" }, [
-          _c("span", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Esperando respuesta")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "light-green darken-1" }, [
-          _c("span", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Evolucionando")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "cyan darken-1" }, [
-          _c("span", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Tomar acción")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "teal darken-1" }, [
-          _c("span", [_vm._v("0")]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Congelado")])
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -299,6 +299,7 @@
             <v-select
           v-model="userSelected"
           :items="users"
+          item-text="name"
           label=" Seleccione usuario"
           @change="changeUser()"
         ></v-select>
@@ -458,7 +459,7 @@
 <script>
   export default {
     props:{
-        oportunities:Array,
+        users:Array,
     },
     data: () => ({
       datas:[],
@@ -466,7 +467,6 @@
       userSelected: [],
       newStatus:[],
       newUser:[],
-      users:["Juan", "Pedro"],
       emailText:[],
       newNote: [
           {
@@ -556,7 +556,12 @@
         this.emailDialog=false;
       },
       changeUser(){
-        this.datas = this.oportunities
+        let index = this.users.findIndex(x => x.name === this.userSelected);
+        let id_user = this.users[index].id;
+        axios.get('/interesed/' + id_user).then((response) => {
+          this.datas = response.data.oportunities;
+          console.log(response.data.oportunities);
+        });
 
       },
       changeStatus(){

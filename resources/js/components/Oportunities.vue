@@ -2,37 +2,13 @@
     <div class="text-center p-4 d-flex align-items-center flex-column">
         <div>
             <ul class="d-flex list-status">
-                <li class="blue-grey">
+                <li v-for="state in status" :style="{ backgroundColor: state.color}">
                     <span>0</span> 
-                    <p>Sin contactar</p>
-                </li>
-                <li class="yellow darken-3">
-                    <span>0</span> 
-                    <p>Sin seguimiento</p>
-                </li>
-                <li class="red darken-1">
-                    <span>0</span> 
-                    <p>Pendiente contactar</p>
-                </li>
-                <li class="deep-orange darken-1">
-                    <span>0</span> 
-                    <p>Esperando respuesta</p>
-                </li>
-                <li class="light-green darken-1">
-                    <span>0</span> 
-                    <p>Evolucionando</p>
-                </li>    
-                <li class="cyan darken-1">
-                    <span>0</span> 
-                    <p>Tomar acción</p>
-                </li>
-                <li class="teal darken-1">
-                    <span>0</span> 
-                    <p>Congelado</p>
+                    <p>{{state.name}}</p>
                 </li>
             </ul>
         </div>
-        <oportunities-table :oportunities="oportunities"> </oportunities-table>
+        <oportunities-table :users="users"> </oportunities-table>
     </div>
 </template>
 
@@ -53,8 +29,9 @@
 <script>
 export default {
     props:{
-        oportunities:Array,
-    }
+        users:Array,
+        status:Array,
+    },
 
 }
 </script>
