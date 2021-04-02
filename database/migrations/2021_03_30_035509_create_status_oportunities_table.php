@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOportunitiesTable extends Migration
+class CreateStatusOportunitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateOportunitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('oportunities', function (Blueprint $table) {
+        Schema::create('status_oportunities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id');
             $table->string('name');
-            $table->integer('contact_id');
-            $table->date('vigency');
-            $table->integer('status_id');
-            $table->timestamps();
+            $table->string('color');
         });
     }
 
@@ -31,6 +27,6 @@ class CreateOportunitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('oportunities');
+        Schema::dropIfExists('status_oportunities');
     }
 }

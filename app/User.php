@@ -43,4 +43,12 @@ class User extends Authenticatable
      */
 
 
+    /** 
+     * Relacion uno a muchos con el modelo Oportunity
+     */
+    public function notes()
+    {
+         return $this->hasMany('App\Oportunity');
+    }
+
 }

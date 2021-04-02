@@ -36,3 +36,4 @@ Route::get('/status', 'StatusViewController@index')->name('status');
 
 
 Route::resource('/interesed', OportunityController::class);
+Route::get('/api-contacts','OportunityController@getContacts');

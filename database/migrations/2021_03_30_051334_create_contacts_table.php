@@ -4,22 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOportunitiesTable extends Migration
+class CreateContactsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('oportunities', function (Blueprint $table) {
+    public function up(){
+        Schema::create('contacts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id');
             $table->string('name');
-            $table->integer('contact_id');
-            $table->date('vigency');
-            $table->integer('status_id');
+            $table->string('img_path');
+            $table->string('email')->unique();;
+            $table->string('tel_1');
+            $table->string('tel_2')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateOportunitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('oportunities');
+        Schema::dropIfExists('contacts');
     }
 }
