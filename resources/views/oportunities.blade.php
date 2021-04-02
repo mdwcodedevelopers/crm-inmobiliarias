@@ -6,7 +6,10 @@
             <nav-admin title="Oportunidades" />
         </div>
         
-        <oportunities :users="{{$users}}" :status="{{$status}}"/>
+        <oportunities 
+            :users="{{$users}}" 
+            :status="{{$status}}"
+        />
 
     </div>
 @endsection

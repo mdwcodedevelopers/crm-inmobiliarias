@@ -18,7 +18,7 @@ class CreateOportunitiesTable extends Migration
             $table->integer('user_id');
             $table->string('name');
             $table->integer('contact_id');
-            $table->integer('vigency');
+            $table->date('vigency');
             $table->integer('status_id');
             $table->timestamps();
         });

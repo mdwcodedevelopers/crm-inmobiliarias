@@ -57,8 +57,7 @@
                       >
                       <v-text-field
                           disabled
-                          label="mail@mail.com"
-                        ></v-text-field>
+                        >asdasdas</v-text-field>
                       </v-col>
                       <v-col
                         cols="12"
@@ -73,14 +72,13 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="emailDialog = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text @click="sendEmail(selected)">Enviar mensaje</v-btn>
+                        <v-btn color="blue darken-1" text :disabled="emailText.length==0" @click="sendEmail(selected)">Enviar mensaje</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                   </v-row>
                 </v-card-text>
               </v-card>
             </v-dialog>
-          </div>
        </template>          
 
          <v-divider
@@ -125,6 +123,8 @@
                       <v-select
                         v-model="newStatus"
                         :items="status"
+                        item-text="name"
+                        item-value="id"
                         label=" Seleccione estado"
                       ></v-select>
                     </v-col>
@@ -133,14 +133,13 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="statusDialog = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text @click="changeStatus()">Cambiar</v-btn>
+                        <v-btn color="blue darken-1" text :disabled="newStatus.length==0" @click="changeStatus()">Cambiar</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                   </v-row>
                 </v-card-text>
               </v-card>
             </v-dialog>
-          </div>
        </template> 
 
          <v-divider
@@ -189,6 +188,8 @@
                       <v-select
                         v-model="newStatus"
                         :items="reasons"
+                        item-text="name"
+                        item-value="id"
                         label=" Seleccione una opción"
                       ></v-select>
                     </v-col>
@@ -206,14 +207,13 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="closeDialog = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text @click="closeOportunity()">Cerrar oportunidades</v-btn>
+                        <v-btn color="blue darken-1" text :disabled="newStatus.length==0" @click="closeOportunity()">Cerrar oportunidades</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                   </v-row>
                 </v-card-text>
               </v-card>
             </v-dialog>
-          </div>
        </template> 
 
          <v-divider
@@ -267,6 +267,8 @@
                       <v-select
                         v-model="newUser"
                         :items="users"
+                        item-text="name"
+                        item-value="id"
                         label=" Seleccione agente"
                       ></v-select>
                     </v-col>
@@ -275,14 +277,13 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="statusReassign = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text @click="assignUser()">Cambiar</v-btn>
+                        <v-btn color="blue darken-1" text :disabled="newUser.length===0" @click="assignUser()">Cambiar</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                   </v-row>
                 </v-card-text>
               </v-card>
             </v-dialog>
-          </div>
        </template> 
 
         
@@ -300,6 +301,7 @@
           v-model="userSelected"
           :items="users"
           item-text="name"
+          item-value="id"
           label=" Seleccione usuario"
           @change="changeUser()"
         ></v-select>
@@ -358,7 +360,7 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="noteDialog = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text @click="saveNote()">Guardar</v-btn>
+                        <v-btn color="blue darken-1" text @click="saveNote(item.id)">Guardar</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                        
@@ -400,13 +402,12 @@
                 </v-card-text>
               </v-card>
             </v-dialog>
-          </div>
         </template>
     </template>
         
     
     <template v-slot:no-data> 
-        <h3>Seleccione un usuario para ver sus oportunidades</h3>
+        <h3>Seleccione un usuario para ver sus oportunidades o agregue una oportunidad</h3>
     </template>
     
     <template v-slot:item.contact="{ item } ">
@@ -438,14 +439,14 @@
     </template>
 
 
-    <template v-slot:item.vigency="{ item }">
+    <!-- <template v-slot:item.vigency="{ item }">
      
       <v-progress-linear 
             :value=item.vigency 
             color="light-green darken-4">
       </v-progress-linear>
 
-    </template>
+    </template> -->
   </v-data-table>
 </template>
 
@@ -460,6 +461,7 @@
   export default {
     props:{
         users:Array,
+        status: Array,
     },
     data: () => ({
       datas:[],
@@ -511,17 +513,6 @@
                 },
             ]
          },
-            status(){
-              return[
-                'Sin contactar', 
-                'Sin seguimiento', 
-                'Pendiente contactar',
-                'Esperando respuesta',
-                'Evolucionando',
-                'Tomar acción',
-                'Congelado'
-            ]
-         },
             reasons(){
               return[
                 'Compró con nosotros', 
@@ -556,21 +547,46 @@
         this.emailDialog=false;
       },
       changeUser(){
-        let index = this.users.findIndex(x => x.name === this.userSelected);
-        let id_user = this.users[index].id;
-        axios.get('/interesed/' + id_user).then((response) => {
+        axios.get('/interesed/' + this.userSelected).then((response) => {
           this.datas = response.data.oportunities;
-          console.log(response.data.oportunities);
         });
 
       },
       changeStatus(){
+        let params;
+
+        this.selected.forEach(element => {
+          console.log(element);
+          params = {
+            status_id: this.newStatus,
+            user_id: element.user_id,
+          };
+        axios.put('/interesed/' + element.id, params ).then((response) => {
+              console.log(response);
+              element.status=this.status[this.newStatus-1].name;
+        });
+        this.selected=[];
+        });
         this.statusDialog = false
       },
       closeOportunity(){
         this.closeDialog = false
       },
       assignUser(){
+        let params;
+        let index; 
+        this.selected.forEach(element => {
+          params = {
+            status_id: element.status_id,
+            user_id: this.newUser,
+          };
+          axios.put('/interesed/' + element.id, params ).then((response) => {
+              console.log(response);
+              index = this.datas.findIndex( x => x.name == element.name)-1;
+              this.datas.splice(index,1)
+        });
+        this.selected=[];
+        });
         this.statusReassign = false
       }
     },

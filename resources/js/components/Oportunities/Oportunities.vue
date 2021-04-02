@@ -1,14 +1,17 @@
 <template>
     <div class="text-center p-4 d-flex align-items-center flex-column">
+        
+        <new-oportunity :status="status" ></new-oportunity>
+        
         <div>
-            <ul class="d-flex list-status">
-                <li v-for="state in status" :style="{ backgroundColor: state.color}">
+            <ul class="d-flex list-status flex-wrap justify-center  ">
+                <li v-for="state in status" :style="{ backgroundColor: state.color}" :key="state.id">
                     <span>0</span> 
                     <p>{{state.name}}</p>
                 </li>
             </ul>
         </div>
-        <oportunities-table :users="users"> </oportunities-table>
+        <oportunities-table :users="users" :status="status"> </oportunities-table>
     </div>
 </template>
 
