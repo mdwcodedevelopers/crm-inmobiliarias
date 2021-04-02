@@ -2,7 +2,7 @@
     <div class="">
         <v-app-bar color="light-blue darken-1 " dark>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title>Propiedades</v-toolbar-title>
+            <v-toolbar-title>{{title}}</v-toolbar-title>
 
             <v-spacer></v-spacer>
             <button @click.prevent="logout()">
@@ -61,6 +61,9 @@
 
 <script>
 export default {
+    props:{
+        title:String
+    },
     data: () => ({
         drawer: false,
         group: null,

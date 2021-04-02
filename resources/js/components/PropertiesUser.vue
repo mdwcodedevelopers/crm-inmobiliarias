@@ -61,6 +61,10 @@
             </v-layout>
         </template>
         <v-data-table :headers="headers" :items="properties" item-key="propeties-user" class="elevation-1" :search="search">
+            <template v-slot:item.imagen="{ item }">
+
+               <v-img :src="'../'+item.image" height="100" width="100"></v-img>
+            </template>
             <template v-slot:top>
                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
             </template>
@@ -79,7 +83,7 @@
                         mdi-pencil
                     </v-icon>
                 </v-btn>
-                <v-btn color="warning" @click="delete_dialog(item.id,item.title)">
+                <v-btn color="warning" @click="images(item.id)">
                     <v-icon color="#fff">
                         mdi-file-image
                     </v-icon>
@@ -229,10 +233,13 @@ export default {
             }
         },
         create() {
-            console.log(this.status_id);
-            axios.post("/api-images", {
-                title: this.title,
-                information: this.information,
+            axios.post("/api-properties", {
+                title:this.title,
+                information:this.information,
+                price:this.price,
+                dimension: this.dimension ,
+                status:this.status_id,
+                currency_id:this.currency_id
             }).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
@@ -240,7 +247,7 @@ export default {
                     this.information = '';
                     this.price = '';
                     this.dimension = '';
-                    this.status_id_edit = '';
+                    this.status_id = '';
                     this.dialog = false;
                     this.currency_id='';
                 }
@@ -295,6 +302,9 @@ export default {
         },
         prueba(){
             console.log(this.currency_id_edit);
+        },
+        images(id){
+            window.location.href="/property-images/"+id;
         }
     },
     created() {
@@ -306,7 +316,7 @@ export default {
                 return [
                 {
                     text: 'Imagen',
-                    value: 'image'
+                    value: 'imagen'
                 },{
                     text: 'Propiedad',
                     align: 'start',

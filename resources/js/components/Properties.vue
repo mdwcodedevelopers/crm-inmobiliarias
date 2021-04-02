@@ -50,7 +50,7 @@
                     <v-col  v-for="card in properties" :key="card.id" cols="4" >
                         <h3 class="text-center venta mt-3">{{card.name}}</h3>
                         <v-card>
-                            <v-img src="https://cdn.vuetifyjs.com/images/cards/house.jpg" class="" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="200px">
+                            <v-img :src="'../'+card.image" class="" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="200px">
 
                             </v-img>
                             <v-card-title v-text="card.title"></v-card-title>

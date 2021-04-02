@@ -5,17 +5,17 @@
         <v-layout row justify-center>
             <v-dialog v-model="dialog" persistent max-width="400px">
                 <template v-slot:activator="{ on }">
-                    <v-btn color="success" dark v-on="on">Nuevo estatus</v-btn>
+                    <v-btn color="success" class="my-4" dark v-on="on">Crear Moneda <v-icon>mdi-currency-usd</v-icon> </v-btn>
                 </template>
                 <v-card>
                     <v-card-title>
-                        <span class="headline">Crear estado de propiedad</span>
+                        <span class="headline">Crear Moneda</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12>
-                                    <v-text-field label="Nombre" v-model="name" required></v-text-field>
+                                    <v-text-field label="Moneda" v-model="name" required></v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
                                     {{error}}
@@ -65,14 +65,14 @@
             <v-dialog v-model="dialogedit" persistent max-width="600px">
                 <v-card>
                     <v-card-title>
-                        <span class="headline">Editar propiedad</span>
+                        <span class="headline">Editar Moneda</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
                             <v-layout wrap>
 
                                 <v-flex xs12>
-                                    <v-text-field label="Información de la propiedad" v-model="name_edit" required></v-text-field>
+                                    <v-text-field label="Moneda" v-model="name_edit" required></v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
                                     {{error}}
@@ -94,7 +94,7 @@
             <v-dialog v-model="dialogdelete" persistent max-width="600px">
                 <v-card>
                     <v-card-title>
-                        <span class="headline">Desea eliminar: {{currency_eliminar}}</span>
+                        <span class="headline">Desea eliminar la moneda: {{currency_eliminar}}</span>
                     </v-card-title>
                     <v-card-text>
 

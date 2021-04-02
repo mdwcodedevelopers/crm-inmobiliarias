@@ -27,17 +27,14 @@ class ImageController extends Controller
                 'url_image'=>$image_path
             ]);
         }else{
-            // $image_path="asda";
-            // Image::create([
-            //     'property_id'=>1,
-            //     'url_image'=>'imagen'
-            // ]);
         }
-        // Image::create([
-        //     'property_id'=>$request['property_id'],
-        //     'url_image'=>$request['imagen']
-        // ]);
-        // return response()->json($image_path);
+    }
+    public function setimage(Request $request,$id){
+        $property = Property::find($id);
+        $property->update([
+            'image'=>$request['image']
+        ]);
+        return response()->json("success");
     }
     public function update(Request $request, $id)
     {

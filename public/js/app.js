@@ -2823,25 +2823,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-var gradients = [['#42b3f4']];
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      width: 2,
-      radius: 10,
-      padding: 8,
-      lineCap: 'round',
-      gradient: gradients[5],
-      value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
-      gradientDirection: 'top',
-      gradients: gradients
+      properties: '',
+      users: ''
     };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get("/api-dashboard").then(function (response) {
+      _this.properties = response.data.property;
+      _this.users = response.data.users;
+    });
   }
 });
 
@@ -2856,6 +2851,11 @@ var gradients = [['#42b3f4']];
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3079,7 +3079,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var InstFormData = new FormData();
       InstFormData.append('imagen', this.archivo);
-      InstFormData.append('images_id', this.id); // if (this.$refs.image) {
+      InstFormData.append('property_id', 1); // if (this.$refs.image) {
       //         this.image = this.$refs.image.files[0]
       //     }
       // // this.image = this.$refs.image.files[0];
@@ -3104,35 +3104,46 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    index: function index() {
+    setimage: function setimage(image) {
       var _this2 = this;
 
+      axios.put('/property-images-set/' + this.id, {
+        image: image
+      }).then(function (response) {
+        if (response.status == 200) {
+          _this2.index();
+        }
+      });
+    },
+    index: function index() {
+      var _this3 = this;
+
       axios.get("/api-images?id=" + this.id).then(function (response) {
-        _this2.images = response.data.images;
+        _this3.images = response.data.images;
       });
     },
     edit_model: function edit_model() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.put("/api-images/" + this.id_edit, {}).then(function (response) {
         if (response.status == 200) {
-          _this3.index();
+          _this4.index();
         }
       });
     },
     delete_model: function delete_model() {
-      var _this4 = this;
+      var _this5 = this;
 
       console.log(this.id_delete);
       axios["delete"]("/api-images/" + this.id_delete).then(function (response) {
         console.log(response);
 
         if (response.status == 200) {
-          _this4.index();
+          _this5.index();
 
-          _this4.dialogdelete = false;
+          _this5.dialogdelete = false;
         } else {
-          _this4.error = "Error al añadir propiedad";
+          _this5.error = "Error al añadir propiedad";
         }
       });
     },
@@ -3227,6 +3238,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    title: String
+  },
   data: function data() {
     return {
       drawer: false,
@@ -4141,6 +4155,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rol: Number
@@ -4201,10 +4219,13 @@ __webpack_require__.r(__webpack_exports__);
     create: function create() {
       var _this2 = this;
 
-      console.log(this.status_id);
-      axios.post("/api-images", {
+      axios.post("/api-properties", {
         title: this.title,
-        information: this.information
+        information: this.information,
+        price: this.price,
+        dimension: this.dimension,
+        status: this.status_id,
+        currency_id: this.currency_id
       }).then(function (response) {
         if (response.status == 200) {
           _this2.index(0, '');
@@ -4213,7 +4234,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.information = '';
           _this2.price = '';
           _this2.dimension = '';
-          _this2.status_id_edit = '';
+          _this2.status_id = '';
           _this2.dialog = false;
           _this2.currency_id = '';
         }
@@ -4275,6 +4296,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     prueba: function prueba() {
       console.log(this.currency_id_edit);
+    },
+    images: function images(id) {
+      window.location.href = "/property-images/" + id;
     }
   },
   created: function created() {
@@ -4285,7 +4309,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.rol == 1) {
         return [{
           text: 'Imagen',
-          value: 'image'
+          value: 'imagen'
         }, {
           text: 'Propiedad',
           align: 'start',
@@ -4387,51 +4411,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     property: Object
   },
   data: function data() {
     return {
-      items: [{
-        src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
-      }, {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'
-      }, {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
-      }, {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
-      }]
+      items: []
     };
   },
-  created: function created() {}
+  methods: {
+    index: function index() {
+      var _this = this;
+
+      axios.get("/api-images?id=" + this.property.id).then(function (response) {
+        _this.items = response.data.images;
+      });
+    }
+  },
+  created: function created() {
+    this.index();
+  }
 });
 
 /***/ }),
@@ -4894,12 +4894,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rol: Number
@@ -4912,14 +4906,13 @@ __webpack_require__.r(__webpack_exports__);
       id_edit: '',
       error: '',
       id_delete: '',
-      // propiedad_eliminar: '',
       admins: [],
       agents: [],
       users: [],
       search: '',
       roles: [],
       name: '',
-      rol_id: '',
+      rol_id: -1,
       email: '',
       phone: '',
       province: '',
@@ -4929,7 +4922,8 @@ __webpack_require__.r(__webpack_exports__);
       email_edit: '',
       phone_edit: '',
       province_edit: '',
-      direction_edit: ''
+      direction_edit: '',
+      error_edit: ''
     };
   },
   methods: {
@@ -4947,30 +4941,51 @@ __webpack_require__.r(__webpack_exports__);
     create: function create() {
       var _this2 = this;
 
-      axios.post("/api-users", {
-        name: this.name,
-        email: this.email,
-        rol_id: this.rol_id,
-        phone: this.phone,
-        pronvince: this.province,
-        direction: this.direction
-      }).then(function (response) {
-        if (response.status == 200) {
-          _this2.index();
-
-          _this2.dialog = false;
-          _this2.name = "";
-          _this2.email = "";
-          _this2.rol_id = "";
-          _this2.phone = "";
-          _this2.province = "";
-          _this2.direction = "";
+      if (this.rol_id == '') {
+        this.error = 'Complete el rol';
+      } else {
+        if (this.rol_id == 1 || this.rol_id == 3) {
+          this.phone = "";
+          this.province = "";
+          this.direction = "";
         }
-      });
+
+        axios.post("/api-users", {
+          name: this.name,
+          email: this.email,
+          rol_id: this.rol_id,
+          phone: this.phone,
+          pronvince: this.province,
+          direction: this.direction
+        }).then(function (response) {
+          if (response.status == 200) {
+            _this2.index();
+
+            _this2.dialog = false;
+            _this2.name = "";
+            _this2.email = "";
+            _this2.rol_id = "";
+            _this2.phone = "";
+            _this2.province = "";
+            _this2.direction = "";
+          } else {
+            _this2.error = "Error al crea Usuario";
+          }
+        });
+      }
     },
     edit_model: function edit_model() {
       var _this3 = this;
 
+      if (this.rol_id_edit == 1 || this.rol_id_edit == 3) {
+        this.phone_edit = '';
+        this.province_edit = '';
+        this.direction_edit = '';
+      }
+
+      console.log(this.phone_edit);
+      console.log(this.province_edit);
+      console.log(this.direction_edit);
       axios.put("/api-users/" + this.id_edit, {
         name: this.name_edit,
         email: this.email_edit,
@@ -4995,7 +5010,6 @@ __webpack_require__.r(__webpack_exports__);
     delete_model: function delete_model() {
       var _this4 = this;
 
-      // console.log(this.id_delete);
       axios["delete"]("/api-users/" + this.id_delete).then(function (response) {
         console.log(response);
 
@@ -5008,18 +5022,20 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    edit: function edit(id, title, dimension, price, info) {// this.dialogedit = true;
-      // this.id_edit = id;
-      // this.title_edit = title;
-      // this.information_edit = info;
-      // this.price_edit = price;
-      // this.dimension_edit = dimension;
-      // console.log(this.id_edit)
+    edit: function edit(id, name, email, rol) {
+      this.dialogedit = true;
+      this.id_edit = id;
+      this.name_edit = name;
+      this.email_edit = email;
+      this.rol_id_edit = rol;
+      console.log(this.name);
     },
     delete_dialog: function delete_dialog(id) {
-      console.log("sadsad");
       this.id_delete = id;
       this.dialogdelete = true;
+    },
+    whatsapp: function whatsapp(phone) {
+      window.location.href = 'https://api.whatsapp.com/send?phone=' + phone;
     }
   },
   created: function created() {
@@ -43095,8 +43111,18 @@ var render = function() {
                       return [
                         _c(
                           "v-btn",
-                          _vm._g({ attrs: { color: "success", dark: "" } }, on),
-                          [_vm._v("Nuevo estatus")]
+                          _vm._g(
+                            {
+                              staticClass: "my-4",
+                              attrs: { color: "success", dark: "" }
+                            },
+                            on
+                          ),
+                          [
+                            _vm._v("Crear Moneda "),
+                            _c("v-icon", [_vm._v("mdi-currency-usd")])
+                          ],
+                          1
                         )
                       ]
                     }
@@ -43117,7 +43143,7 @@ var render = function() {
                   [
                     _c("v-card-title", [
                       _c("span", { staticClass: "headline" }, [
-                        _vm._v("Crear estado de propiedad")
+                        _vm._v("Crear Moneda")
                       ])
                     ]),
                     _vm._v(" "),
@@ -43137,7 +43163,7 @@ var render = function() {
                                   { attrs: { xs12: "" } },
                                   [
                                     _c("v-text-field", {
-                                      attrs: { label: "Nombre", required: "" },
+                                      attrs: { label: "Moneda", required: "" },
                                       model: {
                                         value: _vm.name,
                                         callback: function($$v) {
@@ -43325,7 +43351,7 @@ var render = function() {
                   [
                     _c("v-card-title", [
                       _c("span", { staticClass: "headline" }, [
-                        _vm._v("Editar propiedad")
+                        _vm._v("Editar Moneda")
                       ])
                     ]),
                     _vm._v(" "),
@@ -43345,10 +43371,7 @@ var render = function() {
                                   { attrs: { xs12: "" } },
                                   [
                                     _c("v-text-field", {
-                                      attrs: {
-                                        label: "Información de la propiedad",
-                                        required: ""
-                                      },
+                                      attrs: { label: "Moneda", required: "" },
                                       model: {
                                         value: _vm.name_edit,
                                         callback: function($$v) {
@@ -43447,7 +43470,8 @@ var render = function() {
                     _c("v-card-title", [
                       _c("span", { staticClass: "headline" }, [
                         _vm._v(
-                          "Desea eliminar: " + _vm._s(_vm.currency_eliminar)
+                          "Desea eliminar la moneda: " +
+                            _vm._s(_vm.currency_eliminar)
                         )
                       ])
                     ]),
@@ -43524,102 +43548,86 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      { staticClass: "row" },
+      [
+        _c(
+          "v-card",
+          {
+            staticClass: "mx-auto text-white mt-3",
+            attrs: { width: "300", "max-width": "600", color: "blue darken-2" }
+          },
+          [
+            _c("v-card-text", [
+              _c("p", { staticClass: "display-1 text-white text-center" }, [
+                _vm._v("\n                    Propiedades\n                ")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "display-1 text-white text-center" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.properties) +
+                    "\n                "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "v-card-actions",
+              [
+                _c("v-btn", { attrs: { text: "", dark: "" } }, [
+                  _vm._v(
+                    "\n                    Ver Propiedades\n                "
+                  )
+                ])
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "v-card",
+          {
+            staticClass: "mx-auto text-white mt-3",
+            attrs: { width: "300", "max-width": "600", color: "teal darken-1" }
+          },
+          [
+            _c("v-card-text", [
+              _c("p", { staticClass: "display-1 text-white text-center" }, [
+                _vm._v("\n                    Usuarios\n                ")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "display-1 text-white text-center" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.users) +
+                    "\n                "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "v-card-actions",
+              [
+                _c("v-btn", { attrs: { text: "", dark: "" } }, [
+                  _vm._v("\n                    Ver Usuarios\n                ")
+                ])
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card text-white bg-success mb-4",
-              staticStyle: { "max-width": "15rem" }
-            },
-            [
-              _c("div", { staticClass: "card-header text-center" }, [
-                _vm._v("Propiedades Vendidas")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("h5", { staticClass: "card-title text-center" }, [
-                  _vm._v("5")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card text-white bg-info",
-              staticStyle: { "max-width": "15rem" }
-            },
-            [
-              _c("div", { staticClass: "card-header text-center" }, [
-                _vm._v("Interesados")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("h5", { staticClass: "card-title text-center" }, [
-                  _vm._v("16")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card text-white bg-warning",
-              staticStyle: { "max-width": "15rem" }
-            },
-            [
-              _c("div", { staticClass: "card-header text-center" }, [
-                _vm._v("Categorias")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("h5", { staticClass: "card-title text-center" }, [
-                  _vm._v("16")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card text-white bg-success mb-4",
-              staticStyle: { "max-width": "15rem" }
-            },
-            [
-              _c("div", { staticClass: "card-header text-center" }, [
-                _vm._v("Mensajes")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("h5", { staticClass: "card-title text-center" }, [
-                  _vm._v("52")
-                ])
-              ])
-            ]
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -44061,6 +44069,26 @@ var render = function() {
                           ])
                         ],
                         1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "#E53935" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setimage(item.url_image)
+                            }
+                          }
+                        },
+                        [
+                          _c("v-icon", { attrs: { color: "#fff" } }, [
+                            _vm._v(
+                              "\n                                mdi-delete\n                            "
+                            )
+                          ])
+                        ],
+                        1
                       )
                     ],
                     1
@@ -44117,7 +44145,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("v-toolbar-title", [_vm._v("Propiedades")]),
+          _c("v-toolbar-title", [_vm._v(_vm._s(_vm.title))]),
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
@@ -44418,7 +44446,17 @@ var render = function() {
         "v-app-bar",
         { attrs: { color: "light-blue darken-1 ", dark: "" } },
         [
-          _c("v-toolbar-title", [_vm._v("Propiedades")]),
+          _c("v-toolbar-title", [
+            _c(
+              "a",
+              {
+                staticClass: "text-white",
+                staticStyle: { "text-decoration": "none" },
+                attrs: { href: "/" }
+              },
+              [_vm._v("Propiedades")]
+            )
+          ]),
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
@@ -45229,8 +45267,7 @@ var render = function() {
                     [
                       _c("v-img", {
                         attrs: {
-                          src:
-                            "https://cdn.vuetifyjs.com/images/cards/house.jpg",
+                          src: "../" + card.image,
                           gradient: "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)",
                           height: "200px"
                         }
@@ -45726,6 +45763,21 @@ var render = function() {
           },
           scopedSlots: _vm._u([
             {
+              key: "item.imagen",
+              fn: function(ref) {
+                var item = ref.item
+                return [
+                  _c("v-img", {
+                    attrs: {
+                      src: "../" + item.image,
+                      height: "100",
+                      width: "100"
+                    }
+                  })
+                ]
+              }
+            },
+            {
               key: "top",
               fn: function() {
                 return [
@@ -45781,7 +45833,7 @@ var render = function() {
                       attrs: { color: "warning" },
                       on: {
                         click: function($event) {
-                          return _vm.delete_dialog(item.id, item.title)
+                          return _vm.images(item.id)
                         }
                       }
                     },
@@ -45820,6 +45872,7 @@ var render = function() {
           ])
         },
         [
+          _vm._v(" "),
           _vm._v(" "),
           [
             _c("tr", [
@@ -46276,9 +46329,12 @@ var render = function() {
     [
       _c(
         "v-carousel",
-        { attrs: { "show-arrows": false } },
+        { attrs: { "show-arrows": true } },
         _vm._l(_vm.items, function(item, i) {
-          return _c("v-carousel-item", { key: i, attrs: { src: item.src } })
+          return _c("v-carousel-item", {
+            key: i,
+            attrs: { src: "../" + item.url_image }
+          })
         }),
         1
       ),
@@ -46292,7 +46348,11 @@ var render = function() {
               "p",
               { staticClass: "display-1 text--primary" },
               [
-                _vm._v("\n      " + _vm._s(_vm.property.title) + "   "),
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.property.title) +
+                    "\n                "
+                ),
                 _c(
                   "v-chip",
                   {
@@ -46301,7 +46361,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n          " + _vm._s(_vm.property.name) + "\n      "
+                      "\n                    " +
+                        _vm._s(_vm.property.name) +
+                        "\n                "
                     )
                   ]
                 )
@@ -46310,7 +46372,11 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "text--primary" }, [
-              _vm._v("\n        " + _vm._s(_vm.property.information) + "\n    ")
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.property.information) +
+                  "\n            "
+              )
             ])
           ]),
           _vm._v(" "),
@@ -46318,58 +46384,8 @@ var render = function() {
             "v-card-actions",
             [
               _c("v-btn", { attrs: { text: "", color: "primary accent-4" } }, [
-                _vm._v("\n      Hablar con el agente\n    ")
+                _vm._v("\n                Hablar con el agente\n            ")
               ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-expand-transition",
-            [
-              _vm.reveal
-                ? _c(
-                    "v-card",
-                    {
-                      staticClass: "transition-fast-in-fast-out v-card--reveal",
-                      staticStyle: { height: "100%" }
-                    },
-                    [
-                      _c("v-card-text", { staticClass: "pb-0" }, [
-                        _c("p", { staticClass: "display-1 text--primary" }, [
-                          _vm._v("\n          Origin\n        ")
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            "late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’, from Greek eleēmosunē ‘compassion’ "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        { staticClass: "pt-0" },
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { text: "", color: "teal accent-4" },
-                              on: {
-                                click: function($event) {
-                                  _vm.reveal = false
-                                }
-                              }
-                            },
-                            [_vm._v("\n          Close\n        ")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                : _vm._e()
             ],
             1
           )
@@ -46882,7 +46898,7 @@ var render = function() {
                             on
                           ),
                           [
-                            _vm._v("Crear usuario  "),
+                            _vm._v("Crear usuario "),
                             _c("v-icon", [_vm._v("mdi-account-multiple-plus ")])
                           ],
                           1
@@ -46903,10 +46919,11 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "v-card",
+                  { attrs: { color: "" } },
                   [
-                    _c("v-card-title", [
+                    _c("v-card-title", { staticClass: "text-center" }, [
                       _c("span", { staticClass: "headline" }, [
-                        _vm._v("Crear propiedad")
+                        _vm._v("Crear usuario")
                       ])
                     ]),
                     _vm._v(" "),
@@ -46957,68 +46974,74 @@ var render = function() {
                                   1
                                 ),
                                 _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md6: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: {
-                                        label: "Telefono",
-                                        required: ""
-                                      },
-                                      model: {
-                                        value: _vm.phone,
-                                        callback: function($$v) {
-                                          _vm.phone = $$v
-                                        },
-                                        expression: "phone"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
+                                _vm.rol_id == 2
+                                  ? _c(
+                                      "v-flex",
+                                      { attrs: { xs12: "", sm6: "", md6: "" } },
+                                      [
+                                        _c("v-text-field", {
+                                          attrs: {
+                                            label: "Telefono",
+                                            required: ""
+                                          },
+                                          model: {
+                                            value: _vm.phone,
+                                            callback: function($$v) {
+                                              _vm.phone = $$v
+                                            },
+                                            expression: "phone"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
                                 _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md6: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: {
-                                        label: "Provincia",
-                                        required: ""
-                                      },
-                                      model: {
-                                        value: _vm.province,
-                                        callback: function($$v) {
-                                          _vm.province = $$v
-                                        },
-                                        expression: "province"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
+                                _vm.rol_id == 2
+                                  ? _c(
+                                      "v-flex",
+                                      { attrs: { xs12: "", sm6: "", md6: "" } },
+                                      [
+                                        _c("v-text-field", {
+                                          attrs: {
+                                            label: "Provincia",
+                                            required: ""
+                                          },
+                                          model: {
+                                            value: _vm.province,
+                                            callback: function($$v) {
+                                              _vm.province = $$v
+                                            },
+                                            expression: "province"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
                                 _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md6: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: {
-                                        label: "Dirección",
-                                        required: ""
-                                      },
-                                      model: {
-                                        value: _vm.direction,
-                                        callback: function($$v) {
-                                          _vm.direction = $$v
-                                        },
-                                        expression: "direction"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
+                                _vm.rol_id == 2
+                                  ? _c(
+                                      "v-flex",
+                                      { attrs: { xs12: "", sm6: "", md6: "" } },
+                                      [
+                                        _c("v-text-field", {
+                                          attrs: {
+                                            label: "Dirección",
+                                            required: ""
+                                          },
+                                          model: {
+                                            value: _vm.direction,
+                                            callback: function($$v) {
+                                              _vm.direction = $$v
+                                            },
+                                            expression: "direction"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
                                 _vm._v(" "),
                                 _c(
                                   "v-flex",
@@ -47070,7 +47093,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "Moneda\n                                    "
+                                              "Moneda\n                                        "
                                             )
                                           ]
                                         ),
@@ -47081,9 +47104,9 @@ var render = function() {
                                             { domProps: { value: item.id } },
                                             [
                                               _vm._v(
-                                                "\n                                        " +
+                                                "\n                                            " +
                                                   _vm._s(item.rol) +
-                                                  "\n                                    "
+                                                  "\n                                        "
                                               )
                                             ]
                                           )
@@ -47158,7 +47181,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-card",
-        { staticClass: "my-4" },
+        { staticClass: "text-white my-2", attrs: { color: "orange" } },
         [
           _c(
             "card-title",
@@ -47207,13 +47230,7 @@ var render = function() {
                           attrs: { color: "#66BB6A" },
                           on: {
                             click: function($event) {
-                              return _vm.edit(
-                                item.id,
-                                item.title,
-                                item.dimension,
-                                item.price,
-                                item.information
-                              )
+                              return _vm.edit(item.id, item.name, item.email, 1)
                             }
                           }
                         },
@@ -47271,9 +47288,11 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-card",
-        { staticClass: "my-4" },
+        { staticClass: "my-4", attrs: { color: "blue darken-2" } },
         [
-          _c("card-title", { staticClass: "display-1" }, [_vm._v("Agentes")]),
+          _c("card-title", { staticClass: "display-1 text-white my-2" }, [
+            _vm._v("Agentes")
+          ]),
           _vm._v(" "),
           _c(
             "v-data-table",
@@ -47316,13 +47335,7 @@ var render = function() {
                           attrs: { color: "#66BB6A" },
                           on: {
                             click: function($event) {
-                              return _vm.edit(
-                                item.id,
-                                item.title,
-                                item.dimension,
-                                item.price,
-                                item.information
-                              )
+                              return _vm.edit(item.id, item.name, item.email, 3)
                             }
                           }
                         },
@@ -47380,9 +47393,11 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-card",
-        { staticClass: "my-4" },
+        { staticClass: "my-4", attrs: { color: "cyan darken-3" } },
         [
-          _c("card-title", { staticClass: "display-1" }, [_vm._v("Usuarios")]),
+          _c("card-title", { staticClass: "display-1 text-white" }, [
+            _vm._v("Usuarios")
+          ]),
           _vm._v(" "),
           _c(
             "v-data-table",
@@ -47425,13 +47440,7 @@ var render = function() {
                           attrs: { color: "#66BB6A" },
                           on: {
                             click: function($event) {
-                              return _vm.edit(
-                                item.id,
-                                item.title,
-                                item.dimension,
-                                item.price,
-                                item.information
-                              )
+                              return _vm.edit(item.id, item.name, item.email, 2)
                             }
                           }
                         },
@@ -47459,6 +47468,26 @@ var render = function() {
                           _c("v-icon", { attrs: { color: "#fff" } }, [
                             _vm._v(
                               "\n                        mdi-delete\n                    "
+                            )
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "#66BB6A" },
+                          on: {
+                            click: function($event) {
+                              return _vm.whatsapp(item.phone)
+                            }
+                          }
+                        },
+                        [
+                          _c("v-icon", { attrs: { color: "#fff" } }, [
+                            _vm._v(
+                              "\n                        mdi-whatsapp\n                    "
                             )
                           ])
                         ],
@@ -47530,13 +47559,13 @@ var render = function() {
                                   { attrs: { xs12: "", sm6: "", md6: "" } },
                                   [
                                     _c("v-text-field", {
-                                      attrs: { label: "Titulo", required: "" },
+                                      attrs: { label: "Nombre", required: "" },
                                       model: {
-                                        value: _vm.title_edit,
+                                        value: _vm.name_edit,
                                         callback: function($$v) {
-                                          _vm.title_edit = $$v
+                                          _vm.name_edit = $$v
                                         },
-                                        expression: "title_edit"
+                                        expression: "name_edit"
                                       }
                                     })
                                   ],
@@ -47548,40 +47577,87 @@ var render = function() {
                                   { attrs: { xs12: "", sm6: "", md6: "" } },
                                   [
                                     _c("v-text-field", {
-                                      attrs: { label: "Dimensiones" },
+                                      attrs: { label: "Correo", required: "" },
                                       model: {
-                                        value: _vm.dimension_edit,
+                                        value: _vm.email_edit,
                                         callback: function($$v) {
-                                          _vm.dimension_edit = $$v
+                                          _vm.email_edit = $$v
                                         },
-                                        expression: "dimension_edit"
+                                        expression: "email_edit"
                                       }
                                     })
                                   ],
                                   1
                                 ),
                                 _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md6: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: {
-                                        label: "Precio",
-                                        "persistent-hint": "",
-                                        required: ""
-                                      },
-                                      model: {
-                                        value: _vm.price_edit,
-                                        callback: function($$v) {
-                                          _vm.price_edit = $$v
-                                        },
-                                        expression: "price_edit"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
+                                _vm.rol_id_edit == 2
+                                  ? _c(
+                                      "v-flex",
+                                      { attrs: { xs12: "", sm6: "", md6: "" } },
+                                      [
+                                        _c("v-text-field", {
+                                          attrs: {
+                                            label: "Telefono",
+                                            required: ""
+                                          },
+                                          model: {
+                                            value: _vm.phone_edit,
+                                            callback: function($$v) {
+                                              _vm.phone_edit = $$v
+                                            },
+                                            expression: "phone_edit"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.rol_id_edit == 2
+                                  ? _c(
+                                      "v-flex",
+                                      { attrs: { xs12: "", sm6: "", md6: "" } },
+                                      [
+                                        _c("v-text-field", {
+                                          attrs: {
+                                            label: "Provincia",
+                                            required: ""
+                                          },
+                                          model: {
+                                            value: _vm.province_edit,
+                                            callback: function($$v) {
+                                              _vm.province_edit = $$v
+                                            },
+                                            expression: "province_edit"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.rol_id_edit == 2
+                                  ? _c(
+                                      "v-flex",
+                                      { attrs: { xs12: "", sm6: "", md6: "" } },
+                                      [
+                                        _c("v-text-field", {
+                                          attrs: {
+                                            label: "Dirección",
+                                            required: ""
+                                          },
+                                          model: {
+                                            value: _vm.direction_edit,
+                                            callback: function($$v) {
+                                              _vm.direction_edit = $$v
+                                            },
+                                            expression: "direction_edit"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
                                 _vm._v(" "),
                                 _c(
                                   "v-flex",
@@ -47594,16 +47670,13 @@ var render = function() {
                                           {
                                             name: "model",
                                             rawName: "v-model",
-                                            value: _vm.currency_id_edit,
-                                            expression: "currency_id_edit"
+                                            value: _vm.rol_id_edit,
+                                            expression: "rol_id_edit"
                                           }
                                         ],
                                         staticClass: "form-control mt-2",
                                         attrs: { placeholder: "Estado" },
                                         on: {
-                                          click: function($event) {
-                                            return _vm.prueba()
-                                          },
                                           change: function($event) {
                                             var $$selectedVal = Array.prototype.filter
                                               .call(
@@ -47619,7 +47692,7 @@ var render = function() {
                                                     : o.value
                                                 return val
                                               })
-                                            _vm.currency_id_edit = $event.target
+                                            _vm.rol_id_edit = $event.target
                                               .multiple
                                               ? $$selectedVal
                                               : $$selectedVal[0]
@@ -47642,113 +47715,14 @@ var render = function() {
                                           ]
                                         ),
                                         _vm._v(" "),
-                                        _vm._l(_vm.currency, function(item) {
+                                        _vm._l(_vm.roles, function(item) {
                                           return _c(
                                             "option",
                                             { domProps: { value: item.id } },
                                             [
                                               _vm._v(
                                                 "\n                                            " +
-                                                  _vm._s(item.currency) +
-                                                  "\n                                        "
-                                              )
-                                            ]
-                                          )
-                                        })
-                                      ],
-                                      2
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md6: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: {
-                                        label: "Información de la propiedad",
-                                        required: ""
-                                      },
-                                      model: {
-                                        value: _vm.information_edit,
-                                        callback: function($$v) {
-                                          _vm.information_edit = $$v
-                                        },
-                                        expression: "information_edit"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md6: "" } },
-                                  [
-                                    _c(
-                                      "select",
-                                      {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.status_id_edit,
-                                            expression: "status_id_edit"
-                                          }
-                                        ],
-                                        staticClass: "form-control mt-2",
-                                        attrs: {
-                                          placeholder: "Estado",
-                                          required: ""
-                                        },
-                                        on: {
-                                          change: function($event) {
-                                            var $$selectedVal = Array.prototype.filter
-                                              .call(
-                                                $event.target.options,
-                                                function(o) {
-                                                  return o.selected
-                                                }
-                                              )
-                                              .map(function(o) {
-                                                var val =
-                                                  "_value" in o
-                                                    ? o._value
-                                                    : o.value
-                                                return val
-                                              })
-                                            _vm.status_id_edit = $event.target
-                                              .multiple
-                                              ? $$selectedVal
-                                              : $$selectedVal[0]
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c(
-                                          "option",
-                                          {
-                                            attrs: {
-                                              selected: "",
-                                              disabled: ""
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Estatus\n                                        "
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _vm._l(_vm.status, function(item) {
-                                          return _c(
-                                            "option",
-                                            { domProps: { value: item.id } },
-                                            [
-                                              _vm._v(
-                                                "\n                                            " +
-                                                  _vm._s(item.status) +
+                                                  _vm._s(item.rol) +
                                                   "\n                                        "
                                               )
                                             ]
@@ -47845,9 +47819,7 @@ var render = function() {
                   [
                     _c("v-card-title", [
                       _c("span", { staticClass: "headline" }, [
-                        _vm._v(
-                          "Desea eliminar: " + _vm._s(_vm.propiedad_eliminar)
-                        )
+                        _vm._v("Desea eliminar: ")
                       ])
                     ]),
                     _vm._v(" "),

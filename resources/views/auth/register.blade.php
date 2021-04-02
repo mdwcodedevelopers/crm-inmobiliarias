@@ -15,18 +15,18 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
+            <v-card color="blue">
+                <p class="display-1 text-center mt-3 text-white">
+                    Registrarse
+                  </p>
+                <v-card>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                            <div class="col-md-6 mx-auto ">
+                                <v-text-field id="name" label="Nombre" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -36,10 +36,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Telefono') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" required value="{{ old('phone') }}" >
+                            <div class="col-md-6 mx-auto">
+                                <v-text-field id="phone" label="Telefono" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" required value="{{ old('phone') }}" >
 
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
@@ -49,10 +48,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('Provincia') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="province" type="text" class="form-control @error('province') is-invalid @enderror" name="pronvince" value="{{ old('province') }}" >
+                            <div class="col-md-6 mx-auto">
+                                <v-text-field id="province" label="Provincia" type="text" class="form-control @error('province') is-invalid @enderror" name="pronvince" value="{{ old('province') }}" >
 
                                 @error('province')
                                     <span class="invalid-feedback" role="alert">
@@ -62,10 +60,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="direction" class="col-md-4 col-form-label text-md-right">{{ __('Dirección') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="direction" type="text" class="form-control @error('province') is-invalid @enderror" name="direction" value="{{ old('direction') }}" >
+                            <div class="col-md-6 mx-auto">
+                                <v-text-field id="direction" label="Dirección" type="text" class="form-control @error('province') is-invalid @enderror" name="direction" value="{{ old('direction') }}" >
 
                                 @error('direction')
                                     <span class="invalid-feedback" role="alert">
@@ -75,10 +72,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Correo') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                            <div class="col-md-6 mx-auto">
+                                <v-text-field id="email" label="Correo" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -89,10 +85,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                            <div class="col-md-6 mx-auto">
+                                <v-text-field id="password" label="Contraseña" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -103,18 +98,17 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirma contraseña') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            <div class="col-md-6 mx-auto">
+                                <v-text-field id="password-confirm" label="Confirmar contraseña" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
+                                <v-btn color="success" type="submit">
+                                    {{ __('Registrarse') }}
+                                </v-btn>
                             </div>
                         </div>
                     </form>

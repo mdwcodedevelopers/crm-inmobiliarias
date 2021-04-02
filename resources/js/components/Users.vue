@@ -1,14 +1,15 @@
 <template>
     <div class="text-center">
-        <template >
+        <template>
             <v-layout row justify-center>
                 <v-dialog v-model="dialog" persistent max-width="600px">
-                    <template v-slot:activator="{ on }" >
-                        <v-btn color="success" class="my-4" dark v-on="on">Crear usuario  <v-icon>mdi-account-multiple-plus </v-icon></v-btn>
+                    <template v-slot:activator="{ on }">
+                        <v-btn color="success" class="my-4" dark v-on="on">Crear usuario <v-icon>mdi-account-multiple-plus </v-icon>
+                        </v-btn>
                     </template>
-                    <v-card>
-                        <v-card-title>
-                            <span class="headline">Crear propiedad</span>
+                    <v-card color="">
+                        <v-card-title class="text-center">
+                            <span class="headline">Crear usuario</span>
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-md>
@@ -19,29 +20,24 @@
                                     <v-flex xs12 sm6 md6>
                                         <v-text-field label="Correo" v-model="email" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md6>
+                                    <v-flex xs12 sm6 md6 v-if="rol_id==2">
                                         <v-text-field label="Telefono" v-model="phone" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md6>
+                                    <v-flex xs12 sm6 md6 v-if="rol_id==2">
                                         <v-text-field label="Provincia" v-model="province" required></v-text-field>
-                                    </v-flex>  <v-flex xs12 sm6 md6>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md6 v-if="rol_id==2">
                                         <v-text-field label="Dirección" v-model="direction" required></v-text-field>
                                     </v-flex>
+
                                     <v-flex xs12 sm6 md6>
-                                        <!-- <v-select
-                                        v-model="rol_id"
-                                        :item-value="roles.id"
-                                        :items="roles"
-                                        label="Rol de usuario"
-                                        single-line
-                                      ></v-select> -->
-                                      <select class="form-control mt-2" placeholder="Estado" v-model="rol_id">
-                                        <option selected disabled>Moneda
-                                        </option>
-                                        <option v-for="item in roles" :value="item.id" >
-                                            {{ item.rol }}
-                                        </option>
-                                    </select>
+                                        <select class="form-control mt-2" placeholder="Estado" v-model="rol_id">
+                                            <option selected disabled>Moneda
+                                            </option>
+                                            <option v-for="item in roles" :value="item.id">
+                                                {{ item.rol }}
+                                            </option>
+                                        </select>
                                     </v-flex>
                                     <v-flex xs12>
                                         {{error}}
@@ -58,7 +54,7 @@
                 </v-dialog>
             </v-layout>
         </template>
-        <v-card class="my-4">
+        <v-card color="orange" class="text-white my-2">
             <card-title class="display-1 mt-2" color="blue">Administradores</card-title>
             <v-data-table :headers="headers" :items="admins" item-key="propeties-user" class="elevation-1" :search="search">
                 <template v-slot:top>
@@ -74,7 +70,7 @@
                 </template>
                 <template v-slot:item.action="{ item }">
 
-                    <v-btn color="#66BB6A" @click="edit(item.id,item.title,item.dimension,item.price,item.information)">
+                    <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,1)">
                         <v-icon color="#fff">
                             mdi-pencil
                         </v-icon>
@@ -89,8 +85,8 @@
             </v-data-table>
         </v-card>
 
-        <v-card class="my-4">
-            <card-title class="display-1">Agentes</card-title>
+        <v-card class="my-4" color="blue darken-2">
+            <card-title class="display-1 text-white my-2">Agentes</card-title>
             <v-data-table :headers="headers" :items="agents" item-key="propeties-user" class="elevation-1" :search="search">
                 <template v-slot:top>
                     <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
@@ -105,7 +101,7 @@
                 </template>
                 <template v-slot:item.action="{ item }">
 
-                    <v-btn color="#66BB6A" @click="edit(item.id,item.title,item.dimension,item.price,item.information)">
+                    <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,3)">
                         <v-icon color="#fff">
                             mdi-pencil
                         </v-icon>
@@ -119,8 +115,8 @@
 
             </v-data-table>
         </v-card>
-        <v-card class="my-4">
-            <card-title class="display-1">Usuarios</card-title>
+        <v-card class="my-4" color="cyan darken-3">
+            <card-title class="display-1 text-white">Usuarios</card-title>
             <v-data-table :headers="usersheader" :items="users" item-key="propeties-user" class="elevation-1" :search="search">
                 <template v-slot:top>
                     <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
@@ -135,7 +131,7 @@
                 </template>
                 <template v-slot:item.action="{ item }">
 
-                    <v-btn color="#66BB6A" @click="edit(item.id,item.title,item.dimension,item.price,item.information)">
+                    <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,2)">
                         <v-icon color="#fff">
                             mdi-pencil
                         </v-icon>
@@ -143,6 +139,11 @@
                     <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
                         <v-icon color="#fff">
                             mdi-delete
+                        </v-icon>
+                    </v-btn>
+                    <v-btn color="#66BB6A" @click="whatsapp(item.phone)">
+                        <v-icon color="#fff">
+                            mdi-whatsapp
                         </v-icon>
                     </v-btn>
                 </template>
@@ -161,36 +162,29 @@
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Titulo" v-model="title_edit" required></v-text-field>
+                                        <v-text-field label="Nombre" v-model="name_edit" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Dimensiones" v-model="dimension_edit"></v-text-field>
+                                        <v-text-field label="Correo" v-model="email_edit" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Precio" v-model="price_edit" persistent-hint required></v-text-field>
+                                    <v-flex xs12 sm6 md6 v-if="rol_id_edit==2">
+                                        <v-text-field label="Telefono" v-model="phone_edit" required></v-text-field>
                                     </v-flex>
+                                    <v-flex xs12 sm6 md6 v-if="rol_id_edit==2">
+                                        <v-text-field label="Provincia" v-model="province_edit" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md6 v-if="rol_id_edit==2">
+                                        <v-text-field label="Dirección" v-model="direction_edit" required></v-text-field>
+                                    </v-flex>
+
                                     <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" @click="prueba()" v-model="currency_id_edit">
+                                        <select class="form-control mt-2" placeholder="Estado" v-model="rol_id_edit">
                                             <option selected disabled>Moneda
                                             </option>
-                                            <option v-for="item in currency" :value="item.id">
-                                                {{ item.currency }}
+                                            <option v-for="item in roles" :value="item.id">
+                                                {{ item.rol }}
                                             </option>
                                         </select>
-
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Información de la propiedad" v-model="information_edit" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" v-model="status_id_edit" required>
-                                            <option selected disabled>Estatus
-                                            </option>
-                                            <option v-for="item in status" :value="item.id">
-                                                {{ item.status }}
-                                            </option>
-                                        </select>
-
                                     </v-flex>
                                     <v-flex xs12>
                                         {{error}}
@@ -212,7 +206,7 @@
                 <v-dialog v-model="dialogdelete" persistent max-width="600px">
                     <v-card>
                         <v-card-title>
-                            <span class="headline">Desea eliminar: {{propiedad_eliminar}}</span>
+                            <span class="headline">Desea eliminar: </span>
                         </v-card-title>
                         <v-card-text>
 
@@ -242,24 +236,24 @@ export default {
             id_edit: '',
             error: '',
             id_delete: '',
-            // propiedad_eliminar: '',
-            admins:[],
-            agents:[],
-            users:[],
-            search:'',
-            roles:[],
-            name:'',
-            rol_id:'',
-            email:'',
-            phone:'',
-            province:'',
-            direction:'',
-            name_edit:'',
-            rol_id_edit:'',
-            email_edit:'',
-            phone_edit:'',
-            province_edit:'',
-            direction_edit:''
+            admins: [],
+            agents: [],
+            users: [],
+            search: '',
+            roles: [],
+            name: '',
+            rol_id: -1,
+            email: '',
+            phone: '',
+            province: '',
+            direction: '',
+            name_edit: '',
+            rol_id_edit: '',
+            email_edit: '',
+            phone_edit: '',
+            province_edit: '',
+            direction_edit: '',
+            error_edit:''
         }
     },
     methods: {
@@ -268,55 +262,73 @@ export default {
                 this.admins = response.data.admins;
                 this.agents = response.data.agents;
                 this.users = response.data.users;
-                this.roles=response.data.roles;
+                this.roles = response.data.roles;
                 console.log(this.admins)
             });
 
         },
         create() {
-            axios.post("/api-users", {
-                name: this.name,
-                email: this.email,
-                rol_id:this.rol_id,
-                phone:this.phone,
-                pronvince:this.province,
-                direction:this.direction
-            }).then((response) => {
-                if (response.status == 200){
-                    this.index();
-                    this.dialog = false;
-                    this.name="";
-                    this.email="";
-                    this.rol_id="";
-                    this.phone="";
-                    this.province="";
-                    this.direction="";
+            if (this.rol_id == '') {
+                this.error = 'Complete el rol';
+            } else {
+                if (this.rol_id == 1 || this.rol_id == 3) {
+                    this.phone = "";
+                    this.province = "";
+                    this.direction = "";
                 }
-            });
+                axios.post("/api-users", {
+                    name: this.name,
+                    email: this.email,
+                    rol_id: this.rol_id,
+                    phone: this.phone,
+                    pronvince: this.province,
+                    direction: this.direction
+                }).then((response) => {
+                    if (response.status == 200) {
+                        this.index();
+                        this.dialog = false;
+                        this.name = "";
+                        this.email = "";
+                        this.rol_id = "";
+                        this.phone = "";
+                        this.province = "";
+                        this.direction = "";
+                    } else {
+                        this.error = "Error al crea Usuario";
+                    }
+                });
+            }
         },
         edit_model() {
+            if (this.rol_id_edit == 1 || this.rol_id_edit == 3) {
+                    this.phone_edit = '';
+                    this.province_edit = '';
+                    this.direction_edit = '';
+            }
+            console.log(this.phone_edit);
+            console.log(this.province_edit);
+            console.log(this.direction_edit)
             axios.put("/api-users/" + this.id_edit, {
                 name: this.name_edit,
                 email: this.email_edit,
-                rol_id:this.rol_id_edit,
-                phone:this.phone_edit,
-                pronvince:this.province_edit,
-                direction:this.direction_edit
+                rol_id: this.rol_id_edit,
+                phone: this.phone_edit,
+                pronvince: this.province_edit,
+                direction: this.direction_edit
             }).then((response) => {
                 if (response.status == 200) {
                     this.index();
                     this.dialogedit = false;
-                    this.name_edit="";
-                    this.email_edit="";
-                    this.rol_id_edit="";
-                    this.phone_edit="";
-                    this.province_edit="";
-                    this.direction_edit="";
+                    this.name_edit = "";
+                    this.email_edit = "";
+                    this.rol_id_edit = "";
+                    this.phone_edit = "";
+                    this.province_edit = "";
+                    this.direction_edit = "";
                 }
             });
         },
         delete_model() {
-            // console.log(this.id_delete);
             axios.delete("/api-users/" + this.id_delete).then((response) => {
                 console.log(response);
                 if (response.status == 200) {
@@ -327,76 +339,76 @@ export default {
                 }
             });
         },
-        edit(id, title, dimension, price, info) {
-            // this.dialogedit = true;
-            // this.id_edit = id;
-            // this.title_edit = title;
-            // this.information_edit = info;
-            // this.price_edit = price;
-            // this.dimension_edit = dimension;
-            // console.log(this.id_edit)
+        edit(id, name, email,rol) {
+            this.dialogedit = true;
+            this.id_edit=id;
+            this.name_edit=name;
+            this.email_edit=email;
+            this.rol_id_edit=rol;
+            console.log(this.name);
+
         },
         delete_dialog(id) {
-             console.log("sadsad");
             this.id_delete = id;
             this.dialogdelete = true;
         },
+        whatsapp(phone){
+            window.location.href='https://api.whatsapp.com/send?phone='+phone;
+        }
     },
     created() {
         this.index(0, '');
     },
     computed: {
         headers() {
-                return [
-                    {
-                        text: 'Usuario',
-                        value: 'name'
-                    },
-                    {
-                        text: 'Correo',
-                        value: 'email'
-                    },
-                    {
-                        text: 'Acciones',
-                        value: 'action',
-                        sortable: false,
-                        align: 'center'
-                    },
-                ]
+            return [{
+                    text: 'Usuario',
+                    value: 'name'
+                },
+                {
+                    text: 'Correo',
+                    value: 'email'
+                },
+                {
+                    text: 'Acciones',
+                    value: 'action',
+                    sortable: false,
+                    align: 'center'
+                },
+            ]
         },
-        usersheader(){
-            return [
-                    {
-                        text: 'Usuario',
-                        value: 'name'
-                    },
-                    {
-                        text: 'Correo',
-                        value: 'email'
-                    },
-                    {
-                        text: 'Telefono',
-                        value: 'phone'
-                    },
-                    {
-                        text: 'Provincia',
-                        value: 'pronvince'
-                    },
-                    {
-                        text: 'Dirección',
-                        value: 'direction'
-                    },
-                    {
-                        text: 'Correo',
-                        value: 'email'
-                    },
-                    {
-                        text: 'Acciones',
-                        value: 'action',
-                        sortable: false,
-                        align: 'center'
-                    },
-                ]
+        usersheader() {
+            return [{
+                    text: 'Usuario',
+                    value: 'name'
+                },
+                {
+                    text: 'Correo',
+                    value: 'email'
+                },
+                {
+                    text: 'Telefono',
+                    value: 'phone'
+                },
+                {
+                    text: 'Provincia',
+                    value: 'pronvince'
+                },
+                {
+                    text: 'Dirección',
+                    value: 'direction'
+                },
+                {
+                    text: 'Correo',
+                    value: 'email'
+                },
+                {
+                    text: 'Acciones',
+                    value: 'action',
+                    sortable: false,
+                    align: 'center'
+                },
+            ]
         }
     },
 }

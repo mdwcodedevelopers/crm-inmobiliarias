@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="">
-    <nav-admin />
+    <nav-admin :title="'Imagenes de la propiedad'"/>
 </div>
     <div class="container">
             <image-propertie :property="{{$property}}" :id="{{$id}}" />

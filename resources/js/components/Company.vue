@@ -27,9 +27,6 @@
 
 <script>
 export default {
-    props: {
-        property: Object,
-    },
     data() {
         return {
             items:[]

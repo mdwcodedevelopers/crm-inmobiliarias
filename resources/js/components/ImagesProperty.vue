@@ -179,6 +179,11 @@ v-model="archivo" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon
                                 mdi-delete
                             </v-icon>
                         </v-btn>
+                        <v-btn color="#E53935" @click="setimage(item.url_image)">
+                            <v-icon color="#fff">
+                                mdi-delete
+                            </v-icon>
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -220,7 +225,7 @@ export default {
         create() {
             let InstFormData = new FormData();
             InstFormData.append('imagen' , this.archivo);
-            InstFormData.append('images_id' , this.id);
+            InstFormData.append('property_id' , 1);
             // if (this.$refs.image) {
             //         this.image = this.$refs.image.files[0]
             //     }
@@ -237,6 +242,15 @@ export default {
             //     }
             // });
             axios.post('/api-images', InstFormData , {headers : {'content-type': 'multipart/form-data'}}).then((response) => {
+                if (response.status == 200) {
+                    this.index();
+                }
+            });
+        },
+        setimage(image){
+            axios.put('/property-images-set/'+this.id,{
+                image:image
+            }).then((response) => {
                 if (response.status == 200) {
                     this.index();
                 }

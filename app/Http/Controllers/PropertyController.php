@@ -54,7 +54,7 @@ class PropertyController extends Controller
         ->join('users','properties.user_id','users.id')
         ->join('currency','currency.id','properties.currency_id')
         // ->join('images','images.property_id','properties.currency_id')
-        ->select('properties.id','properties.information','properties.title','properties.price','properties.dimension','status.status','users.name','currency.currency')->
+        ->select('properties.id','properties.information','properties.title','properties.price','properties.dimension','status.status','users.name','currency.currency','properties.image')->
         get();
         $total = Property::count();
         return response()->json([
@@ -75,7 +75,8 @@ class PropertyController extends Controller
             'status_id'=>$request['status'],
             'categorie_id'=>1,
             'city'=>1,
-            'currency_id'=>$request['currency_id']
+            'currency_id'=>$request['currency_id'],
+            'image'=>''
         ]);
     }
     public function update(Request $request,$id)

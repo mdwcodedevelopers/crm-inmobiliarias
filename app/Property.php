@@ -16,7 +16,8 @@ class Property extends Model
         'title',
         'categorie_id',
         'currency_id',
-        'city'
+        'city',
+        'image'
     ];
 
     /**

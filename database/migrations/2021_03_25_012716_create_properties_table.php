@@ -18,6 +18,7 @@ class CreatePropertiesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->string('information');
+            $table->string('image');
             $table->float('price');
             $table->float('dimension');
             $table->unsignedBigInteger('status_id')->nullable();
