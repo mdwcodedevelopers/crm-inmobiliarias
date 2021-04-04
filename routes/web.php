@@ -36,4 +36,7 @@ Route::get('/status', 'StatusViewController@index')->name('status');
 
 
 Route::resource('/interesed', OportunityController::class);
+Route::put('/interesed/close/{id}', 'OportunityController@closeOportunity');
 Route::get('/api-contacts','OportunityController@getContacts');
+Route::get('/api-notes/{id}','NoteController@show');
+Route::post('/api-notes','NoteController@store');

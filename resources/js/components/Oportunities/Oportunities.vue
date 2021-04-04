@@ -11,7 +11,10 @@
                 </li>
             </ul>
         </div>
-        <oportunities-table :users="users" :status="status"> </oportunities-table>
+        <oportunities-table 
+            :users="users" 
+            :status="status"
+            @updateList="updateStatusList(...arguments)"> </oportunities-table>
     </div>
 </template>
 
@@ -35,6 +38,23 @@ export default {
         users:Array,
         status:Array,
     },
+    created() {
+        this.status.forEach(element => {
+            element.count=0;
+        });
+    },
+    methods:{
+        updateStatusList(datas){  
+            
+            this.status.forEach(element => {
+            element.count=0;
+            });
+            
+            datas.forEach(element => {
+                this.status[element.status_id - 1].count++;
+            });
+        }
+    }
 
 }
 </script>

@@ -125,7 +125,6 @@
         getContacts(){
           axios.get('/api-contacts').then((response) =>{
             this.contacts= response.data;
-            console.log("nada");
           });
         },
         disabledButton(){
@@ -155,10 +154,7 @@
               setTimeout(() => this.dialog = false, 2000);
             });
            
-            this.oportunity.contact_id= "";
-            this.oportunity.name= "";
-            this.oportunity.vigency= "";
-            this.oportunity.status_id= "";
+            this.oportunity= [];
         },
     }
   }

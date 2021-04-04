@@ -2,11 +2,7 @@
     <div class="">
         <v-app-bar color="light-blue darken-1 " dark>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-<<<<<<< HEAD
-            <v-toolbar-title>{{title}}</v-toolbar-title>
-=======
             <v-toolbar-title>{{ title }}</v-toolbar-title>
->>>>>>> deee9bd50dbe7da7cbae6768cbe8c1850ae1a9e9
 
             <v-spacer></v-spacer>
             <button @click.prevent="logout()">
@@ -66,13 +62,8 @@
 <script>
 export default {
     props:{
-<<<<<<< HEAD
-        title:String
-    },
-=======
             title:String,
         },
->>>>>>> deee9bd50dbe7da7cbae6768cbe8c1850ae1a9e9
     data: () => ({
         drawer: false,
         group: null,

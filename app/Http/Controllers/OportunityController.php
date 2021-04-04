@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 class OportunityController extends Controller
 {
+
+    
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -64,15 +67,15 @@ class OportunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_user)
     {
         $oportunities = Oportunity::selectRaw('oportunities.*,  contacts.name AS contact, contacts.tel_1 AS tel_1,
-          contacts.tel_2 AS tel_2, contacts.email AS email, contacts.img_path AS img_contact, status_oportunities.name AS status, users.name AS user' )
+          contacts.tel_2 AS tel_2, contacts.email AS email, contacts.img_path AS img_contact, status_oportunities.name AS status, status_oportunities.color AS status_color, users.name AS user' )
         ->join('contacts', 'oportunities.contact_id', '=', 'contacts.id')
         ->join('users', 'oportunities.user_id', '=', 'users.id')
         ->join('status_oportunities', 'oportunities.status_id', '=', 'status_oportunities.id')
-        ->where('oportunities.user_id', $id)->get();
-        
+        ->where('oportunities.user_id', $id_user)->get();
+        // dd($oportunities);
         return compact('oportunities');
     }
 
@@ -111,7 +114,18 @@ class OportunityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $oportunity = Oportunity::find($id)->delete();
+
+        return "correcto";
+    }
+    public function closeOportunity(Request $request, $id)
+    {
+        $oportunity = Oportunity::find($id);
+        $oportunity->closed_reason = $request->reason;
+        $oportunity->closed = "1";
+        $oportunity->save();
+
+        return $oportunity;
     }
 
     public function getContacts(){

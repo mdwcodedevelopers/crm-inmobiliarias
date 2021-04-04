@@ -17,7 +17,8 @@ class CreateNoteOportunitiesTable extends Migration
             $table->bigIncrements('note_id')->unique();
             $table->string('title');
             $table->text('description');
-            $table->integer('oportunity_id');
+            $table->integer('oportunity_id')->unsigned()->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

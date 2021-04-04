@@ -3063,9 +3063,96 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Navs/NavAdmin.vue?vue&type=script&lang=js& ***!
   \************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\xampp2\\htdocs\\crm-inmobiliarias\\resources\\js\\components\\Navs\\NavAdmin.vue: Unexpected token (69:0)\n\n\u001b[0m \u001b[90m 67 |\u001b[39m \u001b[36mexport\u001b[39m \u001b[36mdefault\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 68 |\u001b[39m     props\u001b[33m:\u001b[39m{\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 69 |\u001b[39m \u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 70 |\u001b[39m         title\u001b[33m:\u001b[39m\u001b[33mString\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 71 |\u001b[39m     }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 72 |\u001b[39m \u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n    at Parser._raise (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:776:17)\n    at Parser.raiseWithData (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:769:17)\n    at Parser.raise (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:737:17)\n    at Parser.unexpected (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:9686:16)\n    at Parser.parseIdentifierName (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:11846:18)\n    at Parser.parseIdentifier (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:11819:23)\n    at Parser.parseMaybePrivateName (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:11148:19)\n    at Parser.parsePropertyName (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:11633:155)\n    at Parser.parsePropertyDefinition (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:11519:22)\n    at Parser.parseObjectLike (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:11434:25)\n    at Parser.parseExprAtom (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10994:23)\n    at Parser.parseExprSubscripts (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10655:23)\n    at Parser.parseUpdate (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10635:21)\n    at Parser.parseMaybeUnary (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10613:23)\n    at Parser.parseExprOps (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10474:23)\n    at Parser.parseMaybeConditional (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10448:23)\n    at Parser.parseMaybeAssign (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10411:21)\n    at C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10378:39\n    at Parser.allowInAnd (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:12051:12)\n    at Parser.parseMaybeAssignAllowIn (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10378:17)\n    at Parser.parseObjectProperty (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:11595:101)\n    at Parser.parseObjPropValue (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:11620:100)\n    at Parser.parsePropertyDefinition (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:11544:10)\n    at Parser.parseObjectLike (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:11434:25)\n    at Parser.parseExprAtom (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10994:23)\n    at Parser.parseExprSubscripts (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10655:23)\n    at Parser.parseUpdate (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10635:21)\n    at Parser.parseMaybeUnary (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10613:23)\n    at Parser.parseExprOps (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10474:23)\n    at Parser.parseMaybeConditional (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10448:23)\n    at Parser.parseMaybeAssign (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10411:21)\n    at C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10378:39\n    at Parser.allowInAnd (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:12045:16)\n    at Parser.parseMaybeAssignAllowIn (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:10378:17)\n    at Parser.parseExportDefaultExpression (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:13407:24)\n    at Parser.parseExport (C:\\xampp2\\htdocs\\crm-inmobiliarias\\node_modules\\@babel\\parser\\lib\\index.js:13317:31)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    title: String
+  },
+  data: function data() {
+    return {
+      drawer: false,
+      group: null
+    };
+  },
+  watch: {
+    group: function group() {
+      this.drawer = false;
+    }
+  },
+  methods: {
+    logout: function logout() {
+      axios.post("/logout", {}).then(function (response) {
+        if (response.status == 200) {
+          window.location.href = "/";
+        }
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -3480,7 +3567,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api-contacts').then(function (response) {
         _this.contacts = response.data;
-        console.log("nada");
       });
     },
     disabledButton: function disabledButton() {
@@ -3511,10 +3597,151 @@ __webpack_require__.r(__webpack_exports__);
           return _this2.dialog = false;
         }, 2000);
       });
-      this.oportunity.contact_id = "";
-      this.oportunity.name = "";
-      this.oportunity.vigency = "";
-      this.oportunity.status_id = "";
+      this.oportunity = [];
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Oportunities/Note-actions.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Oportunities/Note-actions.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    element: Object
+  },
+  data: function data() {
+    return {
+      noteDialog: false,
+      historyDialog: false,
+      list: [],
+      newNote: []
+    };
+  },
+  methods: {
+    saveNote: function saveNote(id) {
+      var _this = this;
+
+      var params = {
+        title: this.newNote.description,
+        description: this.newNote.title,
+        oportunity_id: id
+      };
+      axios.post('/api-notes', params).then(function (response) {
+        _this.noteDialog = false;
+        console.log(response);
+        _this.newNote = [];
+      });
+    },
+    history: function history() {
+      var _this2 = this;
+
+      var date;
+      axios.get("/api-notes/" + this.element.id).then(function (response) {
+        _this2.list = response.data; // console.log(this.list.sort((a, b) => a.created_at.getTime() > .created_at.getTime()));
+      });
     }
   }
 });
@@ -3947,48 +4174,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     users: Array,
@@ -4002,12 +4187,8 @@ __webpack_require__.r(__webpack_exports__);
       newStatus: [],
       newUser: [],
       emailText: [],
-      newNote: [{
-        title: null,
-        description: null
-      }],
-      noteDialog: false,
-      historyDialog: false,
+      colorGroup: [],
+      deleteDialog: false,
       dialogDelete: false,
       emailDialog: false,
       statusDialog: false,
@@ -4038,17 +4219,32 @@ __webpack_require__.r(__webpack_exports__);
       }];
     },
     reasons: function reasons() {
-      return ['Compró con nosotros', 'Alquiló con nosotros', 'Compró con otro', 'Alquiló con otro', 'Fantasma', 'Busqueda suspendida', 'Tasación exitosa (Ingreso a la propiedad)', 'Tasación suspendida (No ingreso a la propiedad)', 'Otro'];
+      return [{
+        id: 1,
+        name: 'Compró con nosotros'
+      }, {
+        id: 2,
+        name: 'Alquiló con nosotros'
+      }, {
+        id: 3,
+        name: 'Compró con otro'
+      }, {
+        id: 4,
+        name: 'Alquiló con otro'
+      }, {
+        id: 5,
+        name: 'Fantasma'
+      }, {
+        id: 6,
+        name: 'Tasación exitosa (Ingreso a la propiedad)'
+      }, {
+        id: 7,
+        name: 'Tasación suspendida (No ingreso a la propiedad)'
+      }];
     }
   },
-  watch: {},
   methods: {
     initialize: function initialize() {// this.datas = this.oportunities
-    },
-    saveNote: function saveNote() {
-      console.log(this.newNote.title);
-      console.log(this.newNote.description);
-      this.noteDialog = false;
     },
     sendEmail: function sendEmail(item) {
       item.forEach(function (element) {
@@ -4082,29 +4278,60 @@ __webpack_require__.r(__webpack_exports__);
       this.statusDialog = false;
     },
     closeOportunity: function closeOportunity() {
-      this.closeDialog = false;
+      var _this3 = this;
+
+      var params = {
+        reason: this.newStatus
+      };
+      this.selected.forEach(function (element) {
+        axios.put('/interesed/close/' + element.id, params).then(function (response) {
+          console.log(response);
+          element.status = 'Cerrado';
+          element.closed = 1;
+          _this3.closeDialog = false;
+        });
+      });
     },
     assignUser: function assignUser() {
-      var _this3 = this;
+      var _this4 = this;
 
       var params;
       var index;
       this.selected.forEach(function (element) {
         params = {
           status_id: element.status_id,
-          user_id: _this3.newUser
+          user_id: _this4.newUser
         };
         axios.put('/interesed/' + element.id, params).then(function (response) {
           console.log(response);
-          index = _this3.datas.findIndex(function (x) {
+          index = _this4.datas.findIndex(function (x) {
             return x.name == element.name;
           }) - 1;
 
-          _this3.datas.splice(index, 1);
+          _this4.datas.splice(index, 1);
         });
-        _this3.selected = [];
+        _this4.selected = [];
       });
       this.statusReassign = false;
+    },
+    deleteOportunity: function deleteOportunity() {
+      var _this5 = this;
+
+      var index;
+      this.selected.forEach(function (element) {
+        axios["delete"]('/interesed/' + element.id).then(function (response) {
+          console.log(response);
+          index = _this5.datas.findIndex(function (x) {
+            return x.name == element.name;
+          }) - 1;
+
+          _this5.datas.splice(index, 1);
+
+          _this5.deleteDialog = false;
+        });
+      }); // axios.delete('interesed/' + this.selected.id).then((response) => {
+      //       console.log(response);
+      // });
     }
   }
 });
@@ -4151,10 +4378,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     users: Array,
     status: Array
+  },
+  created: function created() {
+    this.status.forEach(function (element) {
+      element.count = 0;
+    });
+  },
+  methods: {
+    updateStatusList: function updateStatusList(datas) {
+      var _this = this;
+
+      this.status.forEach(function (element) {
+        element.count = 0;
+      });
+      datas.forEach(function (element) {
+        _this.status[element.status_id - 1].count++;
+      });
+    }
   }
 });
 
@@ -9966,7 +10213,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.venta {\n    background-color: #38c172;\n    color: #fff;\n}\n.VueCarousel-slide {\n    position: relative;\n    background: #2962FF;\n    color: #fff;\n    font-family: Arial;\n    text-align: center;\n    min-height: 100px;\n}\n.label {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n}\nslide {\n    margin: 600px;\n}\nrow {\n    margin-top: 10px;\n}\n", ""]);
+exports.push([module.i, "\n.venta {\r\n    background-color: #38c172;\r\n    color: #fff;\n}\n.VueCarousel-slide {\r\n    position: relative;\r\n    background: #2962FF;\r\n    color: #fff;\r\n    font-family: Arial;\r\n    text-align: center;\r\n    min-height: 100px;\n}\n.label {\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\n}\nslide {\r\n    margin: 600px;\n}\nrow {\r\n    margin-top: 10px;\n}\r\n", ""]);
 
 // exports
 
@@ -44429,13 +44676,9 @@ var render = function() {
               }
             }
           }),
-          _vm._v("\n<<<<<<< HEAD\n            "),
+          _vm._v(" "),
           _c("v-toolbar-title", [_vm._v(_vm._s(_vm.title))]),
-          _vm._v("\n=======\n            "),
-          _c("v-toolbar-title", [_vm._v(_vm._s(_vm.title))]),
-          _vm._v(
-            "\n>>>>>>> deee9bd50dbe7da7cbae6768cbe8c1850ae1a9e9\n\n            "
-          ),
+          _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
           _c(
@@ -45418,6 +45661,291 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Oportunities/Note-actions.vue?vue&type=template&id=71555a93&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Oportunities/Note-actions.vue?vue&type=template&id=71555a93& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { width: "500" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g(
+                      _vm._b(
+                        { attrs: { color: "#66BB6A" } },
+                        "v-btn",
+                        attrs,
+                        false
+                      ),
+                      on
+                    ),
+                    [
+                      _c("v-icon", { attrs: { color: "#fff" } }, [
+                        _vm._v(
+                          "\n                    mdi-comment\n                "
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.noteDialog,
+            callback: function($$v) {
+              _vm.noteDialog = $$v
+            },
+            expression: "noteDialog"
+          }
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", { staticClass: "headline grey lighten-2" }, [
+                _vm._v("\n                Nueva Nota\n              ")
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", sm: "12" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { label: "Titulo de Nota" },
+                                model: {
+                                  value: _vm.newNote.title,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.newNote, "title", $$v)
+                                  },
+                                  expression: "newNote.title"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12", sm: "12" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { label: "Descripcion de Nota" },
+                                model: {
+                                  value: _vm.newNote.description,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.newNote, "description", $$v)
+                                  },
+                                  expression: "newNote.description"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "blue darken-1", text: "" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.noteDialog = false
+                                    }
+                                  }
+                                },
+                                [_vm._v("Cancelar")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "blue darken-1", text: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.saveNote(_vm.element.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Guardar")]
+                              ),
+                              _vm._v(" "),
+                              _c("v-spacer")
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { width: "500" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g(
+                      _vm._b(
+                        {
+                          attrs: { color: "#66BB6A" },
+                          on: {
+                            click: function($event) {
+                              return _vm.history()
+                            }
+                          }
+                        },
+                        "v-btn",
+                        attrs,
+                        false
+                      ),
+                      on
+                    ),
+                    [
+                      _c("v-icon", { attrs: { color: "#fff" } }, [
+                        _vm._v(
+                          "\n                    mdi-history\n                "
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.historyDialog,
+            callback: function($$v) {
+              _vm.historyDialog = $$v
+            },
+            expression: "historyDialog"
+          }
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", { staticClass: "headline grey lighten-2" }, [
+                _vm._v("\n                Historial de cambios\n              ")
+              ]),
+              _vm._v(" "),
+              _c("v-card-text", [
+                _c(
+                  "ul",
+                  [
+                    _c("li", [
+                      _vm._v("Creado el " + _vm._s(_vm.element.created_at))
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.list, function(item) {
+                      return _c("li", { key: item.note_id }, [
+                        _vm._v(
+                          " \n                      Nota:" +
+                            _vm._s(item.title) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          " \n                           " +
+                            _vm._s(item.description) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          " \n                           Creada el " +
+                            _vm._s(item.created_at) +
+                            " "
+                        )
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _vm.element.closed
+                      ? _c("li", [
+                          _vm._v(
+                            "Cerrada el " +
+                              _vm._s(_vm.element.deleted_at) +
+                              " por"
+                          )
+                        ])
+                      : _vm._e()
+                  ],
+                  2
+                )
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Oportunities/Oportunities-table.vue?vue&type=template&id=de502cd6&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Oportunities/Oportunities-table.vue?vue&type=template&id=de502cd6&scoped=true& ***!
@@ -45451,15 +45979,6 @@ var render = function() {
               "v-toolbar",
               { attrs: { flat: "", height: "100px" } },
               [
-                _c("v-btn", { attrs: { small: "", text: "" } }, [
-                  _vm._v("\n          Ocultar para reasignar\n      ")
-                ]),
-                _vm._v(" "),
-                _c("v-divider", {
-                  staticClass: "mx-4",
-                  attrs: { inset: "", vertical: "" }
-                }),
-                _vm._v(" "),
                 [
                   _c(
                     "v-dialog",
@@ -45479,6 +45998,142 @@ var render = function() {
                                     {
                                       attrs: {
                                         disabled: _vm.selected.length === 0,
+                                        small: "",
+                                        text: ""
+                                      }
+                                    },
+                                    "v-btn",
+                                    attrs,
+                                    false
+                                  ),
+                                  on
+                                ),
+                                [
+                                  _c("v-icon", [
+                                    _vm._v(
+                                      "\n                  mdi-delete\n              "
+                                    )
+                                  ]),
+                                  _vm._v(
+                                    "\n              Eliminar oportunidad\n              "
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          }
+                        }
+                      ]),
+                      model: {
+                        value: _vm.deleteDialog,
+                        callback: function($$v) {
+                          _vm.deleteDialog = $$v
+                        },
+                        expression: "deleteDialog"
+                      }
+                    },
+                    [
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        [
+                          _c(
+                            "v-card-title",
+                            { staticClass: "headline grey lighten-2" },
+                            [
+                              _vm._v(
+                                "\n                Enviar Email\n              "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c("v-col", { attrs: { cols: "12" } }, [
+                                    _c("p", [
+                                      _vm._v(
+                                        "¿Esta seguro que desea eliminar esta oportunidad? Luego no podrá recuperarla"
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card-actions",
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            color: "blue darken-1",
+                                            text: ""
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.deleteDialog = false
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Cancelar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: { color: "red darken-1" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.deleteOportunity()
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Eliminar")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-spacer")
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                _vm._v(" "),
+                [
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { width: "600" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "activator",
+                          fn: function(ref) {
+                            var on = ref.on
+                            var attrs = ref.attrs
+                            return [
+                              _c(
+                                "v-btn",
+                                _vm._g(
+                                  _vm._b(
+                                    {
+                                      attrs: {
+                                        disabled:
+                                          _vm.selected.length === 0 ||
+                                          _vm.selected.closed,
                                         small: "",
                                         text: ""
                                       }
@@ -45644,7 +46299,9 @@ var render = function() {
                                   _vm._b(
                                     {
                                       attrs: {
-                                        disabled: _vm.selected.length === 0,
+                                        disabled:
+                                          _vm.selected.length === 0 ||
+                                          _vm.selected[0].closed,
                                         small: "",
                                         text: ""
                                       }
@@ -45803,7 +46460,9 @@ var render = function() {
                                   _vm._b(
                                     {
                                       attrs: {
-                                        disabled: _vm.selected.length === 0,
+                                        disabled:
+                                          _vm.selected.length === 0 ||
+                                          _vm.selected.closed,
                                         small: "",
                                         text: ""
                                       }
@@ -45984,7 +46643,9 @@ var render = function() {
                                   _vm._b(
                                     {
                                       attrs: {
-                                        disabled: _vm.selected.length === 0,
+                                        disabled:
+                                          _vm.selected.length === 0 ||
+                                          _vm.selected.closed,
                                         small: "",
                                         text: ""
                                       }
@@ -46180,268 +46841,51 @@ var render = function() {
         proxy: true
       },
       {
+        key: "group.header",
+        fn: function(ref) {
+          var group = ref.group
+          var toggle = ref.toggle
+          var isOpen = ref.isOpen
+          return [
+            _c(
+              "td",
+              {
+                staticStyle: {
+                  "text-align": "initial",
+                  "padding-left": "2rem"
+                },
+                attrs: { colspan: 6 }
+              },
+              [
+                _c(
+                  "v-btn",
+                  {
+                    ref: group,
+                    attrs: { "x-small": "", icon: "" },
+                    on: { click: toggle }
+                  },
+                  [
+                    isOpen
+                      ? _c("v-icon", [_vm._v("mdi-minus")])
+                      : _c("v-icon", [_vm._v("mdi-plus")])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("span", { staticClass: "mx-5 font-weight-bold" }, [
+                  _vm._v(_vm._s(group))
+                ])
+              ],
+              1
+            )
+          ]
+        }
+      },
+      {
         key: "item.actions",
         fn: function(ref) {
           var item = ref.item
-          return [
-            [
-              _c(
-                "v-dialog",
-                {
-                  attrs: { width: "500" },
-                  scopedSlots: _vm._u(
-                    [
-                      {
-                        key: "activator",
-                        fn: function(ref) {
-                          var on = ref.on
-                          var attrs = ref.attrs
-                          return [
-                            _c(
-                              "v-btn",
-                              _vm._g(
-                                _vm._b(
-                                  { attrs: { color: "#66BB6A" } },
-                                  "v-btn",
-                                  attrs,
-                                  false
-                                ),
-                                on
-                              ),
-                              [
-                                _c("v-icon", { attrs: { color: "#fff" } }, [
-                                  _vm._v(
-                                    "\n                    mdi-comment\n                "
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ]
-                        }
-                      }
-                    ],
-                    null,
-                    true
-                  ),
-                  model: {
-                    value: _vm.noteDialog,
-                    callback: function($$v) {
-                      _vm.noteDialog = $$v
-                    },
-                    expression: "noteDialog"
-                  }
-                },
-                [
-                  _vm._v(" "),
-                  _c(
-                    "v-card",
-                    [
-                      _c(
-                        "v-card-title",
-                        { staticClass: "headline grey lighten-2" },
-                        [_vm._v("\n                Nueva Nota\n              ")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-text",
-                        [
-                          _c(
-                            "v-container",
-                            [
-                              _c(
-                                "v-row",
-                                [
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "12", sm: "12" } },
-                                    [
-                                      _c("v-text-field", {
-                                        attrs: { label: "Titulo de Nota" },
-                                        model: {
-                                          value: _vm.newNote.title,
-                                          callback: function($$v) {
-                                            _vm.$set(_vm.newNote, "title", $$v)
-                                          },
-                                          expression: "newNote.title"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "12", sm: "12" } },
-                                    [
-                                      _c("v-text-field", {
-                                        attrs: { label: "Descripcion de Nota" },
-                                        model: {
-                                          value: _vm.newNote.description,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.newNote,
-                                              "description",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "newNote.description"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-card-actions",
-                                    [
-                                      _c("v-spacer"),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: {
-                                            color: "blue darken-1",
-                                            text: ""
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              _vm.noteDialog = false
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("Cancelar")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: {
-                                            color: "blue darken-1",
-                                            text: ""
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.saveNote(item.id)
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("Guardar")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("v-spacer")
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            _vm._v(" "),
-            [
-              _c(
-                "v-dialog",
-                {
-                  attrs: { width: "500" },
-                  scopedSlots: _vm._u(
-                    [
-                      {
-                        key: "activator",
-                        fn: function(ref) {
-                          var on = ref.on
-                          var attrs = ref.attrs
-                          return [
-                            _c(
-                              "v-btn",
-                              _vm._g(
-                                _vm._b(
-                                  { attrs: { color: "#66BB6A" } },
-                                  "v-btn",
-                                  attrs,
-                                  false
-                                ),
-                                on
-                              ),
-                              [
-                                _c("v-icon", { attrs: { color: "#fff" } }, [
-                                  _vm._v(
-                                    "\n                    mdi-history\n                "
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ]
-                        }
-                      }
-                    ],
-                    null,
-                    true
-                  ),
-                  model: {
-                    value: _vm.historyDialog,
-                    callback: function($$v) {
-                      _vm.historyDialog = $$v
-                    },
-                    expression: "historyDialog"
-                  }
-                },
-                [
-                  _vm._v(" "),
-                  _c(
-                    "v-card",
-                    [
-                      _c(
-                        "v-card-title",
-                        { staticClass: "headline grey lighten-2" },
-                        [
-                          _vm._v(
-                            "\n                Historial de cambios\n              "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("v-card-text", [
-                        _c("ul", [
-                          _c("li", [
-                            _vm._v(
-                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
-                            )
-                          ])
-                        ])
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ]
-          ]
+          return [_c("note-action", { attrs: { element: item } })]
         }
       },
       {
@@ -46589,7 +47033,12 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("oportunities-table", {
-        attrs: { users: _vm.users, status: _vm.status }
+        attrs: { users: _vm.users, status: _vm.status },
+        on: {
+          updateList: function($event) {
+            return _vm.updateStatusList.apply(void 0, arguments)
+          }
+        }
       })
     ],
     1
@@ -106651,6 +107100,7 @@ Vue.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('note-action', __webpack_require__(/*! ./components/Oportunities/Note-actions.vue */ "./resources/js/components/Oportunities/Note-actions.vue")["default"]);
 Vue.component('new-oportunity', __webpack_require__(/*! ./components/Oportunities/New-oportunity.vue */ "./resources/js/components/Oportunities/New-oportunity.vue")["default"]);
 Vue.component('contact-card', __webpack_require__(/*! ./components/Oportunities/Contact-card.vue */ "./resources/js/components/Oportunities/Contact-card.vue")["default"]);
 Vue.component('oportunities', __webpack_require__(/*! ./components/Oportunities/Oportunities.vue */ "./resources/js/components/Oportunities/Oportunities.vue")["default"]);
@@ -107528,6 +107978,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Oportunities/Note-actions.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/Oportunities/Note-actions.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Note_actions_vue_vue_type_template_id_71555a93___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Note-actions.vue?vue&type=template&id=71555a93& */ "./resources/js/components/Oportunities/Note-actions.vue?vue&type=template&id=71555a93&");
+/* harmony import */ var _Note_actions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Note-actions.vue?vue&type=script&lang=js& */ "./resources/js/components/Oportunities/Note-actions.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Note_actions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Note_actions_vue_vue_type_template_id_71555a93___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Note_actions_vue_vue_type_template_id_71555a93___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Oportunities/Note-actions.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Oportunities/Note-actions.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/Oportunities/Note-actions.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Note_actions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Note-actions.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Oportunities/Note-actions.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Note_actions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Oportunities/Note-actions.vue?vue&type=template&id=71555a93&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/Oportunities/Note-actions.vue?vue&type=template&id=71555a93& ***!
+  \**********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Note_actions_vue_vue_type_template_id_71555a93___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Note-actions.vue?vue&type=template&id=71555a93& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Oportunities/Note-actions.vue?vue&type=template&id=71555a93&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Note_actions_vue_vue_type_template_id_71555a93___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Note_actions_vue_vue_type_template_id_71555a93___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Oportunities/Oportunities-table.vue":
 /*!*********************************************************************!*\
   !*** ./resources/js/components/Oportunities/Oportunities-table.vue ***!
@@ -108083,8 +108602,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp2\htdocs\crm-inmobiliarias\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp2\htdocs\crm-inmobiliarias\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\crm-inmobiliarias\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\crm-inmobiliarias\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
