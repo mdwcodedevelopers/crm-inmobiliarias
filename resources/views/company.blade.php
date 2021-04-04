@@ -3,10 +3,10 @@
 @section('content')
 
     <div class="">
-        <nav-admin :title="'Estatus'"/>
+        <nav-admin :title="'Empresa'"/>
     </div>
-    <div class="container">
+    <div class="">
 
-        <status />
+        <company />
     </div>
 @endsection

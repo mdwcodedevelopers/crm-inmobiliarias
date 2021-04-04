@@ -26,7 +26,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        // 'password',
+         'remember_token',
     ];
 
     /**
@@ -43,7 +44,7 @@ class User extends Authenticatable
      */
 
 
-    /** 
+    /**
      * Relacion uno a muchos con el modelo Oportunity
      */
     public function notes()

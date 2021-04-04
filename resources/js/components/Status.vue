@@ -5,7 +5,7 @@
             <v-layout row justify-center>
                 <v-dialog v-model="dialog" persistent max-width="400px">
                     <template v-slot:activator="{ on }">
-                        <v-btn color="success" dark v-on="on">Nuevo estatus</v-btn>
+                        <v-btn color="success" class="my-4" dark v-on="on">Nuevo estatus</v-btn>
                     </template>
                     <v-card>
                         <v-card-title>

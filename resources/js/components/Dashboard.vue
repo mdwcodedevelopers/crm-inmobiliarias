@@ -12,7 +12,8 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn text dark>
-                        Ver Propiedades
+                        <a href="/properties-user" class="text-white">Ver Propiedades</a>
+
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -27,7 +28,8 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn text dark>
-                        Ver Usuarios
+                      <a href="/users" class="text-white">Ver Usuarios</a>
+
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -50,5 +52,6 @@ export default {
             this.users = response.data.users;
         });
     }
+
 }
 </script>

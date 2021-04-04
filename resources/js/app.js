@@ -30,7 +30,9 @@ Vue.component('oportunities', require('./components/Oportunities/Oportunities.vu
 Vue.component('oportunities-table', require('./components/Oportunities/Oportunities-table.vue').default);
 Vue.component('properties', require('./components/Properties.vue').default);
 Vue.component('propertie', require('./components/Property.vue').default);
+Vue.component('profile', require('./components/Profile.vue').default);
 Vue.component('users', require('./components/Users.vue').default);
+Vue.component('company', require('./components/Company.vue').default);
 Vue.component('image-propertie', require('./components/ImagesProperty.vue').default);
 Vue.component('nav-guest', require('./components/Navs/NavGuest.vue').default);
 Vue.component('nav-admin', require('./components/Navs/NavAdmin.vue').default);

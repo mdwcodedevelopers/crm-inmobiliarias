@@ -68,7 +68,7 @@ export default {
         drawer: false,
         group: null,
     }),
-    
+
     watch: {
         group() {
             this.drawer = false
@@ -85,6 +85,6 @@ export default {
             });
         }
     }
-    
+
 }
 </script>
