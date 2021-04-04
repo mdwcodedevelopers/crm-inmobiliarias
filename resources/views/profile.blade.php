@@ -3,10 +3,10 @@
 @section('content')
     <div class="">
         <div class="">
-            <nav-admin :title="'Propiedades'"/>
+            <nav-admin :title="'Perfil'"/>
         </div>
         <div class="container">
-            <properties-user :rol="{{$rol}}"/>
+            <profile/>
         </div>
 
     </div>

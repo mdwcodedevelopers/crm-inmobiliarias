@@ -120,7 +120,7 @@ v-model="archivo" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon
                 <v-dialog v-model="dialogdelete" persistent max-width="600px">
                     <v-card>
                         <v-card-title>
-                            <span class="headline">Desea eliminar: {{propiedad_eliminar}}</span>
+                            <span class="headline">Desea eliminar:</span>
                         </v-card-title>
                         <v-card-text>
 
@@ -134,35 +134,25 @@ v-model="archivo" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon
                 </v-dialog>
             </v-layout>
         </template>
+        <template>
+            <v-layout row justify-center>
+                <v-dialog v-model="dialogimage" persistent max-width="600px">
+                    <v-card>
+                        <v-card-title>
+                            <span class="headline">Desea poner como imagen principal</span>
+                        </v-card-title>
+                        <v-card-text>
 
-        <v-row>
-            <v-col  v-for="card in properties" :key="card.id" cols="4" >
-                <h3 class="text-center venta mt-3">{{card.name}}</h3>
-                <v-card>
-                    <v-img src="https://cdn.vuetifyjs.com/images/cards/house.jpg" class="" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="200px">
-
-                    </v-img>
-                    <v-card-title v-text="card.title"></v-card-title>
-
-                    <v-card-actions>
-                        <v-chip color="#2979FF" text-color="#fff" class="mr-1">
-                            {{card.dimension}} mt2
-                        </v-chip>
-                        <v-chip color="#38c172" text-color="#fff" class="mr-3">
-                            {{card.price}}
-                        </v-chip>
-                        <v-btn
-                        class="ma-2"
-                        outlined
-                        color="indigo"
-                        @click="show(card.id)"
-                      >
-                        Ver más
-                      </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-col>
-        </v-row>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn @click="dialogdelete = false">Cancelar</v-btn>
+                            <v-btn color="#E53935" class="text-white" @click.prevent="delete_model()">Eliminar</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-layout>
+        </template>
         <v-row>
             <v-col  v-for="item in images" :key="item.id" cols="4" >
                 <v-card>
@@ -179,9 +169,9 @@ v-model="archivo" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon
                                 mdi-delete
                             </v-icon>
                         </v-btn>
-                        <v-btn color="#E53935" @click="setimage(item.url_image)">
+                        <v-btn color="warning" @click="setimage(item.url_image)">
                             <v-icon color="#fff">
-                                mdi-delete
+                                mdi-file-image
                             </v-icon>
                         </v-btn>
                     </v-card-actions>
@@ -209,16 +199,17 @@ v-model="archivo" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon
 export default {
     props: {
         id:Number,
-        property:Array
+        property:Object
     },
     data() {
         return {
-            dialog: false,
+            dialogimage: false,
             dialogedit: false,
             dialogdelete: false,
             error:'',
             archivo:null,
             images: [],
+            dialog:false
         }
     },
     methods: {

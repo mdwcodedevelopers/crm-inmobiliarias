@@ -78,21 +78,24 @@
             </template>
             <template v-slot:item.action="{ item }">
 
-                <v-btn color="#66BB6A" @click="edit(item.id,item.title,item.dimension,item.price,item.information)">
+                <v-btn color="#66BB6A" class="m-1" @click="edit(item.id,item.title,item.dimension,item.price,item.information)">
                     <v-icon color="#fff">
                         mdi-pencil
                     </v-icon>
                 </v-btn>
-                <v-btn color="warning" @click="images(item.id)">
+                <v-btn color="warning" class="m-1" @click="images(item.id)">
                     <v-icon color="#fff">
                         mdi-file-image
                     </v-icon>
                 </v-btn>
-                <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
-                    <v-icon color="#fff">
-                        mdi-delete
-                    </v-icon>
-                </v-btn>
+                <div class="" v-if="rol==1">
+                    <v-btn color="#E53935" class="m-1" @click="delete_dialog(item.id,item.title)">
+                        <v-icon color="#fff">
+                            mdi-delete
+                        </v-icon>
+                    </v-btn>
+                </div>
+
             </template>
 
         </v-data-table>

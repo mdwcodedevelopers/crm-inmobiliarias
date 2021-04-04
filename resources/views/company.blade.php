@@ -3,9 +3,10 @@
 @section('content')
 
     <div class="">
-        <nav-admin :title="'Monedas'"/>
+        <nav-admin :title="'Empresa'"/>
     </div>
-    <div class="container">
-        <currency />
+    <div class="">
+
+        <company />
     </div>
 @endsection

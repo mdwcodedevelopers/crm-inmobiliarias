@@ -1,155 +1,185 @@
 <template>
     <div class="text-center">
-        <template>
-            <v-layout row justify-center>
-                <v-dialog v-model="dialog" persistent max-width="600px">
-                    <template v-slot:activator="{ on }">
-                        <v-btn color="success" class="my-4" dark v-on="on">Crear usuario <v-icon>mdi-account-multiple-plus </v-icon>
-                        </v-btn>
-                    </template>
-                    <v-card color="">
-                        <v-card-title class="text-center">
-                            <span class="headline">Crear usuario</span>
-                        </v-card-title>
-                        <v-card-text>
-                            <v-container grid-list-md>
-                                <v-layout wrap>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Nombre" v-model="name" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Correo" v-model="email" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6 v-if="rol_id==2">
-                                        <v-text-field label="Telefono" v-model="phone" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6 v-if="rol_id==2">
-                                        <v-text-field label="Provincia" v-model="province" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6 v-if="rol_id==2">
-                                        <v-text-field label="Dirección" v-model="direction" required></v-text-field>
-                                    </v-flex>
+        <v-card >
+            <v-card-title class="text-center justify-center py-6">
+              <template>
+                <v-layout row justify-center>
+                    <v-dialog v-model="dialog" persistent max-width="600px">
+                        <template v-slot:activator="{ on }">
+                            <v-btn color="success" class="my-4" dark v-on="on">Crear usuario <v-icon>mdi-account-multiple-plus </v-icon>
+                            </v-btn>
+                        </template>
+                        <v-card color="">
+                            <v-card-title class="text-center">
+                                <span class="headline">Crear usuario</span>
+                            </v-card-title>
+                            <v-card-text>
+                                <v-container grid-list-md>
+                                    <v-layout wrap>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Nombre" v-model="name" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Correo" v-model="email" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6 v-if="rol_id==2">
+                                            <v-text-field label="Telefono" v-model="phone" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6 v-if="rol_id==2">
+                                            <v-text-field label="Provincia" v-model="province" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6 v-if="rol_id==2">
+                                            <v-text-field label="Dirección" v-model="direction" required></v-text-field>
+                                        </v-flex>
 
-                                    <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" v-model="rol_id">
-                                            <option selected disabled>Moneda
-                                            </option>
-                                            <option v-for="item in roles" :value="item.id">
-                                                {{ item.rol }}
-                                            </option>
-                                        </select>
-                                    </v-flex>
-                                    <v-flex xs12>
-                                        {{error}}
-                                    </v-flex>
-                                </v-layout>
-                            </v-container>
-                        </v-card-text>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="danger" @click="dialog = false">Cancelar</v-btn>
-                            <v-btn color="success" @click.prevent="create()">Crear</v-btn>
-                        </v-card-actions>
+                                        <v-flex xs12 sm6 md6>
+                                            <select class="form-control mt-2" placeholder="Estado" v-model="rol_id">
+                                                <option selected disabled>Moneda
+                                                </option>
+                                                <option v-for="item in roles" :value="item.id">
+                                                    {{ item.rol }}
+                                                </option>
+                                            </select>
+                                        </v-flex>
+                                        <v-flex xs12>
+                                            {{error}}
+                                        </v-flex>
+                                    </v-layout>
+                                </v-container>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="danger" @click="dialog = false">Cancelar</v-btn>
+                                <v-btn color="success" @click.prevent="create()">Crear</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </v-layout>
+            </template>
+            </v-card-title>
+
+            <v-tabs
+              v-model="tab"
+              background-color="transparent"
+              grow
+            >
+              <v-tab
+                v-for="itemtab in items"
+                :key="itemtab"
+              >
+                {{ itemtab }}
+              </v-tab>
+            </v-tabs>
+
+            <v-tabs-items v-model="tab">
+                <v-tab-item
+                  :key="itemtab"
+                >
+                  <v-card flat>
+                    <v-card color="orange" class="text-white my-2">
+                        <v-card-title class="display-1 mt-2" color="blue">Administradores</v-card-title>
+                        <v-data-table :headers="headers" :items="admins" item-key="propeties-user" class="elevation-1" :search="search">
+                            <template v-slot:top>
+                                <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
+                            </template>
+                            <template>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                    </td>
+                                    <td colspan="4"></td>
+                                </tr>
+                            </template>
+                            <template v-slot:item.action="{ item }">
+
+                                <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,1)">
+                                    <v-icon color="#fff">
+                                        mdi-pencil
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn color="#E53935" @click="delete_dialog(item.id,item.name,item.email)">
+                                    <v-icon color="#fff">
+                                        mdi-delete
+                                    </v-icon>
+                                </v-btn>
+                            </template>
+
+                        </v-data-table>
                     </v-card>
-                </v-dialog>
-            </v-layout>
-        </template>
-        <v-card color="orange" class="text-white my-2">
-            <card-title class="display-1 mt-2" color="blue">Administradores</card-title>
-            <v-data-table :headers="headers" :items="admins" item-key="propeties-user" class="elevation-1" :search="search">
-                <template v-slot:top>
-                    <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
-                </template>
-                <template>
-                    <tr>
-                        <td></td>
-                        <td>
-                        </td>
-                        <td colspan="4"></td>
-                    </tr>
-                </template>
-                <template v-slot:item.action="{ item }">
+                  </v-card>
+                </v-tab-item>
+                <v-tab-item>
+                    <v-card class="my-4" color="blue darken-2">
+                        <v-card-title class="display-1 text-white my-2">Agentes</v-card-title>
+                        <v-data-table :headers="headers" :items="agents" item-key="propeties-user" class="elevation-1" :search="search">
+                            <template v-slot:top>
+                                <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
+                            </template>
+                            <template>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                    </td>
+                                    <td colspan="4"></td>
+                                </tr>
+                            </template>
+                            <template v-slot:item.action="{ item }">
 
-                    <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,1)">
-                        <v-icon color="#fff">
-                            mdi-pencil
-                        </v-icon>
-                    </v-btn>
-                    <v-btn color="#E53935" @click="delete_dialog(item.id)">
-                        <v-icon color="#fff">
-                            mdi-delete
-                        </v-icon>
-                    </v-btn>
-                </template>
+                                <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,3)">
+                                    <v-icon color="#fff">
+                                        mdi-pencil
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn color="#E53935" @click="delete_dialog(item.id,item.name,item.email)">
+                                    <v-icon color="#fff">
+                                        mdi-delete
+                                    </v-icon>
+                                </v-btn>
+                            </template>
 
-            </v-data-table>
-        </v-card>
+                        </v-data-table>
+                    </v-card>
+                </v-tab-item>
 
-        <v-card class="my-4" color="blue darken-2">
-            <card-title class="display-1 text-white my-2">Agentes</card-title>
-            <v-data-table :headers="headers" :items="agents" item-key="propeties-user" class="elevation-1" :search="search">
-                <template v-slot:top>
-                    <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
-                </template>
-                <template>
-                    <tr>
-                        <td></td>
-                        <td>
-                        </td>
-                        <td colspan="4"></td>
-                    </tr>
-                </template>
-                <template v-slot:item.action="{ item }">
+                <v-tab-item>
+                    <v-card class="my-4" color="cyan darken-3">
+                        <v-card-title class="display-1 text-white">Usuarios</v-card-title>
+                        <v-data-table :headers="usersheader" :items="users" item-key="propeties-user" class="elevation-1" :search="search">
+                            <template v-slot:top>
+                                <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
+                            </template>
+                            <template>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                    </td>
+                                    <td colspan="4"></td>
+                                </tr>
+                            </template>
+                            <template v-slot:item.action="{ item }">
 
-                    <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,3)">
-                        <v-icon color="#fff">
-                            mdi-pencil
-                        </v-icon>
-                    </v-btn>
-                    <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
-                        <v-icon color="#fff">
-                            mdi-delete
-                        </v-icon>
-                    </v-btn>
-                </template>
+                                <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,2)">
+                                    <v-icon color="#fff">
+                                        mdi-pencil
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn color="#E53935" @click="delete_dialog(item.id,item.name,item.email)">
+                                    <v-icon color="#fff">
+                                        mdi-delete
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn color="#66BB6A" @click="whatsapp(item.phone)">
+                                    <v-icon color="#fff">
+                                        mdi-whatsapp
+                                    </v-icon>
+                                </v-btn>
+                            </template>
 
-            </v-data-table>
-        </v-card>
-        <v-card class="my-4" color="cyan darken-3">
-            <card-title class="display-1 text-white">Usuarios</card-title>
-            <v-data-table :headers="usersheader" :items="users" item-key="propeties-user" class="elevation-1" :search="search">
-                <template v-slot:top>
-                    <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
-                </template>
-                <template>
-                    <tr>
-                        <td></td>
-                        <td>
-                        </td>
-                        <td colspan="4"></td>
-                    </tr>
-                </template>
-                <template v-slot:item.action="{ item }">
-
-                    <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,2)">
-                        <v-icon color="#fff">
-                            mdi-pencil
-                        </v-icon>
-                    </v-btn>
-                    <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
-                        <v-icon color="#fff">
-                            mdi-delete
-                        </v-icon>
-                    </v-btn>
-                    <v-btn color="#66BB6A" @click="whatsapp(item.phone)">
-                        <v-icon color="#fff">
-                            mdi-whatsapp
-                        </v-icon>
-                    </v-btn>
-                </template>
-
-            </v-data-table>
-        </v-card>
+                        </v-data-table>
+                    </v-card>
+                </v-tab-item>
+            </v-tabs-items>
+          </v-card>
 
         <template>
             <v-layout row justify-center>
@@ -206,7 +236,7 @@
                 <v-dialog v-model="dialogdelete" persistent max-width="600px">
                     <v-card>
                         <v-card-title>
-                            <span class="headline">Desea eliminar: </span>
+                            <span class="headline">Desea eliminar al usuario: {{name_delete}} ({{email_delete}})</span>
                         </v-card-title>
                         <v-card-text>
 
@@ -230,6 +260,7 @@ export default {
     },
     data() {
         return {
+            drawer: false,
             dialog: false,
             dialogedit: false,
             dialogdelete: false,
@@ -253,7 +284,14 @@ export default {
             phone_edit: '',
             province_edit: '',
             direction_edit: '',
-            error_edit:''
+            error_edit:'',
+            name_delete:'',
+            email_delete:'',
+            tab: null,
+            itemtab:'',
+        items: [
+          'Administradores', 'Agentes', 'Usuarios'
+        ],
         }
     },
     methods: {
@@ -298,6 +336,15 @@ export default {
                     }
                 });
             }
+        },
+        logout() {
+            axios.post("/logout", {
+
+            }).then((response) => {
+                if (response.status == 200) {
+                    window.location.href ="/"
+                }
+            });
         },
         edit_model() {
             if (this.rol_id_edit == 1 || this.rol_id_edit == 3) {
@@ -348,8 +395,10 @@ export default {
             console.log(this.name);
 
         },
-        delete_dialog(id) {
+        delete_dialog(id,name,email) {
             this.id_delete = id;
+            this.name_delete=name;
+            this.email_delete=email;
             this.dialogdelete = true;
         },
         whatsapp(phone){

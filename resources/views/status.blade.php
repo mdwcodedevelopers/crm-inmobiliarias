@@ -5,7 +5,7 @@
     <div class="">
         <nav-admin :title="'Estatus'"/>
     </div>
-    <div class="">
+    <div class="container">
 
         <status />
     </div>
