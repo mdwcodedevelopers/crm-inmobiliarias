@@ -6,7 +6,7 @@
         <div>
             <ul class="d-flex list-status flex-wrap justify-center  ">
                 <li v-for="state in status" :style="{ backgroundColor: state.color}" :key="state.id">
-                    <span>{{state.count}}</span> 
+                    <span v-if="state.count != 0">{{state.count}}</span> 
                     <p>{{state.name}}</p>
                 </li>
             </ul>
@@ -39,11 +39,6 @@ export default {
         users:Array,
         status:Array,
         rol: Number,
-    },
-    created() {
-        this.status.forEach(element => {
-            element.count=0;
-        });
     },
     methods:{
         updateStatusList(datas){  

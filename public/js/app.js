@@ -3699,6 +3699,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     status: Array
@@ -3745,7 +3747,7 @@ __webpack_require__.r(__webpack_exports__);
         contact_id: this.oportunity.contact_id,
         status_id: this.oportunity.status_id
       };
-      axios.post('/interesed/', newOportunity).then(function (response) {
+      axios.post('/api-oportunities/', newOportunity).then(function (response) {
         console.log(response);
         _this2.responseRequest = "Registro guardado";
         setTimeout(function () {
@@ -4336,6 +4338,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     users: Array,
@@ -4411,97 +4417,110 @@ __webpack_require__.r(__webpack_exports__);
     initialize: function initialize() {// this.datas = this.oportunities
     },
     sendEmail: function sendEmail(item) {
+      var _this = this;
+
+      var params;
       item.forEach(function (element) {
-        console.log(element.email);
+        params = {
+          name: element.contact,
+          oportunity: element.name,
+          email: element.email,
+          subject: _this.emailText.asunto,
+          text: _this.emailText.texto
+        };
+        axios.post('/api-oportunities/sendMail', params).then(function (response) {
+          console.log(response);
+        });
       });
       this.emailDialog = false;
     },
     changeUser: function changeUser() {
-      var _this = this;
+      var _this2 = this;
 
-      axios.get('/interesed/' + this.userSelected).then(function (response) {
-        _this.datas = response.data.oportunities;
+      axios.get('/api-oportunities/' + this.userSelected).then(function (response) {
+        _this2.datas = response.data.oportunities;
 
-        _this.datas.forEach(function (element) {
+        _this2.datas.forEach(function (element) {
           if (element.closed == "1") {
-            console.log("cerrado");
             element.status = "Cerrado";
           }
 
           ;
+
+          _this2.$emit('updateList', _this2.datas);
         });
       });
     },
     changeStatus: function changeStatus() {
-      var _this2 = this;
+      var _this3 = this;
 
       var params;
       this.selected.forEach(function (element) {
         console.log(element);
         params = {
-          status_id: _this2.newStatus,
+          status_id: _this3.newStatus,
           user_id: element.user_id
         };
-        axios.put('/interesed/' + element.id, params).then(function (response) {
+        axios.put('/api-oportunities/' + element.id, params).then(function (response) {
           console.log(response);
-          element.status = _this2.status[_this2.newStatus - 1].name;
+          element.status = _this3.status[_this3.newStatus - 1].name;
         });
-        _this2.selected = [];
+        _this3.selected = [];
       });
       this.statusDialog = false;
     },
     closeOportunity: function closeOportunity() {
-      var _this3 = this;
+      var _this4 = this;
 
       var params = {
         reason: this.newStatus,
         description: this.description
       };
       this.selected.forEach(function (element) {
-        axios.put('/interesed/close/' + element.id, params).then(function (response) {
+        axios.put('/api-oportunities/close/' + element.id, params).then(function (response) {
           console.log(response);
           element.status = 'Cerrado';
           element.closed = 1;
-          _this3.closeDialog = false;
+          _this4.closeDialog = false;
         });
       });
     },
     assignUser: function assignUser() {
-      var _this4 = this;
+      var _this5 = this;
 
       var params;
       var index;
       this.selected.forEach(function (element) {
         params = {
           status_id: element.status_id,
-          user_id: _this4.newUser
+          user_id: _this5.newUser
         };
-        axios.put('/interesed/' + element.id, params).then(function (response) {
-          console.log(response);
-          index = _this4.datas.findIndex(function (x) {
-            return x.name == element.name;
-          }) - 1;
-
-          _this4.datas.splice(index, 1);
-        });
-        _this4.selected = [];
-      });
-      this.statusReassign = false;
-    },
-    deleteOportunity: function deleteOportunity() {
-      var _this5 = this;
-
-      var index;
-      this.selected.forEach(function (element) {
-        axios["delete"]('/interesed/' + element.id).then(function (response) {
+        axios.put('/api-oportunities/' + element.id, params).then(function (response) {
           console.log(response);
           index = _this5.datas.findIndex(function (x) {
             return x.name == element.name;
           }) - 1;
 
           _this5.datas.splice(index, 1);
+        });
+        _this5.selected = [];
+      });
+      this.statusReassign = false;
+    },
+    deleteOportunity: function deleteOportunity() {
+      var _this6 = this;
 
-          _this5.deleteDialog = false;
+      var index;
+      this.selected.forEach(function (element) {
+        axios["delete"]('/api-oportunities/' + element.id).then(function (response) {
+          console.log(response);
+          index = _this6.datas.findIndex(function (x) {
+            return x.name == element.name;
+          }) - 1;
+
+          _this6.datas.splice(index, 1);
+
+          _this6.deleteDialog = false;
         });
       }); // axios.delete('interesed/' + this.selected.id).then((response) => {
       //       console.log(response);
@@ -4561,11 +4580,6 @@ __webpack_require__.r(__webpack_exports__);
     users: Array,
     status: Array,
     rol: Number
-  },
-  created: function created() {
-    this.status.forEach(function (element) {
-      element.count = 0;
-    });
   },
   methods: {
     updateStatusList: function updateStatusList(datas) {
@@ -46210,7 +46224,7 @@ var render = function() {
                       _vm._b(
                         {
                           staticClass: "my-6",
-                          attrs: { color: "primary", dark: "" },
+                          attrs: { color: "success", dark: "" },
                           on: {
                             click: function($event) {
                               return _vm.newOps()
@@ -46223,7 +46237,11 @@ var render = function() {
                       ),
                       on
                     ),
-                    [_vm._v("\n        Nueva Oportunidad\n      ")]
+                    [
+                      _vm._v("\n        Nueva Oportunidad\n        "),
+                      _c("v-icon", [_vm._v("mdi-briefcase-plus ")])
+                    ],
+                    1
                   )
                 ]
               }
@@ -46972,11 +46990,20 @@ var render = function() {
                                     "v-col",
                                     { attrs: { cols: "12", sm: "12" } },
                                     [
-                                      _c(
-                                        "v-text-field",
-                                        { attrs: { disabled: "" } },
-                                        [_vm._v("asdasdas")]
-                                      )
+                                      _c("v-text-field", {
+                                        attrs: { label: "Asunto" },
+                                        model: {
+                                          value: _vm.emailText.asunto,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.emailText,
+                                              "asunto",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "emailText.asunto"
+                                        }
+                                      })
                                     ],
                                     1
                                   ),
@@ -46988,11 +47015,15 @@ var render = function() {
                                       _c("v-textarea", {
                                         attrs: { label: "Texto de email" },
                                         model: {
-                                          value: _vm.emailText,
+                                          value: _vm.emailText.texto,
                                           callback: function($$v) {
-                                            _vm.emailText = $$v
+                                            _vm.$set(
+                                              _vm.emailText,
+                                              "texto",
+                                              $$v
+                                            )
                                           },
-                                          expression: "emailText"
+                                          expression: "emailText.texto"
                                         }
                                       })
                                     ],
@@ -47026,7 +47057,9 @@ var render = function() {
                                           attrs: {
                                             color: "blue darken-1",
                                             text: "",
-                                            disabled: _vm.emailText.length == 0
+                                            disabled:
+                                              Object.entries(_vm.emailText)
+                                                .length === 0
                                           },
                                           on: {
                                             click: function($event) {
@@ -47810,7 +47843,9 @@ var render = function() {
               "li",
               { key: state.id, style: { backgroundColor: state.color } },
               [
-                _c("span", [_vm._v(_vm._s(state.count))]),
+                state.count != 0
+                  ? _c("span", [_vm._v(_vm._s(state.count))])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("p", [_vm._v(_vm._s(state.name))])
               ]

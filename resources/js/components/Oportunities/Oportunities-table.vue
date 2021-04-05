@@ -100,24 +100,28 @@
                         cols="12"
                         sm="12"
                       >
+                      
                       <v-text-field
-                          disabled
-                        >asdasdas</v-text-field>
+                        v-model="emailText.asunto"
+                        label="Asunto"
+                      ></v-text-field>
                       </v-col>
+                      
                       <v-col
                         cols="12"
                         sm="12"
                       >
                       <v-textarea
-                        v-model="emailText"
+                        v-model="emailText.texto"
                         label="Texto de email"
                       ></v-textarea>
                       </v-col>
-
+                      
+    
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="emailDialog = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text :disabled="emailText.length==0" @click="sendEmail(selected)">Enviar mensaje</v-btn>
+                        <v-btn color="blue darken-1" text  :disabled="Object.entries(emailText).length === 0" @click="sendEmail(selected)">Enviar mensaje</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                   </v-row>
@@ -513,19 +517,29 @@
         // this.datas = this.oportunities
       },
       sendEmail(item){
+        let params;
         item.forEach(element => {
-          console.log(element.email);
+          params={
+            name: element.contact,
+            oportunity: element.name,
+            email: element.email,
+            subject: this.emailText.asunto,
+            text: this.emailText.texto
+          }
+          axios.post('/api-oportunities/sendMail', params).then((response) =>{
+            console.log(response);
+          });
         });
         this.emailDialog=false;
       },
       changeUser(){
-        axios.get('/interesed/' + this.userSelected).then((response) => {
+        axios.get('/api-oportunities/' + this.userSelected).then((response) => {
           this.datas = response.data.oportunities;
           this.datas.forEach(element => {
             if (element.closed =="1") {
-              console.log("cerrado")
               element.status = "Cerrado";
             };
+            this.$emit('updateList', this.datas);
           });
         });
 
@@ -539,7 +553,7 @@
             status_id: this.newStatus,
             user_id: element.user_id,
           };
-        axios.put('/interesed/' + element.id, params ).then((response) => {
+        axios.put('/api-oportunities/' + element.id, params ).then((response) => {
               console.log(response);
               element.status=this.status[this.newStatus-1].name;
         });
@@ -553,7 +567,7 @@
           description:this.description,
         };
         this.selected.forEach(element => {
-          axios.put('/interesed/close/' + element.id, params ).then((response) => {
+          axios.put('/api-oportunities/close/' + element.id, params ).then((response) => {
             console.log(response);
             element.status='Cerrado';
             element.closed=1;
@@ -569,7 +583,7 @@
             status_id: element.status_id,
             user_id: this.newUser,
           };
-          axios.put('/interesed/' + element.id, params ).then((response) => {
+          axios.put('/api-oportunities/' + element.id, params ).then((response) => {
               console.log(response);
               index = this.datas.findIndex( x => x.name == element.name)-1;
               this.datas.splice(index,1)
@@ -582,7 +596,7 @@
         let index; 
 
         this.selected.forEach(element => {
-          axios.delete('/interesed/' + element.id ).then((response) => {
+          axios.delete('/api-oportunities/' + element.id ).then((response) => {
             console.log(response);
               index = this.datas.findIndex( x => x.name == element.name)-1;
               this.datas.splice(index,1);

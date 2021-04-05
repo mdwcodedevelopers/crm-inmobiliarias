@@ -7,8 +7,9 @@
       
     >
       <template v-slot:activator="{ on, attrs }">
+       
         <v-btn
-          color="primary"
+          color="success"
           dark
           v-bind="attrs"
           v-on="on"
@@ -16,6 +17,7 @@
           @click="newOps()"
         >
           Nueva Oportunidad
+          <v-icon>mdi-briefcase-plus </v-icon>
         </v-btn>
       </template>
       <v-card>
@@ -148,7 +150,7 @@
                 status_id: this.oportunity.status_id 
             }
 
-            axios.post('/interesed/', newOportunity).then((response) => {
+            axios.post('/api-oportunities/', newOportunity).then((response) => {
               console.log(response);
               this.responseRequest="Registro guardado";
               setTimeout(() => this.dialog = false, 2000);

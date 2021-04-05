@@ -8,6 +8,7 @@ use App\NoteOportunity;
 use App\Contact;
 use App\StatusOportunity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OportunityController extends Controller
 {
@@ -23,7 +24,10 @@ class OportunityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request){
+
+    }
+    public function view(Request $request)
     {           
         $user=User::find(auth()->id())->rol_id;
         $users = User::selectRaw('id, name')->get();
@@ -133,5 +137,15 @@ class OportunityController extends Controller
         $contacts = Contact::get();
         return $contacts;
         
+    }
+    public function sendEmail(Request $request)
+    {
+        $data["text"]=$request->text;
+        $data["oportunity"]=$request->oportunity;
+        $data["contact_name"] = $request->name;
+        Mail::send('emails.contact_oportunity', $data, function($message) use ($request) {
+            $message->to($request->email)->subject($request->subject);
+        });
+        return response()->json("success", 200);
     }
 }
