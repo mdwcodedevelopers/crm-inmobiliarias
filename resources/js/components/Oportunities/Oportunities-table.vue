@@ -14,53 +14,59 @@
         height="100px"
       >
        <!-- Modal de delete -->
-       <template>
-            <v-dialog
-              v-model="deleteDialog"
-              width="600"
-            >
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn 
-                    :disabled="selected.length=== 0"
-                    small
-                    text
-                    v-bind="attrs"
-                    v-on="on"
-                    >
-                   <v-icon
-                    >
-                    mdi-delete
-                </v-icon>
-                Eliminar oportunidad
-                </v-btn>
-            </template>
+        <div v-if="rol==1" style="height:100% !important" class="d-flex align-items-center"> 
+          <template>
+                <v-dialog
+                  v-model="deleteDialog"
+                  width="600"
+                >
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                        :disabled="selected.length=== 0"
+                        small
+                        text
+                        v-bind="attrs"
+                        v-on="on"
+                        >
+                      <v-icon
+                        >
+                        mdi-delete
+                    </v-icon>
+                    Eliminar oportunidad
+                    </v-btn>
+                </template>
 
-              <v-card>
-                <v-card-title class="headline grey lighten-2">
-                  Enviar Email
-                </v-card-title>
+                  <v-card>
+                    <v-card-title class="headline grey lighten-2">
+                      Enviar Email
+                    </v-card-title>
 
-                <v-card-text>
-                  <v-row>
-                    <v-col
-                        cols="12"
-                      >
-                      <p>¿Esta seguro que desea eliminar esta oportunidad? Luego no podrá recuperarla</p>
-                      </v-col>
+                    <v-card-text>
+                      <v-row>
+                        <v-col
+                            cols="12"
+                          >
+                          <p>¿Esta seguro que desea eliminar esta oportunidad? Luego no podrá recuperarla</p>
+                          </v-col>
 
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="deleteDialog = false">Cancelar</v-btn>
-                        <v-btn color="red darken-1"  @click="deleteOportunity()">Eliminar</v-btn>
-                        <v-spacer></v-spacer>
-                    </v-card-actions>
-                  </v-row>
-                </v-card-text>
-              </v-card>
-            </v-dialog>
-       </template> 
-       
-
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="deleteDialog = false">Cancelar</v-btn>
+                            <v-btn color="red darken-1"  @click="deleteOportunity()">Eliminar</v-btn>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                      </v-row>
+                    </v-card-text>
+                  </v-card>
+                </v-dialog>
+          </template> 
+          
+          <v-divider
+              class="mx-4"
+              inset
+              vertical
+            ></v-divider>
+        </div>
        <!-- Modal de email -->
        <template>
             <v-dialog
@@ -69,7 +75,7 @@
             >
             <template v-slot:activator="{ on, attrs }">
                 <v-btn 
-                    :disabled="selected.length=== 0 || selected.closed"
+                    :disabled="selected.length=== 0"
                     small
                     text
                     v-bind="attrs"
@@ -134,7 +140,7 @@
             >
             <template v-slot:activator="{ on, attrs }">
                 <v-btn 
-                    :disabled="selected.length=== 0 || selected[0].closed"
+                    :disabled="selected.length=== 0 || selected[0].closed === 1"
                     small
                     text
                     v-bind="attrs"
@@ -196,7 +202,7 @@
             >
             <template v-slot:activator="{ on, attrs }">
                 <v-btn 
-                    :disabled="selected.length=== 0 || selected.closed"
+                    :disabled="selected.length=== 0 || selected[0].closed === 1"
                     small
                     text
                     v-bind="attrs"
@@ -238,6 +244,7 @@
                     sd=12
                       >
                       <v-textarea
+                        v-model="description"
                         label="Descripcion"
                       ></v-textarea>
                     </v-col>
@@ -246,7 +253,7 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="closeDialog = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text :disabled="newStatus.length==0" @click="closeOportunity()">Cerrar oportunidades</v-btn>
+                        <v-btn color="blue darken-1" text :disabled="newStatus.length==0 || description.length==0" @click="closeOportunity()">Cerrar oportunidades</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                   </v-row>
@@ -269,7 +276,7 @@
             >
             <template v-slot:activator="{ on, attrs }">
                 <v-btn 
-                    :disabled="selected.length=== 0 || selected.closed"
+                    :disabled="selected.length=== 0 || selected[0].closed === 1"
                     small
                     text
                     v-bind="attrs"
@@ -420,12 +427,14 @@
     props:{
         users:Array,
         status: Array,
+        rol: Number,
     },
     data: () => ({
       datas:[],
-      selected: [ ],
+      selected: [],
       userSelected: [],
       newStatus:[],
+      description:[],
       newUser:[],
       emailText:[],
       colorGroup: [],
@@ -512,6 +521,12 @@
       changeUser(){
         axios.get('/interesed/' + this.userSelected).then((response) => {
           this.datas = response.data.oportunities;
+          this.datas.forEach(element => {
+            if (element.closed =="1") {
+              console.log("cerrado")
+              element.status = "Cerrado";
+            };
+          });
         });
 
       },
@@ -535,6 +550,7 @@
       closeOportunity(){
         let params={
           reason:this.newStatus,
+          description:this.description,
         };
         this.selected.forEach(element => {
           axios.put('/interesed/close/' + element.id, params ).then((response) => {

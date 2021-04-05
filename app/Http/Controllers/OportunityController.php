@@ -25,10 +25,10 @@ class OportunityController extends Controller
      */
     public function index(Request $request)
     {           
-        
+        $user=User::find(auth()->id())->rol_id;
         $users = User::selectRaw('id, name')->get();
         $status = StatusOportunity::get();
-        return view('oportunities', compact('users', 'status'));;
+        return view('oportunities', compact('users', 'status', 'user'));;
     }
 
     /**
@@ -122,7 +122,8 @@ class OportunityController extends Controller
     {
         $oportunity = Oportunity::find($id);
         $oportunity->closed_reason = $request->reason;
-        $oportunity->closed = "1";
+        $oportunity->closed_description = $request->description;
+        $oportunity->closed = 1;
         $oportunity->save();
 
         return $oportunity;

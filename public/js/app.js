@@ -4329,10 +4329,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     users: Array,
-    status: Array
+    status: Array,
+    rol: Number
   },
   data: function data() {
     return {
@@ -4340,6 +4348,7 @@ __webpack_require__.r(__webpack_exports__);
       selected: [],
       userSelected: [],
       newStatus: [],
+      description: [],
       newUser: [],
       emailText: [],
       colorGroup: [],
@@ -4412,6 +4421,15 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/interesed/' + this.userSelected).then(function (response) {
         _this.datas = response.data.oportunities;
+
+        _this.datas.forEach(function (element) {
+          if (element.closed == "1") {
+            console.log("cerrado");
+            element.status = "Cerrado";
+          }
+
+          ;
+        });
       });
     },
     changeStatus: function changeStatus() {
@@ -4436,7 +4454,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var params = {
-        reason: this.newStatus
+        reason: this.newStatus,
+        description: this.description
       };
       this.selected.forEach(function (element) {
         axios.put('/interesed/close/' + element.id, params).then(function (response) {
@@ -4536,10 +4555,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     users: Array,
-    status: Array
+    status: Array,
+    rol: Number
   },
   created: function created() {
     this.status.forEach(function (element) {
@@ -46710,123 +46731,149 @@ var render = function() {
               "v-toolbar",
               { attrs: { flat: "", height: "100px" } },
               [
-                [
-                  _c(
-                    "v-dialog",
-                    {
-                      attrs: { width: "600" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "activator",
-                          fn: function(ref) {
-                            var on = ref.on
-                            var attrs = ref.attrs
-                            return [
-                              _c(
-                                "v-btn",
-                                _vm._g(
-                                  _vm._b(
-                                    {
-                                      attrs: {
-                                        disabled: _vm.selected.length === 0,
-                                        small: "",
-                                        text: ""
-                                      }
-                                    },
-                                    "v-btn",
-                                    attrs,
-                                    false
-                                  ),
-                                  on
-                                ),
-                                [
-                                  _c("v-icon", [
-                                    _vm._v(
-                                      "\n                  mdi-delete\n              "
-                                    )
-                                  ]),
-                                  _vm._v(
-                                    "\n              Eliminar oportunidad\n              "
-                                  )
-                                ],
-                                1
-                              )
-                            ]
-                          }
-                        }
-                      ]),
-                      model: {
-                        value: _vm.deleteDialog,
-                        callback: function($$v) {
-                          _vm.deleteDialog = $$v
-                        },
-                        expression: "deleteDialog"
-                      }
-                    },
-                    [
-                      _vm._v(" "),
-                      _c(
-                        "v-card",
+                _vm.rol == 1
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "d-flex align-items-center",
+                        staticStyle: { height: "100% !important" }
+                      },
+                      [
                         [
                           _c(
-                            "v-card-title",
-                            { staticClass: "headline grey lighten-2" },
-                            [
-                              _vm._v(
-                                "\n                Enviar Email\n              "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-text",
-                            [
-                              _c(
-                                "v-row",
+                            "v-dialog",
+                            {
+                              attrs: { width: "600" },
+                              scopedSlots: _vm._u(
                                 [
-                                  _c("v-col", { attrs: { cols: "12" } }, [
-                                    _c("p", [
+                                  {
+                                    key: "activator",
+                                    fn: function(ref) {
+                                      var on = ref.on
+                                      var attrs = ref.attrs
+                                      return [
+                                        _c(
+                                          "v-btn",
+                                          _vm._g(
+                                            _vm._b(
+                                              {
+                                                attrs: {
+                                                  disabled:
+                                                    _vm.selected.length === 0,
+                                                  small: "",
+                                                  text: ""
+                                                }
+                                              },
+                                              "v-btn",
+                                              attrs,
+                                              false
+                                            ),
+                                            on
+                                          ),
+                                          [
+                                            _c("v-icon", [
+                                              _vm._v(
+                                                "\n                      mdi-delete\n                  "
+                                              )
+                                            ]),
+                                            _vm._v(
+                                              "\n                  Eliminar oportunidad\n                  "
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                false,
+                                789966123
+                              ),
+                              model: {
+                                value: _vm.deleteDialog,
+                                callback: function($$v) {
+                                  _vm.deleteDialog = $$v
+                                },
+                                expression: "deleteDialog"
+                              }
+                            },
+                            [
+                              _vm._v(" "),
+                              _c(
+                                "v-card",
+                                [
+                                  _c(
+                                    "v-card-title",
+                                    { staticClass: "headline grey lighten-2" },
+                                    [
                                       _vm._v(
-                                        "¿Esta seguro que desea eliminar esta oportunidad? Luego no podrá recuperarla"
+                                        "\n                    Enviar Email\n                  "
                                       )
-                                    ])
-                                  ]),
+                                    ]
+                                  ),
                                   _vm._v(" "),
                                   _c(
-                                    "v-card-actions",
+                                    "v-card-text",
                                     [
-                                      _c("v-spacer"),
-                                      _vm._v(" "),
                                       _c(
-                                        "v-btn",
-                                        {
-                                          attrs: {
-                                            color: "blue darken-1",
-                                            text: ""
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              _vm.deleteDialog = false
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("Cancelar")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: { color: "red darken-1" },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.deleteOportunity()
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("Eliminar")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("v-spacer")
+                                        "v-row",
+                                        [
+                                          _c(
+                                            "v-col",
+                                            { attrs: { cols: "12" } },
+                                            [
+                                              _c("p", [
+                                                _vm._v(
+                                                  "¿Esta seguro que desea eliminar esta oportunidad? Luego no podrá recuperarla"
+                                                )
+                                              ])
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-actions",
+                                            [
+                                              _c("v-spacer"),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    color: "blue darken-1",
+                                                    text: ""
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.deleteDialog = false
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("Cancelar")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    color: "red darken-1"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.deleteOportunity()
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("Eliminar")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c("v-spacer")
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
                                     ],
                                     1
                                   )
@@ -46837,12 +46884,15 @@ var render = function() {
                             1
                           )
                         ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
+                        _vm._v(" "),
+                        _c("v-divider", {
+                          staticClass: "mx-4",
+                          attrs: { inset: "", vertical: "" }
+                        })
+                      ],
+                      2
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
                 [
                   _c(
@@ -46862,9 +46912,7 @@ var render = function() {
                                   _vm._b(
                                     {
                                       attrs: {
-                                        disabled:
-                                          _vm.selected.length === 0 ||
-                                          _vm.selected.closed,
+                                        disabled: _vm.selected.length === 0,
                                         small: "",
                                         text: ""
                                       }
@@ -47032,7 +47080,7 @@ var render = function() {
                                       attrs: {
                                         disabled:
                                           _vm.selected.length === 0 ||
-                                          _vm.selected[0].closed,
+                                          _vm.selected[0].closed === 1,
                                         small: "",
                                         text: ""
                                       }
@@ -47193,7 +47241,7 @@ var render = function() {
                                       attrs: {
                                         disabled:
                                           _vm.selected.length === 0 ||
-                                          _vm.selected.closed,
+                                          _vm.selected[0].closed === 1,
                                         small: "",
                                         text: ""
                                       }
@@ -47289,7 +47337,14 @@ var render = function() {
                                     { attrs: { cols: "12", sd: "12" } },
                                     [
                                       _c("v-textarea", {
-                                        attrs: { label: "Descripcion" }
+                                        attrs: { label: "Descripcion" },
+                                        model: {
+                                          value: _vm.description,
+                                          callback: function($$v) {
+                                            _vm.description = $$v
+                                          },
+                                          expression: "description"
+                                        }
                                       })
                                     ],
                                     1
@@ -47322,7 +47377,9 @@ var render = function() {
                                           attrs: {
                                             color: "blue darken-1",
                                             text: "",
-                                            disabled: _vm.newStatus.length == 0
+                                            disabled:
+                                              _vm.newStatus.length == 0 ||
+                                              _vm.description.length == 0
                                           },
                                           on: {
                                             click: function($event) {
@@ -47376,7 +47433,7 @@ var render = function() {
                                       attrs: {
                                         disabled:
                                           _vm.selected.length === 0 ||
-                                          _vm.selected.closed,
+                                          _vm.selected[0].closed === 1,
                                         small: "",
                                         text: ""
                                       }
@@ -47753,7 +47810,7 @@ var render = function() {
               "li",
               { key: state.id, style: { backgroundColor: state.color } },
               [
-                _c("span", [_vm._v("0")]),
+                _c("span", [_vm._v(_vm._s(state.count))]),
                 _vm._v(" "),
                 _c("p", [_vm._v(_vm._s(state.name))])
               ]
@@ -47764,7 +47821,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("oportunities-table", {
-        attrs: { users: _vm.users, status: _vm.status },
+        attrs: { users: _vm.users, status: _vm.status, rol: _vm.rol },
         on: {
           updateList: function($event) {
             return _vm.updateStatusList.apply(void 0, arguments)

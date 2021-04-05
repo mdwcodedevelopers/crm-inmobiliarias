@@ -9,6 +9,7 @@
         <oportunities 
             :users="{{$users}}" 
             :status="{{$status}}"
+            :rol="{{$user}}"
         />
 
     </div>

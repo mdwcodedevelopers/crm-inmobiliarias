@@ -6,7 +6,7 @@
         <div>
             <ul class="d-flex list-status flex-wrap justify-center  ">
                 <li v-for="state in status" :style="{ backgroundColor: state.color}" :key="state.id">
-                    <span>0</span> 
+                    <span>{{state.count}}</span> 
                     <p>{{state.name}}</p>
                 </li>
             </ul>
@@ -14,6 +14,7 @@
         <oportunities-table 
             :users="users" 
             :status="status"
+            :rol="rol"
             @updateList="updateStatusList(...arguments)"> </oportunities-table>
     </div>
 </template>
@@ -37,6 +38,7 @@ export default {
     props:{
         users:Array,
         status:Array,
+        rol: Number,
     },
     created() {
         this.status.forEach(element => {
