@@ -62,7 +62,7 @@ class OportunityController extends Controller
 
         $oportunity->save();
 
-        return $oportunity;
+        return response()->json("success", 200);
     }
 
     /**
@@ -107,7 +107,7 @@ class OportunityController extends Controller
         $oportunity->status_id = $request->status_id;
         $oportunity->user_id = $request->user_id;
         $oportunity->save();
-        return $oportunity;    
+        return response()->json("success", 200);
     }
 
     /**
@@ -120,7 +120,7 @@ class OportunityController extends Controller
     {
         $oportunity = Oportunity::find($id)->delete();
 
-        return "correcto";
+        return response()->json("success", 200);
     }
     public function closeOportunity(Request $request, $id)
     {
@@ -130,7 +130,7 @@ class OportunityController extends Controller
         $oportunity->closed = 1;
         $oportunity->save();
 
-        return $oportunity;
+        return response()->json("success", 200);
     }
 
     public function getContacts(){
@@ -143,9 +143,9 @@ class OportunityController extends Controller
         $data["text"]=$request->text;
         $data["oportunity"]=$request->oportunity;
         $data["contact_name"] = $request->name;
-        Mail::send('emails.contact_oportunity', $data, function($message) use ($request) {
-            $message->to($request->email)->subject($request->subject);
-        });
+        // Mail::send('emails.contact_oportunity', $data, function($message) use ($request) {
+        //     $message->to($request->email)->subject($request->subject);
+        // });
         return response()->json("success", 200);
     }
 }
