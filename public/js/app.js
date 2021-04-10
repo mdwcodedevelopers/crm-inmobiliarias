@@ -3700,7 +3700,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     status: Array
@@ -4438,6 +4437,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get('/api-oportunities/' + this.userSelected).then(function (response) {
+        console.log('Buscando las oporunidades de el usuario id=' + _this2.userSelected);
         _this2.datas = response.data.oportunities;
 
         _this2.datas.forEach(function (element) {
@@ -4573,23 +4573,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     users: Array,
     status: Array,
     rol: Number
   },
+  data: function data() {
+    return {
+      counterStatus: [0, 0, 0, 0, 0, 0, 0]
+    };
+  },
   methods: {
     updateStatusList: function updateStatusList(datas) {
       var _this = this;
 
+      var i = 0;
       this.status.forEach(function (element) {
-        element.count = 0;
+        _this.counterStatus[i] = 0;
+        i++;
       });
       datas.forEach(function (element) {
-        _this.status[element.status_id - 1].count++;
+        _this.counterStatus[element.status_id - 1]++;
       });
     }
   }
@@ -5632,6 +5637,86 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10724,7 +10809,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.list-status[data-v-6e5adf54]{\n    list-style: none;\n}\n.list-status li[data-v-6e5adf54]{\n    padding: 20px 20px;\n    color: rgb(250, 240, 240);\n    font-weight: 500;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.list-status[data-v-6e5adf54]{\n    list-style: none;\n}\n.list-status li[data-v-6e5adf54]{\n    padding: 20px 20px;\n    color: rgb(250, 240, 240);\n    font-weight: 500;\n}\n", ""]);
 
 // exports
 
@@ -10762,7 +10847,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.panel-expansion[data-v-7723f684]{\n    width: 13rem;\n}\n.list-tags[data-v-7723f684]{\n    list-style: none;\n}\n", ""]);
+exports.push([module.i, "\n.panel-expansion[data-v-7723f684]{\n    width: 20rem;\n}\n.list-tags[data-v-7723f684]{\n    list-style: none;\n}\n", ""]);
 
 // exports
 
@@ -45676,7 +45761,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("v-list-item", [
-                    _c("a", { attrs: { href: "/interesed" } }, [
+                    _c("a", { attrs: { href: "/interested" } }, [
                       _vm._v("Interesados de compra")
                     ])
                   ]),
@@ -45828,7 +45913,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("v-list-item", [
-                    _c("a", { attrs: { href: "/interesed" } }, [
+                    _c("a", { attrs: { href: "/interested" } }, [
                       _vm._v("Interesados de compra")
                     ])
                   ]),
@@ -46371,7 +46456,7 @@ var render = function() {
                       _vm._b(
                         {
                           staticClass: "my-6",
-                          attrs: { color: "success", dark: "" },
+                          attrs: { color: "success" },
                           on: {
                             click: function($event) {
                               return _vm.newOps()
@@ -47989,13 +48074,7 @@ var render = function() {
             return _c(
               "li",
               { key: state.id, style: { backgroundColor: state.color } },
-              [
-                state.count != 0
-                  ? _c("span", [_vm._v(_vm._s(state.count))])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(state.name))])
-              ]
+              [_c("p", [_vm._v(_vm._s(state.name))])]
             )
           }),
           0
@@ -50226,103 +50305,235 @@ var render = function() {
     { staticClass: "text-center p-4 d-flex align-items-center flex-column" },
     [
       _c(
-        "v-row",
-        { attrs: { justify: "center" } },
+        "v-card",
+        {
+          staticClass: "d-flex my-6 py-4 justify-space-around",
+          staticStyle: { width: "100%" }
+        },
         [
           _c(
-            "v-expansion-panels",
-            { attrs: { width: "accordion" } },
-            _vm._l(_vm.groups, function(group) {
-              return _c(
-                "v-expansion-panel",
-                { key: group.id, staticClass: "panel-expansion" },
+            "div",
+            [
+              _c("v-card-title", [_vm._v("Etiquetas de Contactos")]),
+              _vm._v(" "),
+              _c("v-card-subtitle", [
+                _vm._v("Segmentará tus contactos de acuerdo a sus intereses")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c(
+                "v-btn",
+                { attrs: { color: "success" } },
                 [
-                  _c(
-                    "v-expansion-panel-header",
-                    { attrs: { color: "grey lighten-2" } },
+                  _c("v-icon", [
+                    _vm._v(
+                      "\n                    mdi-plus-circle\n                "
+                    )
+                  ]),
+                  _vm._v("\n                Nueva Etiqueta\n            ")
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-btn", [
+                _vm._v(
+                  "\n                Nuevo grupo de etiquetas\n            "
+                )
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        {
+          staticStyle: { width: "100%" },
+          attrs: { color: "", elevation: "2" }
+        },
+        [
+          _c(
+            "v-container",
+            { staticClass: "d-flex flex-column align-star ml-0" },
+            [
+              _c(
+                "v-expansion-panels",
+                { attrs: { accordion: "" } },
+                _vm._l(_vm.groups, function(group) {
+                  return _c(
+                    "v-expansion-panel",
+                    {
+                      key: group.id,
+                      staticClass: "my-1 panel-expansion",
+                      on: {
+                        click: function($event) {
+                          _vm.selected = []
+                        }
+                      }
+                    },
                     [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(group.name) +
-                          "\n                    "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("v-expansion-panel-content", {}, [
-                    _c(
-                      "ul",
-                      { staticClass: "list-tags ", attrs: { multiple: "" } },
-                      _vm._l(_vm.groupFilter(group.id), function(item) {
-                        return _c(
-                          "li",
+                      _c(
+                        "v-expansion-panel-header",
+                        { attrs: { color: "grey lighten-1" } },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(group.name) +
+                              "\n                        "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("v-expansion-panel-content", [
+                        _c(
+                          "div",
                           {
-                            key: item.id,
-                            staticClass: "d-flex align-items-center"
+                            staticClass:
+                              "expansion-panel-subheader grey lighten-2 py-2"
                           },
                           [
-                            _c("v-checkbox", {
-                              attrs: { value: "" },
-                              scopedSlots: _vm._u(
-                                [
-                                  {
-                                    key: "label",
-                                    fn: function() {
-                                      return [
-                                        _vm._v(
-                                          _vm._s(item.name) +
-                                            " | " +
-                                            _vm._s(item.count) +
-                                            " contactos"
-                                        )
-                                      ]
-                                    },
-                                    proxy: true
-                                  }
-                                ],
-                                null,
-                                true
-                              ),
-                              model: {
-                                value: _vm.selected[group.id],
-                                callback: function($$v) {
-                                  _vm.$set(_vm.selected, group.id, $$v)
-                                },
-                                expression: "selected[group.id]"
-                              }
-                            }),
+                            _c("v-btn", { attrs: { small: "", text: "" } }, [
+                              _vm._v(
+                                "\n                                Editar grupo\n                            "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("v-btn", { attrs: { small: "", text: "" } }, [
+                              _vm._v(
+                                "\n                                Borrar grupo\n                            "
+                              )
+                            ]),
                             _vm._v(" "),
                             _c(
-                              "div",
-                              { staticClass: "actions-items" },
+                              "v-btn",
+                              {
+                                attrs: {
+                                  disabled: _vm.selected.length === 0,
+                                  small: "",
+                                  text: ""
+                                }
+                              },
                               [
-                                _c(
-                                  "v-btn",
-                                  { attrs: { small: "", text: "" } },
-                                  [_c("v-icon", [_vm._v("mdi-pencil")])],
-                                  1
-                                ),
+                                _vm._v(
+                                  "\n                                Borrar etiquetas seleccionadas\n                            "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: {
+                                  disabled: _vm.selected.length === 0,
+                                  small: "",
+                                  text: ""
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                Remover del grupo\n                            "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: {
+                                  disabled: _vm.selected.length === 0,
+                                  small: "",
+                                  text: ""
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                Unificar etiquetas\n                            "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "ul",
+                          {
+                            staticClass: "list-tags ",
+                            attrs: { multiple: "" }
+                          },
+                          _vm._l(_vm.groupFilter(group.id), function(item) {
+                            return _c(
+                              "li",
+                              {
+                                key: item.id,
+                                staticClass: "d-flex align-items-center"
+                              },
+                              [
+                                _c("v-checkbox", {
+                                  attrs: { value: item.id, multiple: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "label",
+                                        fn: function() {
+                                          return [
+                                            _vm._v(
+                                              _vm._s(item.name) +
+                                                " | " +
+                                                _vm._s(item.count) +
+                                                " contactos"
+                                            )
+                                          ]
+                                        },
+                                        proxy: true
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  ),
+                                  model: {
+                                    value: _vm.selected,
+                                    callback: function($$v) {
+                                      _vm.selected = $$v
+                                    },
+                                    expression: "selected"
+                                  }
+                                }),
                                 _vm._v(" "),
                                 _c(
-                                  "v-btn",
-                                  { attrs: { small: "", text: "" } },
-                                  [_c("v-icon", [_vm._v("mdi-plus-circle")])],
+                                  "div",
+                                  { staticClass: "actions-items" },
+                                  [
+                                    _c(
+                                      "v-btn",
+                                      { attrs: { small: "", text: "" } },
+                                      [_c("v-icon", [_vm._v("mdi-pencil")])],
+                                      1
+                                    )
+                                  ],
                                   1
                                 )
                               ],
                               1
                             )
-                          ],
-                          1
+                          }),
+                          0
                         )
-                      }),
-                      0
-                    )
-                  ])
-                ],
+                      ])
+                    ],
+                    1
+                  )
+                }),
                 1
               )
-            }),
+            ],
             1
           )
         ],

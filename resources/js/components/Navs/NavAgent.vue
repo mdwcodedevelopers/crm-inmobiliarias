@@ -23,7 +23,7 @@
                         <a href="/tickets">Tickets</a>
                     </v-list-item>
                     <v-list-item>
-                        <a href="/interesed">Interesados de compra</a>
+                        <a href="/interested">Interesados de compra</a>
                     </v-list-item>
 
                     <v-list-item>

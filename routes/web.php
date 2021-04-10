@@ -20,7 +20,7 @@ Route::post('/api-password','UserController@updatepassword');
 Route::get('/currency','CurrencyController@view');
 Route::get('/company','CompanyController@view');
 Route::get('/users','UsersController@view');
-Route::get('/interesed', "OportunityController@view");
+Route::get('/interested', "OportunityController@view");
 Route::get('/contacts/tags', "TagController@view");
 Route::resources(['api-properties' => PropertyController::class,
 'api-status'=>StatusController::class,

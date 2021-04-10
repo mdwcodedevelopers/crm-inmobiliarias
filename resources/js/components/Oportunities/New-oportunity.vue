@@ -10,7 +10,6 @@
        
         <v-btn
           color="success"
-          dark
           v-bind="attrs"
           v-on="on"
           class="my-6"

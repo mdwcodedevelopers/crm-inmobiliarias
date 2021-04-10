@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanySeeder::class);
         $this->call(GroupTagSeeder::class);
         $this->call(TagSeeder::class);
+        $this->call(ContactSeeder::class);
     }
 }

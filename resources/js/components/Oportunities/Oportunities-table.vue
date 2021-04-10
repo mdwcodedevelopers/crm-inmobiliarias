@@ -534,6 +534,8 @@
       },
       changeUser(){
         axios.get('/api-oportunities/' + this.userSelected).then((response) => {
+          console.log('Buscando las oporunidades de el usuario id='+ this.userSelected);
+          
           this.datas = response.data.oportunities;
           this.datas.forEach(element => {
             if (element.closed =="1") {
