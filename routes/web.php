@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/','WelcomeController@index');
 Route::get('/property/{id}','PropertyController@property');
 Route::get('/property-images/{id}','ImageController@images');
@@ -27,11 +28,14 @@ Route::resources(['api-properties' => PropertyController::class,
 'api-users'=>UsersController::class,
 'api-user'=>UserController::class,
 'api-company'=>CompanyController::class,
-'api-dashboard'=>DashboardController::class]);
+'api-dashboard'=>DashboardController::class,
+'api-reports'=>ReportController::class
+]);
 Auth::routes();
 
 Route::get('/api-properties-user', 'PropertyController@properties');
 Route::get('/profile', 'UserController@view');
+Route::get('/reports', 'ReportController@view');
 Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
 Route::get('/home', 'HomeController@index')->name('home');
 

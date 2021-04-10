@@ -14,6 +14,9 @@
             <v-list nav dense>
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
                     <v-list-item>
+                        <a href="/">Pagina web</a>
+                    </v-list-item>
+                    <v-list-item>
                         <a href="/users">Usuarios</a>
                     </v-list-item>
 
@@ -43,14 +46,12 @@
                     <v-list-item>
                         <a href="/share">Compartir</a>
                     </v-list-item>
-                    <v-list-item>
-                        <a href="/web">Pagina web</a>
-                    </v-list-item>
+
                     <v-list-item>
                         <a href="/statistics">Estaditicas</a>
                     </v-list-item>
                     <v-list-item>
-                        <a href="/edictions">Historial de ediciones</a>
+                        <a href="/reports">Historial de operaciones</a>
                     </v-list-item>
                 </v-list-item-group>
             </v-list>

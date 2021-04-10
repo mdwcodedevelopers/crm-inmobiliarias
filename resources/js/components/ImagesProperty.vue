@@ -36,7 +36,7 @@
                             <v-layout wrap>
                                 <v-flex xs12 sm6 md6>
                                     <v-file-input
-v-model="archivo" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon="mdi-archive" ></v-file-input>
+                                    v-model="archivo" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon="mdi-archive" ></v-file-input>
                                    <!-- <input
                                             class="appearance-none border-2 border-gray-200 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                                             ref="image" type="file">-->
