@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Currency;
+use App\Report;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -19,21 +20,41 @@ class CurrencyController extends Controller
         Currency::create([
             'currency'=>$request['name']
         ]);
-
+        Report::create([
+            'type'=>'Creación',
+            'table'=>'Moneda',
+            'information'=>'Se creo la moneda: '.$request['name']
+        ]);
     }
     public function update(Request $request, $id)
     {
+        $name = Currency::where('id','=',"$id")->first();
         $currency = Currency::find($id);
         $currency->update([
             'currency'=>$request['name']
+        ]);
+        Report::create([
+            'type'=>'Actualizacion',
+            'table'=>'Moneda',
+            'information'=>'Se cambio el de '.$name->currency.' nombre a: '.$request['name']
         ]);
         return response()->json("success", 200);
     }
     public function destroy($id)
     {
+        // Report::create([
+        //     'type'=>'Actualizacion',
+        //     'table'=>'Moneda',
+        //     'information'=>'Se cambio el nombre a: '.$request['name']
+        // ]);
+        $name = Currency::where('id','=',"$id")->first();
         $currency = Currency::find($id);
         $currency->delete();
-
+        Report::create([
+            'type'=>'Eliminación',
+            'table'=>'Moneda',
+            'information'=>'Se eliminó '.$name->currency
+        ]);
         return response()->json("success", 200);
     }
     public function view()

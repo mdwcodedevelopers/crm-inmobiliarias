@@ -1,10 +1,12 @@
 <template>
     <div class="text-center">
+        <v-btn @click="exportPDF()" color="red darken-4" dark>Pdf <v-icon>mdi-file-pdf</v-icon></v-btn>
         <template>
             <v-layout row justify-center>
                 <v-dialog v-model="dialog" persistent max-width="600px">
                     <template v-slot:activator="{ on }">
-                        <v-btn color="success" class="my-4" dark v-on="on">Agregar propiedad <v-icon>mdi-home-circle</v-icon> </v-btn>
+                        <v-btn color="success" class="my-4" dark v-on="on">Agregar propiedad <v-icon>mdi-home-circle</v-icon>
+                        </v-btn>
                     </template>
                     <v-card class="my-4">
                         <v-card-title>
@@ -61,7 +63,7 @@
         <v-data-table :headers="headers" :items="properties" item-key="propeties-user" class="elevation-1" :search="search">
             <template v-slot:item.imagen="{ item }">
 
-               <v-img :src="'../'+item.image" height="100" width="100"></v-img>
+                <v-img :src="'../'+item.image" height="100" width="100"></v-img>
             </template>
             <template v-slot:top>
                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
@@ -86,13 +88,21 @@
                         mdi-file-image
                     </v-icon>
                 </v-btn>
-                <div class="" v-if="rol==1">
-                    <v-btn color="#E53935" class="m-1" @click="delete_dialog(item.id,item.title)">
-                        <v-icon color="#fff">
-                            mdi-delete
-                        </v-icon>
-                    </v-btn>
-                </div>
+                <v-btn color="blue darken-2" class="m-1" @click="shareFace(item.id)">
+                    <v-icon color="#fff">
+                        mdi-facebook
+                    </v-icon>
+                </v-btn>
+                <v-btn color="blue darken-1" class="m-1" @click="shareTwit(item.id)">
+                    <v-icon color="#fff">
+                        mdi-twitter
+                    </v-icon>
+                </v-btn>
+                <v-btn v-if="rol==1" color="#E53935" class="m-1" @click="delete_dialog(item.id,item.title)">
+                    <v-icon color="#fff">
+                        mdi-delete
+                    </v-icon>
+                </v-btn>
 
             </template>
 
@@ -117,6 +127,15 @@
                                         <v-text-field label="Precio" v-model="price_edit" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
+<<<<<<< HEAD
+                                        <select class="form-control mt-2" placeholder="Estado" @click="prueba()" v-model="currency_id_edit">
+                                            <option selected disabled>Moneda
+                                            </option>
+                                            <option v-for="item in currency" :value="item.id">
+                                                {{ item.currency }}
+                                            </option>
+                                        </select>
+=======
                                          <v-select
                                             v-model="currency_id_edit"
                                             :items="currency"
@@ -125,6 +144,7 @@
                                             label="Moneda"
                                             @click="prueba()"
                                         ></v-select>
+>>>>>>> 9936d23f9107233d22b261e78a959e61ca6abfac
 
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
@@ -179,29 +199,23 @@
 </template>
 
 <script>
+import jsPDF from 'jspdf';
+import 'jspdf-autotable'
 export default {
     props: {
         rol: Number
     },
     data() {
         return {
-            paginate: {
-                total: 0,
-                current_page: 0,
-                per_page: 0,
-                last_page: 0,
-                from: 0,
-                to: 0
-            },
             properties: [],
             status: [],
-            currency:[],
+            currency: [],
             search: '',
             dialog: false,
             dialogedit: false,
             dialogdelete: false,
             title: '',
-            currency_id:'',
+            currency_id: '',
             information: '',
             price: '',
             dimension: '',
@@ -210,7 +224,7 @@ export default {
             information_edit: '',
             price_edit: '',
             dimension_edit: '',
-            currency_id_edit:'',
+            currency_id_edit: '',
             error: '',
             id_delete: '',
             propiedad_eliminar: '',
@@ -224,25 +238,25 @@ export default {
                 axios.get("/api-properties-user?&search=" + search).then((response) => {
                     this.properties = response.data.Properties;
                     this.status = response.data.status;
-                    this.currency=response.data.currency;
+                    this.currency = response.data.currency;
                 });
             } else {
                 axios.get("/api-properties-admin?search=" + search).then((response) => {
                     this.properties = response.data.Properties;
                     this.status = response.data.status;
-                    this.currency=response.data.currency;
+                    this.currency = response.data.currency;
 
                 });
             }
         },
         create() {
             axios.post("/api-properties", {
-                title:this.title,
-                information:this.information,
-                price:this.price,
-                dimension: this.dimension ,
-                status:this.status_id,
-                currency_id:this.currency_id
+                title: this.title,
+                information: this.information,
+                price: this.price,
+                dimension: this.dimension,
+                status: this.status_id,
+                currency_id: this.currency_id
             }).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
@@ -252,7 +266,7 @@ export default {
                     this.dimension = '';
                     this.status_id = '';
                     this.dialog = false;
-                    this.currency_id='';
+                    this.currency_id = '';
                 }
             });
         },
@@ -263,7 +277,7 @@ export default {
                 information: this.information_edit,
                 price: this.price_edit,
                 status: this.status_id_edit,
-                currency_id:this.currency_id_edit
+                currency_id: this.currency_id_edit
             }).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
@@ -273,7 +287,7 @@ export default {
                     this.dimension_edit = '';
                     this.status_id_edit = '';
                     this.dialogedit = false;
-                    this.currency_id_edit=''
+                    this.currency_id_edit = ''
                 }
             });
         },
@@ -303,11 +317,100 @@ export default {
             this.dialogdelete = true;
             this.propiedad_eliminar = title;
         },
-        prueba(){
+        prueba() {
             console.log(this.currency_id_edit);
         },
-        images(id){
-            window.location.href="/property-images/"+id;
+        images(id) {
+            window.location.href = "/property-images/" + id;
+        },
+        shareFace(id) {
+            window.open("https://www.facebook.com/sharer/sharer.php?u=https://" + window.location.host + "/property/" + id, '_blank');
+            // window.location.href=;
+        },
+        shareTwit(id) {
+            window.open("https://twitter.com/intent/tweet?text=Me gusta esta propiedad https://" + window.location.host + "/property/" + id, '_blank');
+            // window.location.href=;
+        },
+        exportPDF() {
+            if (this.rol == 1) {
+                var columns = [
+
+                    {
+                        title: 'Propiedad',
+                        dataKey: 'title',
+                    },
+                    {
+                        title: 'Ciudad',
+                        dataKey: 'city'
+                    },
+                    {
+                        title: "Información",
+                        dataKey: "information"
+                    },
+                    {
+                        title: 'Precio',
+                        dataKey: 'price'
+                    },
+
+                    {
+                        title: 'Dimensión',
+                        dataKey: 'dimension'
+                    },
+                    {
+                        title: 'Estatus',
+                        dataKey: 'status'
+                    },
+                    {
+                        title: 'Usuario',
+                        dataKey: 'name'
+                    },
+                    {
+                        title: 'Moneda',
+                        dataKey: 'currency'
+                    },
+                ];
+            } else {
+                var columns = [
+
+                    {
+                        title: 'Propiedad',
+                        dataKey: 'title',
+                    },
+                    {
+                        title: 'Ciudad',
+                        dataKey: 'city'
+                    },
+                    {
+                        title: "Información",
+                        dataKey: "information"
+                    },
+                    {
+                        title: 'Precio',
+                        dataKey: 'price'
+                    },
+
+                    {
+                        title: 'Dimensión',
+                        dataKey: 'dimension'
+                    },
+                    {
+                        title: 'Estatus',
+                        dataKey: 'status'
+                    },
+                    {
+                        title: 'Moneda',
+                        dataKey: 'currency'
+                    },
+                ];
+            }
+            var doc = new jsPDF('p', 'pt');
+            doc.text('Propiedades', 40, 40);
+            doc.autoTable(columns, this.properties, {
+                margin: {
+                    top: 60
+                },
+            });
+            doc.save('Propiedades.pdf');
         }
     },
     created() {
@@ -315,85 +418,86 @@ export default {
     },
     computed: {
         headers() {
-            if(this.rol==1){
-                return [
-                {
-                    text: 'Imagen',
-                    value: 'imagen'
-                },{
-                    text: 'Propiedad',
-                    align: 'start',
-                    sortable: true,
-                    value: 'title',
-                },
-                // { text: 'Ciudad', value: 'city' },
-                {
-                    text: 'Información',
-                    value: 'information'
-                },
-                {
-                    text: 'Precio',
-                    value: 'price'
-                },
-                {
-                    text: 'Dimensión',
-                    value: 'dimension'
-                },
-                {
-                    text: 'Estatus',
-                    value: 'status'
-                },
-                {
-                    text: 'Usuario',
-                    value: 'name'
-                },
-                {
-                    text: 'Moneda',
-                    value: 'currency'
-                },
-                {
-                    text: 'Acciones',
-                    value: 'action',
-                    sortable: false,
-                    align: 'center'
-                },
-            ]
-            }
-            else{
+            if (this.rol == 1) {
                 return [{
-                    text: 'Propiedad',
-                    align: 'start',
-                    sortable: true,
-                    value: 'title',
-                },
-                // { text: 'Ciudad', value: 'city' },
-                {
-                    text: 'Información',
-                    value: 'information'
-                },
-                {
-                    text: 'Precio',
-                    value: 'price'
-                },
-                {
-                    text: 'Dimensión',
-                    value: 'dimension'
-                },
-                {
-                    text: 'Estatus',
-                    value: 'name'
-                },
-                {
-                    text: 'Moneda',
-                    value: 'currency'
-                },
-                {
-                    text: 'Acciones',
-                    value: 'action',
-                    sortable: false,
-                    align: 'center'
-                },
-            ]
+                        text: 'Imagen',
+                        value: 'imagen'
+                    }, {
+                        text: 'Propiedad',
+                        align: 'start',
+                        sortable: true,
+                        value: 'title',
+                    },
+                    {
+                        text: 'Ciudad',
+                        value: 'city'
+                    },
+                    {
+                        text: 'Información',
+                        value: 'information'
+                    },
+                    {
+                        text: 'Precio',
+                        value: 'price'
+                    },
+                    {
+                        text: 'Dimensión',
+                        value: 'dimension'
+                    },
+                    {
+                        text: 'Estatus',
+                        value: 'status'
+                    },
+                    {
+                        text: 'Usuario',
+                        value: 'name'
+                    },
+                    {
+                        text: 'Moneda',
+                        value: 'currency'
+                    },
+                    {
+                        text: 'Acciones',
+                        value: 'action',
+                        sortable: false,
+                        align: 'center'
+                    },
+                ]
+            } else {
+                return [{
+                        text: 'Propiedad',
+                        align: 'start',
+                        sortable: true,
+                        value: 'title',
+                    },
+                    // { text: 'Ciudad', value: 'city' },
+                    {
+                        text: 'Información',
+                        value: 'information'
+                    },
+                    {
+                        text: 'Precio',
+                        value: 'price'
+                    },
+                    {
+                        text: 'Dimensión',
+                        value: 'dimension'
+                    },
+                    {
+                        text: 'Estatus',
+                        value: 'name'
+                    },
+                    {
+                        text: 'Moneda',
+                        value: 'currency'
+                    },
+                    {
+                        text: 'Acciones',
+                        value: 'action',
+                        sortable: false,
+                        align: 'center'
+                    },
+                ]
             }
 
         },

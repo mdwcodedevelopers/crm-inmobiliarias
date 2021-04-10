@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/','WelcomeController@index');
 Route::get('/property/{id}','PropertyController@property');
 Route::get('/property-images/{id}','ImageController@images');
@@ -30,11 +31,17 @@ Route::resources(['api-properties' => PropertyController::class,
 'api-user'=>UserController::class,
 'api-company'=>CompanyController::class,
 'api-dashboard'=>DashboardController::class,
+<<<<<<< HEAD
+'api-reports'=>ReportController::class
+]);
+=======
 'api-oportunities'=>OportunityController::class]);
+>>>>>>> 9936d23f9107233d22b261e78a959e61ca6abfac
 Auth::routes();
 
 Route::get('/api-properties-user', 'PropertyController@properties');
 Route::get('/profile', 'UserController@view');
+Route::get('/reports', 'ReportController@view');
 Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
 Route::get('/home', 'HomeController@index')->name('home');
 

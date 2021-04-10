@@ -44,7 +44,7 @@ Vue.component('currency', require('./components/Currency.vue').default);
 Vue.component('properties-user', require('./components/PropertiesUser.vue').default);
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('categories', require('./components/Categories.vue').default);
-Vue.component('barra-component', require('./components/Barra.vue').default);
+Vue.component('reports', require('./components/Reports.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

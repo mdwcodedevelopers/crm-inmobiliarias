@@ -26,7 +26,7 @@
                         <div class="form-group row">
 
                             <div class="col-md-6 mx-auto">
-                                <v-text-field id="email" type="email"  label="Correo" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="email" type="email"  placeholder="Correo" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6 mx-auto my-2">
-                                <v-text-field  id="password" label="Contraseña"  type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input  id="password" placeholder="Contraseña"  type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">

@@ -22,11 +22,12 @@
                 <v-card>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
-
                         <div class="form-group row">
 
                             <div class="col-md-6 mx-auto ">
-                                <v-text-field id="name" label="Nombre" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        <v-alert color="info" class="m-4" dark>Todos lo campos son requeridos <v-icon>mdi-info</v-icon></v-alert>
+
+                                <input id="name" placeholder="Nombre*" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -38,7 +39,7 @@
                         <div class="form-group row">
 
                             <div class="col-md-6 mx-auto">
-                                <v-text-field id="phone" label="Telefono" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" required value="{{ old('phone') }}" >
+                                <input id="phone" placeholder="Telefono*" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" required value="{{ old('phone') }}" >
 
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
@@ -50,7 +51,7 @@
                         <div class="form-group row">
 
                             <div class="col-md-6 mx-auto">
-                                <v-text-field id="province" label="Provincia" type="text" class="form-control @error('province') is-invalid @enderror" name="pronvince" value="{{ old('province') }}" >
+                                <input id="province" placeholder="Provincia*" type="text" class="form-control @error('province') is-invalid @enderror" name="pronvince" value="{{ old('province') }}" >
 
                                 @error('province')
                                     <span class="invalid-feedback" role="alert">
@@ -62,7 +63,7 @@
                         <div class="form-group row">
 
                             <div class="col-md-6 mx-auto">
-                                <v-text-field id="direction" label="Dirección" type="text" class="form-control @error('province') is-invalid @enderror" name="direction" value="{{ old('direction') }}" >
+                                <input id="direction" placeholder="Dirección*" type="text" class="form-control @error('province') is-invalid @enderror" name="direction" value="{{ old('direction') }}" >
 
                                 @error('direction')
                                     <span class="invalid-feedback" role="alert">
@@ -74,7 +75,7 @@
                         <div class="form-group row">
 
                             <div class="col-md-6 mx-auto">
-                                <v-text-field id="email" label="Correo" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" placeholder="Correo*" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -87,7 +88,7 @@
                         <div class="form-group row">
 
                             <div class="col-md-6 mx-auto">
-                                <v-text-field id="password" label="Contraseña" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" placeholder="Contraseña*" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -100,7 +101,7 @@
                         <div class="form-group row">
 
                             <div class="col-md-6 mx-auto">
-                                <v-text-field id="password-confirm" label="Confirmar contraseña" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" placeholder="Confirmar contraseña*" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 

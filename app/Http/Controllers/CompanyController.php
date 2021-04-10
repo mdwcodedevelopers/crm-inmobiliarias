@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Company;
+use App\Report;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -34,10 +35,16 @@ class CompanyController extends Controller
     // }
     public function update(Request $request, $id)
     {
+        $compan = Company::where('id','=','1')->first();
         $company = Company::find(1);
         $company->update([
             'name' => $request['name'],
             'information' => $request['information']
+        ]);
+        Report::create([
+            'type'=>'Actualizacion',
+            'table'=>'Compañia',
+            'information'=>'Se cambio el nombre de '.$compan->name.' a: '.$request['name'].' y la información de: '.$compan->information.' a: '.$request['information']
         ]);
         return response()->json("success", 200);
     }
@@ -53,7 +60,11 @@ class CompanyController extends Controller
             $company->update([
                 'image_url' => $image_path
             ]);
-
+            Report::create([
+                'type'=>'Actualizacion',
+                'table'=>'Compañia',
+                'information'=>'Se cambio la imagen de la empresa'
+            ]);
         }
     }
     public function view()
