@@ -11,7 +11,23 @@
             </button>
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" absolute bottom temporary>
+            
+            <v-list color="light-blue darken-1 ">
+                <v-list-item>
+                    <v-list-item-content>
+                        <a href="/" class="">
+                            LOGO
+                            <!-- <v-img src="/images/main-transparent.png"  contain height="50"></v-img> -->
+                            <v-list-item-title class="title white--text">
+                                Application
+                            </v-list-item-title>
+                        </a>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+
             <v-list nav dense>
+               
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
                     <v-list-item>
                         <a href="/users">Usuarios</a>
@@ -58,6 +74,12 @@
     </div>
 
 </template>
+
+<style scoped>
+    .v-list-item a:hover{
+        text-decoration: none;
+    }
+</style>
 
 <script>
 export default {

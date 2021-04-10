@@ -23,27 +23,25 @@
                                         <v-text-field label="Precio" v-model="price" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" v-model="currency_id">
-                                            <option selected disabled>Moneda
-                                            </option>
-                                            <option v-for="item in currency" :value="item.id">
-                                                {{ item.currency }}
-                                            </option>
-                                        </select>
-
+                                        <v-select
+                                            v-model="currency_id"
+                                            :items="currency"
+                                            item-text="currency"
+                                            item-value="id"
+                                            label=" Moneda"
+                                        ></v-select>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                         <v-text-field label="Información de la propiedad" v-model="information" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" v-model="status_id" required>
-                                            <option selected disabled>Estatus
-                                            </option>
-                                            <option v-for="item in status" :value="item.id">
-                                                {{ item.status }}
-                                            </option>
-                                        </select>
-
+                                        <v-select
+                                            v-model="status_id"
+                                            :items="status"
+                                            item-text="status"
+                                            item-value="id"
+                                            label="Estatus"
+                                        ></v-select>
                                     </v-flex>
                                     <v-flex xs12>
                                         {{error}}
@@ -119,26 +117,28 @@
                                         <v-text-field label="Precio" v-model="price_edit" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" @click="prueba()" v-model="currency_id_edit">
-                                            <option selected disabled>Moneda
-                                            </option>
-                                            <option v-for="item in currency" :value="item.id" >
-                                                {{ item.currency }}
-                                            </option>
-                                        </select>
+                                         <v-select
+                                            v-model="currency_id_edit"
+                                            :items="currency"
+                                            item-text="currency"
+                                            item-value="id"
+                                            label="Moneda"
+                                            @click="prueba()"
+                                        ></v-select>
 
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                         <v-text-field label="Información de la propiedad" v-model="information_edit" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" v-model="status_id_edit" required>
-                                            <option selected disabled>Estatus
-                                            </option>
-                                            <option v-for="item in status" :value="item.id">
-                                                {{ item.status }}
-                                            </option>
-                                        </select>
+                                        <v-select
+                                            v-model="status_id_edit"
+                                            :items="status"
+                                            item-text="status"
+                                            item-value="id"
+                                            label="Estatus"
+                                            required
+                                        ></v-select>
 
                                     </v-flex>
                                     <v-flex xs12>

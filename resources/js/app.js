@@ -30,7 +30,7 @@ Vue.component('contact-card', require('./components/Oportunities/Contact-card.vu
 Vue.component('oportunities', require('./components/Oportunities/Oportunities.vue').default);
 Vue.component('oportunities-table', require('./components/Oportunities/Oportunities-table.vue').default);
 Vue.component('properties', require('./components/Properties.vue').default);
-Vue.component('propertie', require('./components/Property.vue').default);
+Vue.component('property', require('./components/Property.vue').default);
 Vue.component('profile', require('./components/Profile.vue').default);
 Vue.component('users', require('./components/Users.vue').default);
 Vue.component('company', require('./components/Company.vue').default);

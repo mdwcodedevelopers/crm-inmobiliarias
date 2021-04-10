@@ -7,6 +7,7 @@
     show-select
     :items="datas"
     class="elevation-1"
+    :search="search"
   >
     <template v-slot:top>
       <v-toolbar
@@ -358,6 +359,8 @@
         </div>
 
       </v-toolbar>
+      <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
+
     </template>
 
     <template v-slot:group.header="{ group, toggle, isOpen }">
@@ -437,6 +440,7 @@
       datas:[],
       selected: [],
       userSelected: [],
+      search: '',
       newStatus:[],
       description:[],
       newUser:[],

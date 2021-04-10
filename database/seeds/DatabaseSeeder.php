@@ -18,5 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GroupTagSeeder::class);
         $this->call(TagSeeder::class);
         $this->call(ContactSeeder::class);
+        $this->call(CurrencySeeder::class);
+        $this->call(StatusPropertiesSeeder::class);
     }
 }
