@@ -21,6 +21,8 @@ Route::post('/api-password','UserController@updatepassword');
 Route::get('/currency','CurrencyController@view');
 Route::get('/company','CompanyController@view');
 Route::get('/users','UsersController@view');
+Route::get('/interested', "OportunityController@view");
+Route::get('/contacts/tags', "TagController@view");
 Route::resources(['api-properties' => PropertyController::class,
 'api-status'=>StatusController::class,
 'api-currency'=>CurrencyController::class,
@@ -29,8 +31,12 @@ Route::resources(['api-properties' => PropertyController::class,
 'api-user'=>UserController::class,
 'api-company'=>CompanyController::class,
 'api-dashboard'=>DashboardController::class,
+<<<<<<< HEAD
 'api-reports'=>ReportController::class
 ]);
+=======
+'api-oportunities'=>OportunityController::class]);
+>>>>>>> 9936d23f9107233d22b261e78a959e61ca6abfac
 Auth::routes();
 
 Route::get('/api-properties-user', 'PropertyController@properties');
@@ -44,5 +50,8 @@ Route::get('/categories', 'CategorieController@categories')->name('categories');
 Route::get('/status', 'StatusViewController@index')->name('status');
 
 
-Route::resource('/interesed', OportunityController::class);
+Route::put('/api-oportunities/close/{id}', 'OportunityController@closeOportunity');
 Route::get('/api-contacts','OportunityController@getContacts');
+Route::get('/api-notes/{id}','NoteController@show');
+Route::post('/api-notes','NoteController@store');
+Route::post('/api-oportunities/sendMail','OportunityController@sendEmail');

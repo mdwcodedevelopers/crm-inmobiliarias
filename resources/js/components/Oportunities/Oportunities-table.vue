@@ -7,21 +7,67 @@
     show-select
     :items="datas"
     class="elevation-1"
+    :search="search"
   >
     <template v-slot:top>
       <v-toolbar
         flat
         height="100px"
       >
-        <v-btn small text>
-            Ocultar para reasignar
-        </v-btn>
-        <v-divider
-          class="mx-4"
-          inset
-          vertical
-        ></v-divider> 
+       <!-- Modal de delete -->
+        <div v-if="rol==1" style="height:100% !important" class="d-flex align-items-center"> 
+          <template>
+                <v-dialog
+                  v-model="deleteDialog"
+                  width="600"
+                >
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                        :disabled="selected.length=== 0"
+                        small
+                        text
+                        v-bind="attrs"
+                        v-on="on"
+                        >
+                      <v-icon
+                        >
+                        mdi-delete
+                    </v-icon>
+                    Eliminar oportunidad
+                    </v-btn>
+                </template>
 
+                  <v-card>
+                    <v-card-title class="headline grey lighten-2">
+                      Enviar Email
+                    </v-card-title>
+
+                    <v-card-text>
+                      <v-row>
+                        <v-col
+                            cols="12"
+                          >
+                          <p>¿Esta seguro que desea eliminar esta oportunidad? Luego no podrá recuperarla</p>
+                          </v-col>
+
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="deleteDialog = false">Cancelar</v-btn>
+                            <v-btn color="red darken-1"  @click="deleteOportunity()">Eliminar</v-btn>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                      </v-row>
+                    </v-card-text>
+                  </v-card>
+                </v-dialog>
+          </template> 
+          
+          <v-divider
+              class="mx-4"
+              inset
+              vertical
+            ></v-divider>
+        </div>
        <!-- Modal de email -->
        <template>
             <v-dialog
@@ -55,24 +101,28 @@
                         cols="12"
                         sm="12"
                       >
+                      
                       <v-text-field
-                          disabled
-                        >asdasdas</v-text-field>
+                        v-model="emailText.asunto"
+                        label="Asunto"
+                      ></v-text-field>
                       </v-col>
+                      
                       <v-col
                         cols="12"
                         sm="12"
                       >
                       <v-textarea
-                        v-model="emailText"
+                        v-model="emailText.texto"
                         label="Texto de email"
                       ></v-textarea>
                       </v-col>
-
+                      
+    
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="emailDialog = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text :disabled="emailText.length==0" @click="sendEmail(selected)">Enviar mensaje</v-btn>
+                        <v-btn color="blue darken-1" text  :disabled="Object.entries(emailText).length === 0" @click="sendEmail(selected)">Enviar mensaje</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                   </v-row>
@@ -95,7 +145,7 @@
             >
             <template v-slot:activator="{ on, attrs }">
                 <v-btn 
-                    :disabled="selected.length=== 0"
+                    :disabled="selected.length=== 0 || selected[0].closed === 1"
                     small
                     text
                     v-bind="attrs"
@@ -157,7 +207,7 @@
             >
             <template v-slot:activator="{ on, attrs }">
                 <v-btn 
-                    :disabled="selected.length=== 0"
+                    :disabled="selected.length=== 0 || selected[0].closed === 1"
                     small
                     text
                     v-bind="attrs"
@@ -199,6 +249,7 @@
                     sd=12
                       >
                       <v-textarea
+                        v-model="description"
                         label="Descripcion"
                       ></v-textarea>
                     </v-col>
@@ -207,7 +258,7 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="closeDialog = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text :disabled="newStatus.length==0" @click="closeOportunity()">Cerrar oportunidades</v-btn>
+                        <v-btn color="blue darken-1" text :disabled="newStatus.length==0 || description.length==0" @click="closeOportunity()">Cerrar oportunidades</v-btn>
                         <v-spacer></v-spacer>
                     </v-card-actions>
                   </v-row>
@@ -230,7 +281,7 @@
             >
             <template v-slot:activator="{ on, attrs }">
                 <v-btn 
-                    :disabled="selected.length=== 0"
+                    :disabled="selected.length=== 0 || selected[0].closed === 1"
                     small
                     text
                     v-bind="attrs"
@@ -308,101 +359,22 @@
         </div>
 
       </v-toolbar>
+      <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
+
     </template>
 
+    <template v-slot:group.header="{ group, toggle, isOpen }">
+      <td :colspan="6" style="text-align: initial; padding-left:2rem;">
+        <v-btn @click="toggle" x-small icon :ref="group">
+            <v-icon v-if="isOpen">mdi-minus</v-icon>
+            <v-icon v-else>mdi-plus</v-icon>
+        </v-btn>
+        <span class="mx-5 font-weight-bold">{{ group }}</span>
+      </td>
+    </template>
 
     <template v-slot:item.actions="{ item }">
-
-        <template>
-
-            <v-dialog
-              v-model="noteDialog"
-              width="500"
-            >
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn 
-                    color="#66BB6A" 
-                    v-bind="attrs"
-                    v-on="on"
-                    >
-                  <v-icon color="#fff" >
-                      mdi-comment
-                  </v-icon>
-                </v-btn>
-              </template>
-
-              <v-card>
-                <v-card-title class="headline grey lighten-2">
-                  Nueva Nota
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col
-                        cols="12"
-                        sm="12"
-                      >
-                        <v-text-field
-                          v-model="newNote.title"
-                          label="Titulo de Nota"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="12"
-                      >
-                        <v-text-field
-                          v-model="newNote.description"
-                          label="Descripcion de Nota"
-                        ></v-text-field>
-                      </v-col>
-
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="noteDialog = false">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text @click="saveNote(item.id)">Guardar</v-btn>
-                        <v-spacer></v-spacer>
-                    </v-card-actions>
-                       
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-              </v-card>
-            </v-dialog>
-        </template>
-
-        <template>
-            <v-dialog
-              v-model="historyDialog"
-              width="500"
-            >
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn 
-                    color="#66BB6A" 
-                    v-bind="attrs"
-                    v-on="on"
-                    >
-                  <v-icon color="#fff" >
-                      mdi-history
-                  </v-icon>
-                </v-btn>
-              </template>
-
-              <v-card>
-                <v-card-title class="headline grey lighten-2">
-                  Historial de cambios
-                </v-card-title>
-
-                <v-card-text>
-                  <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                    <li>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</li>
-                    <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
-                  </ul>
-                </v-card-text>
-              </v-card>
-            </v-dialog>
-        </template>
+      <note-action :element="item"></note-action>
     </template>
         
     
@@ -462,22 +434,19 @@
     props:{
         users:Array,
         status: Array,
+        rol: Number,
     },
     data: () => ({
       datas:[],
-      selected: [ ],
+      selected: [],
       userSelected: [],
+      search: '',
       newStatus:[],
+      description:[],
       newUser:[],
       emailText:[],
-      newNote: [
-          {
-            title: null,
-            description: null,
-          }
-      ],
-      noteDialog: false,
-      historyDialog: false,
+      colorGroup: [],
+      deleteDialog: false,
       dialogDelete: false,
       emailDialog: false,
       statusDialog: false,
@@ -515,40 +484,69 @@
          },
             reasons(){
               return[
-                'Compró con nosotros', 
-                'Alquiló con nosotros', 
-                'Compró con otro',
-                'Alquiló con otro',
-                'Fantasma',
-                'Busqueda suspendida',
-                'Tasación exitosa (Ingreso a la propiedad)',
-                'Tasación suspendida (No ingreso a la propiedad)',
-                'Otro',
+                {
+                id:1,
+                name:'Compró con nosotros'
+              },
+              {
+                id:2,
+                name:'Alquiló con nosotros'
+              },
+              {
+                id:3,
+                name:'Compró con otro'
+              },
+              {
+                id:4,
+                name:'Alquiló con otro'
+              },
+              {
+                id:5,
+                name:'Fantasma'
+              },
+              {
+                id:6,
+                name:'Tasación exitosa (Ingreso a la propiedad)'
+              },
+              {
+                id:7,
+                name:'Tasación suspendida (No ingreso a la propiedad)'
+              },
               ]
             }
-    },
-
-    watch: {
     },
 
     methods: {
       initialize () {
         // this.datas = this.oportunities
       },
-      saveNote () {
-        console.log(this.newNote.title);
-        console.log(this.newNote.description);
-        this.noteDialog = false;
-      },
       sendEmail(item){
+        let params;
         item.forEach(element => {
-          console.log(element.email);
+          params={
+            name: element.contact,
+            oportunity: element.name,
+            email: element.email,
+            subject: this.emailText.asunto,
+            text: this.emailText.texto
+          }
+          axios.post('/api-oportunities/sendMail', params).then((response) =>{
+            console.log(response);
+          });
         });
         this.emailDialog=false;
       },
       changeUser(){
-        axios.get('/interesed/' + this.userSelected).then((response) => {
+        axios.get('/api-oportunities/' + this.userSelected).then((response) => {
+          console.log('Buscando las oporunidades de el usuario id='+ this.userSelected);
+          
           this.datas = response.data.oportunities;
+          this.datas.forEach(element => {
+            if (element.closed =="1") {
+              element.status = "Cerrado";
+            };
+            this.$emit('updateList', this.datas);
+          });
         });
 
       },
@@ -561,7 +559,7 @@
             status_id: this.newStatus,
             user_id: element.user_id,
           };
-        axios.put('/interesed/' + element.id, params ).then((response) => {
+        axios.put('/api-oportunities/' + element.id, params ).then((response) => {
               console.log(response);
               element.status=this.status[this.newStatus-1].name;
         });
@@ -570,7 +568,18 @@
         this.statusDialog = false
       },
       closeOportunity(){
-        this.closeDialog = false
+        let params={
+          reason:this.newStatus,
+          description:this.description,
+        };
+        this.selected.forEach(element => {
+          axios.put('/api-oportunities/close/' + element.id, params ).then((response) => {
+            console.log(response);
+            element.status='Cerrado';
+            element.closed=1;
+            this.closeDialog = false;
+          });
+        });
       },
       assignUser(){
         let params;
@@ -580,7 +589,7 @@
             status_id: element.status_id,
             user_id: this.newUser,
           };
-          axios.put('/interesed/' + element.id, params ).then((response) => {
+          axios.put('/api-oportunities/' + element.id, params ).then((response) => {
               console.log(response);
               index = this.datas.findIndex( x => x.name == element.name)-1;
               this.datas.splice(index,1)
@@ -588,6 +597,21 @@
         this.selected=[];
         });
         this.statusReassign = false
+      },
+      deleteOportunity(){
+        let index; 
+
+        this.selected.forEach(element => {
+          axios.delete('/api-oportunities/' + element.id ).then((response) => {
+            console.log(response);
+              index = this.datas.findIndex( x => x.name == element.name)-1;
+              this.datas.splice(index,1);
+              this.deleteDialog=false;
+          });          
+          });
+        // axios.delete('interesed/' + this.selected.id).then((response) => {
+        //       console.log(response);
+        // });
       }
     },
   }

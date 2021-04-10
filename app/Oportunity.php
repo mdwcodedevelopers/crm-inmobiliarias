@@ -1,15 +1,30 @@
 <?php
 
 namespace App;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Oportunity extends Model
 {
-    //
-    protected $fillable = ['id','user_id', 'name', 'contact_id', 'vigency', 'status_id'];
+     use SoftDeletes;
 
+    protected $fillable = ['id','user_id', 'name', 'contact_id', 'vigency', 'status_id','closed', 'closed_reason'];
 
+    protected $dates = ['deleted_at'];
+     // Cambio para el formato de fecha     
+     public function getCreatedAtAttribute($value){
+           return Carbon::parse($value)->format('d-m-Y');
+     }
+
+     public function getUpdatedAtAttribute($value){
+          return Carbon::parse($value)->format('d-m-Y');
+     }
+
+     public function getVigencyAttribute($value){
+          return Carbon::parse($value)->format('d-m-Y');
+     }
      /** 
      * Relacion uno a uno con el modelo Contact
      */

@@ -20,6 +20,10 @@ class CreateOportunitiesTable extends Migration
             $table->integer('contact_id');
             $table->date('vigency');
             $table->integer('status_id');
+            $table->boolean('closed')->default(0); //0abierto, 1cerrado
+            $table->string('closed_reason')->nullable();
+            $table->text('closed_description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -8,9 +8,13 @@ use App\NoteOportunity;
 use App\Contact;
 use App\StatusOportunity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OportunityController extends Controller
 {
+
+    
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -20,12 +24,15 @@ class OportunityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request){
+
+    }
+    public function view(Request $request)
     {           
-        
+        $user=User::find(auth()->id())->rol_id;
         $users = User::selectRaw('id, name')->get();
         $status = StatusOportunity::get();
-        return view('oportunities', compact('users', 'status'));;
+        return view('oportunities', compact('users', 'status', 'user'));;
     }
 
     /**
@@ -55,7 +62,7 @@ class OportunityController extends Controller
 
         $oportunity->save();
 
-        return $oportunity;
+        return response()->json("success", 200);
     }
 
     /**
@@ -64,15 +71,15 @@ class OportunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_user)
     {
         $oportunities = Oportunity::selectRaw('oportunities.*,  contacts.name AS contact, contacts.tel_1 AS tel_1,
-          contacts.tel_2 AS tel_2, contacts.email AS email, contacts.img_path AS img_contact, status_oportunities.name AS status, users.name AS user' )
+          contacts.tel_2 AS tel_2, contacts.email AS email, contacts.img_path AS img_contact, status_oportunities.name AS status, status_oportunities.color AS status_color, users.name AS user' )
         ->join('contacts', 'oportunities.contact_id', '=', 'contacts.id')
         ->join('users', 'oportunities.user_id', '=', 'users.id')
         ->join('status_oportunities', 'oportunities.status_id', '=', 'status_oportunities.id')
-        ->where('oportunities.user_id', $id)->get();
-        
+        ->where('oportunities.user_id', $id_user)->get();
+        // dd($oportunities);
         return compact('oportunities');
     }
 
@@ -100,7 +107,7 @@ class OportunityController extends Controller
         $oportunity->status_id = $request->status_id;
         $oportunity->user_id = $request->user_id;
         $oportunity->save();
-        return $oportunity;    
+        return response()->json("success", 200);
     }
 
     /**
@@ -111,12 +118,34 @@ class OportunityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $oportunity = Oportunity::find($id)->delete();
+
+        return response()->json("success", 200);
+    }
+    public function closeOportunity(Request $request, $id)
+    {
+        $oportunity = Oportunity::find($id);
+        $oportunity->closed_reason = $request->reason;
+        $oportunity->closed_description = $request->description;
+        $oportunity->closed = 1;
+        $oportunity->save();
+
+        return response()->json("success", 200);
     }
 
     public function getContacts(){
         $contacts = Contact::get();
         return $contacts;
         
+    }
+    public function sendEmail(Request $request)
+    {
+        $data["text"]=$request->text;
+        $data["oportunity"]=$request->oportunity;
+        $data["contact_name"] = $request->name;
+        // Mail::send('emails.contact_oportunity', $data, function($message) use ($request) {
+        //     $message->to($request->email)->subject($request->subject);
+        // });
+        return response()->json("success", 200);
     }
 }
