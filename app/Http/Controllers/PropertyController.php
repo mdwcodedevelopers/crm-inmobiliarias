@@ -99,7 +99,11 @@ class PropertyController extends Controller
     }
     public function property($id)
     {
-        $rol=User::find(auth()->id())->rol_id;
+        $rol=3;
+        if (!is_null(auth()->id())) {
+            $rol=User::find(auth()->id())->rol_id;
+        }
+        
         $property= Status::orderBy('properties.updated_at', 'desc')->where('properties.id','=',"$id")
         ->join('properties','properties.status_id','status.id')->first();
         $property->image= Image::select('url_image')->whereProperty_id($property->id)->get();

@@ -5528,6 +5528,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     property: Object
@@ -49899,7 +49901,7 @@ var render = function() {
                       _vm._v(
                         "\n                        " +
                           _vm._s(_vm.property.dimension) +
-                          "mt2\n                    "
+                          " mt2\n                    "
                       )
                     ]
                   ),
@@ -49914,7 +49916,7 @@ var render = function() {
                       _vm._v(
                         "\n                        " +
                           _vm._s(_vm.property.price) +
-                          "USD\n                    "
+                          " USD\n                    "
                       )
                     ]
                   ),
@@ -50134,10 +50136,12 @@ var render = function() {
                                       _c(
                                         "v-btn",
                                         {
+                                          staticClass: "success",
                                           attrs: {
                                             outlined: "",
                                             rounded: "",
-                                            text: ""
+                                            text: "",
+                                            color: "white"
                                           }
                                         },
                                         [

@@ -21,10 +21,10 @@
                             {{property.information}}
                         </p>
                         <v-chip color="#2979FF" text-color="#fff" class="mb-2 mr-3">
-                            {{property.dimension}}mt2
+                            {{property.dimension}} mt2
                         </v-chip>
                         <v-chip color="#38c172" text-color="#fff" class="mb-2 mr-3">
-                            {{property.price}}USD
+                            {{property.price}} USD
                         </v-chip>
                         
                         <v-card
@@ -119,6 +119,8 @@
                                         outlined
                                         rounded
                                         text
+                                        color="white"
+                                        class="success"
                                     >
                                         Enviar
                                     </v-btn>
