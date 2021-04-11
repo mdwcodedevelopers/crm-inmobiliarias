@@ -2,7 +2,7 @@
     <div class="text-center">
         <v-card color="blue">
             <div class="display-1 text-white">Lista de reportes</div>
-            <v-data-table :headers="headers"  no-results-text="No hay resultados" no-data-text="No hay historial de reportes" :items="reports" item-key="propeties-user" class="elevation-1" :search="search">
+            <v-data-table :headers="headers"  no-results-text="No hay resultados" no-data-text="No hay historial de reportes" :items="reports"  class="elevation-1" :search="search">
                 <template v-slot:item.imagen="{ item }">
 
                     <v-img :src="'../'+item.image" height="100" width="100"></v-img>

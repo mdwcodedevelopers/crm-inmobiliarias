@@ -63,17 +63,9 @@
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-                <v-btn
-                color="success"
-                dark
-                absolute
-                right
-                fab
-                class="mt-3"
-                @click="dialog=true"
-              >
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
+                <v-btn color="success" dark absolute right fab class="mt-3" @click="dialog=true">
+                    <v-icon>mdi-plus</v-icon>
+                </v-btn>
                 <v-tab-item :key="itemtab">
 
                     <v-card flat>
@@ -81,8 +73,8 @@
                         <v-card color="orange" class="text-white my-2">
 
                             <v-card-title class="display-1 mt-2" color="blue">Administradores</v-card-title>
-                            <v-data-table   no-results-text="No hay resultados" no-data-text="No hay Usuarios" :headers="headers" :items="admins"  class="elevation-1" :search="search">
-                            <template v-slot:top>
+                            <v-data-table no-results-text="No hay resultados" no-data-text="No hay Usuarios" :headers="headers" :items="admins" class="elevation-1" :search="search">
+                                <template v-slot:top>
                                     <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
                                 </template>
                                 <template>
@@ -114,7 +106,7 @@
                 <v-tab-item>
                     <v-card class="my-4" color="blue darken-2">
                         <v-card-title class="display-1 text-white my-2">Agentes</v-card-title>
-                        <v-data-table no-data-text="No hay Usuarios" no-results-text="No hay resultados" :headers="headers" :items="agents"  class="elevation-1" :search="search">
+                        <v-data-table no-data-text="No hay Usuarios" no-results-text="No hay resultados" :headers="headers" :items="agents" class="elevation-1" :search="search">
                             <template v-slot:top>
                                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
                             </template>
@@ -326,7 +318,9 @@ export default {
                 }).then((response) => {
                     if (response.status == 200) {
                         this.index();
-                        this.dialog = false;
+                        // this.dialog = false;
+                        // this.error='';
+                        this.$swal('Usuario creado con exito', '', 'OK');
                         this.name = "";
                         this.email = "";
                         this.rol_id = "";
@@ -334,14 +328,22 @@ export default {
                         this.province = "";
                         this.direction = "";
                     } else {
-                        this.error = "Error al crear Usuario";
+                        this.$swal({
+                            title: 'Error al crear usuario',
+                            type: 'warning'
+                        });
                     }
-                }).catch(
-                    this.error = "Error al crear Usuario, el email ya esta en uso"
-                );
+                }).catch((e) => {
+                    this.$swal({
+                        title: 'Error al crear usuario, correo en uso',
+                        type: 'warning'
+                    });
+                });
             } else {
-
-                this.error = 'Complete todos los campos obligarios';
+                this.$swal({
+                    title: 'Complete todos los campos',
+                    type: 'warning'
+                });
 
             }
         },
@@ -382,7 +384,7 @@ export default {
                 }).catch(
                     this.error = "Error al crear Usuario, el email ya esta en uso"
                 );
-            }else{
+            } else {
                 this.error_edit = 'Complete todos los campos obligarios';
             }
         },

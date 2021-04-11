@@ -11,7 +11,7 @@
             </button>
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" absolute bottom temporary>
-            
+
             <v-list color="light-blue darken-1 ">
                 <v-list-item>
                     <v-list-item-content>
@@ -23,17 +23,11 @@
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
-    
+
             <v-list nav dense>
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
                     <v-list-item>
-                        <a href="/users">Usuarios</a>
-                    </v-list-item>
-                    <v-list-item>
                         <a href="/properties-user">Propiedades</a>
-                    </v-list-item>
-                    <v-list-item>
-                        <a href="/tickets">Tickets</a>
                     </v-list-item>
                     <v-list-item>
                         <a href="/interested">Interesados de compra</a>
@@ -43,9 +37,6 @@
                         <a href="/profile">Mi perfil</a>
                     </v-list-item>
 
-                    <v-list-item>
-                        <a href="/share">Compartir</a>
-                    </v-list-item>
                     <v-list-item>
                         <a href="/web">Pagina web</a>
                     </v-list-item>

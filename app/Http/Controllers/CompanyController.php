@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $request)
     {
         $company = Company::where('id', '=', '1')->first();
@@ -18,21 +22,6 @@ class CompanyController extends Controller
             'company' => $company,
         ]);
     }
-    // public function store(Request $request)
-    // {
-    //     if($request['imagen']!=null){
-    //         $file = $request->file('imagen');
-    //         $extension = $file->getClientOriginalExtension();
-    //         Storage::put('public/images/'.$file->getFilename().'.'.$extension,  File::get($file));
-    //         $image_path='./storage'.'/images/'.$file->getFilename().'.'.$extension;
-    //         Company::create([
-    //             'name'=>$request['name'],
-    //             'information'=>$request['information'],
-    //             'image-url'=>$image_path
-    //         ]);
-    //     }else{
-    //     }
-    // }
     public function update(Request $request, $id)
     {
         $compan = Company::where('id','=','1')->first();
