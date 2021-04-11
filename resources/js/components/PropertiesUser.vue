@@ -127,7 +127,6 @@
                                         <v-text-field label="Precio" v-model="price_edit" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-<<<<<<< HEAD
                                         <select class="form-control mt-2" placeholder="Estado" @click="prueba()" v-model="currency_id_edit">
                                             <option selected disabled>Moneda
                                             </option>
@@ -135,16 +134,6 @@
                                                 {{ item.currency }}
                                             </option>
                                         </select>
-=======
-                                         <v-select
-                                            v-model="currency_id_edit"
-                                            :items="currency"
-                                            item-text="currency"
-                                            item-value="id"
-                                            label="Moneda"
-                                            @click="prueba()"
-                                        ></v-select>
->>>>>>> 9936d23f9107233d22b261e78a959e61ca6abfac
 
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>

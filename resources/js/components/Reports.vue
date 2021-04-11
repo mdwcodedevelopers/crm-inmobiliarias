@@ -1,36 +1,40 @@
 <template>
     <div class="text-center">
+        <v-card color="blue">
+            <div class="display-1 text-white">Lista de reportes</div>
+            <v-data-table :headers="headers" :items="reports" item-key="propeties-user" class="elevation-1" :search="search">
+                <template v-slot:item.imagen="{ item }">
+
+                    <v-img :src="'../'+item.image" height="100" width="100"></v-img>
+                </template>
+                <template v-slot:top>
+                    <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
+                </template>
+                <template>
+                    <tr>
+                        <td></td>
+                        <td>
+                        </td>
+                        <td colspan="4"></td>
+                    </tr>
+                </template>
+                <template v-slot:item.action="{ item }">
+                    <v-btn color="#E53935" class="m-1" @click="delete_dialog(item.id,item.information)">
+                        <v-icon color="#fff">
+                            mdi-delete
+                        </v-icon>
+                    </v-btn>
+
+                </template>
+
+            </v-data-table>
+        </v-card>
         <v-btn color="#E53935" class="m-1" @click="exportPDF()">
             <v-icon color="#fff">
                 mdi-pdf
             </v-icon>
         </v-btn>
-        <v-data-table :headers="headers" :items="reports" item-key="propeties-user" class="elevation-1" :search="search">
-            <template v-slot:item.imagen="{ item }">
 
-                <v-img :src="'../'+item.image" height="100" width="100"></v-img>
-            </template>
-            <template v-slot:top>
-                <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
-            </template>
-            <template>
-                <tr>
-                    <td></td>
-                    <td>
-                    </td>
-                    <td colspan="4"></td>
-                </tr>
-            </template>
-            <template v-slot:item.action="{ item }">
-                <v-btn color="#E53935" class="m-1" @click="delete_dialog(item.id,item.information)">
-                    <v-icon color="#fff">
-                        mdi-delete
-                    </v-icon>
-                </v-btn>
-
-            </template>
-
-        </v-data-table>
 
         <template>
             <v-layout row justify-center>

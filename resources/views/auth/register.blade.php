@@ -25,13 +25,13 @@
                         <div class="form-group row">
 
                             <div class="col-md-6 mx-auto ">
-                        <v-alert color="info" class="m-4" dark>Todos lo campos son requeridos <v-icon>mdi-info</v-icon></v-alert>
+                        <v-alert color="warning" class="m-4" dark>Todos lo campos son requeridos <v-icon>mdi-info</v-icon></v-alert>
 
                                 <input id="name" placeholder="Nombre*" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>Error en el nombre</strong>
                                     </span>
                                 @enderror
                             </div>
@@ -43,7 +43,7 @@
 
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>Error en el número de telefono</strong>
                                     </span>
                                 @enderror
                             </div>
@@ -55,7 +55,7 @@
 
                                 @error('province')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>Error en la provincia</strong>
                                     </span>
                                 @enderror
                             </div>
@@ -67,7 +67,7 @@
 
                                 @error('direction')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>Error en la dirección</strong>
                                     </span>
                                 @enderror
                             </div>
@@ -79,7 +79,7 @@
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>Error en el correo</strong>
                                     </span>
                                 @enderror
                             </div>
@@ -92,7 +92,7 @@
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>Contraseña no valida</strong>
                                     </span>
                                 @enderror
                             </div>

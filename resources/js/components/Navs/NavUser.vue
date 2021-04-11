@@ -14,6 +14,9 @@
             <v-list nav dense>
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
                     <v-list-item>
+                        <a href="/">Web</a>
+                    </v-list-item>
+                    <v-list-item>
                         <a href="/profile">Mi perfil</a>
                     </v-list-item>
                 </v-list-item-group>

@@ -36,7 +36,7 @@
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>Este correo no esta registrado</strong>
                                     </span>
                                 @enderror
                             </div>

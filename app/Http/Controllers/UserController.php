@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Roles;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,20 +13,21 @@ class UserController extends Controller
     {
         $user = User::where('id', '=', auth()->id())->first();
         return response()->json([
-            'user' => $user,
+            'user' => $user
         ]);
     }
     public function view()
     {
-        return view('profile');
+        $user=User::find(auth()->id());
+        return view('profile',['rol'=>$user->rol_id]);
     }
-    public function update(Request $request, $id)
+    public function store(Request $request)
     {
         $user = User::find(auth()->id());
         $user->update([
             'name' => $request['name'],
             'email' => $request['email'],
-            'phone' => $request->phone,
+            'phone' => $request['phone'],
             'pronvince' => $request['pronvince'],
             'direction' => $request['direction'],
         ]);

@@ -31,12 +31,7 @@ Route::resources(['api-properties' => PropertyController::class,
 'api-user'=>UserController::class,
 'api-company'=>CompanyController::class,
 'api-dashboard'=>DashboardController::class,
-<<<<<<< HEAD
-'api-reports'=>ReportController::class
-]);
-=======
 'api-oportunities'=>OportunityController::class]);
->>>>>>> 9936d23f9107233d22b261e78a959e61ca6abfac
 Auth::routes();
 
 Route::get('/api-properties-user', 'PropertyController@properties');
