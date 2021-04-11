@@ -40,7 +40,7 @@
                 </v-dialog>
             </v-layout>
         </template>
-        <v-data-table :headers="headers" :items="properties" item-key="name" class="elevation-1" :search="search">
+        <v-data-table :headers="headers" :items="properties" no-results-text="No hay resultados" no-data-text="No hay propiedades" item-key="name" class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
             </template>

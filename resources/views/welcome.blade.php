@@ -15,12 +15,12 @@
         @endif
         @if ($rol==2)
         <div class="">
-            <nav-agent />
+            <nav-user />
         </div>
         @endif
         @if ($rol==3)
         <div class="">
-            <nav-user>
+            <nav-agent>
         </div>
         @endif
         @endguest

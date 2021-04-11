@@ -7,7 +7,7 @@
             <nav-admin />
         </div>
         @endif
-        @if ($rol==2)
+        @if ($rol==3)
         <div class="">
             <nav-agent />
         </div>

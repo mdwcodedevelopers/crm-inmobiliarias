@@ -1,13 +1,76 @@
 <template>
     <div class="text-center">
-        <v-btn @click="exportPDF()" color="red darken-4" dark>Pdf <v-icon>mdi-file-pdf</v-icon></v-btn>
+
+        <v-card color="blue">
+            <v-card-title class="display-1 text-white">Propiedades             <v-btn
+                color="success"
+                dark
+                absolute
+                right
+                fab
+                class="mt-1"
+                @click="dialog=true"
+              >
+                <v-icon>mdi-plus</v-icon>
+              </v-btn></v-card-title>
+
+            <v-data-table :headers="headers"  no-results-text="No hay resultados" no-data-text="No hay propiedades " :items="properties" item-key="propeties-user" class="elevation-1" :search="search">
+                <template v-slot:item.imagen="{ item }">
+
+                    <v-img :src="'../'+item.image" height="100" width="100"></v-img>
+                </template>
+                <template v-slot:top>
+                    <v-toolbar flat>
+                    <v-text-field v-model="search" label="Buscar" class="mt-3"></v-text-field>
+                    <v-spacer></v-spacer>
+            <v-btn @click="exportPDF()" color="#E53935" dark>Pdf <v-icon>mdi-file-pdf</v-icon></v-btn>
+
+                    </v-toolbar>
+                </template>
+                <template>
+                    <tr>
+                        <td></td>
+                        <td>
+                        </td>
+                        <td colspan="4"></td>
+                    </tr>
+                </template>
+                <template v-slot:item.action="{ item }">
+
+                    <v-btn color="#66BB6A" class="m-1" @click="edit(item.id,item.title,item.dimension,item.price,item.information)">
+                        <v-icon color="#fff">
+                            mdi-pencil
+                        </v-icon>
+                    </v-btn>
+                    <v-btn color="warning" class="m-1" @click="images(item.id)">
+                        <v-icon color="#fff">
+                            mdi-file-image
+                        </v-icon>
+                    </v-btn>
+                    <v-btn color="blue darken-2" class="m-1" @click="shareFace(item.id)">
+                        <v-icon color="#fff">
+                            mdi-facebook
+                        </v-icon>
+                    </v-btn>
+                    <v-btn color="blue darken-1" class="m-1" @click="shareTwit(item.id)">
+                        <v-icon color="#fff">
+                            mdi-twitter
+                        </v-icon>
+                    </v-btn>
+                    <v-btn v-if="rol==1" color="#E53935" class="m-1" @click="delete_dialog(item.id,item.title)">
+                        <v-icon color="#fff">
+                            mdi-delete
+                        </v-icon>
+                    </v-btn>
+
+                </template>
+
+            </v-data-table>
+        </v-card>
         <template>
             <v-layout row justify-center>
                 <v-dialog v-model="dialog" persistent max-width="600px">
-                    <template v-slot:activator="{ on }">
-                        <v-btn color="success" class="my-4" dark v-on="on">Agregar propiedad <v-icon>mdi-home-circle</v-icon>
-                        </v-btn>
-                    </template>
+
                     <v-card class="my-4">
                         <v-card-title>
                             <span class="headline">Crear propiedad</span>
@@ -26,6 +89,7 @@
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                         <v-select
+                                        no-data-text="No hay Monedas "
                                             v-model="currency_id"
                                             :items="currency"
                                             item-text="currency"
@@ -38,6 +102,7 @@
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                         <v-select
+                                        no-data-text="No hay Estatus "
                                             v-model="status_id"
                                             :items="status"
                                             item-text="status"
@@ -60,53 +125,6 @@
                 </v-dialog>
             </v-layout>
         </template>
-        <v-data-table :headers="headers" :items="properties" item-key="propeties-user" class="elevation-1" :search="search">
-            <template v-slot:item.imagen="{ item }">
-
-                <v-img :src="'../'+item.image" height="100" width="100"></v-img>
-            </template>
-            <template v-slot:top>
-                <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
-            </template>
-            <template>
-                <tr>
-                    <td></td>
-                    <td>
-                    </td>
-                    <td colspan="4"></td>
-                </tr>
-            </template>
-            <template v-slot:item.action="{ item }">
-
-                <v-btn color="#66BB6A" class="m-1" @click="edit(item.id,item.title,item.dimension,item.price,item.information)">
-                    <v-icon color="#fff">
-                        mdi-pencil
-                    </v-icon>
-                </v-btn>
-                <v-btn color="warning" class="m-1" @click="images(item.id)">
-                    <v-icon color="#fff">
-                        mdi-file-image
-                    </v-icon>
-                </v-btn>
-                <v-btn color="blue darken-2" class="m-1" @click="shareFace(item.id)">
-                    <v-icon color="#fff">
-                        mdi-facebook
-                    </v-icon>
-                </v-btn>
-                <v-btn color="blue darken-1" class="m-1" @click="shareTwit(item.id)">
-                    <v-icon color="#fff">
-                        mdi-twitter
-                    </v-icon>
-                </v-btn>
-                <v-btn v-if="rol==1" color="#E53935" class="m-1" @click="delete_dialog(item.id,item.title)">
-                    <v-icon color="#fff">
-                        mdi-delete
-                    </v-icon>
-                </v-btn>
-
-            </template>
-
-        </v-data-table>
         <template>
             <v-layout row justify-center>
                 <v-dialog v-model="dialogedit" persistent max-width="600px">
@@ -127,7 +145,6 @@
                                         <v-text-field label="Precio" v-model="price_edit" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-<<<<<<< HEAD
                                         <select class="form-control mt-2" placeholder="Estado" @click="prueba()" v-model="currency_id_edit">
                                             <option selected disabled>Moneda
                                             </option>
@@ -135,16 +152,6 @@
                                                 {{ item.currency }}
                                             </option>
                                         </select>
-=======
-                                         <v-select
-                                            v-model="currency_id_edit"
-                                            :items="currency"
-                                            item-text="currency"
-                                            item-value="id"
-                                            label="Moneda"
-                                            @click="prueba()"
-                                        ></v-select>
->>>>>>> 9936d23f9107233d22b261e78a959e61ca6abfac
 
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>

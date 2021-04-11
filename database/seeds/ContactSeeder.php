@@ -1,11 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-<<<<<<< HEAD
-use Illuminate\Support\Facades\DB;
-=======
 use App\Contact;
->>>>>>> 9936d23f9107233d22b261e78a959e61ca6abfac
 
 class ContactSeeder extends Seeder
 {
@@ -16,15 +12,6 @@ class ContactSeeder extends Seeder
      */
     public function run()
     {
-<<<<<<< HEAD
-        DB::table('contacts')->insert([
-            'name' => 'usuario',
-            'img_path' => '',
-            'email' => 'contact@contact.com',
-            'tel_1' => '12345678',
-            'tel_2' => '12345678'
-        ]);
-=======
         $contacts =
             array(
                 'name' => 'Contacto de prueba',
@@ -36,6 +23,5 @@ class ContactSeeder extends Seeder
             );
 
         Contact::create($contacts);
->>>>>>> 9936d23f9107233d22b261e78a959e61ca6abfac
     }
 }
