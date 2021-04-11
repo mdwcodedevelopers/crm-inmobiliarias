@@ -9,6 +9,7 @@
     class="elevation-1"
     :search="search"
     no-data-text="No hay datos disponibles"
+    no-results-text="No hay resultados"
   >
     <template v-slot:top>
       <v-toolbar

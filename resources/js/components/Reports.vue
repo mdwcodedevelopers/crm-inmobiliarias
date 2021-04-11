@@ -2,7 +2,7 @@
     <div class="text-center">
         <v-card color="blue">
             <div class="display-1 text-white">Lista de reportes</div>
-            <v-data-table :headers="headers" no-data-text="No hay datos disponibles" :items="reports" item-key="propeties-user" class="elevation-1" :search="search">
+            <v-data-table :headers="headers"  no-results-text="No hay resultados" no-data-text="No hay historial de reportes" :items="reports" item-key="propeties-user" class="elevation-1" :search="search">
                 <template v-slot:item.imagen="{ item }">
 
                     <v-img :src="'../'+item.image" height="100" width="100"></v-img>
@@ -10,7 +10,8 @@
                 <template v-slot:top>
                     <v-toolbar flat>
                         <v-text-field v-model="search" label="Buscar" class="mt-3"></v-text-field>
-                        <v-btn color="#E53935" class="m-1" @click="exportPDF()" dark>
+                        <v-spacer></v-spacer>
+                        <v-btn color="#E53935" class="m-1" @click="exportPDF()" dark>PDF
                                 <v-icon>mdi-file-pdf</v-icon>
                         </v-btn>
                     </v-toolbar>

@@ -81,9 +81,8 @@
                         <v-card color="orange" class="text-white my-2">
 
                             <v-card-title class="display-1 mt-2" color="blue">Administradores</v-card-title>
-                            <v-data-table rows-per-page-items="[20, 10, 30, 40]"
-                            loading-text="Loading... Please wait" no-data-text="No hay datos disponibles" :headers="headers" :items="admins" item-key="propeties-user" class="elevation-1" :search="search">
-                                <template v-slot:top>
+                            <v-data-table   no-results-text="No hay resultados" no-data-text="No hay Usuarios" :headers="headers" :items="admins"  class="elevation-1" :search="search">
+                            <template v-slot:top>
                                     <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
                                 </template>
                                 <template>
@@ -115,7 +114,7 @@
                 <v-tab-item>
                     <v-card class="my-4" color="blue darken-2">
                         <v-card-title class="display-1 text-white my-2">Agentes</v-card-title>
-                        <v-data-table no-data-text="No hay datos disponibles" :headers="headers" :items="agents" item-key="propeties-user" class="elevation-1" :search="search">
+                        <v-data-table no-data-text="No hay Usuarios" no-results-text="No hay resultados" :headers="headers" :items="agents"  class="elevation-1" :search="search">
                             <template v-slot:top>
                                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
                             </template>
@@ -148,7 +147,7 @@
                 <v-tab-item>
                     <v-card class="my-4" color="cyan darken-3">
                         <v-card-title class="display-1 text-white">Usuarios</v-card-title>
-                        <v-data-table no-data-text="No hay datos disponibles" :headers="usersheader" :items="users" item-key="propeties-user" class="elevation-1" :search="search">
+                        <v-data-table no-data-text="No hay Usuarios" no-results-text="No hay resultados" :headers="usersheader" :items="users" class="elevation-1" :search="search">
                             <template v-slot:top>
                                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
                             </template>

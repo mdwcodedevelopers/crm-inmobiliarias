@@ -14,14 +14,14 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn></v-card-title>
 
-            <v-data-table :headers="headers" no-data-text="No hay propiedades " :items="properties" item-key="propeties-user" class="elevation-1" :search="search">
+            <v-data-table :headers="headers"  no-results-text="No hay resultados" no-data-text="No hay propiedades " :items="properties" item-key="propeties-user" class="elevation-1" :search="search">
                 <template v-slot:item.imagen="{ item }">
 
                     <v-img :src="'../'+item.image" height="100" width="100"></v-img>
                 </template>
                 <template v-slot:top>
                     <v-toolbar flat>
-                    <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
+                    <v-text-field v-model="search" label="Buscar" class="mt-3"></v-text-field>
                     <v-spacer></v-spacer>
             <v-btn @click="exportPDF()" color="#E53935" dark>Pdf <v-icon>mdi-file-pdf</v-icon></v-btn>
 
@@ -89,6 +89,7 @@
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                         <v-select
+                                        no-data-text="No hay Monedas "
                                             v-model="currency_id"
                                             :items="currency"
                                             item-text="currency"
@@ -101,6 +102,7 @@
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                         <v-select
+                                        no-data-text="No hay Estatus "
                                             v-model="status_id"
                                             :items="status"
                                             item-text="status"

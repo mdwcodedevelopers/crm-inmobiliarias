@@ -33,7 +33,7 @@
                 </v-dialog>
             </v-layout>
         </template>
-        <v-data-table :headers="headers" :items="currency" no-data-text="No hay datos disponibles" item-key="propeties-user" class="elevation-1" :search="search">
+        <v-data-table :headers="headers" :items="currency"  no-results-text="No hay resultados" no-data-text="No hay monedas" class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
             </template>
