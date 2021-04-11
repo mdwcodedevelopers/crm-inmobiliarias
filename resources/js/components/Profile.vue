@@ -139,30 +139,28 @@ export default {
             this.direction_edit = direction;
         },
         edit_model() {
-            if (this.profile.rol_id == 2 &&  this.phone_edit=='' || this.province_edit=='' || this.direction_edit=='') {
-                this.error='Complete todos los campos';
-            }
-            else if(this.email_edit=='' || this.name_edit==''){
-                this.error='Complete todos los campos';
-            }
-            else{
+            if (this.profile.rol_id == 2 && this.phone_edit == '' || this.province_edit == '' || this.direction_edit == '') {
+                this.error = 'Complete todos los campos';
+            } else if (this.email_edit == '' || this.name_edit == '') {
+                this.error = 'Complete todos los campos';
+            } else {
                 axios.post("/api-user", {
-                name: this.name_edit,
-                email: this.email_edit,
-                phone: this.phone_edit,
-                pronvince: this.province_edit,
-                direction: this.direction_edit
-            }).then((response) => {
-                if (response.status == 200) {
-                    this.index();
-                    this.name_edit = '';
-                    this.email_edit = '';
-                    this.phone_edit = '';
-                    this.province_edit = '';
-                    this.direction_edit = '';
-                    this.dialogedit = false;
-                }
-            }).catch(this.error = 'Error al editar, email repetido');
+                    name: this.name_edit,
+                    email: this.email_edit,
+                    phone: this.phone_edit,
+                    pronvince: this.province_edit,
+                    direction: this.direction_edit
+                }).then((response) => {
+                    if (response.status == 200) {
+                        this.index();
+                        this.name_edit = '';
+                        this.email_edit = '';
+                        this.phone_edit = '';
+                        this.province_edit = '';
+                        this.direction_edit = '';
+                        this.dialogedit = false;
+                    }
+                }).catch(this.error = 'Error al editar, email repetido');
             }
 
         },
@@ -170,9 +168,9 @@ export default {
             this.dialogpass = true;
         },
         edit_pass() {
-            let pass1=this.passnew;
-            let pass2= this.cpassnew;
-            if (pass1 !=pass2) {
+            let pass1 = this.passnew;
+            let pass2 = this.cpassnew;
+            if (pass1 != pass2) {
                 this.error_edit = 'Las contraseñas no coinciden';
             } else {
                 axios.post("/api-password", {

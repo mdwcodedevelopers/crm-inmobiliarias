@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $request){
         $id=$request->id;
         $images= Image::where('property_id','=',$id)->get();

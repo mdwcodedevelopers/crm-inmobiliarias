@@ -7,11 +7,7 @@ use App\Currency;
 use App\Property;
 use App\Report;
 use App\Status;
-<<<<<<< HEAD
-use App\User;
-=======
 use App\Image;
->>>>>>> 9936d23f9107233d22b261e78a959e61ca6abfac
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -116,29 +112,18 @@ class PropertyController extends Controller
     }
     public function property($id)
     {
-<<<<<<< HEAD
-
-        $property = Status::orderBy('properties.updated_at', 'desc')->where('properties.id', '=', "$id")
-            ->join('properties', 'properties.status_id', 'status.id')->first();
-        if ($user = User::find(auth()->id())) {
-            return view('property', ['property' => $property, 'rol' => $user->rol_id]);
-        } else {
-            return view('property', ['property' => $property, 'rol' => 0]);
-        }
-=======
         $rol=User::find(auth()->id())->rol_id;
         $property= Status::orderBy('properties.updated_at', 'desc')->where('properties.id','=',"$id")
         ->join('properties','properties.status_id','status.id')->first();
         $property->image= Image::select('url_image')->whereProperty_id($property->id)->get();
         // dd($images);
         return view('property',['property'=>$property,'rol'=>$rol]);
->>>>>>> 9936d23f9107233d22b261e78a959e61ca6abfac
     }
     public function destroy($id)
     {
         $prop = Property::where('id', '=', "$id")->first();
         $property = Property::find($id);
-        
+
         $property->delete();
         Report::create([
             'type' => 'Eliminación',

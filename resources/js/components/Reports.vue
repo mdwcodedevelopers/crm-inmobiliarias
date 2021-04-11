@@ -2,13 +2,19 @@
     <div class="text-center">
         <v-card color="blue">
             <div class="display-1 text-white">Lista de reportes</div>
-            <v-data-table :headers="headers" :items="reports" item-key="propeties-user" class="elevation-1" :search="search">
+            <v-data-table :headers="headers" no-data-text="No hay datos disponibles" :items="reports" item-key="propeties-user" class="elevation-1" :search="search">
                 <template v-slot:item.imagen="{ item }">
 
                     <v-img :src="'../'+item.image" height="100" width="100"></v-img>
                 </template>
                 <template v-slot:top>
-                    <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
+                    <v-toolbar flat>
+                        <v-text-field v-model="search" label="Buscar" class="mt-3"></v-text-field>
+                        <v-btn color="#E53935" class="m-1" @click="exportPDF()" dark>
+                                <v-icon>mdi-file-pdf</v-icon>
+                        </v-btn>
+                    </v-toolbar>
+
                 </template>
                 <template>
                     <tr>
@@ -29,12 +35,6 @@
 
             </v-data-table>
         </v-card>
-        <v-btn color="#E53935" class="m-1" @click="exportPDF()">
-            <v-icon color="#fff">
-                mdi-pdf
-            </v-icon>
-        </v-btn>
-
 
         <template>
             <v-layout row justify-center>
@@ -59,8 +59,8 @@
 </template>
 
 <script>
-    import jsPDF from 'jspdf';
-    import 'jspdf-autotable'
+import jsPDF from 'jspdf';
+import 'jspdf-autotable'
 export default {
     props: {
         rol: Number
@@ -71,7 +71,7 @@ export default {
             dialogdelete: false,
             id_delete: '',
             propiedad_eliminar: '',
-            search:''
+            search: ''
         }
     },
     methods: {

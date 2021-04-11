@@ -8,6 +8,7 @@
     :items="datas"
     class="elevation-1"
     :search="search"
+    no-data-text="No hay datos disponibles"
   >
     <template v-slot:top>
       <v-toolbar
@@ -15,14 +16,14 @@
         height="100px"
       >
        <!-- Modal de delete -->
-        <div v-if="rol==1" style="height:100% !important" class="d-flex align-items-center"> 
+        <div v-if="rol==1" style="height:100% !important" class="d-flex align-items-center">
           <template>
                 <v-dialog
                   v-model="deleteDialog"
                   width="600"
                 >
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn 
+                    <v-btn
                         :disabled="selected.length=== 0"
                         small
                         text
@@ -60,8 +61,8 @@
                     </v-card-text>
                   </v-card>
                 </v-dialog>
-          </template> 
-          
+          </template>
+
           <v-divider
               class="mx-4"
               inset
@@ -75,7 +76,7 @@
               width="600"
             >
             <template v-slot:activator="{ on, attrs }">
-                <v-btn 
+                <v-btn
                     :disabled="selected.length=== 0"
                     small
                     text
@@ -101,13 +102,13 @@
                         cols="12"
                         sm="12"
                       >
-                      
+
                       <v-text-field
                         v-model="emailText.asunto"
                         label="Asunto"
                       ></v-text-field>
                       </v-col>
-                      
+
                       <v-col
                         cols="12"
                         sm="12"
@@ -117,8 +118,8 @@
                         label="Texto de email"
                       ></v-textarea>
                       </v-col>
-                      
-    
+
+
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="emailDialog = false">Cancelar</v-btn>
@@ -129,22 +130,22 @@
                 </v-card-text>
               </v-card>
             </v-dialog>
-       </template>          
+       </template>
 
          <v-divider
           class="mx-4"
           inset
           vertical
         ></v-divider>
-      
-       <!-- Modal de status --> 
+
+       <!-- Modal de status -->
        <template>
             <v-dialog
               v-model="statusDialog"
               width="600"
             >
             <template v-slot:activator="{ on, attrs }">
-                <v-btn 
+                <v-btn
                     :disabled="selected.length=== 0 || selected[0].closed === 1"
                     small
                     text
@@ -163,7 +164,7 @@
                 <v-card-title class="headline grey lighten-2">
                   <small>
                     Está a punto de cambiar un estado. ¿Está seguro?
-                  </small> 
+                  </small>
                 </v-card-title>
 
                 <v-card-text>
@@ -178,7 +179,7 @@
                         label=" Seleccione estado"
                       ></v-select>
                     </v-col>
-                      
+
 
                       <v-card-actions>
                         <v-spacer></v-spacer>
@@ -190,7 +191,7 @@
                 </v-card-text>
               </v-card>
             </v-dialog>
-       </template> 
+       </template>
 
          <v-divider
           class="mx-4"
@@ -199,14 +200,14 @@
         ></v-divider>
 
 
-        <!-- Modal de cerrar oportunidad --> 
+        <!-- Modal de cerrar oportunidad -->
        <template>
             <v-dialog
               v-model="closeDialog"
               width="600"
             >
             <template v-slot:activator="{ on, attrs }">
-                <v-btn 
+                <v-btn
                     :disabled="selected.length=== 0 || selected[0].closed === 1"
                     small
                     text
@@ -225,7 +226,7 @@
                 <v-card-title class="headline grey lighten-2">
                   <small>
                     Está a punto de cerrar {{selected.length}} oportunidades. ¿Está seguro?
-                  </small> 
+                  </small>
                 </v-card-title>
 
                 <v-card-text>
@@ -243,7 +244,7 @@
                         label=" Seleccione una opción"
                       ></v-select>
                     </v-col>
-                    
+
                     <v-col
                     cols=12
                     sd=12
@@ -253,7 +254,7 @@
                         label="Descripcion"
                       ></v-textarea>
                     </v-col>
-                      
+
 
                       <v-card-actions>
                         <v-spacer></v-spacer>
@@ -265,7 +266,7 @@
                 </v-card-text>
               </v-card>
             </v-dialog>
-       </template> 
+       </template>
 
          <v-divider
           class="mx-4"
@@ -273,14 +274,14 @@
           vertical
         ></v-divider>
 
-        <!-- Modal de reasignar --> 
+        <!-- Modal de reasignar -->
        <template>
             <v-dialog
               v-model="statusReassign"
               width="600"
             >
             <template v-slot:activator="{ on, attrs }">
-                <v-btn 
+                <v-btn
                     :disabled="selected.length=== 0 || selected[0].closed === 1"
                     small
                     text
@@ -299,7 +300,7 @@
                 <v-card-title class="headline grey lighten-2">
                   <small>
                     Está a punto de reasignar {{selected.length}} contactos. ¿Está seguro?
-                  </small> 
+                  </small>
                 </v-card-title>
 
                 <v-card-text>
@@ -309,7 +310,7 @@
                     sm=4
                       >
                       <h4 style="margin-top:10px;">Nuevo agente:</h4>
-                      
+
                     </v-col>
                     <v-col
                     cols=12
@@ -323,7 +324,7 @@
                         label=" Seleccione agente"
                       ></v-select>
                     </v-col>
-                      
+
 
                       <v-card-actions>
                         <v-spacer></v-spacer>
@@ -335,10 +336,10 @@
                 </v-card-text>
               </v-card>
             </v-dialog>
-       </template> 
+       </template>
 
-        
-     
+
+
         <v-divider
           class="mx-4"
           inset
@@ -376,12 +377,12 @@
     <template v-slot:item.actions="{ item }">
       <note-action :element="item"></note-action>
     </template>
-        
-    
-    <template v-slot:no-data> 
+
+
+    <template v-slot:no-data>
         <h3>Seleccione un usuario para ver sus oportunidades o agregue una oportunidad</h3>
     </template>
-    
+
     <template v-slot:item.contact="{ item } ">
      <v-menu
         top
@@ -399,7 +400,7 @@
           </a>
         </template>
         <v-list>
-          <contact-card 
+          <contact-card
               :contact="item.contact"
               :img="item.img_contact"
               :tel1="item.tel_1"
@@ -407,14 +408,14 @@
               :email="item.email"></contact-card>
         </v-list>
       </v-menu>
-      
+
     </template>
 
 
     <!-- <template v-slot:item.vigency="{ item }">
-     
-      <v-progress-linear 
-            :value=item.vigency 
+
+      <v-progress-linear
+            :value=item.vigency
             color="light-green darken-4">
       </v-progress-linear>
 
@@ -539,7 +540,7 @@
       changeUser(){
         axios.get('/api-oportunities/' + this.userSelected).then((response) => {
           console.log('Buscando las oporunidades de el usuario id='+ this.userSelected);
-          
+
           this.datas = response.data.oportunities;
           this.datas.forEach(element => {
             if (element.closed =="1") {
@@ -583,7 +584,7 @@
       },
       assignUser(){
         let params;
-        let index; 
+        let index;
         this.selected.forEach(element => {
           params = {
             status_id: element.status_id,
@@ -599,7 +600,7 @@
         this.statusReassign = false
       },
       deleteOportunity(){
-        let index; 
+        let index;
 
         this.selected.forEach(element => {
           axios.delete('/api-oportunities/' + element.id ).then((response) => {
@@ -607,7 +608,7 @@
               index = this.datas.findIndex( x => x.name == element.name)-1;
               this.datas.splice(index,1);
               this.deleteDialog=false;
-          });          
+          });
           });
         // axios.delete('interesed/' + this.selected.id).then((response) => {
         //       console.log(response);

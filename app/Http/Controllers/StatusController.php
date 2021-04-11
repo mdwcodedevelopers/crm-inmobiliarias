@@ -9,6 +9,10 @@ use Illuminate\Routing\Controller;
 
 class StatusController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $request){
         $status = Status::get();
         return response()->json([

@@ -7,13 +7,17 @@ use App\NoteOportunity;
 
 class NoteController extends Controller
 {
-   
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function store(Request $request)
     {
         $note = new NoteOportunity;
@@ -38,5 +42,5 @@ class NoteController extends Controller
         return $notes;
     }
 
-    
+
 }
