@@ -112,12 +112,7 @@ class PropertyController extends Controller
     }
     public function property($id)
     {
-
-        $rol=3;
-        if (!is_null(auth()->id())) {
-            $rol=User::find(auth()->id())->rol_id;
-        }
-
+ 
         $property = Status::orderBy('properties.updated_at', 'desc')->where('properties.id', '=', "$id")
             ->join('properties', 'properties.status_id', 'status.id')->first();
         if ($user = User::find(auth()->id())) {
@@ -126,7 +121,7 @@ class PropertyController extends Controller
             return view('property', ['property' => $property, 'rol' => 0]);
         }
         $property->image= Image::select('url_image')->whereProperty_id($property->id)->get();
-        return view('property',['property'=>$property,'rol'=>$rol]);
+        return view('property',['property'=>$property,'rol'=>$user->rol_id]);
     }
     public function destroy($id)
     {

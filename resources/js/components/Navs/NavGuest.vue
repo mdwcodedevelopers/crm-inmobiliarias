@@ -2,7 +2,7 @@
     <div class="">
         <v-app-bar color="light-blue darken-1 " dark>
 
-            <v-toolbar-title> <a href="/" class="text-white" style="text-decoration:none">Propiedades</a> </v-toolbar-title>
+            <v-toolbar-title> <a href="/" class="text-white" style="text-decoration:none">Home</a> </v-toolbar-title>
 
             <v-spacer></v-spacer>
 
