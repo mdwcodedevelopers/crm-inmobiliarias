@@ -9,9 +9,14 @@ import '@mdi/font/css/materialdesignicons.css'
 window.Vue = require('vue');
 import Vuetify from 'vuetify';
 import VueCarousel from 'vue-carousel';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+Vue.use(VueSweetalert2);
 Vue.use(VueCarousel);
 Vue.use(Vuetify);
 import colors from 'vuetify/lib/util/colors'
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

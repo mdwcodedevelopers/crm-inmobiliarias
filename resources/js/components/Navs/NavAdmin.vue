@@ -40,16 +40,10 @@
                         <a href="/currency">Monedas</a>
                     </v-list-item>
                     <v-list-item>
-                        <a href="/">Trabajadores de la empresa</a>
-                    </v-list-item>
-                    <v-list-item>
                         <a href="/properties-user">Propiedades</a>
                     </v-list-item>
                     <v-list-item>
                         <a href="/status">Estatus de propiedades</a>
-                    </v-list-item>
-                    <v-list-item>
-                        <a href="/tickets">Tickets</a>
                     </v-list-item>
                     <v-list-item>
                         <a href="/interested">Interesados de compra</a>
@@ -59,7 +53,7 @@
                         <a href="/profile">Mi perfil</a>
                     </v-list-item>
                     <v-list-item>
-                        <a href="/statistics">Estaditicas</a>
+                        <a href="/home">Estaditicas</a>
                     </v-list-item>
                     <v-list-item>
                         <a href="/reports">Historial de operaciones</a>
