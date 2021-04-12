@@ -25,7 +25,7 @@
 
         <main class="fondo">
             <v-app class="fondo">
-                <div class="h-full" style="background-color:#ECEFF1" >
+                <div class="h-full" style="background-color:#ECEFF1;min-height: 100%;" >
                 @yield('content')
 
                 </div>

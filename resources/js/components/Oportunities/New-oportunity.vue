@@ -1,5 +1,4 @@
 <template>
-  <v-row justify="center">
     <v-dialog
       v-model="dialog"
       persistent
@@ -7,17 +6,21 @@
       
     >
       <template v-slot:activator="{ on, attrs }">
-       
-        <v-btn
-          color="success"
-          v-bind="attrs"
+            <v-card-title class="display-1 text-white p-6">Nueva Oportunidad
+              <v-btn
+                color="success"
+                dark
+                absolute
+                right
+                fab
+                class="mt-1"
+                v-bind="attrs"
           v-on="on"
-          class="my-6"
-          @click="newOps()"
-        >
-          Nueva Oportunidad
-          <v-icon>mdi-briefcase-plus </v-icon>
-        </v-btn>
+                @click="newOps()"
+              >
+                <v-icon>mdi-plus</v-icon>
+              </v-btn></v-card-title>
+
       </template>
       <v-card>
         <v-card-title>
@@ -93,7 +96,6 @@
           <div class="message-report bg-success" v-if="responseRequest.length">{{responseRequest}}</div>
       </v-card>
     </v-dialog>
-  </v-row>
 </template>
 
 
@@ -153,6 +155,7 @@
               console.log(response);
               this.responseRequest="Registro guardado";
               setTimeout(() => this.dialog = false, 2000);
+              this.$emit('updateData');
             });
            
             this.oportunity= [];

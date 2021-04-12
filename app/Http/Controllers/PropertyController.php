@@ -77,7 +77,6 @@ class PropertyController extends Controller
             'price' => $request['price'],
             'dimension' => $request['dimension'],
             'status_id' => $request['status'],
-            'categorie_id' => 1,
             'city' => 1,
             'currency_id' => $request['currency_id'],
             'image' => ''
@@ -99,7 +98,6 @@ class PropertyController extends Controller
             'price' => $request['price'],
             'dimension' => $request['dimension'],
             'status_id' => $request['status'],
-            'categorie_id' => 1,
             'city' => 1,
             'currency_id' => $request['currency_id']
         ]);

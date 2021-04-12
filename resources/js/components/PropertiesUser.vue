@@ -16,8 +16,7 @@
 
             <v-data-table :headers="headers"  no-results-text="No hay resultados" no-data-text="No hay propiedades " :items="properties" item-key="propeties-user" class="elevation-1" :search="search">
                 <template v-slot:item.imagen="{ item }">
-
-                    <v-img :src="'../'+item.image" height="100" width="100"></v-img>
+                    <v-img :src="'../'+item.image" height="100" width="100"></v-img>  
                 </template>
                 <template v-slot:top>
                     <v-toolbar flat>
@@ -145,13 +144,14 @@
                                         <v-text-field label="Precio" v-model="price_edit" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" @click="prueba()" v-model="currency_id_edit">
-                                            <option selected disabled>Moneda
-                                            </option>
-                                            <option v-for="item in currency" :value="item.id">
-                                                {{ item.currency }}
-                                            </option>
-                                        </select>
+                                         <v-select
+                                        no-data-text="No hay Monedas "
+                                            v-model="currency_id_edit"
+                                            :items="currency"
+                                            item-text="currency"
+                                            item-value="id"
+                                            label=" Moneda"
+                                        ></v-select>
 
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>

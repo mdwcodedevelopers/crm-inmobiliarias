@@ -14,14 +14,20 @@ class StatusPropertiesSeeder extends Seeder
     {
         $status = [
             array(
-                'status' => 'Venta',
+                'status' => 'Alquilar',
             ),
             
             array(
-                'status' => 'Alquiler',
+                'status' => 'En Venta',
             ),       
             array(
-                'status' => 'Ventas en lote',
+                'status' => 'En venta con opcion alquiler',
+            ),
+            array(
+                'status' => 'En aquiler con opcion a venta',
+            ),
+            array(
+                'status' => 'Alquiler de tiempo temporal',
             ),                     
         ];
 

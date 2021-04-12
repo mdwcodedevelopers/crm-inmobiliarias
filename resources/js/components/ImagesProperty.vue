@@ -1,5 +1,14 @@
 <template>
     <div class="mt-4">
+        <v-card class="d-flex p-2 " style="width:100%">
+        <v-btn text href="/properties-user">
+            <v-icon>mdi-chevron-left-circle-outline</v-icon>
+        </v-btn>
+        <span class="display-1">
+            Regresar a propiedades 
+        </span>
+            
+        </v-card>
         <v-card
         class="mx-auto
         my-3"
@@ -156,6 +165,12 @@
         <v-row>
             <v-col  v-for="item in images" :key="item.id" cols="4" >
                 <v-card>
+                    <v-btn color="primary" small class="m-3"  v-if="property.image == item.url_image" @click="setimage(item.url_image)">
+                            Imagen principal
+                    </v-btn>
+                    <v-btn color="warning" small class="m-3"  v-else @click="setimage(item.url_image)">
+                            Seleccionar como principal
+                    </v-btn>        
                     <v-img :src="'../'+item.url_image" ></v-img>
 
                     <v-card-actions>
@@ -167,11 +182,6 @@
                         <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
                             <v-icon color="#fff">
                                 mdi-delete
-                            </v-icon>
-                        </v-btn>
-                        <v-btn color="warning" @click="setimage(item.url_image)">
-                            <v-icon color="#fff">
-                                mdi-file-image
                             </v-icon>
                         </v-btn>
                     </v-card-actions>
@@ -234,6 +244,7 @@ export default {
             // });
             axios.post('/api-images', InstFormData , {headers : {'content-type': 'multipart/form-data'}}).then((response) => {
                 if (response.status == 200) {
+                    this.dialog= false;
                     this.index();
                 }
             });
@@ -243,6 +254,7 @@ export default {
                 image:image
             }).then((response) => {
                 if (response.status == 200) {
+                    this.property.image = image
                     this.index();
                 }
             });

@@ -1,7 +1,6 @@
 <template>
     <div class="text-center p-4 d-flex align-items-center flex-column">
         
-        <new-oportunity :status="status" ></new-oportunity>
         
         <div>
             <ul class="d-flex list-status flex-wrap justify-center  ">
