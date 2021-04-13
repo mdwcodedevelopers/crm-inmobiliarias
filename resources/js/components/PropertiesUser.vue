@@ -255,11 +255,11 @@ export default {
             status_id_edit: '',
             priceRules: [
                 v => !!v || 'El precio es obligatorio',
-                v => !isNaN(v) || 'El precio debe ser un valor numerico',
+                v => !isNaN(parseFloat(v)) || 'El precio debe ser un valor numerico',
             ],
             dimRules: [
                 v => !!v || 'Las dimensiones son obligatorias',
-                v => !isNaN(v) || 'Las dimensiones son tomadas en mt2 solo ingrese la cantidad de metros',
+                v => !isNaN(parseFloat(v)) || 'Las dimensiones son tomadas en mt2 solo ingrese la cantidad de metros',
             ],
             titleRules: [
                 v => !!v || 'El titulo de la propiedad es obligatorio',
@@ -322,14 +322,15 @@ export default {
                 });
         },
         edit_model() {
-            axios.put("/api-properties"+ this.id_edit, {
+            axios.put("/api-properties/" + this.id_edit, {
                 title: this.title_edit,
+                dimension: this.dimension_edit,
                 information: this.information_edit,
                 price: this.price_edit,
-                dimension: this.dimension_edit,
                 status: this.status_id_edit,
                 currency_id: this.currency_id_edit
             }).then((response) => {
+                
                 if (response.status == 200) {
                     this.index(0, '');
                     this.title_edit = '';
@@ -338,9 +339,9 @@ export default {
                     this.dimension_edit = '';
                     this.status_id_edit = '';
                     this.dialogedit = false;
-                    this.currency_id_edit = '';
+                    this.currency_id_edit = ''
                     this.$swal.fire(
-                      'Propiedad creada con exito',
+                      'Propiedad editada con exito',
                       'Para agregar imagenes seleccione el boton de imagenes a la derecha de la tabla.',
                       'success'
                     );
@@ -348,11 +349,10 @@ export default {
             }).catch(error => {
                     this.$swal.fire(
                       'Error',
-                      'Hubo un error al tratar de crear la propiedad, intente nuevamente, recuerde que los precios y las dimensiones deben ser unicamente en numeros y máximo 2 decimales.',
+                      'Hubo un error al tratar de editar la propiedad, intente nuevamente, recuerde que los precios y las dimensiones deben ser unicamente en numeros y máximo 2 decimales.',
                       'error'
                     )
                 });
-            
         },
         delete_model() {
             console.log(this.id_delete);
@@ -361,11 +361,20 @@ export default {
                 if (response.status == 200) {
                     this.index(0, '');
                     this.dialogdelete = false;
-                } else {
-                    this.error = "Error al añadir propiedad";
+                    this.$swal.fire(
+                      'Propiedad eliminada con exito',
+                      '',
+                      'success'
+                    );
                 }
-            });
-        },
+            }).catch(error => {
+                    this.$swal.fire(
+                      'Error',
+                      'Hubo un error al tratar de eliminar la propiedad, intente nuevamente.',
+                      'error'
+                    )
+                });
+          },
         edit(id, title, dimension, price, info) {
             this.dialogedit = true;
             this.id_edit = id;
