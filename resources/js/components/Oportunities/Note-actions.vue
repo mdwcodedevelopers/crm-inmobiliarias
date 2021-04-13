@@ -114,10 +114,21 @@ export default {
            
         axios.post('/api-notes', params).then((response) =>{
           this.noteDialog = false;
-          console.log(response);
           this.newNote= [];
-
-        });
+          this.$swal.fire({
+              icon: 'success',
+              title: 'Tu nota se ha guardado con exito',
+              showConfirmButton: false,
+              timer: 1500
+            })
+        }).catch(error => {
+          this.$swal.fire({
+              icon: 'error',
+              title: 'Ocurrio un error con tu nota, revisa tus campos, no pueden ser vacios',
+              showConfirmButton: false,
+              timer: 1500
+            })
+        });;
 
       },
         history(){

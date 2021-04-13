@@ -2,7 +2,7 @@
     <div class="text-center">
 
         <v-card color="blue">
-            <v-card-title class="display-1 text-white">Propiedades             <v-btn
+            <v-card-title class="display-1 text-white">Propiedades<v-btn
                 color="success"
                 dark
                 absolute
@@ -76,49 +76,56 @@
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-md>
-                                <v-layout wrap>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Titulo" v-model="title" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Dimensiones" v-model="dimension"></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Precio" v-model="price" persistent-hint required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-select
-                                        no-data-text="No hay Monedas "
-                                            v-model="currency_id"
-                                            :items="currency"
-                                            item-text="currency"
-                                            item-value="id"
-                                            label=" Moneda"
-                                        ></v-select>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Información de la propiedad" v-model="information" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-select
-                                        no-data-text="No hay Estatus "
-                                            v-model="status_id"
-                                            :items="status"
-                                            item-text="status"
-                                            item-value="id"
-                                            label="Estatus"
-                                        ></v-select>
-                                    </v-flex>
-                                    <v-flex xs12>
-                                        {{error}}
-                                    </v-flex>
-                                </v-layout>
+                                <v-form
+                                    ref="form"
+                                    v-model="valid"
+                                >
+                                    <v-layout wrap>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Titulo" :rules="titleRules" v-model="title" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Dimensiones" :rules="dimRules" v-model="dimension"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Precio" v-model="price" :rules="priceRules" persistent-hint required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-select
+                                            no-data-text="No hay Monedas "
+                                                v-model="currency_id"
+                                                :items="currency"
+                                                :rules="selectRules"
+                                                item-text="currency"
+                                                item-value="id"
+                                                label=" Moneda"
+                                            ></v-select>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Información de la propiedad" :rules="infoRules" v-model="information" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-select
+                                            no-data-text="No hay Estatus "
+                                                v-model="status_id"
+                                                :rules="selectRules"
+                                                :items="status"
+                                                item-text="status"
+                                                item-value="id"
+                                                label="Estatus"
+                                            ></v-select>
+                                        </v-flex>
+                                        <v-flex xs12>
+                                            {{error}}
+                                        </v-flex>
+                                    </v-layout>
+                                </v-form>
                             </v-container>
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="danger" @click="dialog = false">Cancelar</v-btn>
-                            <v-btn color="success" @click.prevent="create()">Crear</v-btn>
+                            <v-btn color="success" :disabled="!valid" @click.prevent="create()">Crear</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -133,21 +140,26 @@
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-md>
+                                <v-form
+                                    ref="form"
+                                    v-model="valid"
+                                >
                                 <v-layout wrap>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Titulo" v-model="title_edit" required></v-text-field>
+                                        <v-text-field label="Titulo" v-model="title_edit" :rules="titleRules" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Dimensiones" v-model="dimension_edit"></v-text-field>
+                                        <v-text-field label="Dimensiones"  :rules="dimRules"v-model="dimension_edit"></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Precio" v-model="price_edit" persistent-hint required></v-text-field>
+                                        <v-text-field label="Precio" :rules="priceRules" v-model="price_edit" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                          <v-select
                                         no-data-text="No hay Monedas "
                                             v-model="currency_id_edit"
                                             :items="currency"
+                                                :rules="selectRules"
                                             item-text="currency"
                                             item-value="id"
                                             label=" Moneda"
@@ -155,13 +167,15 @@
 
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Información de la propiedad" v-model="information_edit" required></v-text-field>
+                                        <v-text-field label="Información de la propiedad" v-model="information_edit" :rules="infoRules" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                         <v-select
+                                        
                                             v-model="status_id_edit"
                                             :items="status"
                                             item-text="status"
+                                                :rules="selectRules"
                                             item-value="id"
                                             label="Estatus"
                                             required
@@ -172,12 +186,13 @@
                                         {{error}}
                                     </v-flex>
                                 </v-layout>
+                            </v-form>
                             </v-container>
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="danger" @click="dialogedit = false">Cancelar</v-btn>
-                            <v-btn color="success" @click.prevent="edit_model()">Editar</v-btn>
+                            <v-btn color="success" :disabled="!valid" @click.prevent="edit_model()">Editar</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -218,6 +233,7 @@ export default {
             status: [],
             currency: [],
             search: '',
+            valid: false,
             dialog: false,
             dialogedit: false,
             dialogdelete: false,
@@ -236,7 +252,24 @@ export default {
             id_delete: '',
             propiedad_eliminar: '',
             status_id: '',
-            status_id_edit: ''
+            status_id_edit: '',
+            priceRules: [
+                v => !!v || 'El precio es obligatorio',
+                v => !isNaN(v) || 'El precio debe ser un valor numerico',
+            ],
+            dimRules: [
+                v => !!v || 'Las dimensiones son obligatorias',
+                v => !isNaN(v) || 'Las dimensiones son tomadas en mt2 solo ingrese la cantidad de metros',
+            ],
+            titleRules: [
+                v => !!v || 'El titulo de la propiedad es obligatorio',
+            ],
+            selectRules: [
+                v => !!v || 'Debe escoger una opción',
+            ],
+            infoRules: [
+                v => !!v || 'La información de la propiedad es obligatoria',
+            ],
         }
     },
     methods: {
@@ -274,15 +307,26 @@ export default {
                     this.status_id = '';
                     this.dialog = false;
                     this.currency_id = '';
+                    this.$swal.fire(
+                      'Propiedad creada con exito',
+                      'Para agregar imagenes seleccione el boton de imagenes a la derecha de la tabla.',
+                      'success'
+                    );
                 }
-            });
+            }).catch(error => {
+                    this.$swal.fire(
+                      'Error',
+                      'Hubo un error al tratar de crear la propiedad, intente nuevamente, recuerde que los precios y las dimensiones deben ser unicamente en numeros y máximo 2 decimales.',
+                      'error'
+                    )
+                });
         },
         edit_model() {
-            axios.put("/api-properties/" + this.id_edit, {
+            axios.put("/api-properties"+ this.id_edit, {
                 title: this.title_edit,
-                dimension: this.dimension_edit,
                 information: this.information_edit,
                 price: this.price_edit,
+                dimension: this.dimension_edit,
                 status: this.status_id_edit,
                 currency_id: this.currency_id_edit
             }).then((response) => {
@@ -294,9 +338,21 @@ export default {
                     this.dimension_edit = '';
                     this.status_id_edit = '';
                     this.dialogedit = false;
-                    this.currency_id_edit = ''
+                    this.currency_id_edit = '';
+                    this.$swal.fire(
+                      'Propiedad creada con exito',
+                      'Para agregar imagenes seleccione el boton de imagenes a la derecha de la tabla.',
+                      'success'
+                    );
                 }
-            });
+            }).catch(error => {
+                    this.$swal.fire(
+                      'Error',
+                      'Hubo un error al tratar de crear la propiedad, intente nuevamente, recuerde que los precios y las dimensiones deben ser unicamente en numeros y máximo 2 decimales.',
+                      'error'
+                    )
+                });
+            
         },
         delete_model() {
             console.log(this.id_delete);

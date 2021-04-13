@@ -24,18 +24,11 @@
         >
         <!-- Modal de delete -->
           <div v-if="rol==1" style="height:100% !important" class="d-flex align-items-center">
-            <template>
-                  <v-dialog
-                    v-model="deleteDialog"
-                    width="600"
-                  >
-                  <template v-slot:activator="{ on, attrs }">
                       <v-btn
                           :disabled="selected.length=== 0"
                           small
                           text
-                          v-bind="attrs"
-                          v-on="on"
+                          @click="deleteOportunity()"
                           >
                         <v-icon
                           >
@@ -43,32 +36,6 @@
                       </v-icon>
                       Eliminar oportunidad
                       </v-btn>
-                  </template>
-
-                    <v-card>
-                      <v-card-title class="headline grey lighten-2">
-                        Enviar Email
-                      </v-card-title>
-
-                      <v-card-text>
-                        <v-row>
-                          <v-col
-                              cols="12"
-                            >
-                            <p>¿Esta seguro que desea eliminar esta oportunidad? Luego no podrá recuperarla</p>
-                            </v-col>
-
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn color="blue darken-1" text @click="deleteDialog = false">Cancelar</v-btn>
-                              <v-btn color="red darken-1"  @click="deleteOportunity()">Eliminar</v-btn>
-                              <v-spacer></v-spacer>
-                          </v-card-actions>
-                        </v-row>
-                      </v-card-text>
-                    </v-card>
-                  </v-dialog>
-            </template>
 
             <v-divider
                 class="mx-4"
@@ -130,7 +97,7 @@
                         <v-card-actions>
                           <v-spacer></v-spacer>
                           <v-btn color="blue darken-1" text @click="emailDialog = false">Cancelar</v-btn>
-                          <v-btn color="blue darken-1" text  :disabled="Object.entries(emailText).length === 0" @click="sendEmail(selected)">Enviar mensaje</v-btn>
+                          <v-btn color="blue darken-1" text  :disabled="Object.entries(emailText).length <= 1" @click="sendEmail(selected)">Enviar mensaje</v-btn>
                           <v-spacer></v-spacer>
                       </v-card-actions>
                     </v-row>
@@ -571,7 +538,6 @@
             user_id: element.user_id,
           };
         axios.put('/api-oportunities/' + element.id, params ).then((response) => {
-              console.log(response);
               element.status=this.status[this.newStatus-1].name;
         });
         this.selected=[];
@@ -579,18 +545,37 @@
         this.statusDialog = false
       },
       closeOportunity(){
-        let params={
-          reason:this.newStatus,
-          description:this.description,
-        };
-        this.selected.forEach(element => {
-          axios.put('/api-oportunities/close/' + element.id, params ).then((response) => {
-            console.log(response);
-            element.status='Cerrado';
-            element.closed=1;
-            this.closeDialog = false;
-          });
-        });
+     
+        this.$swal.fire({
+          title: '¿Estás seguro que deseas cerrar esta oportunidad?',
+          text: "¡Solamente un usuario con privilegios elevados podra modificarla luego de esto!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonText: 'Cancelar',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '¡Si, deseo cerrarlo!'
+        }).then((result) => {
+                let params={
+              reason:this.newStatus,
+              description:this.description,
+            };
+            this.selected.forEach(element => {
+              axios.put('/api-oportunities/close/' + element.id, params ).then((response) => {
+                console.log(response);
+                element.status='Cerrado';
+                element.closed=1;
+                this.closeDialog = false;
+              });
+            });
+        }).catch(error => {
+                    this.$swal.fire(
+                      'No se pudo cerrar',
+                      'Hubo un error al tratar de cerrar.',
+                      'error'
+                    )
+                });
+                
       },
       assignUser(){
         let params;
@@ -601,29 +586,58 @@
             user_id: this.newUser,
           };
           axios.put('/api-oportunities/' + element.id, params ).then((response) => {
-              console.log(response);
               index = this.datas.findIndex( x => x.name == element.name)-1;
-              this.datas.splice(index,1)
-        });
+              this.datas.splice(index,1);
+               this.$swal.fire(
+                      'Oportunidad cambiada',
+                      'La oportunidad ha sido cambiada de usuario con exito.',
+                      'success'
+                    );
+        }).catch(error => {
+                    this.$swal.fire(
+                      'No se pudo cambiar',
+                      'Hubo un error al tratar de cambiar la oportunidad.',
+                      'error'
+                    )
+                });
         this.selected=[];
         });
         this.statusReassign = false
       },
       deleteOportunity(){
-        let index;
+        
+        this.$swal.fire({
+          title: '¿Estás seguro que deseas eliminar esta oportunidad?',
+          text: "¡No podrás revertir esto!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonText: 'Cancelar',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '¡Si, deseo eliminarlo!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.selected.forEach(element => {
+                axios.delete('/api-oportunities/' + element.id ).then((response) => {
+                    this.changeUser();
+                    this.$swal.fire(
+                      'Eliminado',
+                      'La oportunidad ha sido eliminada con exito.',
+                      'success'
+                    );
+                    this.selected=[];
+                }).catch(error => {
+                    this.$swal.fire(
+                      'No se pudo eliminar',
+                      'Hubo un error al tratar de eliminar.',
+                      'error'
+                    )
+                });
+              });
+          }
+        });
 
-        this.selected.forEach(element => {
-          axios.delete('/api-oportunities/' + element.id ).then((response) => {
-            console.log(response);
-              index = this.datas.findIndex( x => x.name == element.name)-1;
-              this.datas.splice(index,1);
-              this.deleteDialog=false;
-          });
-          });
-        // axios.delete('interesed/' + this.selected.id).then((response) => {
-        //       console.log(response);
-        // });
-      }
+        }
     },
   }
 </script>

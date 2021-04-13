@@ -131,7 +131,7 @@
           });
         },
         disabledButton(){
-            if (  this.oportunity.contact_id == "" | this.oportunity.name  == "" | this.oportunity.vigency == "" | this.oportunity.status_id == "") {
+            if (  this.oportunity.contact_id == "" |  this.oportunity.name  == "" | this.oportunity.vigency == "" | this.oportunity.status_id == "") {
                        return true;
             }else{
                 return false;
@@ -152,11 +152,14 @@
             }
 
             axios.post('/api-oportunities/', newOportunity).then((response) => {
-              console.log(response);
-              this.responseRequest="Registro guardado";
-              setTimeout(() => this.dialog = false, 2000);
+                this.dialog = false;
+              this.$swal("Oportunidad guardada con exito","", "success").then(() => {
               this.$emit('updateData');
-            });
+              });
+            }).catch(error => {
+                this.dialog = false;
+              this.$swal("Ocurrio un error al crear la oportunidad", "","error");
+            });;
            
             this.oportunity= [];
         },
