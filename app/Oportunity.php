@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 class Oportunity extends Model
 {
      use SoftDeletes;
-
-    protected $fillable = ['user_id', 'name', 'contact_id', 'vigency', 'status_id','closed', 'closed_reason'];
+     
+     protected $primaryKey = 'id';
+     
+     protected $fillable = ['user_id', 'name', 'contact_id', 'vigency', 'status_id','closed', 'closed_reason'];
 
     protected $dates = ['deleted_at'];
      // Cambio para el formato de fecha     
