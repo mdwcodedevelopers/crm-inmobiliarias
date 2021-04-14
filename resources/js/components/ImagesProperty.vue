@@ -45,7 +45,7 @@
                             <v-layout wrap>
                                 <v-flex xs12 sm6 md6>
                                     <v-file-input
-                                    v-model="archivo" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon="mdi-archive" ></v-file-input>
+                                    v-model="archivo" accept="image/*" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon="mdi-archive" ></v-file-input>
                                    <!-- <input
                                             class="appearance-none border-2 border-gray-200 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                                             ref="image" type="file">-->
@@ -226,7 +226,7 @@ export default {
         create() {
             let InstFormData = new FormData();
             InstFormData.append('imagen' , this.archivo);
-            InstFormData.append('property_id' , 1);
+            InstFormData.append('property_id' , this.id);
             // if (this.$refs.image) {
             //         this.image = this.$refs.image.files[0]
             //     }
@@ -242,17 +242,31 @@ export default {
             //     if (response.status == 200) {
             //     }
             // });
-            axios.post('/api-images', InstFormData , {headers : {'content-type': 'multipart/form-data'}}).then((response) => {
-                if (response.status == 200) {
-                    this.dialog= false;
-                    this.index();
-                }
-            });
+            if(!this.validarImagen(this.archivo)){
+                this.$swal.fire(
+                      'Error',
+                      this.error,
+                      'error'
+                    )
+            }else{
+                axios.post('/api-images', InstFormData , {headers : {'content-type': 'multipart/form-data'}}).then((response) => {
+                    if (response.status == 200) {
+                        this.dialog= false;
+                        this.index();
+                        this.$swal.fire(
+                        'Imagen subida con exito',
+                        '',
+                        'success'
+                        );
+                    }
+                });
+            }
         },
         setimage(image){
             axios.put('/property-images-set/'+this.id,{
                 image:image
             }).then((response) => {
+                console.log(response);
                 if (response.status == 200) {
                     this.property.image = image
                     this.index();
@@ -262,6 +276,7 @@ export default {
         index(){
             axios.get("/api-images?id=" + this.id).then((response) => {
                     this.images = response.data.images;
+                    console.log(response);
                 });
         },
         edit_model() {
@@ -295,6 +310,26 @@ export default {
         },
         createmodal(){
             this.dialog=true;
+        },
+
+        validarImagen(uploadFile){
+
+            if (!window.FileReader) {
+                this.error= 'El navegador no soporta la lectura de archivos';
+                return false;
+            }
+
+            if (!(/\.(jpg|png|gif)$/i).test(uploadFile.name)) {
+                this.error = 'El archivo a adjuntar no es una imagen';
+                return false;
+            }
+            if (uploadFile.size > 500000)
+            {
+                this.error='El peso de la imagen no puede exceder los 500kb';
+                return false;
+            }
+            return true;
+                         
         }
     },
     created(){

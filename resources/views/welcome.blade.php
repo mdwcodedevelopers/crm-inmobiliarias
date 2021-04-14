@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="">
+       
         @guest
             <div class="">
                 <nav-guest />
@@ -24,7 +25,10 @@
         </div>
         @endif
         @endguest
-        <div class="">
+        <div style="text-align: center">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <div >
             <properties />
 
         </div>

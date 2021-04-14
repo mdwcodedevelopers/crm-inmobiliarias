@@ -149,7 +149,7 @@
                                         <v-text-field label="Titulo" v-model="title_edit" :rules="titleRules" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Dimensiones"  :rules="dimRules"v-model="dimension_edit"></v-text-field>
+                                        <v-text-field label="Dimensiones"  :rules="dimRules" v-model="dimension_edit"></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
                                         <v-text-field label="Precio" :rules="priceRules" v-model="price_edit" persistent-hint required></v-text-field>

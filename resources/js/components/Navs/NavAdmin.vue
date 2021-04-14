@@ -10,52 +10,77 @@
 
             </button>
         </v-app-bar>
-        <v-navigation-drawer v-model="drawer" absolute bottom temporary>
+        <v-navigation-drawer v-model="drawer" color="light-blue darken-1 " absolute bottom temporary>
 
-            <v-list color="light-blue darken-1 ">
+            <v-list color="white ">
                 <v-list-item>
                     <v-list-item-content>
                         <a href="/" class="">
-                            LOGO
-                            <!-- <v-img src="/images/main-transparent.png"  contain height="50"></v-img> -->
-                            <v-list-item-title class="title white--text">
-                                Application
-                            </v-list-item-title>
+                            
+                            <v-img src="/images/logo.png"  contain width="200" height="100"></v-img>
+
                         </a>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
 
-            <v-list nav dense>
+            <v-list nav dense  class="nav-list my-6">
 
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
                     <v-list-item>
+                        <v-icon color="white" class="px-2">
+                            mdi-file-document
+                        </v-icon>
                         <a href="/">Pagina web</a>
                     </v-list-item>
                     <v-list-item>
+                        <v-icon color="white" class="px-2">
+                            mdi-account-box-multiple
+                        </v-icon>
                         <a href="/users">Usuarios</a>
                     </v-list-item>
 
                     <v-list-item>
+                        <v-icon color="white" class="px-2">
+                            mdi-home-currency-usd
+                        </v-icon>
                         <a href="/currency">Monedas</a>
                     </v-list-item>
                     <v-list-item>
+                        <v-icon color="white" class="px-2">
+                           mdi-office-building
+                        </v-icon>
                         <a href="/properties-user">Propiedades</a>
                     </v-list-item>
                     <v-list-item>
+                        <v-icon color="white" class="px-2">
+                            mdi-list-status
+                        </v-icon>
                         <a href="/status">Estatus de propiedades</a>
                     </v-list-item>
                     <v-list-item>
-                        <a href="/interested">Interesados de compra</a>
+                        <v-icon color="white" class="px-2">
+                            mdi-apple-keyboard-option
+                        </v-icon>
+                        <a href="/interested">Oportunidades</a>
                     </v-list-item>
 
                     <v-list-item>
+                        <v-icon color="white" class="px-2">
+                            mdi-account
+                        </v-icon>
                         <a href="/profile">Mi perfil</a>
                     </v-list-item>
                     <v-list-item>
+                        <v-icon color="white" class="px-2">
+                            mdi-account
+                        </v-icon>
                         <a href="/home">Estaditicas</a>
                     </v-list-item>
                     <v-list-item>
+                        <v-icon color="white" class="px-2">
+                            mdi-history
+                        </v-icon>
                         <a href="/reports">Historial de operaciones</a>
                     </v-list-item>
                 </v-list-item-group>
@@ -68,6 +93,9 @@
 <style scoped>
     .v-list-item a:hover{
         text-decoration: none;
+    }
+    .nav-list a{
+        color: #fff;
     }
 </style>
 
