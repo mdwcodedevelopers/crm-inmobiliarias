@@ -11,7 +11,10 @@
 |
 */
 
-
+Route::get('artisan-make-storage', function () {
+    $exitCode = Artisan::call('storage:link');
+    return '<h1>Storage creada</h1>';
+  });
 Route::get('/','WelcomeController@index');
 Route::get('/property/{id}','PropertyController@property');
 Route::get('/property-images/{id}','ImageController@images');

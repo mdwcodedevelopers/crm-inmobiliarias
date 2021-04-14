@@ -20,7 +20,6 @@ class NoteController extends Controller
     }
     public function store(Request $request)
     {
-        $last = NoteOportunity::all()->last();
         $note = new NoteOportunity;
         $note->title = $request->title;
         $note->description = $request->description;
