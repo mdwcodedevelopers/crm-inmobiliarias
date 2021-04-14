@@ -40,9 +40,6 @@
         "vue-sweetalert2": "^4.2.1",
         "vuetify": "^2.4.6",
         "vuex": "^3.6.2"
-    },
-    "optionalDependencies": {
-        "fsevents": "^2.0.7"
     }
     
 }
