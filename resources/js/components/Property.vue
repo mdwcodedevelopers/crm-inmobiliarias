@@ -119,8 +119,10 @@
                                         outlined
                                         rounded
                                         text
+                                        :disabled="!valid"
                                         color="white"
                                         class="success"
+                                        @click="sendEmail()"
                                     >
                                         Enviar
                                     </v-btn>
@@ -170,9 +172,17 @@ export default {
                 this.items = response.data.images;
             });
         },
+        sendEmail(){
+        this.$swal.fire(
+                      'Su correo de pruebas ha sido enviado',
+                      'Los correos serán enviados cuando se pase ha desarrollo.',
+                      'success'
+                    );
+    }
     },
     created(){
         this.index();
-    }
+    },
+    
 }
 </script>
