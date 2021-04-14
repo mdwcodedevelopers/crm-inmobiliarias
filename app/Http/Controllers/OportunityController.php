@@ -42,7 +42,7 @@ class OportunityController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -53,14 +53,14 @@ class OportunityController extends Controller
      */
     public function store(Request $request)
     {
-        $oportunity = new Oportunity();
-        $oportunity->user_id = auth()->id();
-        $oportunity->name = $request->name;
-        $oportunity->contact_id = $request->contact_id;
-        $oportunity->vigency = $request->vigency;
-        $oportunity->status_id = $request->status_id;
-
-        $oportunity->save();
+        Oportunity::create([
+            'user_id' => auth()->id(),
+            'name' => $request['name'],
+            'contact_id' => $request['contact_id'],
+            'vigency' => $request['vigency'],
+            'status_id' => $request['status_id'],
+        ]);
+        
 
         return response()->json("success", 200);
     }
