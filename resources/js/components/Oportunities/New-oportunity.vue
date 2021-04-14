@@ -87,7 +87,7 @@
             color="blue darken-1"
             text
             :disabled="disabledButton"
-            @click="addOportunity()"
+            @click="newOportunity()"
           >
             Guardar
           </v-btn>
@@ -143,9 +143,9 @@
         this.getContacts,
         this.responseRequest=[];
       },
-        addOportunity(){
+        newOportunity(){
           console.log("agregando oportunidad");
-            axios.post('/api-oportunities/', {
+            axios.post('/api-oportunities', {
                  name: this.oportunity.name,
                 vigency: this.oportunity.vigency,
                 contact_id: this.oportunity.contact_id,
