@@ -20,7 +20,6 @@ class ImageController extends Controller
     }
     public function store(Request $request)
     {
-        $last= Image::all()->last();
 
         if($request['imagen']!=null){
             $file = $request->file('imagen');
@@ -28,7 +27,6 @@ class ImageController extends Controller
             Storage::put('public/images/'.$file->getFilename().'.'.$extension,  File::get($file));
             $image_path='./storage'.'/images/'.$file->getFilename().'.'.$extension;
             Image::create([
-                'id' => $last->id+1,
                 'property_id'=>$request['property_id'],
                 'url_image'=>$image_path
             ]);

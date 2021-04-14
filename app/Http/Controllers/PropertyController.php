@@ -70,10 +70,8 @@ class PropertyController extends Controller
     }
     public function store(Request $request)
     {
-        $last=Property::all()->last();
 
         Property::create([
-            'id' => $last->id+1,
             'user_id' => auth()->id(),
             'title' => $request['title'],
             'information' => $request['information'],

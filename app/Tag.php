@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    protected $fillable = ['id','name','group_id'];
+    protected $fillable = ['name','group_id'];
 
      /** 
      * Relacion uno a muchos con el modelo Contact

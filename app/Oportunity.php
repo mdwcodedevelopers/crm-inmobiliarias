@@ -13,7 +13,6 @@ class Oportunity extends Model
      protected $table='oportunities';
       
      protected $fillable = [
-          'id',
           'user_id', 
           'name', 
           'contact_id', 

@@ -10,7 +10,7 @@ class NoteOportunity extends Model
 {
      use SoftDeletes;
 
-    protected $fillable = ['note_id','title', 'description', 'oportunity_id'];
+    protected $fillable = ['title', 'description', 'oportunity_id'];
     
     protected $primaryKey = 'note_id';
     

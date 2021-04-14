@@ -22,7 +22,6 @@ class NoteController extends Controller
     {
         $last = NoteOportunity::all()->last();
         $note = new NoteOportunity;
-        $note->note_id = $last->note_id+1;
         $note->title = $request->title;
         $note->description = $request->description;
         $note->oportunity_id = $request->oportunity_id;

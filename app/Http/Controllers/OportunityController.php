@@ -35,6 +35,15 @@ class OportunityController extends Controller
         return view('oportunities', compact('users', 'status', 'user'));;
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        
+    }
     
     /**
      * Store a newly created resource in storage.
@@ -44,15 +53,15 @@ class OportunityController extends Controller
      */
     public function store(Request $request)
     {
-        $last= Oportunity::all()->last();
-        Oportunity::create([
-            'id' => $last->id+1,
-            'user_id' => auth()->id(),
-            'name' => $request['name'],
-            'contact_id' => $request['contact_id'],
-            'vigency' => $request['vigency'],
-            'status_id' => $request['status_id'],
-        ]);
+       
+        $oportunity = new Oportunity();
+        $oportunity->user_id = auth()->id();
+        $oportunity->name = $request->name;
+        $oportunity->contact_id = $request->contact_id;
+        $oportunity->vigency = $request->vigency;
+        $oportunity->status_id = $request->status_id;
+
+        $oportunity->save();
 
         return response()->json("success", 200);
     }
