@@ -53,7 +53,7 @@ class OportunityController extends Controller
      */
     public function store(Request $request)
     {
-        Property::create([
+        Oportunity::create([
             'user_id' => auth()->id(),
             'name' => $request['name'],
             'contact_id' => $request['contact_id'],

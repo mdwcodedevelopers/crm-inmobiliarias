@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-    protected $fillable = ['id','name', 'img_path', 'tel_1', 'tel_2','email','tag_id'];
+    protected $fillable = ['name', 'img_path', 'tel_1', 'tel_2','email','tag_id'];
 
      /** 
      * Relacion uno a uno con el modelo Oportunity
