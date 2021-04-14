@@ -13,7 +13,8 @@
         "prod": "npm run production",
         "postinstall": "npm run prod",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "heroku-postbuild": "npm run production"
+        "heroku-prebuild": "npm install -f",
+        "heroku-postbuild": "npm run build"
     },
     "devDependencies": {
         "@mdi/font": "^5.9.55",
