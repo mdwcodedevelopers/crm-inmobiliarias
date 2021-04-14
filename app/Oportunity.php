@@ -10,7 +10,7 @@ class Oportunity extends Model
 {
      use SoftDeletes;
 
-    protected $fillable = ['id', 'user_id', 'name', 'contact_id', 'vigency', 'status_id','closed', 'closed_reason'];
+    protected $fillable = ['user_id', 'name', 'contact_id', 'vigency', 'status_id','closed', 'closed_reason'];
 
     protected $dates = ['deleted_at'];
      // Cambio para el formato de fecha     
