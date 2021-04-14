@@ -15,9 +15,6 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js",
         "heroku-postbuild": "npm run build"
     },
-    "optionalDependencies": {
-        "fsevents": "^2.0.7"
-    },
     "devDependencies": {
         "@mdi/font": "^5.9.55",
         "axios": "^0.21.1",
@@ -43,6 +40,9 @@
         "vue-sweetalert2": "^4.2.1",
         "vuetify": "^2.4.6",
         "vuex": "^3.6.2"
+    },
+    "optionalDependencies": {
+        "fsevents": "^2.0.7"
     }
     
 }
