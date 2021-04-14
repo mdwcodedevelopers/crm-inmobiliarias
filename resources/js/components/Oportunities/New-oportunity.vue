@@ -144,17 +144,16 @@
         this.responseRequest=[];
       },
         addOportunity(){
-            let newOportunity = {
-                name: this.oportunity.name,
+            axios.post('/api-oportunities/', {
+                 name: this.oportunity.name,
                 vigency: this.oportunity.vigency,
                 contact_id: this.oportunity.contact_id,
                 status_id: this.oportunity.status_id 
-            }
-
-            axios.post('/api-oportunities/', newOportunity).then((response) => {
+            }).then((response) => {
                 this.dialog = false;
               this.$swal("Oportunidad guardada con exito","", "success").then(() => {
               this.$emit('updateData');
+              console.log(response);
               });
             }).catch(error => {
                 this.dialog = false;
