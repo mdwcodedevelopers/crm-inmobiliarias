@@ -144,6 +144,7 @@
         this.responseRequest=[];
       },
         addOportunity(){
+          console.log("agregando oportunidad");
             axios.post('/api-oportunities/', {
                  name: this.oportunity.name,
                 vigency: this.oportunity.vigency,
