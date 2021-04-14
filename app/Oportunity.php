@@ -9,12 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 class Oportunity extends Model
 {
      use SoftDeletes;
-     
-     protected $primaryKey = 'id';
-     
-     protected $fillable = ['user_id', 'name', 'contact_id', 'vigency', 'status_id','closed', 'closed_reason'];
+
+     protected $table='oportunities';
+      
+     protected $fillable = [
+          'user_id', 
+          'name', 
+          'contact_id', 
+          'vigency', 
+          'status_id',
+          'closed', 
+          'closed_reason'];
 
     protected $dates = ['deleted_at'];
+
      // Cambio para el formato de fecha     
      public function getCreatedAtAttribute($value){
            return Carbon::parse($value)->format('d-m-Y');

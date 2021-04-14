@@ -13,6 +13,7 @@ class CreateOportunitiesTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('oportunities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
@@ -36,5 +37,6 @@ class CreateOportunitiesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('oportunities');
+        
     }
 }
