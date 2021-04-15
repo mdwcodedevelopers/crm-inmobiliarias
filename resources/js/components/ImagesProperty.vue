@@ -328,7 +328,7 @@ export default {
             }
 
             if (!(/\.(jpg|png|gif)$/i).test(uploadFile.name)) {
-                this.error = 'El archivo a adjuntar no es una imagen';
+                this.error = 'El archivo a adjuntar no es una imagen de un formato valido';
                 return false;
             }
             if (uploadFile.size > 500000)

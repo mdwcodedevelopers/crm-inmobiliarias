@@ -60,7 +60,10 @@
                                     {{card.dimension}} mt2
                                 </v-chip>
                                 <v-chip color="#38c172" text-color="#fff" class="mr-3">
-                                    {{card.price}}
+                                    {{card.price}} 
+                                    <span class="px-1" v-if="card.currency_id==1"> USD</span>
+                                    <span class="px-1" v-else> EUR</span>
+                                    
                                 </v-chip>
                                 <v-btn
                                 class="ma-2"
