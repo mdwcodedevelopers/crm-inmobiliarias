@@ -165,20 +165,21 @@
         <v-row>
             <v-col  v-for="item in images" :key="item.id" cols="4" >
                 <v-card>
-                    <v-btn color="primary" small class="m-3"  v-if="property.image == item.url_image" @click="setimage(item.url_image)">
+                    
+                    <v-img :src="'../'+item.url_image" ></v-img>
+
+                    <v-card-actions>
+                        <!-- <v-btn color="#66BB6A" @click="edit(item.id,item.title,item.dimension,item.price,item.information)">
+                            <v-icon color="#fff">
+                                mdi-pencil
+                            </v-icon>
+                        </v-btn> -->
+                        <v-btn color="primary" small class="m-3"  v-if="property.image == item.url_image" @click="setimage(item.url_image)">
                             Imagen principal
                     </v-btn>
                     <v-btn color="warning" small class="m-3"  v-else @click="setimage(item.url_image)">
                             Seleccionar como principal
                     </v-btn>        
-                    <v-img :src="'../'+item.url_image" ></v-img>
-
-                    <v-card-actions>
-                        <v-btn color="#66BB6A" @click="edit(item.id,item.title,item.dimension,item.price,item.information)">
-                            <v-icon color="#fff">
-                                mdi-pencil
-                            </v-icon>
-                        </v-btn>
                         <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
                             <v-icon color="#fff">
                                 mdi-delete
