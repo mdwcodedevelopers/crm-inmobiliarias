@@ -259,7 +259,14 @@ export default {
                         'success'
                         );
                     }
-                });
+                }).catch(error => {
+                    this.$swal.fire({
+                        icon: 'Error',
+                        title: 'Ocurrio un error al subir la imagen',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+                    });
             }
         },
         setimage(image){

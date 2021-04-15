@@ -16,7 +16,7 @@ class CreateContactsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('img_path');
-            $table->string('email')->unique();;
+            $table->string('email',20)->unique();;
             $table->string('tel_1');
             $table->string('tel_2')->nullable();
             $table->integer('tag_id');

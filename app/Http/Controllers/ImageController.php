@@ -21,16 +21,24 @@ class ImageController extends Controller
     public function store(Request $request)
     {
 
-        if($request['imagen']!=null){
+        if($request->imagen != null){
             $file = $request->file('imagen');
-            $extension = $file->getClientOriginalExtension();
-            Storage::put('public/images/'.$file->getFilename().'.'.$extension,  File::get($file));
-            $image_path='./storage'.'/images/'.$file->getFilename().'.'.$extension;
-            Image::create([
-                'property_id'=>$request['property_id'],
-                'url_image'=>$image_path
-            ]);
-        }else{
+            $path = 'images/properties/user_'. auth()->id() . '/';
+            $file->move( $path, $file->getClientOriginalName());
+            
+            $image = new Image();
+            
+            $image->url_image =$path.$file->getClientOriginalName();
+            $image->property_id = $request->property_id;
+            $image->save();
+            // $file = $request->file('imagen');
+            // $extension = $file->getClientOriginalExtension();
+            // Storage::put('public/images/'.$file->getFilename().'.'.$extension,  File::get($file));
+            // $image_path='./storage'.'/images/'.$file->getFilename().'.'.$extension;
+            // Image::create([
+            //     'property_id'=>$request['property_id'],
+            //     'url_image'=>$image_path
+            // ]);
         }
     }
     public function setimage(Request $request,$id){
