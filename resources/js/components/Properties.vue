@@ -129,7 +129,7 @@ export default {
             this.index();
         },
         show(id){
-            window.location.href ='/property/'+id;
+            window.location.href ='/admin/property/'+id;
         }
     },
     created() {
