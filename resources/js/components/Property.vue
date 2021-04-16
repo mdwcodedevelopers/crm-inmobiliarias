@@ -1,32 +1,18 @@
 <template>
     <div class="text-center px-4 d-flex align-items-center flex-column">
-        <v-card class="d-flex my-2 justify-space-around" style="width:100%">
+        <v-card class="d-flex my-2 px-1 justify-space-around" style="width:100%">
+           
             <v-col
                 cols="12"
                 sm="8"
             >
-                <v-carousel :show-arrows="true">
-                    <v-carousel-item v-for="(item,i) in items" :key="i" :src="'../'+item.url_image"></v-carousel-item>
-                </v-carousel>
+                <property-card :property="property"></property-card>            
             </v-col>
             <v-col
                 cols="12"
                 sm="4"
             >
-                <v-card-text>
-                        <div class="text--primary h3 ">
-                            {{property.title}}
-                        </div>
-                        <p class="text--primary">
-                            {{property.information}}
-                        </p>
-                        <v-chip color="#2979FF" text-color="#fff" class="mb-2 mr-3">
-                            {{property.dimension}} mt2
-                        </v-chip>
-                        <v-chip color="#38c172" text-color="#fff" class="mb-2 mr-3">
-                            {{property.price}} USD
-                        </v-chip>
-                        
+                       
                         <v-card
                             class="mx-auto"
                             max-width="344"
@@ -133,7 +119,6 @@
                             </v-card-actions>
                         </v-card>
                         
-                    </v-card-text>
             </v-col>
         </v-card>
     </div>
@@ -167,11 +152,6 @@ export default {
         }
     },
     methods: {
-        index() {
-            axios.get("/api-images?id=" + this.property.id).then((response) => {
-                this.items = response.data.images;
-            });
-        },
         sendEmail(){
         this.$swal.fire(
                       'Su correo de pruebas ha sido enviado',
@@ -179,9 +159,6 @@ export default {
                       'success'
                     );
     }
-    },
-    created(){
-        this.index();
     },
     
 }
