@@ -154,10 +154,12 @@ export default {
     },
     data: () => ({
         selected:[],
+        new:[],
     }),
     methods:{
         groupFilter(id){
             let x = this.tags.filter(function (el) {return el.group_id == id});
+
             return x;
         }
             
