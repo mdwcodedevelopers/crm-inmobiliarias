@@ -506,7 +506,7 @@
             subject: this.emailText.asunto,
             text: this.emailText.texto
           }
-          axios.post('/api-oportunities/sendMail', params).then((response) =>{
+          axios.post('/admin/api-oportunities/sendMail', params).then((response) =>{
             console.log(response);
           });
         });
@@ -514,7 +514,7 @@
       },
       changeUser(){
         if (this.userSelected.length !== 0) {
-          axios.get('/api-oportunities/' + this.userSelected).then((response) => {
+          axios.get('/admin/api-oportunities/' + this.userSelected).then((response) => {
             console.log('Buscando las oporunidades de el usuario id='+ this.userSelected);
   
             this.datas = response.data.oportunities;
@@ -537,7 +537,7 @@
             status_id: this.newStatus,
             user_id: element.user_id,
           };
-        axios.put('/api-oportunities/' + element.id, params ).then((response) => {
+        axios.put('/admin/api-oportunities/' + element.id, params ).then((response) => {
               element.status=this.status[this.newStatus-1].name;
         });
         this.selected=[];
@@ -561,7 +561,7 @@
               description:this.description,
             };
             this.selected.forEach(element => {
-              axios.put('/api-oportunities/close/' + element.id, params ).then((response) => {
+              axios.put('/admin/api-oportunities/close/' + element.id, params ).then((response) => {
                 console.log(response);
                 element.status='Cerrado';
                 element.closed=1;
@@ -585,7 +585,7 @@
             status_id: element.status_id,
             user_id: this.newUser,
           };
-          axios.put('/api-oportunities/' + element.id, params ).then((response) => {
+          axios.put('/admin/api-oportunities/' + element.id, params ).then((response) => {
               index = this.datas.findIndex( x => x.name == element.name)-1;
               this.datas.splice(index,1);
                this.$swal.fire(
@@ -618,7 +618,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             this.selected.forEach(element => {
-                axios.delete('/api-oportunities/' + element.id ).then((response) => {
+                axios.delete('/admin/api-oportunities/' + element.id ).then((response) => {
                     this.changeUser();
                     this.$swal.fire(
                       'Eliminado',

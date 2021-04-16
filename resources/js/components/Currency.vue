@@ -139,13 +139,13 @@ export default {
     },
     methods: {
         index() {
-            axios.get("/api-currency").then((response) => {
+            axios.get("/admin/api-currency").then((response) => {
                 this.currency = response.data.currency;
             });
         },
         create() {
             if (this.name != '') {
-                axios.post("/api-currency", {
+                axios.post("/admin/api-currency", {
                     name: this.name,
                 }).then((response) => {
                     if (response.status == 200) {
@@ -161,7 +161,7 @@ export default {
         },
         edit_model() {
             if (this.name_edit != '') {
-                axios.put("/api-currency/" + this.id_edit, {
+                axios.put("/admin/api-currency/" + this.id_edit, {
                     name: this.name_edit,
                 }).then((response) => {
                     if (response.status == 200) {
@@ -176,7 +176,7 @@ export default {
         },
         delete_model() {
             console.log(this.id_delete);
-            axios.delete("/api-currency/" + this.id_delete).then((response) => {
+            axios.delete("/admin/api-currency/" + this.id_delete).then((response) => {
                 console.log(response);
                 if (response.status == 200) {
                     this.index(0, '');

@@ -275,13 +275,13 @@ export default {
     methods: {
         index(page, search) {
             if (this.rol == 2) {
-                axios.get("/api-properties-user?&search=" + search).then((response) => {
+                axios.get("/admin/api-properties-user?&search=" + search).then((response) => {
                     this.properties = response.data.Properties;
                     this.status = response.data.status;
                     this.currency = response.data.currency;
                 });
             } else {
-                axios.get("/api-properties-admin?search=" + search).then((response) => {
+                axios.get("/admin/api-properties-admin?search=" + search).then((response) => {
                     this.properties = response.data.Properties;
                     this.status = response.data.status;
                     this.currency = response.data.currency;
@@ -290,7 +290,7 @@ export default {
             }
         },
         create() {
-            axios.post("/api-properties", {
+            axios.post("/admin/api-properties", {
                 title: this.title,
                 information: this.information,
                 price: this.price,
@@ -322,7 +322,7 @@ export default {
                 });
         },
         edit_model() {
-            axios.put("/api-properties/" + this.id_edit, {
+            axios.put("/admin/api-properties/" + this.id_edit, {
                 title: this.title_edit,
                 dimension: this.dimension_edit,
                 information: this.information_edit,
@@ -356,7 +356,7 @@ export default {
         },
         delete_model() {
             console.log(this.id_delete);
-            axios.delete("/api-properties/" + this.id_delete).then((response) => {
+            axios.delete("/admin/api-properties/" + this.id_delete).then((response) => {
                 console.log(response);
                 if (response.status == 200) {
                     this.index(0, '');

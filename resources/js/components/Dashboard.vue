@@ -64,7 +64,7 @@ export default {
         reports:''
     }),
     created() {
-        axios.get("/api-dashboard").then((response) => {
+        axios.get("/admin/api-dashboard").then((response) => {
             this.properties = response.data.property;
             this.users = response.data.users;
             this.reports=response.data.reports;

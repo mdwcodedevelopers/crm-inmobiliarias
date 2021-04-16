@@ -126,7 +126,7 @@
     }),
     computed:{
         getContacts(){
-          axios.get('/api-contacts').then((response) =>{
+          axios.get('/admin/api-contacts').then((response) =>{
             this.contacts= response.data;
           });
         },
@@ -145,7 +145,7 @@
       },
         newOportunity(){
           console.log("agregando oportunidad");
-            axios.post('/api-oportunities', {
+            axios.post('/admin/api-oportunities', {
                  name: this.oportunity.name,
                 vigency: this.oportunity.vigency,
                 contact_id: this.oportunity.contact_id,

@@ -292,7 +292,7 @@ export default {
     },
     methods: {
         index() {
-            axios.get("/api-users").then((response) => {
+            axios.get("/admin/api-users").then((response) => {
                 this.admins = response.data.admins;
                 this.agents = response.data.agents;
                 this.users = response.data.users;
@@ -308,7 +308,7 @@ export default {
                     this.province = "";
                     this.direction = "";
                 }
-                axios.post("/api-users", {
+                axios.post("/admin/api-users", {
                     name: this.name,
                     email: this.email,
                     rol_id: this.rol_id,
@@ -363,7 +363,7 @@ export default {
                     this.province_edit = '';
                     this.direction_edit = '';
                 }
-                axios.put("/api-users/" + this.id_edit, {
+                axios.put("/admin/api-users/" + this.id_edit, {
                     name: this.name_edit,
                     email: this.email_edit,
                     rol_id: this.rol_id_edit,
@@ -389,7 +389,7 @@ export default {
             }
         },
         delete_model() {
-            axios.delete("/api-users/" + this.id_delete).then((response) => {
+            axios.delete("/admin/api-users/" + this.id_delete).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
                     this.dialogdelete = false;

@@ -126,7 +126,7 @@ export default {
     },
     methods: {
         index() {
-            axios.get("/api-user").then((response) => {
+            axios.get("/admin/api-user").then((response) => {
                 this.profile = response.data.user;
             });
         },
@@ -144,7 +144,7 @@ export default {
             } else if (this.email_edit == '' || this.name_edit == '') {
                 this.error = 'Complete todos los campos';
             } else {
-                axios.post("/api-user", {
+                axios.post("/admin/api-user", {
                     name: this.name_edit,
                     email: this.email_edit,
                     phone: this.phone_edit,
@@ -173,7 +173,7 @@ export default {
             if (pass1 != pass2) {
                 this.error_edit = 'Las contraseñas no coinciden';
             } else {
-                axios.post("/api-password", {
+                axios.post("/admin/api-password", {
                     password: this.passnew
                 }).then((response) => {
                     if (response.status == 200) {

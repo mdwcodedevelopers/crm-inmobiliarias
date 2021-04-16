@@ -137,13 +137,13 @@ export default {
     },
     methods: {
         index() {
-            axios.get("/api-status").then((response) => {
+            axios.get("/admin/api-status").then((response) => {
                 this.status = response.data.status;
             });
         },
         create() {
 
-            axios.post("/api-status", {
+            axios.post("/admin/api-status", {
                 name: this.name,
             }).then((response) => {
                 if (response.status == 200) {
@@ -154,7 +154,7 @@ export default {
             });
         },
         edit_model() {
-            axios.put("/api-status/" + this.id_edit, {
+            axios.put("/admin/api-status/" + this.id_edit, {
                 name: this.name_edit,
             }).then((response) => {
                 if (response.status == 200) {
@@ -165,7 +165,7 @@ export default {
             });
         },
         delete_model() {
-            axios.delete("/api-status/" + this.id_delete).then((response) => {
+            axios.delete("/admin/api-status/" + this.id_delete).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
                     this.dialogdelete = false;

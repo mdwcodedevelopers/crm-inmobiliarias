@@ -160,13 +160,13 @@ export default {
     },
     methods: {
         index(page, search) {
-            axios.get("/api-properties-user?page=" + page + "&search=" + search).then((response) => {
+            axios.get("/admin/api-properties-user?page=" + page + "&search=" + search).then((response) => {
                 this.properties = response.data.Properties;
             });
         },
         create() {
 
-            axios.post("/api-properties", {
+            axios.post("/admin/api-properties", {
                 title: this.title,
                 information: this.information,
                 price: this.price,
@@ -189,7 +189,7 @@ export default {
                 price: this.price_edit,
                 dimension: this.dimension_edit
             };
-            axios.put("/api-properties-put/"+this.id_edit ,{edit} ).then((response) => {
+            axios.put("/admin/api-properties-put/"+this.id_edit ,{edit} ).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');
                     this.title_edit = '';
@@ -203,7 +203,7 @@ export default {
         delete_model() {
             console.log("sdsadsad");
             console.log(this.id_delete);
-            axios.delete("/api-properties/" + this.id_delete).then((response) => {
+            axios.delete("/admin/api-properties/" + this.id_delete).then((response) => {
                 console.log(response);
                 if (response.status == 200) {
                     this.index(0, '');

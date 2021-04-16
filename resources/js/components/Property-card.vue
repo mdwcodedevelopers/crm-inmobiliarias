@@ -115,7 +115,7 @@ export default {
         },
         methods: {
             index() {
-                axios.get("/api-images?id=" + this.property.id).then((response) => {
+                axios.get("/admin/api-images?id=" + this.property.id).then((response) => {
                     this.items = response.data.images;
                 });
             },

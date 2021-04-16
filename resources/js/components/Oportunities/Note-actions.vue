@@ -112,7 +112,7 @@ export default {
           oportunity_id: id,
         };
            
-        axios.post('/api-notes', params).then((response) =>{
+        axios.post('/admin/api-notes', params).then((response) =>{
           this.noteDialog = false;
           this.newNote= [];
           this.$swal.fire({
@@ -133,7 +133,7 @@ export default {
       },
         history(){
             let date;
-            axios.get("/api-notes/" + this.element.id).then((response) => {
+            axios.get("/admin/api-notes/" + this.element.id).then((response) => {
                 this.list = response.data;
                 // console.log(this.list.sort((a, b) => a.created_at.getTime() > .created_at.getTime()));
 

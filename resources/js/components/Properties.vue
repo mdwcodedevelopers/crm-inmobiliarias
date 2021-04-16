@@ -118,7 +118,7 @@ export default {
     }),
     methods: {
         index() {
-            axios.get("/api-properties?page=" +this.paginate.current_page + "&search=" + this.search).then((response) => {
+            axios.get("/admin/api-properties?page=" +this.paginate.current_page + "&search=" + this.search).then((response) => {
                 this.properties = response.data.Properties.data;
                 this.paginate = response.data.pagination;
                 this.total=response.data.total;

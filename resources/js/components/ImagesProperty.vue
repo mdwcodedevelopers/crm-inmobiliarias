@@ -250,7 +250,7 @@ export default {
                       'error'
                     )
             }else{
-                axios.post('/api-images', InstFormData , {headers : {'content-type': 'multipart/form-data'}}).then((response) => {
+                axios.post('/admin/api-images', InstFormData , {headers : {'content-type': 'multipart/form-data'}}).then((response) => {
                     if (response.status == 200) {
                         this.dialog= false;
                         this.index();
@@ -282,13 +282,13 @@ export default {
             });
         },
         index(){
-            axios.get("/api-images?id=" + this.id).then((response) => {
+            axios.get("/admin/api-images?id=" + this.id).then((response) => {
                     this.images = response.data.images;
                     console.log(response);
                 });
         },
         edit_model() {
-            axios.put("/api-images/" + this.id_edit, {
+            axios.put("/admin/api-images/" + this.id_edit, {
             }).then((response) => {
                 if (response.status == 200) {
                     this.index();
@@ -297,7 +297,7 @@ export default {
         },
         delete_model() {
             console.log(this.id_delete);
-            axios.delete("/api-images/" + this.id_delete).then((response) => {
+            axios.delete("/admin/api-images/" + this.id_delete).then((response) => {
                 console.log(response);
                 if (response.status == 200) {
                     this.index();

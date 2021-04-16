@@ -87,7 +87,7 @@ export default {
             this.propiedad_eliminar = title;
         },
         delete_model() {
-            axios.delete("/api-reports/" + this.id_delete).then((response) => {
+            axios.delete("/admin/api-reports/" + this.id_delete).then((response) => {
                 console.log(response);
                 if (response.status == 200) {
                     this.index(0, '');

@@ -15,7 +15,7 @@
             <v-list color="white ">
                 <v-list-item>
                     <v-list-item-content>
-                        <a href="/" class="">
+                        <a href="/admin/" class="">
                             
                             <v-img src="/images/logo.png"  contain width="200" height="100"></v-img>
 
@@ -31,57 +31,63 @@
                         <v-icon color="white" class="px-2">
                             mdi-file-document
                         </v-icon>
-                        <a href="/">Pagina web</a>
+                        <a href="/admin/">Pagina web</a>
                     </v-list-item>
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-account-box-multiple
                         </v-icon>
-                        <a href="/users">Usuarios</a>
+                        <a href="/admin/users">Usuarios</a>
                     </v-list-item>
 
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-home-currency-usd
                         </v-icon>
-                        <a href="/currency">Monedas</a>
+                        <a href="/admin/currency">Monedas</a>
                     </v-list-item>
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                            mdi-office-building
                         </v-icon>
-                        <a href="/properties-user">Propiedades</a>
+                        <a href="/admin/properties-user">Propiedades</a>
                     </v-list-item>
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-list-status
                         </v-icon>
-                        <a href="/status">Estatus de propiedades</a>
+                        <a href="/admin/status">Estatus de propiedades</a>
                     </v-list-item>
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-apple-keyboard-option
                         </v-icon>
-                        <a href="/interested">Oportunidades</a>
+                        <a href="/admin/interested">Oportunidades</a>
                     </v-list-item>
 
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-account
                         </v-icon>
-                        <a href="/profile">Mi perfil</a>
+                        <a href="/admin/profile">Mi perfil</a>
                     </v-list-item>
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-account
                         </v-icon>
-                        <a href="/home">Estaditicas</a>
+                        <a href="/admin/home">Estaditicas</a>
                     </v-list-item>
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-history
                         </v-icon>
-                        <a href="/reports">Historial de operaciones</a>
+                        <a href="/admin/reports">Historial de operaciones</a>
+                    </v-list-item>
+                    <v-list-item>
+                        <v-icon color="white" class="px-2">
+                            mdi-cog
+                        </v-icon>
+                        <a href="/admin/config">Mi Empresa</a>
                     </v-list-item>
                 </v-list-item-group>
             </v-list>
@@ -120,7 +126,7 @@ export default {
 
             }).then((response) => {
                 if (response.status == 200) {
-                    window.location.href ="/"
+                    window.location.href ="/admin/"
                 }
             });
         }

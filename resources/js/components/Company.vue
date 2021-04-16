@@ -100,7 +100,7 @@ export default {
     },
     methods: {
         index() {
-            axios.get("/api-company?id=1").then((response) => {
+            axios.get("/admin/api-company?id=1").then((response) => {
                 this.company = response.data.company;
             });
         },
@@ -111,7 +111,7 @@ export default {
             this.info_edit = info;
         },
         edit_model() {
-            axios.put("/api-company/1", {
+            axios.put("/admin/api-company/1", {
                 name: this.name_edit,
                 information: this.info_edit
             }).then((response) => {
