@@ -5,7 +5,7 @@
                     <v-img src="/images/logo.png"  contain width="400"></v-img>
                     
                         <h3>
-                            ¡Bienvenido al Dashboard de Inmobiliaria Daniel Canepa Propiedades!
+                            ¡Bienvenido al Dashboard de Inmobiliaria Daniel Cánepa Propiedades!
                         </h3> 
                     </v-card-title>
                     <v-card-subtitle></v-card-subtitle>
