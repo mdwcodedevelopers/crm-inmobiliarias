@@ -14,10 +14,12 @@ class CreateImagesTable extends Migration
     public function up()
     {
         Schema::create('images', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('property_id');
-            $table->string('url_image');
+            $table->id();
+            $table->foreignId('property_id');
+            $table->string('url');
+            $table->boolean('principal')->default(0); //0secundaria, 1principal
             $table->timestamps();
+            $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
         });
     }
 

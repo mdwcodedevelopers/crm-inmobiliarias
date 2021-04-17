@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Company;
 
 class CompanySeeder extends Seeder
 {
@@ -12,10 +12,10 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('company')->insert([
+        Company::Create([
             'name' => '',
             'information' => '',
-            'image_url' =>'',
+            'image' =>'',
         ]);
     }
 }

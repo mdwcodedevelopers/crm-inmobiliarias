@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\StatusOportunity;
+use App\StatusOportunity;
 
 class StatusOportunitySeeder extends Seeder
 {
@@ -41,7 +41,7 @@ class StatusOportunitySeeder extends Seeder
                 'name' => 'Congelado',
                 'color' => '#00897B',
             ),
-                
+
         ];
 
         foreach ($status as $key => $value) {

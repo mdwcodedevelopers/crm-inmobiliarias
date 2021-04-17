@@ -14,7 +14,7 @@ class CreateGroupTagsTable extends Migration
     public function up()
     {
         Schema::create('group_tags', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->timestamps();
         });

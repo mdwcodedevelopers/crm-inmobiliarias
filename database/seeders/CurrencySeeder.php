@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Currency;
+use App\Currency;
 
 class CurrencySeeder extends Seeder
 {
@@ -12,17 +12,13 @@ class CurrencySeeder extends Seeder
      */
     public function run()
     {
-        //EUR USD
-        $currency = [
-            array(
-                'currency' => 'USD',
-            ),
-            array(
-                'currency' => 'EUR',
-            ),                
+        $currencies = [
+            array('name' => 'USD'),
+            array('name' => 'EUR'),
+            array('name' => 'ARS'),
         ];
 
-        foreach ($currency as $key => $value) {
+        foreach ($currencies as $key => $value) {
             Currency::create($value);
         }
     }

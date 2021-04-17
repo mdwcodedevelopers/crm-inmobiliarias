@@ -2,20 +2,20 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Roles extends Model
 {
-    protected $fillable=[
-        'name',
-    ];
+  use HasFactory;
 
-    /** 
-     * Relacion muchos a muchos con en modelo User
-     */
-    public function user()
-    {
-        return $this->belongsToMany('App\User');
-    }
+  protected $fillable = ['name'];
 
+  protected $table = 'roles';
+
+
+  public function Users()
+  {
+      return $this->hasMany(User::class, "role_id")->orderBy('name','ASC');
+  }
 }
