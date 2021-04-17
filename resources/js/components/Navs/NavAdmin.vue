@@ -122,12 +122,11 @@ export default {
     },
     methods:{
         logout() {
-            axios.post("/logout", {
+            axios.post("/admin/logout", {
 
             }).then((response) => {
-                if (response.status == 200) {
+                console.log(response);  
                     window.location.href ="/admin/"
-                }
             });
         }
     }

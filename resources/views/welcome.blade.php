@@ -4,7 +4,6 @@
     <div class="">
        
         @guest
-        asdasd
             <div class="">
                 <nav-guest />
 

@@ -11,7 +11,6 @@
                 <a class="text-white mx-2" href="/admin/register">Registrarse</a>
         </v-app-bar>
         <v-navigation-drawer
-        v-model="drawer"
         absolute
         bottom
         temporary
@@ -21,7 +20,6 @@
           dense
         >
           <v-list-item-group
-            v-model="group"
             active-class="deep-purple--text text--accent-4"
           >
             <v-list-item>
