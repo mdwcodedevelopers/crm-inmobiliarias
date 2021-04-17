@@ -13,6 +13,7 @@ class WelcomeController extends Controller
     {
 
         if($user=User::find(auth()->id())){
+
             return view('welcome',['rol'=>$user->rol_id]);
         }
         else{

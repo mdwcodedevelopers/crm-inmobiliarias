@@ -11,7 +11,7 @@ class Tag extends Model
 
   protected $fillable = ['name','group_tag_id'];
 
-  protected $table = 'status';
+  protected $table = 'tags';
 
 
   public function GroupTag()

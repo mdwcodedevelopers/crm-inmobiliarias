@@ -2,13 +2,13 @@
     <div class="">
         <v-app-bar color="light-blue darken-1 " dark>
 
-            <v-toolbar-title> <a href="/" class="text-white" style="text-decoration:none">Home</a> </v-toolbar-title>
+            <v-toolbar-title> <a href="/admin/" class="text-white" style="text-decoration:none">Home</a> </v-toolbar-title>
 
             <v-spacer></v-spacer>
 
-                <a class="text-white mx-2" href="/login">Iniciar sesión</a>
+                <a class="text-white mx-2" href="/admin/login">Iniciar sesión</a>
 
-                <a class="text-white mx-2" href="/register">Registrarse</a>
+                <a class="text-white mx-2" href="/admin/register">Registrarse</a>
         </v-app-bar>
         <v-navigation-drawer
         v-model="drawer"

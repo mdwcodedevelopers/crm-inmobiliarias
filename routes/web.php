@@ -11,6 +11,7 @@
 |
 */
 
+Route::redirect('/','/admin');
 
 
 Route::group(['prefix' => 'admin'], function () {
