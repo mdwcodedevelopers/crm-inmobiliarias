@@ -29,7 +29,7 @@ class OportunityController extends Controller
     }
     public function view(Request $request)
     {           
-        $user=User::find(auth()->id())->rol_id;
+        $user=User::find(auth()->id())->role_id;
         $users = User::selectRaw('id, name')->get();
         $status = StatusOportunity::get();
         return view('oportunities', compact('users', 'status', 'user'));;

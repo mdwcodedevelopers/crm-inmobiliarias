@@ -63,7 +63,7 @@ class CurrencyController extends Controller
         // if(User::find(auth()->id())){
         //     $user=User::find(auth()->id());
         //     if($user==1){
-        //         return view('currency',['rol'=>$user->rol_id]);
+        //         return view('currency',['rol'=>$user->role_id]);
 
         //     }
         //     else{
@@ -74,7 +74,7 @@ class CurrencyController extends Controller
         //     return view('welcome');
         // }
         if($user=User::find(auth()->id())){
-            return view('currency',['rol'=>$user->rol_id]);
+            return view('currency',['rol'=>$user->role_id]);
         }
         else{
             return view('welcome');

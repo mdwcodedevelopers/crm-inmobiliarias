@@ -25,10 +25,10 @@ class HomeController extends Controller
     public function index()
     {
         if($user=User::find(auth()->id())){
-            if($user->rol_id==3){
-                return view('welcome',['rol'=>$user->rol_id]);
+            if($user->role_id==3){
+                return view('welcome',['rol'=>$user->role_id]);
             }else{
-                return view('home',['rol'=>$user->rol_id]);
+                return view('home',['rol'=>$user->role_id]);
             }
         }
         else{

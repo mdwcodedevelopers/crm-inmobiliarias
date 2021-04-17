@@ -9,7 +9,7 @@
                 <div class="text--primary">
                     Correo: {{profile.email}}
                 </div>
-                <div v-if="profile.rol_id ==2">
+                <div v-if="profile.role_id ==2">
                     <div class="text--primary">
                         Telefono:{{profile.phone}}
                     </div>
@@ -48,13 +48,13 @@
                                     <v-flex xs6>
                                         <v-text-field label="Correo*" v-model="email_edit" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs6 v-if="profile.rol_id ==2">
+                                    <v-flex xs6 v-if="profile.role_id ==2">
                                         <v-text-field label="Teléfono*" v-model="phone_edit" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs6 v-if="profile.rol_id ==2">
+                                    <v-flex xs6 v-if="profile.role_id ==2">
                                         <v-text-field label="Provincia*" v-model="province_edit" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 v-if="profile.rol_id ==2">
+                                    <v-flex xs12 v-if="profile.role_id ==2">
                                         <v-text-field label="Dirección*" v-model="direction_edit" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
@@ -139,7 +139,7 @@ export default {
             this.direction_edit = direction;
         },
         edit_model() {
-            if (this.profile.rol_id == 2 && this.phone_edit == '' || this.province_edit == '' || this.direction_edit == '') {
+            if (this.profile.role_id == 2 && this.phone_edit == '' || this.province_edit == '' || this.direction_edit == '') {
                 this.error = 'Complete todos los campos';
             } else if (this.email_edit == '' || this.name_edit == '') {
                 this.error = 'Complete todos los campos';

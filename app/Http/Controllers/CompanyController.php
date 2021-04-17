@@ -59,7 +59,7 @@ class CompanyController extends Controller
     public function view()
     {
         if ($user = User::find(auth()->id())) {
-            return view('company', ['rol' => $user->rol_id]);
+            return view('company', ['rol' => $user->role_id]);
         } else {
             return view('welcome');
         }

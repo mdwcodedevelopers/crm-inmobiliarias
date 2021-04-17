@@ -18,18 +18,18 @@
                                             <v-flex xs12 sm6 md6>
                                                 <v-text-field label="Correo*" v-model="email" required></v-text-field>
                                             </v-flex>
-                                            <v-flex xs12 sm6 md6 v-if="rol_id==2">
+                                            <v-flex xs12 sm6 md6 v-if="role_id==2">
                                                 <v-text-field label="Telefono" v-model="phone" required></v-text-field>
                                             </v-flex>
-                                            <v-flex xs12 sm6 md6 v-if="rol_id==2">
+                                            <v-flex xs12 sm6 md6 v-if="role_id==2">
                                                 <v-text-field label="Provincia" v-model="province" required></v-text-field>
                                             </v-flex>
-                                            <v-flex xs12 sm6 md6 v-if="rol_id==2">
+                                            <v-flex xs12 sm6 md6 v-if="role_id==2">
                                                 <v-text-field label="Dirección" v-model="direction" required></v-text-field>
                                             </v-flex>
 
                                             <v-flex xs12 sm6 md6>
-                                                <select class="form-control mt-2" placeholder="Estado" v-model="rol_id">
+                                                <select class="form-control mt-2" placeholder="Estado" v-model="role_id">
                                                     <option selected disabled>Rol de Usuario*
                                                     </option>
                                                     <option v-for="item in roles" :value="item.id">
@@ -192,18 +192,18 @@
                                     <v-flex xs12 sm6 md6>
                                         <v-text-field label="Correo" v-model="email_edit" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md6 v-if="rol_id_edit==2">
+                                    <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
                                         <v-text-field label="Telefono" v-model="phone_edit" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md6 v-if="rol_id_edit==2">
+                                    <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
                                         <v-text-field label="Provincia" v-model="province_edit" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md6 v-if="rol_id_edit==2">
+                                    <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
                                         <v-text-field label="Dirección" v-model="direction_edit" required></v-text-field>
                                     </v-flex>
 
                                     <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" v-model="rol_id_edit">
+                                        <select class="form-control mt-2" placeholder="Estado" v-model="role_id_edit">
                                             <option selected disabled>Moneda
                                             </option>
                                             <option v-for="item in roles" :value="item.id">
@@ -268,13 +268,13 @@ export default {
             search: '',
             roles: [],
             name: '',
-            rol_id: 0,
+            role_id: 0,
             email: '',
             phone: '',
             province: '',
             direction: '',
             name_edit: '',
-            rol_id_edit: '',
+            role_id_edit: '',
             email_edit: '',
             phone_edit: '',
             province_edit: '',
@@ -302,8 +302,8 @@ export default {
 
         },
         create() {
-            if (this.rol_id != 0 || this.email != '' || this.name != '') {
-                if (this.rol_id == 1 || this.rol_id == 3) {
+            if (this.role_id != 0 || this.email != '' || this.name != '') {
+                if (this.role_id == 1 || this.role_id == 3) {
                     this.phone = "";
                     this.province = "";
                     this.direction = "";
@@ -311,7 +311,7 @@ export default {
                 axios.post("/admin/api-users", {
                     name: this.name,
                     email: this.email,
-                    rol_id: this.rol_id,
+                    role_id: this.role_id,
                     phone: this.phone,
                     pronvince: this.province,
                     direction: this.direction
@@ -323,7 +323,7 @@ export default {
                         this.$swal('Usuario creado con exito', '', 'OK');
                         this.name = "";
                         this.email = "";
-                        this.rol_id = "";
+                        this.role_id = "";
                         this.phone = "";
                         this.province = "";
                         this.direction = "";
@@ -357,8 +357,8 @@ export default {
             });
         },
         edit_model() {
-            if (this.rol_id != 0 || this.email != '' || this.name != '') {
-                if (this.rol_id_edit == 1 || this.rol_id_edit == 3) {
+            if (this.role_id != 0 || this.email != '' || this.name != '') {
+                if (this.role_id_edit == 1 || this.role_id_edit == 3) {
                     this.phone_edit = '';
                     this.province_edit = '';
                     this.direction_edit = '';
@@ -366,7 +366,7 @@ export default {
                 axios.put("/admin/api-users/" + this.id_edit, {
                     name: this.name_edit,
                     email: this.email_edit,
-                    rol_id: this.rol_id_edit,
+                    role_id: this.role_id_edit,
                     phone: this.phone_edit,
                     pronvince: this.province_edit,
                     direction: this.direction_edit
@@ -376,7 +376,7 @@ export default {
                         this.dialogedit = false;
                         this.name_edit = "";
                         this.email_edit = "";
-                        this.rol_id_edit = "";
+                        this.role_id_edit = "";
                         this.phone_edit = "";
                         this.province_edit = "";
                         this.direction_edit = "";
@@ -403,7 +403,7 @@ export default {
             this.id_edit = id;
             this.name_edit = name;
             this.email_edit = email;
-            this.rol_id_edit = rol;
+            this.role_id_edit = rol;
         },
         delete_dialog(id, name, email) {
             this.id_delete = id;

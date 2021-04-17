@@ -13,6 +13,6 @@ class PropertiesUserController extends Controller
     }
     public function index(){
         $user=User::find(auth()->id());
-        return view('properties',['rol'=>$user->rol_id]);
+        return view('properties',['rol'=>$user->role_id]);
     }
 }

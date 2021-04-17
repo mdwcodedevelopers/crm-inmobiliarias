@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Mail;
 class UsersController extends Controller
 {
     public function index(Request $request){
-        $admin = User::where('rol_id','=',1)->get();
-        $agents = User::where('rol_id','=',3)->get();
-        $users = User::where('rol_id','=',2)->get();
+        $admin = User::where('role_id','=',1)->get();
+        $agents = User::where('role_id','=',3)->get();
+        $users = User::where('role_id','=',2)->get();
         $roles=Roles::get();
         return response()->json([
             'admins' => $admin,
@@ -36,7 +36,7 @@ class UsersController extends Controller
             'pronvince' => $request['pronvince'],
             'direction' => $request['direction'],
             'password' => Hash::make( $data['confirmation_code']),
-            'rol_id'=>$request['rol_id'],
+            'role_id'=>$request['role_id'],
         ]);
 
     }
@@ -55,7 +55,7 @@ class UsersController extends Controller
             'pronvince' => $request['pronvince'],
             'direction' => $request['direction'],
             'password' => Hash::make( $data['confirmation_code']),
-            'rol_id'=>$request['rol_id'],
+            'role_id'=>$request['role_id'],
         ]);
 
         return response()->json("success", 200);
@@ -73,7 +73,7 @@ class UsersController extends Controller
         // if(User::find(auth()->id())){
         //     $user=User::find(auth()->id());
         //     if($user==1){
-        //         return view('currency',['rol'=>$user->rol_id]);
+        //         return view('currency',['rol'=>$user->role_id]);
 
         //     }
         //     else{
@@ -84,7 +84,7 @@ class UsersController extends Controller
         //     return view('welcome');
         // }
         if($user=User::find(auth()->id())){
-            return view('users',['rol'=>$user->rol_id]);
+            return view('users',['rol'=>$user->role_id]);
         }
         else{
             return view('welcome');
