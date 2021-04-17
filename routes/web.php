@@ -11,11 +11,11 @@
 |
 */
 
-Route::redirect('/','/admin');
 
+Route::get('/','WelcomeController@index');
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/','WelcomeController@index');
+    Route::get('/', 'HomeController@index')->name('home');
     Route::get('/property/{id}','PropertyController@property');
     Route::get('/property-images/{id}','ImageController@images');
     Route::put('/property-images-set/{id}','ImageController@setimage');
@@ -24,11 +24,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/currency','CurrencyController@view');
     Route::get('/company','CompanyController@view');
     Route::get('/users','UsersController@view');
-    Route::get('/interested', "OportunityController@view");
+    Route::get('/oportunities', "OportunityController@view");
     Route::get('/contacts/tags', "TagController@view");
-    Route::get('/config', "TagController@view");
+    Route::get('/config', "ConfigController@index");
     Route::resources(['api-properties' => PropertyController::class,
     'api-status'=>StatusController::class,
+    'api-status-oportunities'=>StatusOportunitiesController::class,
     'api-currency'=>CurrencyController::class,
     'api-images'=>ImageController::class,
     'api-users'=>UsersController::class,
@@ -42,7 +43,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/profile', 'UserController@view');
     Route::get('/reports', 'ReportController@view');
     Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
-    Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
     Route::get('/categories', 'CategorieController@categories')->name('categories');

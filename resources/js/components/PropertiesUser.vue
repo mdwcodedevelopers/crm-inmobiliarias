@@ -255,11 +255,11 @@ export default {
             status_id_edit: '',
             priceRules: [
                 v => !!v || 'El precio es obligatorio',
-                v => !isNaN(parseFloat(v)) || 'El precio debe ser un valor numerico',
+                v => /^([0-9])*$/.test(v)  || 'El precio debe ser un valor numerico',
             ],
             dimRules: [
                 v => !!v || 'Las dimensiones son obligatorias',
-                v => !isNaN(parseFloat(v)) || 'Las dimensiones son tomadas en mt2 solo ingrese la cantidad de metros',
+                v => /^([0-9])*$/.test(v) || 'Las dimensiones son tomadas en mt2 solo ingrese la cantidad de metros',
             ],
             titleRules: [
                 v => !!v || 'El titulo de la propiedad es obligatorio',

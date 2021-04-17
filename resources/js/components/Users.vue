@@ -11,42 +11,49 @@
                                 </v-card-title>
                                 <v-card-text>
                                     <v-container grid-list-md>
-                                        <v-layout wrap>
-                                            <v-flex xs12 sm6 md6>
-                                                <v-text-field label="Nombre*" v-model="name" required></v-text-field>
-                                            </v-flex>
-                                            <v-flex xs12 sm6 md6>
-                                                <v-text-field label="Correo*" v-model="email" required></v-text-field>
-                                            </v-flex>
-                                            <v-flex xs12 sm6 md6 v-if="role_id==2">
-                                                <v-text-field label="Telefono" v-model="phone" required></v-text-field>
-                                            </v-flex>
-                                            <v-flex xs12 sm6 md6 v-if="role_id==2">
-                                                <v-text-field label="Provincia" v-model="province" required></v-text-field>
-                                            </v-flex>
-                                            <v-flex xs12 sm6 md6 v-if="role_id==2">
-                                                <v-text-field label="Dirección" v-model="direction" required></v-text-field>
-                                            </v-flex>
+                                        <v-form
+                                            ref="form"
+                                            v-model="valid"
+                                        >
+                                            <v-layout wrap>
+                                                <v-flex xs12 sm6 md6>
+                                                    <v-text-field label="Nombre*" :rules="[v => !!v || 'Debe seleccionar un nombre']" v-model="name" required></v-text-field>
+                                                </v-flex>
+                                                <v-flex xs12 sm6 md6>
+                                                    <v-text-field label="Correo*" :rules="mailRule" v-model="email" required></v-text-field>
+                                                </v-flex>
+                                                <v-flex xs12 sm6 md6 v-if="role_id==2">
+                                                    <v-text-field label="Telefono" :rules="phoneRule" v-model="phone" required></v-text-field>
+                                                </v-flex>
+                                                <v-flex xs12 sm6 md6 v-if="role_id==2">
+                                                    <v-text-field label="Provincia" :rules="[v => !!v || 'Debe escoger una opción']" v-model="province" required></v-text-field>
+                                                </v-flex>
+                                                <v-flex xs12 sm6 md6 v-if="role_id==2">
+                                                    <v-text-field label="Dirección" :rules="[v => !!v || 'Debe llenar la dirección']" v-model="direction" required></v-text-field>
+                                                </v-flex>
 
-                                            <v-flex xs12 sm6 md6>
-                                                <select class="form-control mt-2" placeholder="Estado" v-model="role_id">
-                                                    <option selected disabled>Rol de Usuario*
-                                                    </option>
-                                                    <option v-for="item in roles" :value="item.id">
-                                                        {{ item.rol }}
-                                                    </option>
-                                                </select>
-                                            </v-flex>
-                                            <v-flex xs12>
-                                                {{error}}
-                                            </v-flex>
-                                        </v-layout>
+                                                <v-flex xs12 sm6 md6>
+                                                    <v-select
+                                                        no-data-text="No hay Roles"
+                                                            v-model="role_id"
+                                                            :items="roles"
+                                                            :rules="selectRules"
+                                                            item-text="name"
+                                                            item-value="id"
+                                                            label="Rol de usuario*"
+                                                    ></v-select>
+                                                </v-flex>
+                                                <v-flex xs12>
+                                                    {{error}}
+                                                </v-flex>
+                                            </v-layout>
+                                        </v-form>
                                     </v-container>
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn color="danger" @click="dialog = false;error=''">Cancelar</v-btn>
-                                    <v-btn color="success" @click.prevent="create()">Crear</v-btn>
+                                    <v-btn color="success" :disabled="!valid" @click.prevent="create()">Crear</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
@@ -72,7 +79,7 @@
 
                         <v-card color="orange" class="text-white my-2">
 
-                            <v-card-title class="display-1 mt-2" color="blue">Administradores</v-card-title>
+                            <v-card-title class="subtitle-2 mt-2" color="blue">Administradores</v-card-title>
                             <v-data-table no-results-text="No hay resultados" no-data-text="No hay Usuarios" :headers="headers" :items="admins" class="elevation-1" :search="search">
                                 <template v-slot:top>
                                     <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
@@ -105,7 +112,7 @@
                 </v-tab-item>
                 <v-tab-item>
                     <v-card class="my-4" color="blue darken-2">
-                        <v-card-title class="display-1 text-white my-2">Agentes</v-card-title>
+                        <v-card-title class="subtitle-2 text-white my-2">Agentes</v-card-title>
                         <v-data-table no-data-text="No hay Usuarios" no-results-text="No hay resultados" :headers="headers" :items="agents" class="elevation-1" :search="search">
                             <template v-slot:top>
                                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
@@ -138,7 +145,7 @@
 
                 <v-tab-item>
                     <v-card class="my-4" color="cyan darken-3">
-                        <v-card-title class="display-1 text-white">Usuarios</v-card-title>
+                        <v-card-title class="subtitle-2 text-white">Usuarios</v-card-title>
                         <v-data-table no-data-text="No hay Usuarios" no-results-text="No hay resultados" :headers="usersheader" :items="users" class="elevation-1" :search="search">
                             <template v-slot:top>
                                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
@@ -185,42 +192,49 @@
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-md>
-                                <v-layout wrap>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Nombre" v-model="name_edit" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Correo" v-model="email_edit" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
-                                        <v-text-field label="Telefono" v-model="phone_edit" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
-                                        <v-text-field label="Provincia" v-model="province_edit" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
-                                        <v-text-field label="Dirección" v-model="direction_edit" required></v-text-field>
-                                    </v-flex>
+                                <v-form
+                                    ref="form"
+                                    v-model="valid"
+                                >
+                                    <v-layout wrap>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Nombre" :rules="[v => !!v || 'Debe seleccionar un nombre']" v-model="name_edit" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Correo" :rules="mailRule" v-model="email_edit" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
+                                            <v-text-field label="Telefono" :rules="phoneRule" v-model="phone_edit" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
+                                            <v-text-field label="Provincia" :rules="[v => !!v || 'Debe escoger una opción']" v-model="province_edit" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
+                                            <v-text-field label="Dirección"  :rules="[v => !!v || 'Debe llenar la dirección']" v-model="direction_edit" required></v-text-field>
+                                        </v-flex>
 
-                                    <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" v-model="role_id_edit">
-                                            <option selected disabled>Moneda
-                                            </option>
-                                            <option v-for="item in roles" :value="item.id">
-                                                {{ item.rol }}
-                                            </option>
-                                        </select>
-                                    </v-flex>
-                                    <v-flex xs12>
-                                        {{error_edit}}
-                                    </v-flex>
-                                </v-layout>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-select
+                                                no-data-text="No hay Roles"
+                                                    v-model="role_id_edit"
+                                                    :items="roles"
+                                                    :rules="selectRules"
+                                                    item-text="name"
+                                                    item-value="id"
+                                                    label="Rol de usuario*"
+                                            ></v-select>
+                                        </v-flex>
+                                        <v-flex xs12>
+                                            {{error_edit}}
+                                        </v-flex>
+                                    </v-layout>
+                                </v-form>
                             </v-container>
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="danger" @click="dialogedit = false">Cancelar</v-btn>
-                            <v-btn color="success" @click.prevent="edit_model()">Editar</v-btn>
+                            <v-btn color="success" :disabled="!valid" @click.prevent="edit_model()">Editar</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -281,12 +295,25 @@ export default {
             direction_edit: '',
             error_edit: '',
             name_delete: '',
+            valid: false,
             email_delete: '',
             tab: null,
             itemtab: '',
             error_edit: '',
             items: [
                 'Administradores', 'Agentes', 'Usuarios'
+            ],
+             selectRules: [
+                v => !!v || 'Debe escoger una opción',
+            ],
+             mailRule: [
+                v => !!v || 'Debe dar un correo',
+                v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El Correo no es valido'
+            ],
+             phoneRule: [
+                v => !!v || 'Debe dar un telefono',
+                v => v.length != 10 || "El télefono debe de ser valido",
+                v => /^([0-9])*$/.test(v) ||  "El télefono debe de ser valido"
             ],
         }
     },

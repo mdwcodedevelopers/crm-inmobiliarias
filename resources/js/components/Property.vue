@@ -147,7 +147,9 @@ export default {
             ],
             phone: '',
             phoneRules:[
-                v=> !!v || 'Telefono es requerido'
+                v=> !!v || 'Telefono es requerido',
+                v => /^([0-9])*$/.test(v) ||  "El télefono debe de ser valido"
+
             ]
         }
     },

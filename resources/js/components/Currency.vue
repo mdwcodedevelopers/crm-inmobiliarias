@@ -206,7 +206,7 @@ export default {
                     text: 'Moneda',
                     align: 'start',
                     sortable: true,
-                    value: 'currency',
+                    value: 'name',
                 },
                 {
                     text: 'Acciones',

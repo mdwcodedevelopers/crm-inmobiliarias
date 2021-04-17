@@ -27,42 +27,42 @@
             <v-list nav dense  class="nav-list my-6">
 
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
-                    <v-list-item>
+                    <!-- <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-file-document
                         </v-icon>
                         <a href="/admin/">Pagina web</a>
-                    </v-list-item>
-                    <v-list-item>
+                    </v-list-item> -->
+                    <!-- <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-account-box-multiple
                         </v-icon>
                         <a href="/admin/users">Usuarios</a>
-                    </v-list-item>
+                    </v-list-item> -->
 
-                    <v-list-item>
+                    <!-- <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-home-currency-usd
                         </v-icon>
                         <a href="/admin/currency">Monedas</a>
-                    </v-list-item>
+                    </v-list-item> -->
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                            mdi-office-building
                         </v-icon>
                         <a href="/admin/properties-user">Propiedades</a>
                     </v-list-item>
-                    <v-list-item>
+                    <!-- <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-list-status
                         </v-icon>
                         <a href="/admin/status">Estatus de propiedades</a>
-                    </v-list-item>
+                    </v-list-item> -->
                     <v-list-item>
                         <v-icon color="white" class="px-2">
-                            mdi-apple-keyboard-option
+                            mdi-speedometer
                         </v-icon>
-                        <a href="/admin/interested">Oportunidades</a>
+                        <a href="/admin/oportunities">Oportunidades</a>
                     </v-list-item>
 
                     <v-list-item>
@@ -73,7 +73,7 @@
                     </v-list-item>
                     <v-list-item>
                         <v-icon color="white" class="px-2">
-                            mdi-account
+                            mdi-chart-bar
                         </v-icon>
                         <a href="/admin/home">Estaditicas</a>
                     </v-list-item>

@@ -28,8 +28,10 @@ import colors from 'vuetify/lib/util/colors'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('configuration', require('./components/Configuration.vue').default);
 Vue.component('tags', require('./components/Tags.vue').default);
 Vue.component('note-action', require('./components/Oportunities/Note-actions.vue').default);
+Vue.component('status-oportunities', require('./components/Oportunities/Status-oportunities.vue').default);
 Vue.component('new-oportunity', require('./components/Oportunities/New-oportunity.vue').default);
 Vue.component('contact-card', require('./components/Oportunities/Contact-card.vue').default);
 Vue.component('oportunities', require('./components/Oportunities/Oportunities.vue').default);

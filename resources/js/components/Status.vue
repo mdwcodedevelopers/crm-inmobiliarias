@@ -194,7 +194,7 @@ export default {
                     text: 'Nombre',
                     align: 'start',
                     sortable: true,
-                    value: 'status',
+                    value: 'name',
                 },
                 {
                     text: 'Acciones',
