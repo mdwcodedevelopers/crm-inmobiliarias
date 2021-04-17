@@ -2,45 +2,40 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Property extends Model
 {
-    protected $fillable=[
-        'user_id',
-        'title',
-        'information',
-        'price',
-        'dimension',
-        'status_id',
-        'title',
-        'categorie_id',
-        'currency_id',
-        'city',
-        'image'
-    ];
+  use HasFactory;
 
-    /**
-     * Relacion muchos a muchos con el modelo User
-     */
-    // public function users()
-    // {
-    //     return $this->belongsToMany('App\User');
-    // }
+  protected $fillable = ['user_id','status_id','currency_id','title','information','price','dimension','title','city','image'];
 
-    // /**
-    //  * Relacion uno a muchos con el modelo Status
-    //  */
-    // public function status()
-    // {
-    //     return $this->hasMany('App\Status');
-    // }
+  protected $table = 'properties';
 
-    // /**
-    //  * Relacion muchos a muchos con el modelo Categorie
-    //  */
-    // public function categories()
-    // {
-    //     return $this->belongsToMany('App\Categorie');
-    // }
+
+  public function User()
+  {
+    return $this->belongsTo(User::class, 'user_id');
+  }
+
+  public function Status()
+  {
+    return $this->belongsTo(Status::class, 'status_id');
+  }
+
+  public function Currency()
+  {
+    return $this->belongsTo(Currency::class, 'currency_id');
+  }
+
+  public function Categories()
+  {
+    return $this->hasMany(Category_property::class, "property_id");
+  }
+
+  public function Images()
+  {
+    return $this->hasMany(Image::class, "property_id");
+  }
 }

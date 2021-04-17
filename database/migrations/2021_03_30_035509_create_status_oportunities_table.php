@@ -14,10 +14,11 @@ class CreateStatusOportunitiesTable extends Migration
     public function up()
     {
         Schema::create('status_oportunities', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->softDeletes();
+            $table->id();
             $table->string('name');
             $table->string('color');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

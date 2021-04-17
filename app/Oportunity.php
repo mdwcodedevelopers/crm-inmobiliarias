@@ -1,71 +1,47 @@
 <?php
 
 namespace App;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Oportunity extends Model
 {
-     use SoftDeletes;
+  use HasFactory;
 
-     protected $table='oportunities';
-      
-     protected $fillable = [
-          'user_id', 
-          'name', 
-          'contact_id', 
-          'vigency', 
-          'status_id',
-          'closed', 
-          'closed_reason'];
+  protected $fillable = ['user_id','contact_id','status_id','name','vigency','closed','closed_description','closed_reason'];
 
-    protected $dates = ['deleted_at'];
+  protected $table = 'oportunities';
 
-     // Cambio para el formato de fecha     
-     public function getCreatedAtAttribute($value){
-           return Carbon::parse($value)->format('d-m-Y');
-     }
-
-     public function getUpdatedAtAttribute($value){
-          return Carbon::parse($value)->format('d-m-Y');
-     }
-
-     public function getVigencyAttribute($value){
-          return Carbon::parse($value)->format('d-m-Y');
-     }
-     /** 
-     * Relacion uno a uno con el modelo Contact
-     */
-    public function contact()
-    {
-         return $this->hasOne('App\Contact');
-    }
-    
-     /** 
-     * Relacion uno a muchos con el modelo NoteOportunity
-     */
-    public function notes()
-    {
-         return $this->hasMany('App\NoteOportunity');
-    }
-
-     /** 
-     * Relacion muchos a uno con el modelo status_oportunities
-     */
-    public function status()
-    {
-         return $this->belongsTo('App\StatusOportunity','status_id');
-    }
-    /** 
-     * Relacion muchos a uno con el modelo status_oportunities
-     */
-    public function user()
-    {
-         return $this->belongsTo('App\User','user_id');
-    }
+  protected $dates = ['deleted_at'];
 
 
+  public function User()
+  {
+    return $this->belongsTo(User::class, 'user_id');
+  }
+
+  public function Contact()
+  {
+    return $this->hasOne(Contact::class, 'contact_id');
+  }
+
+  public function Status()
+  {
+    return $this->belongsTo(StatusOportunity::class, 'status_id');
+  }
+
+  public function NotesOportunities()
+  {
+    return $this->hasMany(NoteOportunity::class, 'oportunity_id');
+  }
+
+  //PORQUE HAY 3 METODOS QUE HACEN LO MISMO?  getUpdatedAtAttribute  getVigencyAttribute
+  public function getCreatedAtAttribute($value)
+  {
+    return Carbon::parse($value)->format('d-m-Y');
+  }
 
 }

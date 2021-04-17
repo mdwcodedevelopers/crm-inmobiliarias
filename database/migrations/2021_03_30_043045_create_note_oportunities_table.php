@@ -14,12 +14,13 @@ class CreateNoteOportunitiesTable extends Migration
     public function up()
     {
         Schema::create('note_oportunities', function (Blueprint $table) {
-            $table->bigIncrements('note_id')->unique();
+            $table->id();
+            $table->foreignId('oportunity_id')->nullable();
             $table->string('title');
             $table->text('description');
-            $table->integer('oportunity_id')->unsigned()->nullable();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('oportunity_id')->references('id')->on('oportunities')->onDelete('cascade');
         });
     }
 

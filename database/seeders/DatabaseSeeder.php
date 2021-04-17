@@ -11,14 +11,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ContactSeeder::class);
         $this->call(RolesSeeder::class);
         $this->call(AdminSeeder::class);
-        $this->call(StatusOportunitySeeder::class);
         $this->call(CompanySeeder::class);
         $this->call(TagSeeder::class);
+        $this->call(ContactSeeder::class);
         $this->call(CurrencySeeder::class);
-        $this->call(StatusPropertiesSeeder::class);
         $this->call(GroupTagSeeder::class);
+        $this->call(StatusPropertiesSeeder::class);
+        $this->call(StatusOportunitySeeder::class);
     }
 }

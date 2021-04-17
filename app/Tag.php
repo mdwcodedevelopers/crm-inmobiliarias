@@ -2,24 +2,26 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    protected $fillable = ['name','group_id'];
+  use HasFactory;
 
-     /** 
-     * Relacion uno a muchos con el modelo Contact
-     */
-    public function contact()
-    {
-         return $this->hasMany('App\Contact');
-    }
-     /** 
-     * Relacion muchos a uno con el modelo GroupTag
-     */
-    public function grouptag()
-    {
-         return $this->belongsTo('App\GroupTag');
-    }
+  protected $fillable = ['name','group_tag_id'];
+
+  protected $table = 'status';
+
+
+  public function GroupTag()
+  {
+    return $this->belongsTo(Group_tag::class, "group_tag_id");
+  }
+
+  public function Contact()
+  {
+    return $this->hasMany(Contact::class, "tag_id");
+  }
+
 }

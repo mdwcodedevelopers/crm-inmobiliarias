@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AdminSeeder extends Seeder
 {
@@ -12,14 +13,14 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        User::Create([
+            'role_id'=> 1,
             'name' => 'SuperAdmin',
             'email' => 'admin@admin.com',
-            'password' =>'$2y$10$pP.xaHFwPHfOXDeGMSC17OjtFbdVFizMy.NimwMoGLuQQRb8DQSiq',
             'pronvince' =>'',
-            'direction'=>'',
             'phone'=>'',
-            'rol_id'=>1
+            'direction'=>'',
+            'password' => Hash::make('12345678'),
         ]);
     }
 }

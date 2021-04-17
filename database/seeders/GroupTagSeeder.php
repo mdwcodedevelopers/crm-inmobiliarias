@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\GroupTag;
+use App\GroupTag;
 
 class GroupTagSeeder extends Seeder
 {
@@ -13,12 +13,8 @@ class GroupTagSeeder extends Seeder
     public function run()
     {
         $groups = [
-            array(
-                'name' => 'Tipo de Cliente',
-            ),
-            array(
-                'name' => 'Origen de contacto',
-            ),                
+            array( 'name' => 'Tipo de Cliente' ),
+            array( 'name' => 'Origen de contacto' ),
         ];
 
         foreach ($groups as $key => $value) {
