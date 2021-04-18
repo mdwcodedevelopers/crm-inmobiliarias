@@ -94,12 +94,12 @@
                                 </template>
                                 <template v-slot:item.action="{ item }">
 
-                                    <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,1)">
+                                    <v-btn color="#66BB6A" small @click="edit(item.id,item.name,item.email,1)">
                                         <v-icon color="#fff">
                                             mdi-pencil
                                         </v-icon>
                                     </v-btn>
-                                    <v-btn color="#E53935" @click="delete_dialog(item.id,item.name,item.email)">
+                                    <v-btn color="#E53935"  small @click="delete_dialog(item.id,item.name,item.email)">
                                         <v-icon color="#fff">
                                             mdi-delete
                                         </v-icon>
@@ -127,12 +127,12 @@
                             </template>
                             <template v-slot:item.action="{ item }">
 
-                                <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,3)">
+                                <v-btn color="#66BB6A" small @click="edit(item.id,item.name,item.email,3)">
                                     <v-icon color="#fff">
                                         mdi-pencil
                                     </v-icon>
                                 </v-btn>
-                                <v-btn color="#E53935" @click="delete_dialog(item.id,item.name,item.email)">
+                                <v-btn color="#E53935" small @click="delete_dialog(item.id,item.name,item.email)">
                                     <v-icon color="#fff">
                                         mdi-delete
                                     </v-icon>
@@ -160,17 +160,17 @@
                             </template>
                             <template v-slot:item.action="{ item }">
 
-                                <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.email,2)">
+                                <v-btn color="#66BB6A"  small @click="edit(item.id,item.name,item.email,2)">
                                     <v-icon color="#fff">
                                         mdi-pencil
                                     </v-icon>
                                 </v-btn>
-                                <v-btn color="#E53935" @click="delete_dialog(item.id,item.name,item.email)">
+                                <v-btn color="#E53935" small @click="delete_dialog(item.id,item.name,item.email)">
                                     <v-icon color="#fff">
                                         mdi-delete
                                     </v-icon>
                                 </v-btn>
-                                <v-btn color="#66BB6A" @click="whatsapp(item.phone)">
+                                <v-btn color="#66BB6A"  small @click="whatsapp(item.phone)">
                                     <v-icon color="#fff">
                                         mdi-whatsapp
                                     </v-icon>
@@ -384,7 +384,6 @@ export default {
             });
         },
         edit_model() {
-            if (this.role_id != 0 || this.email != '' || this.name != '') {
                 if (this.role_id_edit == 1 || this.role_id_edit == 3) {
                     this.phone_edit = '';
                     this.province_edit = '';
@@ -411,9 +410,6 @@ export default {
                 }).catch(
                     this.error = "Error al crear Usuario, el email ya esta en uso"
                 );
-            } else {
-                this.error_edit = 'Complete todos los campos obligarios';
-            }
         },
         delete_model() {
             axios.delete("/admin/api-users/" + this.id_delete).then((response) => {

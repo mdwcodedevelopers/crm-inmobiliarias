@@ -338,8 +338,8 @@
 
       </template>
 
-      <template v-slot:group.header="{ group, toggle, isOpen }">
-        <td :colspan="6" style="text-align: initial; padding-left:2rem;">
+      <template v-slot:group.header="{ group, toggle, isOpen }"> 
+        <td :colspan="6" style="text-align: initial; padding-left:2rem;" :style="{ backgroundColor: colorGroup}" >
           <v-btn @click="toggle" x-small icon :ref="group">
               <v-icon v-if="isOpen">mdi-minus</v-icon>
               <v-icon v-else>mdi-plus</v-icon>

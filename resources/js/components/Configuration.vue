@@ -6,7 +6,6 @@
             </v-card-title>
             <v-card-text class="d-flex black--text">
                 Este es el componente de configuracion principal.
-
             </v-card-text>
             
             <v-card-title>Configuraciones principales</v-card-title>
@@ -14,7 +13,7 @@
             <!-- <v-card-title>Otras Configuraciones</v-card-title> -->
              <v-col
                 cols="12"
-                sm="8"
+                sm="10"
              >
                 <v-expansion-panels 
                     accordion

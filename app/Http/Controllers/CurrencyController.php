@@ -11,32 +11,30 @@ class CurrencyController extends Controller
 {
     public function index(Request $request){
         $currency = Currency::get();
-        return response()->json([
-            'currency' => $currency,
-    ]);
+        return compact('currency');
     }
     public function store(Request $request)
     {
-        Currency::create([
-            'currency'=>$request['name']
-        ]);
+        $currency = new Currency();
+        $currency->name = $request->name;
+        $currency->save();
         Report::create([
             'type'=>'Creación',
             'table'=>'Moneda',
             'information'=>'Se creo la moneda: '.$request['name']
-        ]);
+            ]);
+            return response()->json("success", 200);
     }
     public function update(Request $request, $id)
     {
-        $name = Currency::where('id','=',"$id")->first();
-        $currency = Currency::find($id);
-        $currency->update([
-            'currency'=>$request['name']
-        ]);
+        $currency = Currency::whereId($id)->first();
+        $name = $currency->name;
+        $currency->name = $request->name;
+        $currency->save();
         Report::create([
             'type'=>'Actualizacion',
             'table'=>'Moneda',
-            'information'=>'Se cambio el de '.$name->currency.' nombre a: '.$request['name']
+            'information'=>'Se cambio el de '.$name .' nombre a: '. $request->name
         ]);
         return response()->json("success", 200);
     }
@@ -47,14 +45,15 @@ class CurrencyController extends Controller
         //     'table'=>'Moneda',
         //     'information'=>'Se cambio el nombre a: '.$request['name']
         // ]);
-        $name = Currency::where('id','=',"$id")->first();
-        $currency = Currency::find($id);
+        $currency = Currency::whereId($id)->first();
+        $name = $currency->name;
         $currency->delete();
+        
         Report::create([
             'type'=>'Eliminación',
             'table'=>'Moneda',
-            'information'=>'Se eliminó '.$name->currency
-        ]);
+            'information'=>'Se eliminó '.$name
+            ]);
         return response()->json("success", 200);
     }
     public function view()

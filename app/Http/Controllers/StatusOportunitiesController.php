@@ -37,6 +37,12 @@ class StatusOportunitiesController extends Controller
     public function store(Request $request)
     {
         //
+        $status = new StatusOportunity();
+        $status->name = $request->name;
+        $status->color = $request->color;
+        $status->save();
+        return response()->json("success", 200);
+    
     }
 
     /**
@@ -48,6 +54,7 @@ class StatusOportunitiesController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**
@@ -70,7 +77,11 @@ class StatusOportunitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $status = StatusOportunity::whereId($id)->first();
+        $status->name = $request->name;
+        $status->color = $request->color;
+        $status->save();
+        return response()->json("success", 200);
     }
 
     /**
@@ -81,6 +92,8 @@ class StatusOportunitiesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $status = StatusOportunity::whereId($id)->first();
+        $status->delete();
+        return response()->json("success", 200);
     }
 }

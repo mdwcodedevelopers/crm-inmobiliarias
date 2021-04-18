@@ -16,7 +16,11 @@
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12>
-                                        <v-text-field label="Moneda*" v-model="name" required></v-text-field>
+                                        <v-text-field label="Nombre de Estado*" v-model="name" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12>
+                                        <p>Color del estado</p>
+                                        <v-color-picker v-model="color" mode="hexa" mode.sync="hex"></v-color-picker>
                                     </v-flex>
                                     <v-flex xs12>
                                         {{error}}
@@ -33,7 +37,41 @@
                 </v-dialog>
             </v-layout>
         </template>
-        <v-data-table :headers="headers" :items="status"  no-results-text="No hay resultados" no-data-text="No hay monedas" class="elevation-1" :search="search">
+        <v-data-table :headers="headers" :items="status"  no-results-text="No hay resultados" no-data-text="No hay Estados" class="elevation-1" :search="search">
+           <template
+                v-slot:body="{ items }"
+            >
+                    <tbody>
+                    <tr
+                        v-for="item in items"
+                        :key="item.name"
+                        :style="{ backgroundColor: item.color}" 
+                    >
+                        <td 
+                        class=" subtitle-1 font-weight-black"
+                        style="text-align:left"
+                        >{{ item.name }}</td>
+                        <td
+                        class="subtitle-1 font-weight-black"
+                        style="text-align:left"
+                        >{{ item.color }}</td>
+                        <td>
+                            <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.color)">
+                                <v-icon color="#fff">
+                                    mdi-pencil
+                                </v-icon>
+                            </v-btn>
+
+                            <v-btn color="#E53935" @click="delete_dialog(item.id,item.name)">
+                                <v-icon color="#fff">
+                                    mdi-delete
+                                </v-icon>
+                            </v-btn>
+                        </td>
+                    </tr>
+                    </tbody>
+      </template>
+            
             <template v-slot:top>
                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
             </template>
@@ -45,20 +83,7 @@
                     <td colspan="4"></td>
                 </tr>
             </template>
-            <template v-slot:item.action="{ item }">
-
-                <v-btn color="#66BB6A" @click="edit(item.id,item.status)">
-                    <v-icon color="#fff">
-                        mdi-pencil
-                    </v-icon>
-                </v-btn>
-
-                <v-btn color="#E53935" @click="delete_dialog(item.id,item.status)">
-                    <v-icon color="#fff">
-                        mdi-delete
-                    </v-icon>
-                </v-btn>
-            </template>
+          
 
         </v-data-table>
         <template>
@@ -66,14 +91,18 @@
                 <v-dialog v-model="dialogedit" persistent max-width="600px">
                     <v-card>
                         <v-card-title>
-                            <span class="headline">Editar Moneda</span>
+                            <span class="headline">Editar Estado</span>
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-md>
                                 <v-layout wrap>
 
                                     <v-flex xs12>
-                                        <v-text-field label="Moneda" v-model="name_edit" required></v-text-field>
+                                        <v-text-field label="Estado" v-model="name" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12>
+                                        <p>Color del estado</p>
+                                        <v-color-picker v-model="color" mode="hexa" mode.sync="hex"></v-color-picker>
                                     </v-flex>
                                     <v-flex xs12>
                                         {{error_edit}}
@@ -95,7 +124,7 @@
                 <v-dialog v-model="dialogdelete" persistent max-width="600px">
                     <v-card>
                         <v-card-title>
-                            <span class="headline">Desea eliminar la moneda: {{status_eliminar}}</span>
+                            <span class="headline">Desea eliminar el estado: {{status_eliminar}}</span>
                         </v-card-title>
                         <v-card-text>
 
@@ -121,6 +150,7 @@ export default {
             dialogedit: false,
             dialogdelete: false,
             name: '',
+            color:'',
             name_edit: '',
             error: '',
             error_edit: '',
@@ -144,35 +174,35 @@ export default {
             });
         },
         create() {
-            if (this.name != '') {
                 axios.post("/admin/api-status-oportunities", {
                     name: this.name,
+                    color: this.color
                 }).then((response) => {
                     if (response.status == 200) {
                         this.index();
                         this.name = '';
                         this.dialog = false;
+                        this.$swal('Estado creado con exito', '', 'success');
                     }
+                }).catch(error => {
+                        this.$swal('Error al añadir estado', 'Seleccione todos los campos', 'error');
                 });
-            } else {
-                this.error = 'Complete todos los campos';
-            }
 
         },
         edit_model() {
-            if (this.name_edit != '') {
                 axios.put("/admin/api-status-oportunities/" + this.id_edit, {
-                    name: this.name_edit,
+                    name: this.name,
+                    color: this.color
                 }).then((response) => {
                     if (response.status == 200) {
                         this.index();
                         this.id_edit = '';
                         this.dialogedit = false;
                     }
+                }).catch(error => {
+                        this.$swal('Error al editar estado', 'Seleccione todos los campos', 'error');
                 });
-            } else {
-                this.error_edit = 'Complete todos los campos';
-            }
+           
         },
         delete_model() {
             console.log(this.id_delete);
@@ -181,15 +211,16 @@ export default {
                 if (response.status == 200) {
                     this.index(0, '');
                     this.dialogdelete = false;
-                } else {
-                    this.error = "Error al añadir propiedad";
                 }
-            });
+            }).catch(error => {
+                     this.error = "Error al añadir propiedad";
+                });
         },
-        edit(id, name) {
+        edit(id, name, color) {
             this.dialogedit = true;
             this.id_edit = id;
-            this.name_edit = name;
+            this.name = name;
+            this.color = color;
         },
         delete_dialog(id, title) {
             this.id_delete = id;
@@ -203,10 +234,14 @@ export default {
     computed: {
         headers() {
             return [{
-                    text: 'Moneda',
+                    text: 'Estados',
                     align: 'start',
                     sortable: true,
                     value: 'name',
+                },
+                {
+                    text: 'Colores',
+                    value: 'color',
                 },
                 {
                     text: 'Acciones',

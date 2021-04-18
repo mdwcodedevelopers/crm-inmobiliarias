@@ -124,6 +124,7 @@ export default {
             error: '',
             search: '',
             id_delete: '',
+            id_edit: '',
             status_eliminar: '',
             drawer: false,
             group: null,
