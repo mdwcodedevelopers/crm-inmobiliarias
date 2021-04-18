@@ -38,4 +38,14 @@ class Property extends Model
   {
     return $this->hasMany(Image::class, "property_id");
   }
+
+  public function Environments()
+  {
+    return $this->hasMany(Environment_property::class, "property_id");
+  }
+
+  public function Services()
+  {
+    return $this->hasMany(Environment_property::class, "property_id");
+  }
 }
