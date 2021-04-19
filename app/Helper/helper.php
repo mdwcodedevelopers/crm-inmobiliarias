@@ -3,8 +3,8 @@
   function types()
   {
     $situation = array(
-      "1" => "Casa",
-      "2" => "Departamento",
+      [ "id" => 1, "name" => "Casa"],
+      [ "id" => 2, "name" => "Departamento"]
     );
 
     return $situation;

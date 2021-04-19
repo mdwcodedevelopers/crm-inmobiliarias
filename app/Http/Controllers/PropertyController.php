@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\User;
 use App\Currency;
 use App\Property;
 use App\Report;
 use App\Status;
 use App\Image;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+
+use Auth;
 
 class PropertyController extends Controller
 {
@@ -17,14 +20,12 @@ class PropertyController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $Properties = Status::orderBy('properties.updated_at', 'desc')->where('title', 'LIKE', "%$search%")
-            // ->where('information','LIKE',"%$search%")
-            ->join('properties', 'properties.status_id', 'status.id')->paginate(9);
-        $total = Property::count();
+
+        $Properties = Status::orderBy('properties.updated_at', 'desc')->where('title', 'LIKE', "%$search%")->join('properties', 'properties.status_id', 'status.id')->paginate(9);
 
         return response()->json([
             'Properties' => $Properties,
-            'total' => $total,
+            'total' => count($Properties),
             'pagination' => [
                 'total'         => $Properties->total(),
                 'current_page'  => $Properties->currentPage(),
@@ -36,64 +37,78 @@ class PropertyController extends Controller
             'search' => $search
         ]);
     }
+
     public function properties(Request $request)
     {
-        $status = Status::get();
-        $currency = Currency::get();
-        $Properties = Status::orderBy('properties.updated_at', 'desc')->where('user_id', auth()->id())->join('properties', 'properties.status_id', 'status.id')
-            ->select('properties.id', 'properties.information', 'properties.title', 'properties.price', 'properties.dimension', 'status.status', 'users.name', 'currency.currency')
-            ->get();
-        $total = Property::count();
+        $properties = Property::selectRaw('properties.*, status.name status, users.name user, currencies.name currency')
+        ->join('status', 'properties.status_id', 'status.id')
+        ->join('users', 'properties.user_id', 'users.id')
+        ->join('currencies', 'properties.currency_id', 'currencies.id')
+        ->where('properties.user_id', Auth::user()->id)
+        ->get();
+
         return response()->json([
-            'Properties' => $Properties,
-            'total' => $total,
-            'status' => $status,
-            'currency' => $currency
+            'properties' => $properties,
+            'total' => count($properties),
+            'status' => Status::get(),
+            'currencies' => Currency::get(),
+            'types' => types()
         ]);
     }
+
     public function propertiesAdmin(Request $request)
     {
-        $status = Status::get();
-        $currency = Currency::get();
-        $Properties = Property::join('status', 'properties.status_id', 'status.id')
-            ->join('users', 'properties.user_id', 'users.id')
-            ->join('currency', 'currency.id', 'properties.currency_id')
-            // ->join('images','images.property_id','properties.currency_id')
-            ->select('properties.id', 'properties.information', 'properties.title', 'properties.price', 'properties.dimension', 'status.status', 'users.name', 'currency.currency', 'properties.image')->get();
-        $total = Property::count();
+        $properties = Property::selectRaw('properties.*, status.name status, users.name user, currencies.name currency')
+        ->join('status', 'properties.status_id', 'status.id')
+        ->join('users', 'properties.user_id', 'users.id')
+        ->join('currencies', 'properties.currency_id', 'currencies.id')
+        ->where('images.principal', 1)
+        ->get();
+
         return response()->json([
-            'Properties' => $Properties,
-            'total' => $total,
-            'status' => $status,
-            'currency' => $currency
+            'Properties' => $properties,
+            'total' => count($properties),
+            'status' => Status::get(),
+            'currencies' => Currency::get(),
+            'types' => types(),
         ]);
     }
+
     public function store(Request $request)
     {
 
-        Property::create([
-            'user_id' => auth()->id(),
-            'title' => $request['title'],
-            'information' => $request['information'],
-            'price' => $request['price'],
-            'dimension' => $request['dimension'],
-            'status_id' => $request['status'],
-            'city' => 1,
-            'currency_id' => $request['currency_id'],
-            'image' => ''
+        $property = Property::create([
+            'user_id' => Auth::user()->id,
+            'title' => $request->title,
+            'type' => $request->type,
+            'country' => $request->country,
+            'price' => $request->price,
+            'currency_id' => $request->currency,
+            'status_id' => $request->status_id,
         ]);
+
         Report::create([
             'type' => 'Creación',
             'table' => 'Propiedad',
-            'information' => 'Se creo la propiedad: ' . $request['title'] . ' con la información' . $request['information'] . ' dimensiones: ' . $request['dimension'] . ' precio: ' . $request['price']
+            'information' => 'Se creo la propiedad: ID#' . $property->id . " " . $request->title,
         ]);
     }
+
+    public function edit($id)
+    {
+        $property = Property::where('id',$id)->with('Status','Currency','Categories','Images','Environments','Services')->first();
+
+        return response()->json([
+            'property' => $property,
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
         $prop = Property::where('id', '=', "$id")->first();
         $property = Property::find($id);
         $property->update([
-            'user_id' => auth()->id(),
+            'user_id' => Auth::auth()->id,
             'title' => $request['title'],
             'information' => $request['information'],
             'price' => $request['price'],
@@ -109,29 +124,30 @@ class PropertyController extends Controller
         ]);
         return response()->json("success");
     }
+
     public function property($id)
     {
- 
         $property = Status::orderBy('properties.updated_at', 'desc')->where('properties.id', '=', "$id")
             ->join('properties', 'properties.status_id', 'status.id')->first();
-        if ($user = User::find(auth()->id())) {
+        if ($user = User::find(Auth::auth()->id)) {
             return view('property', ['property' => $property, 'rol' => $user->role_id]);
         } else {
             return view('property', ['property' => $property, 'rol' => 0]);
         }
         $property->image= Image::select('url_image')->whereProperty_id($property->id)->get();
         return view('property',['property'=>$property,'rol'=>$user->role_id]);
+
     }
+
     public function destroy($id)
     {
         $prop = Property::where('id', '=', "$id")->first();
-        $property = Property::find($id);
+        $property = Property::find($id)->delete();
 
-        $property->delete();
         Report::create([
             'type' => 'Eliminación',
             'table' => 'Propiedad',
-            'information' => 'Se eliminó la propiedad: ' . $prop->title . ' con la información ' . $prop->information . ' dimensiones:' . $prop->dimension . '  precio: ' . $prop->precio
+            'information' => 'Se eliminó la propiedad: ID#' . $id . " " . $prop->title . ' con la información ' . $prop->information . ' dimensiones:' . $prop->dimension . '  precio: ' . $prop->precio
         ]);
         return response()->json("success", 200);
     }

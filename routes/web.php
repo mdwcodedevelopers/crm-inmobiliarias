@@ -46,11 +46,15 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/users', 'UserController@view');
     Route::get('/profile', 'UserController@profile');
     Route::get('/reports', 'ReportController@view');
-    Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
-
-    Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
     Route::get('/categories', 'CategorieController@categories')->name('categories');
     Route::get('/status', 'StatusViewController@index')->name('status');
+    Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
+
+
+    Route::get('/api-properties-user', 'PropertyController@properties');
+    Route::get('/property-user/{id}', 'PropertyController@edit');
+    Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
+
 
 
     Route::put('/api-oportunities/close/{id}', 'OportunityController@closeOportunity');

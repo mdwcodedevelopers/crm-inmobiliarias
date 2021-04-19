@@ -19,14 +19,14 @@ class CreatePropertiesTable extends Migration
             $table->foreignId('status_id');
             $table->foreignId('currency_id');
             $table->string('title');
-            $table->string('information');
-            $table->string('country');
-            $table->string('region');
-            $table->string('location');
-            $table->string('subdivision_1');
-            $table->string('subdivision_2');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->string('information')->nullable();
+            $table->string('country')->nullable();
+            $table->string('region')->nullable();
+            $table->string('location')->nullable();
+            $table->string('subdivision_1')->nullable();
+            $table->string('subdivision_2')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->boolean('show_web')->default(0); //0no, 1si
             $table->enum('type', [1, 2]);
             $table->enum('situation', [1, 2]);
@@ -34,8 +34,9 @@ class CreatePropertiesTable extends Migration
             $table->enum('condition', [1, 2, 3, 4, 5, 6]);
             $table->enum('keys', [1, 2, 3, 4, 5]);
             $table->decimal('price',20,2);
-            $table->decimal('dimension',20,2);
+            $table->decimal('dimension',20,2)->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
