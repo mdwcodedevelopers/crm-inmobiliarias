@@ -24,7 +24,7 @@
                 <v-carousel :show-arrows="true">
                     <v-carousel-item 
                         v-for="(item,i) in items" :key="i" 
-                        :src="'../../'+item.url_image" 
+                        :src="'../../'+item.url" 
                         >
 
                         </v-carousel-item>
