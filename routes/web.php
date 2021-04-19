@@ -38,6 +38,8 @@ Route::group(['prefix' => 'admin'], function () {
     'api-users'=>UsersController::class,
     'api-user'=>UserController::class,
     'api-company'=>CompanyController::class,
+    'api-service'=>ServiceController::class,
+    'api-environment'=>EnvironmentController::class,
     'api-dashboard'=>DashboardController::class,
     'api-oportunities'=>OportunityController::class]);
     Auth::routes();
