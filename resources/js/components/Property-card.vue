@@ -47,7 +47,7 @@
                 </v-card>
             </v-col>
             
-            <!-- <v-col
+            <v-col
             >   
                 <v-card elevation="2">
                     <v-card-title class="primary--text">
@@ -55,11 +55,15 @@
                     </v-card-title>
                     <v-card-text class="d-flex mx-3 black--text" style="text-align:left">
                         <ul class="list-info">
-                            <li>Baños: </li>
+                            <li>Antiguedad: </li>
+                            <li>Condición: </li>
+                            <li>Región: </li>
+                            <li>Situación: </li>
+                            <li>Estado: </li>
                         </ul>
                     </v-card-text>
                 </v-card>
-            </v-col> -->
+            </v-col>
 
             <v-col
             >
