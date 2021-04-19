@@ -21,8 +21,10 @@ class PropertyController extends Controller
     {
         $search = $request->search;
 
-        $Properties = Status::orderBy('properties.updated_at', 'desc')->where('title', 'LIKE', "%$search%")->join('properties', 'properties.status_id', 'status.id')->paginate(9);
-
+        $Properties = Status::orderBy('properties.updated_at', 'desc')->where('show_web',1)->where('title', 'LIKE', "%$search%")->join('properties', 'properties.status_id', 'status.id')->paginate(9);
+        foreach ($Properties as $property) {
+            $property->image = Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first()->url;
+        }
         return response()->json([
             'Properties' => $Properties,
             'total' => count($Properties),
@@ -46,7 +48,7 @@ class PropertyController extends Controller
         ->join('currencies', 'properties.currency_id', 'currencies.id')
         ->where('properties.user_id', Auth::user()->id)
         ->get();
-
+        
         return response()->json([
             'properties' => $properties,
             'total' => count($properties),
