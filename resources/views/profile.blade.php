@@ -2,24 +2,11 @@
 
 @section('content')
     <div class="">
-        @if ($rol == 1)
-            <div class="">
-                <nav-admin :title="'Perfil'" />
-
-            </div>
-        @endif
-        @if ($rol == 2)
-            <div class="">
-                <nav-user :title="'Perfil'" />
-            </div>
-        @endif
-        @if ($rol == 3)
-            <div class="">
-                <nav-agent :title="'Perfil'" />
-            </div>
-        @endif
+        <div class="">
+            <nav-admin title="Mi perfil" :rol="{{$user->role_id}}" />
+        </div>
         <div class="container">
-            <profile />
+            <profile :profile={{$user}} />
         </div>
 
     </div>

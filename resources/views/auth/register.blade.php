@@ -20,7 +20,7 @@
                     Registrarse
                   </p>
                 <v-card>
-                    <form method="POST" action="{{ route('register') }}">
+                    {{-- <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="form-group row">
 
@@ -51,7 +51,7 @@
                         <div class="form-group row">
 
                             <div class="col-md-6 mx-auto">
-                                <input id="province" placeholder="Provincia*" type="text" class="form-control @error('province') is-invalid @enderror" name="pronvince" value="{{ old('province') }}" >
+                                <input id="province" placeholder="Provincia*" type="text" class="form-control @error('province') is-invalid @enderror" name="province" value="{{ old('province') }}" >
 
                                 @error('province')
                                     <span class="invalid-feedback" role="alert">
@@ -85,25 +85,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-
-                            <div class="col-md-6 mx-auto">
-                                <input id="password" placeholder="Contraseña*" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>Contraseña no valida</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <div class="col-md-6 mx-auto">
-                                <input id="password-confirm" placeholder="Confirmar contraseña*" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
+                      <p style="text-align: center">La contraseña se le enviará por correo electrónico</p>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -112,7 +94,8 @@
                                 </v-btn>
                             </div>
                         </div>
-                    </form>
+                    </form> --}}
+                    <users-form></users-form>
                 </div>
             </div>
         </div>

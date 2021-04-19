@@ -13,7 +13,7 @@
             <!-- <v-card-title>Otras Configuraciones</v-card-title> -->
              <v-col
                 cols="12"
-                sm="10"
+                sm="11"
              >
                 <v-expansion-panels 
                     accordion
@@ -42,7 +42,7 @@
 
 
                         <v-expansion-panel-content class="p-3">
-                            <users />
+                            <users :rol="rol"/>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                     <v-expansion-panel
@@ -128,9 +128,10 @@
 </template>
 
 <script>
-import Users from './Users.vue'
 export default {
-  components: { Users },
+    props:{
+        rol: Number,
+    }
 
 }
 </script>

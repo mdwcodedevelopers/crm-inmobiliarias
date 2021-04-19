@@ -1,12 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="">
-        <nav-admin :title="'Usuarios'"/>
+        <nav-admin title="Usuarios" :rol="{{$rol}}" />
     </div>
     <div class="container">
-        <users />
+        <users :rol="{{$rol}}" />
     </div>
 
 @endsection

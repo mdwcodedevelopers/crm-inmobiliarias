@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
             'role_id'=> 1,
             'name' => 'SuperAdmin',
             'email' => 'admin@admin.com',
-            'pronvince' =>'',
+            'province' =>'',
             'phone'=>'',
             'direction'=>'',
             'password' => Hash::make('12345678'),

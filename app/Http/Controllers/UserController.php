@@ -33,7 +33,7 @@ class UserController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'phone' => $request->phone,
-            'pronvince' => $request['pronvince'],
+            'province' => $request['province'],
             'direction' => $request['direction'],
             'password' => Hash::make( $data['confirmation_code']),
             'role_id'=>$request['role_id'],
@@ -52,13 +52,13 @@ class UserController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'phone' => $request->phone,
-            'pronvince' => $request['pronvince'],
+            'province' => $request['province'],
             'direction' => $request['direction'],
             'password' => Hash::make( $data['confirmation_code']),
             'role_id'=>$request['role_id'],
         ]);
 
-        return response()->json("success", 200);
+        return $user;
     }
     public function destroy($id)
     {
@@ -90,4 +90,10 @@ class UserController extends Controller
             return view('welcome');
         }
     }
+    public function profile(){
+        $user = User::find(auth()->id());
+        // dd($user->password);
+        return view('profile', compact('user'));
+    }
+
 }

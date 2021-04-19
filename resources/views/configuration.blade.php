@@ -5,10 +5,10 @@
      
         @if ($rol==1)
         <div class="">
-            <nav-admin title="Mi Empresa" />
+            <nav-admin title="Mi Empresa" :rol="{{$rol}}"/>
         </div>
         <div>
-            <configuration />
+            <configuration :rol="{{$rol}}" />
         </div>
         @endif
         @if ($rol==2)

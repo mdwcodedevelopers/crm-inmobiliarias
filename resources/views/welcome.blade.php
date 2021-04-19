@@ -9,11 +9,10 @@
 
             </div>
         @else
-        @if ($rol==1)
         <div class="">
-            <nav-admin title="Home" />
+            <nav-admin title="Home" :rol="{{$rol}}" />
         </div>
-        @endif
+        {{-- @endif
         @if ($rol==2)
         <div class="">
             <nav-user />
@@ -23,7 +22,7 @@
         <div class="">
             <nav-agent>
         </div>
-        @endif
+        @endif --}}
         @endguest
         <div style="text-align: center">
             <img src="/images/logo.png" alt="">

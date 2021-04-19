@@ -24,49 +24,78 @@ class UsersController extends Controller
     }
     public function store(Request $request)
     {
+        // $data['confirmation_code'] = 123456789;
         $data['confirmation_code'] = rand(100000,999999);
         $data['name']=$request['name'];
-        // Mail::send('emails.password', $data, function($message) use ($request) {
-        //     $message->to($request['email'])->subject('Contraseña');
-        // });
-        User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'phone' => $request->phone,
-            'pronvince' => $request['pronvince'],
-            'direction' => $request['direction'],
-            'password' => Hash::make( $data['confirmation_code']),
-            'role_id'=>$request['role_id'],
-        ]);
-
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->province = $request->province;
+        $user->direction = $request->direction;
+        $user->password = Hash::make( $data['confirmation_code']);
+        $user->role_id = $request->role_id;
+        $user->save();
+        $data['id']=$user->id;
+      
+        Mail::send('emails.confirmation', $data, function($message) use ($request) {
+            $message->to($request['email'])->subject('Contraseña');
+        });
+        
     }
     public function update(Request $request, $id)
     {
-        $data['confirmation_code'] = rand(100000,999999);
-        $data['name']=$request['name'];
-        // Mail::send('emails.password', $data, function($message) use ($request) {
-        //     $message->to($request['email'])->subject('Contraseña');
-        // });
+        // $data['confirmation_code'] = rand(100000,999999);
+        // $data['name']=$request['name'];
         $user = User::find($id);
+        // $data['id']=$user->id;
+        
         $user->update([
             'name' => $request['name'],
             'email' => $request['email'],
             'phone' => $request->phone,
-            'pronvince' => $request['pronvince'],
+            'province' => $request['province'],
             'direction' => $request['direction'],
-            'password' => Hash::make( $data['confirmation_code']),
+            // 'password' => Hash::make( $data['confirmation_code']),
             'role_id'=>$request['role_id'],
-        ]);
-
-        return response()->json("success", 200);
-    }
-    public function destroy($id)
+            ]);
+            
+            // Mail::send('emails.password', $data, function($message) use ($request) {
+            //     $message->to($request['email'])->subject('Contraseña');
+            // });
+            return compact('user');
+        }
+        public function destroy($id)
     {
         $user = User::find($id);
         $user->delete();
 
         return response()->json("success", 200);
     }
+
+    public function updatepassword(Request $request, $id)
+    {
+        $user = User::find($id);
+        if (Hash::check($request->passold, $user->password))
+        {
+            $data['confirmation_code'] = $request->password;
+            $data['name']=$user->name;
+            $data['id']=$user->id;
+            
+            $user->update([
+                'password' => Hash::make( $request->password),
+                ]);
+                
+                Mail::send('emails.password', $data, function($message) use ($user) {
+                    $message->to($user->email)->subject('Contraseña');
+                });
+                return compact('user');
+        }else{
+                return response()->json("error", 401);
+        }
+    }
+            
+      
     public function view()
     {
 

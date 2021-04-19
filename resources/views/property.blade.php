@@ -7,21 +7,9 @@
                     <nav-guest />
                 </div>
             @else
-                @if ($rol==1)
-                    <div class="">
-                        <nav-admin title="Propiedad" />
-                    </div>
-                @endif
-                @if ($rol==2)
-                    <div class="">
-                        <nav-user />
-                    </div>
-                @endif
-                @if ($rol==3)
-                    <div class="">
-                        <nav-agent>
-                    </div>
-                @endif
+            <div class="">
+                <nav-admin title="Propiedad {{$property->name}}" :rol="{{$rol}}" />
+            </div>
             @endguest
     <div class="">
             <property :property="{{$property}}"  />

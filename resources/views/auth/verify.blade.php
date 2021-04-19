@@ -7,26 +7,24 @@
 
 </div>
 
-<div class
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
+                <div class="card-header">{{ __('Verificar email') }}</div>
                 <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
+                    
+                    @if (!is_null($verificado))
+                     {{$verificado}}   
+                    @else
+                    Su cuenta ha sido verificada con exito, para ingresar a la página haga clic acá
+                    
                     @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-		                <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-	                </form>
+                    <br>
+                    <v-btn class="py-3" type="submit" color="success" href="{{ url('/admin')}}">
+                        Ir a iniciar sesión
+                    </v-btn>
+                   
                 </div>
             </div>
         </div>

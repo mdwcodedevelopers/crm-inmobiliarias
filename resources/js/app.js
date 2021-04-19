@@ -41,6 +41,7 @@ Vue.component('property', require('./components/Property.vue').default);
 Vue.component('property-card', require('./components/Property-card.vue').default);
 Vue.component('profile', require('./components/Profile.vue').default);
 Vue.component('users', require('./components/Users.vue').default);
+Vue.component('users-form', require('./components/Users-form.vue').default);
 Vue.component('company', require('./components/Company.vue').default);
 Vue.component('image-propertie', require('./components/ImagesProperty.vue').default);
 Vue.component('nav-guest', require('./components/Navs/NavGuest.vue').default);

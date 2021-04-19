@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
   use HasFactory;
   use Notifiable;
@@ -19,7 +19,7 @@ class User extends Authenticatable
    *
    * @var array
    */
-  protected $fillable = ['role_id','name', 'email','pronvince','phone','direction', 'password'];
+  protected $fillable = ['role_id','name', 'email','province','phone','direction', 'password'];
 
   /**
    * The attributes that should be hidden for arrays.

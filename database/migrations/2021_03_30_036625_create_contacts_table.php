@@ -17,7 +17,7 @@ class CreateContactsTable extends Migration
             $table->foreignId('tag_id');
             $table->string('name');
             $table->string('image');
-            $table->string('email',20)->unique();;
+            $table->string('email',40)->unique();;
             $table->string('phone_1');
             $table->string('phone_2')->nullable();
             $table->timestamps();

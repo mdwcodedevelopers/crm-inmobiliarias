@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use App\User;
+use Carbon\Carbon;
 
 class VerificationController extends Controller
 {
@@ -18,6 +21,7 @@ class VerificationController extends Controller
     | be re-sent if the user didn't receive the original email message.
     |
     */
+    
 
     use VerifiesEmails;
 
@@ -35,8 +39,23 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('guest');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    public function index($id, $hash){
+        // dd($hash);
+        // $mytime =Carbon::now();
+        $user = User::find($id);
+        if(!is_null($user->email_verifiet_at)){
+            $verificado = "Esta cuenta de correo ya ha sido verificada, por favor inicie sesión" ;
+            return view('auth.verify', compact('verificado'));
+        }
+        // dd($mytime->toDateTimeString());
+        $user->markEmailAsVerified();
+        $verificado = null;
+        return view('auth.verify', compact('verificado'));
+        
     }
 }

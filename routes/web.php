@@ -11,7 +11,10 @@
 |
 */
 
-
+Route::get('register/verify', 'Auth\VerificationController@show')->name('verification.notice');
+Route::get('register/verify/{id}/{hash}', 'Auth\VerificationController@index')->name('verification.verify');
+Route::post('register/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+Auth::routes(['verify' => true]);
 Route::get('/','WelcomeController@index');
 
 Route::group(['prefix' => 'admin'], function () {
@@ -20,7 +23,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/property-images/{id}','ImageController@images');
     Route::put('/property-images-set/{id}','ImageController@setimage');
     Route::post('/company-image/{id}','CompanyController@setimage');
-    Route::post('/api-password','UserController@updatepassword');
+    Route::post('/api-password/{id}','UsersController@updatepassword');
     Route::get('/currency','CurrencyController@view');
     Route::get('/company','CompanyController@view');
     Route::get('/users','UsersController@view');
@@ -40,7 +43,8 @@ Route::group(['prefix' => 'admin'], function () {
     Auth::routes();
 
     Route::get('/api-properties-user', 'PropertyController@properties');
-    Route::get('/profile', 'UserController@view');
+    Route::get('/users', 'UserController@view');
+    Route::get('/profile', 'UserController@profile');
     Route::get('/reports', 'ReportController@view');
     Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
 

@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -51,7 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'pronvince' => ['string', 'max:255'],
+            'province' => ['string', 'max:255'],
             'phone' => ['required','string', 'max:255'],
             'direction' => ['string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -67,14 +68,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'phone' => $data['phone'],
-            'pronvince' => $data['pronvince'],
-            'direction' => $data['direction'],
-            'role_id'=>2
-        ]);
+        $datos['confirmation_code'] = rand(100000,999999);
+        $datos['name']=$request['name'];
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->phone = $data['phone'];
+        $user->province = $data['province'];
+        $user->direction = $request->direction;
+        $user->password = Hash::make( $datos['confirmation_code']);
+        $user->role_id = 2;
+        $user->save();
+        dd($user);
+        $data['id']=$user->id;
+        Mail::send('emails.password', $datos, function($message) use ($request) {
+            $message->to($request['email'])->subject('Contraseña');
+        });
+        return view('auth.register_accept');
     }
 }

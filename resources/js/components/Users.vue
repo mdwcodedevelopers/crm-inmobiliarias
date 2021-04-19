@@ -22,18 +22,19 @@
                                                 <v-flex xs12 sm6 md6>
                                                     <v-text-field label="Correo*" :rules="mailRule" v-model="email" required></v-text-field>
                                                 </v-flex>
-                                                <v-flex xs12 sm6 md6 v-if="role_id==2">
+                                                <v-flex xs12 sm6 md6 v-if="role_id==2 | rol==3">
                                                     <v-text-field label="Telefono" :rules="phoneRule" v-model="phone" required></v-text-field>
                                                 </v-flex>
-                                                <v-flex xs12 sm6 md6 v-if="role_id==2">
+                                                <v-flex xs12 sm6 md6 v-if="role_id==2 | rol==3">
                                                     <v-text-field label="Provincia" :rules="[v => !!v || 'Debe escoger una opción']" v-model="province" required></v-text-field>
                                                 </v-flex>
-                                                <v-flex xs12 sm6 md6 v-if="role_id==2">
+                                                <v-flex xs12 sm6 md6 v-if="role_id==2 | rol==3">
                                                     <v-text-field label="Dirección" :rules="[v => !!v || 'Debe llenar la dirección']" v-model="direction" required></v-text-field>
                                                 </v-flex>
 
                                                 <v-flex xs12 sm6 md6>
                                                     <v-select
+                                                    v-if="rol == 1"
                                                         no-data-text="No hay Roles"
                                                             v-model="role_id"
                                                             :items="roles"
@@ -63,21 +64,26 @@
 
             <div class="display-1">Lista de Usuarios</div>
 
-            <v-tabs v-model="tab" background-color="blue" dark>
+            <v-tabs  v-if="rol==1" v-model="tab" background-color="blue" dark>
                 <v-tab v-for="itemtab in items" :key="itemtab">
                     {{ itemtab }}
                 </v-tab>
             </v-tabs>
 
-            <v-tabs-items v-model="tab">
+            
+            <v-tabs  v-else v-model="tab" background-color="blue" dark>
+                <v-tab>Usuarios</v-tab>
+            </v-tabs>
+
+            <v-tabs-items v-model="tab" class="px-5 py-2">
                 <v-btn color="success" dark absolute right fab class="mt-3" @click="dialog=true">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
-                <v-tab-item :key="itemtab">
+                <v-tab-item v-if="rol==1" :key="itemtab">
 
                     <v-card flat>
 
-                        <v-card color="orange" class="text-white my-2">
+                        <v-card  color="orange" class="text-white my-2">
 
                             <v-card-title class="subtitle-2 mt-2" color="blue">Administradores</v-card-title>
                             <v-data-table no-results-text="No hay resultados" no-data-text="No hay Usuarios" :headers="headers" :items="admins" class="elevation-1" :search="search">
@@ -110,7 +116,7 @@
                         </v-card>
                     </v-card>
                 </v-tab-item>
-                <v-tab-item>
+                <v-tab-item v-if="rol==1">
                     <v-card class="my-4" color="blue darken-2">
                         <v-card-title class="subtitle-2 text-white my-2">Agentes</v-card-title>
                         <v-data-table no-data-text="No hay Usuarios" no-results-text="No hay resultados" :headers="headers" :items="agents" class="elevation-1" :search="search">
@@ -203,18 +209,19 @@
                                         <v-flex xs12 sm6 md6>
                                             <v-text-field label="Correo" :rules="mailRule" v-model="email_edit" required></v-text-field>
                                         </v-flex>
-                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
+                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2 || rol==3">
                                             <v-text-field label="Telefono" :rules="phoneRule" v-model="phone_edit" required></v-text-field>
                                         </v-flex>
-                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
+                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2 || rol==3">
                                             <v-text-field label="Provincia" :rules="[v => !!v || 'Debe escoger una opción']" v-model="province_edit" required></v-text-field>
                                         </v-flex>
-                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2">
+                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2 || rol==3" >
                                             <v-text-field label="Dirección"  :rules="[v => !!v || 'Debe llenar la dirección']" v-model="direction_edit" required></v-text-field>
                                         </v-flex>
 
                                         <v-flex xs12 sm6 md6>
                                             <v-select
+                                                    v-if="rol == 1"
                                                 no-data-text="No hay Roles"
                                                     v-model="role_id_edit"
                                                     :items="roles"
@@ -330,6 +337,9 @@ export default {
         },
         create() {
             if (this.role_id != 0 || this.email != '' || this.name != '') {
+                if(this.rol==3){
+                    this.role_id = 2;
+                }
                 if (this.role_id == 1 || this.role_id == 3) {
                     this.phone = "";
                     this.province = "";
@@ -340,26 +350,19 @@ export default {
                     email: this.email,
                     role_id: this.role_id,
                     phone: this.phone,
-                    pronvince: this.province,
+                    province: this.province,
                     direction: this.direction
                 }).then((response) => {
-                    if (response.status == 200) {
                         this.index();
-                        // this.dialog = false;
+                        this.dialog = false;
                         // this.error='';
-                        this.$swal('Usuario creado con exito', '', 'OK');
+                        this.$swal('Usuario creado con exito', 'La contraseña y verificación fueron enviados al usuario', 'OK');
                         this.name = "";
                         this.email = "";
                         this.role_id = "";
                         this.phone = "";
                         this.province = "";
                         this.direction = "";
-                    } else {
-                        this.$swal({
-                            title: 'Error al crear usuario',
-                            type: 'warning'
-                        });
-                    }
                 }).catch((e) => {
                     this.$swal({
                         title: 'Error al crear usuario, correo en uso',
@@ -394,7 +397,7 @@ export default {
                     email: this.email_edit,
                     role_id: this.role_id_edit,
                     phone: this.phone_edit,
-                    pronvince: this.province_edit,
+                    province: this.province_edit,
                     direction: this.direction_edit
                 }).then((response) => {
                     if (response.status == 200) {
@@ -474,7 +477,7 @@ export default {
                 },
                 {
                     text: 'Provincia',
-                    value: 'pronvince'
+                    value: 'province'
                 },
                 {
                     text: 'Dirección',

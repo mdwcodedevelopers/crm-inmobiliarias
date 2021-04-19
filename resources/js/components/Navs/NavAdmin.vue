@@ -47,7 +47,7 @@
                         <a href="/admin/currency">Monedas</a>
                     </v-list-item> -->
                     <v-list-item>
-                        <v-icon color="white" class="px-2">
+                        <v-icon color="white"  class="px-2">
                            mdi-office-building
                         </v-icon>
                         <a href="/admin/properties-user">Propiedades</a>
@@ -58,32 +58,38 @@
                         </v-icon>
                         <a href="/admin/status">Estatus de propiedades</a>
                     </v-list-item> -->
-                    <v-list-item>
-                        <v-icon color="white" class="px-2">
+                    <v-list-item v-if="rol == 1 || rol == 3 ">
+                        <v-icon color="white"  class="px-2">
                             mdi-speedometer
                         </v-icon>
                         <a href="/admin/oportunities">Oportunidades</a>
                     </v-list-item>
-
+                    <v-list-item v-if="rol == 1 || rol == 3 ">
+                        <v-icon color="white" class="px-2">
+                            mdi-account-multiple
+                        </v-icon>
+                        <a href="/admin/users">Lista de usuarios</a>
+                    </v-list-item>
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-account
                         </v-icon>
                         <a href="/admin/profile">Mi perfil</a>
                     </v-list-item>
-                    <v-list-item>
+                     
+                    <v-list-item v-if="rol == 1">
                         <v-icon color="white" class="px-2">
                             mdi-chart-bar
                         </v-icon>
                         <a href="/admin/home">Estaditicas</a>
                     </v-list-item>
-                    <v-list-item>
+                    <v-list-item v-if="rol == 1">
                         <v-icon color="white" class="px-2">
                             mdi-history
                         </v-icon>
                         <a href="/admin/reports">Historial de operaciones</a>
                     </v-list-item>
-                    <v-list-item>
+                    <v-list-item v-if="rol == 1">
                         <v-icon color="white" class="px-2">
                             mdi-cog
                         </v-icon>
@@ -109,6 +115,7 @@
 export default {
     props:{
             title:String,
+            rol: Number,
         },
     data: () => ({
         drawer: false,
