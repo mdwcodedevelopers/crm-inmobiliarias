@@ -39,14 +39,16 @@ Route::group(['prefix' => 'admin'], function () {
     'api-oportunities'=>OportunityController::class]);
     Auth::routes();
 
-    Route::get('/api-properties-user', 'PropertyController@properties');
     Route::get('/profile', 'UserController@view');
     Route::get('/reports', 'ReportController@view');
-    Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
-
-    Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
     Route::get('/categories', 'CategorieController@categories')->name('categories');
     Route::get('/status', 'StatusViewController@index')->name('status');
+    Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
+
+
+    Route::get('/api-properties-user', 'PropertyController@properties');
+    Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
+
 
 
     Route::put('/api-oportunities/close/{id}', 'OportunityController@closeOportunity');
