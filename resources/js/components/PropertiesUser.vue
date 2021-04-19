@@ -5,7 +5,7 @@
     <v-card color="blue">
       <v-card-title class="display-1 text-white">
         Propiedades
-        <v-btn color="success" dark absolute right fab class="mt-1" @click="dialog=true">
+        <v-btn color="success" dark absolute right fab class="mt-1" @click="create()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-card-title>
@@ -13,49 +13,21 @@
         <template v-slot:item.imagen="{ item }">
           <v-img :src="'../'+item.image" height="100" width="100"></v-img>
         </template>
-        <template v-slot:top>
-          <v-toolbar flat>
-            <v-text-field v-model="search" label="Buscar" class="mt-3"></v-text-field>
-            <v-spacer></v-spacer>
-            <v-btn @click="exportPDF()" color="#E53935" dark>
-              Pdf <v-icon>mdi-file-pdf</v-icon></v-btn>
-          </v-toolbar>
-        </template>
-        <template>
-          <tr v-for="p in properties" :key="p.id">
-            <td>{{ p.image }}</td>
-            <td>{{ p.type }}</td>
-            <td>{{ p.country }}, {{ p.region }}, {{ p.location }}</td>
-            <td>{{ p.price }}</td>
-            <td>{{ p.currency }}</td>
-            <td>{{ p.dimension }}</td>
-            <td>{{ p.status }}</td>
-            <td>{{ p.user }}</td>
-            <td></td>
-          </tr>
-        </template>
+          <template v-slot:item.type="{ item }">
+            {{ types[item.type-1]['name'] }}
+          </template>
         <template v-slot:item.action="{ item }">
-          <v-btn color="#66BB6A" class="m-1" @click="edit(item.id,item.title,item.dimension,item.price,item.information)">
+          <v-btn v-if="rol==1" color="#E53935" class="m-1" @click="exportPDF(item.id)">
+            <v-icon color="#fff">
+                mdi-file-pdf
+            </v-icon>
+          </v-btn>
+          <v-btn color="#66BB6A" class="m-1" @click="edit(item.id)">
             <v-icon color="#fff">
                 mdi-pencil
             </v-icon>
           </v-btn>
-          <v-btn color="warning" class="m-1" @click="images(item.id)">
-            <v-icon color="#fff">
-                mdi-file-image
-            </v-icon>
-          </v-btn>
-          <v-btn color="blue darken-2" class="m-1" @click="shareFace(item.id)">
-            <v-icon color="#fff">
-                mdi-facebook
-            </v-icon>
-          </v-btn>
-          <v-btn color="blue darken-1" class="m-1" @click="shareTwit(item.id)">
-            <v-icon color="#fff">
-                mdi-twitter
-            </v-icon>
-          </v-btn>
-          <v-btn v-if="rol==1" color="#E53935" class="m-1" @click="delete_dialog(item.id,item.title)">
+          <v-btn v-if="rol==1" color="#E53935" class="m-1" @click="delete_dialog(item.id)">
             <v-icon color="#fff">
                 mdi-delete
             </v-icon>
@@ -103,7 +75,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="danger" @click="dialog = false">Cancelar</v-btn>
-              <v-btn color="success" :disabled="!valid" @click.prevent="create()">Crear</v-btn>
+              <v-btn color="success" :disabled="!valid" @click.prevent="store()">Crear</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -112,7 +84,7 @@
 
     <template>
       <v-layout row justify-center>
-        <v-dialog v-model="dialogedit" persistent max-width="600px">
+        <v-dialog v-model="dialogedit" persistent max-width="967px">
           <v-card>
             <v-card-title>
               <span class="headline">Editar propiedad</span>
@@ -122,20 +94,89 @@
                 <v-form ref="form" v-model="valid">
                   <v-layout wrap>
                     <v-flex xs12 sm6 md6>
-                      <v-text-field label="Titulo" v-model="title_edit" :rules="inputRules" required></v-text-field>
+                      <v-text-field label="Titulo" :rules="inputRules" v-model="property.title" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm6 md6>
-                      <v-text-field label="Precio" :rules="priceRules" v-model="price_edit" persistent-hint required></v-text-field>
+                      <v-select no-data-text="No existen tipos de propiedad registradas" v-model="property.type" :items="types" :rules="selectRules" item-text="name" item-value="id" label="Tipo de Propiedad"></v-select>
                     </v-flex>
                     <v-flex xs12 sm6 md6>
-                      <v-select no-data-text="No hay Monedas" v-model="selectRules" :items="currencies" :rules="selectRules" item-text="name" item-value="id" label=" Moneda" ></v-select>
+                      <v-text-field label="Dirección" :rules="inputRules" v-model="property.country"></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm6 md6>
-                      <v-select v-model="status_id_edit" :items="status" item-text="status" :rules="selectRules" item-value="id" label="Estatus" required ></v-select>
+                      <v-select no-data-text="No existen estatus registrados" v-model="property.status_id" :items="status" :rules="selectRules" item-text="name" item-value="id" label="Estatus" ></v-select>
+                    </v-flex>
+                    <v-flex xs12 sm6 md6>
+                      <v-text-field label="Precio" :rules="numberRules" v-model="property.price" persistent-hint required></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 sm6 md6>
+                      <v-select no-data-text="No existen monedas registradas" v-model="property.currency" :items="currencies" :rules="selectRules" item-text="name" item-value="id" label="Moneda" ></v-select>
                     </v-flex>
                     <v-flex xs12>
                       {{error}}
                     </v-flex>
+                    <template>
+                      <v-card>
+                        <v-tabs background-color="grey accent-4" center-active dark >
+                          <v-tab>DETALLES</v-tab>
+                          <v-tab>MULTIMEDIA</v-tab>
+                          <v-tab>ARCHIVOS</v-tab>
+                          <v-tab>HISTORIA</v-tab>
+                          <v-tab>PORTALES</v-tab>
+                        </v-tabs>
+                        <v-tabs-items v-model="tabs">
+                          <v-tab-item>
+                            <v-card flat>
+                              <v-card-title class="headline">
+                                Detalles de la Propiedad
+                              </v-card-title>
+                              <v-card-text>
+
+                              </v-card-text>
+                            </v-card>
+                            <v-card flat>
+                              <v-card-title class="headline">
+                                Fotos y Videos
+                              </v-card-title>
+                              <v-card-text>
+
+                              </v-card-text>
+                            </v-card>
+                            <v-card flat>
+                              <v-card-title class="headline">
+                                Archivos de la Propiedad
+                              </v-card-title>
+                              <v-card-text>
+
+                              </v-card-text>
+                            </v-card>
+                            <v-card flat>
+                              <v-card-title class="headline">
+                                Detalles de la Propiedad
+                              </v-card-title>
+                              <v-card-text>
+
+                              </v-card-text>
+                            </v-card>
+                            <v-card flat>
+                              <v-card-title class="headline">
+                                Detalles de la Propiedad
+                              </v-card-title>
+                              <v-card-text>
+
+                              </v-card-text>
+                            </v-card>
+                            <v-card flat>
+                              <v-card-title class="headline">
+                                Detalles de la Propiedad
+                              </v-card-title>
+                              <v-card-text>
+
+                              </v-card-text>
+                            </v-card>
+                          </v-tab-item>
+                        </v-tabs-items>
+                      </v-card>
+                    </template>
                   </v-layout>
                 </v-form>
               </v-container>
@@ -155,7 +196,7 @@
         <v-dialog v-model="dialogdelete" persistent max-width="600px">
           <v-card>
             <v-card-title>
-              <span class="headline">Desea eliminar: {{propiedad_eliminar}}</span>
+              <span class="headline">¿Esta seguro que desea eliminar esta propiedad?</span>
             </v-card-title>
             <v-card-text>
             </v-card-text>
@@ -193,15 +234,10 @@
         dialogdelete: false,
         error: '',
 
-        id_edit: '',
-        title_edit: '',
-        information_edit: '',
-        price_edit: '',
-        dimension_edit: '',
-        currency_id_edit: '',
+
         id_delete: '',
         propiedad_eliminar: '',
-        status_id_edit: '',
+
 
         inputRules: [
           v => !!v || 'El campo es obligatorio',
@@ -226,6 +262,10 @@
         });
       },
       create() {
+        this.property = {};
+        this.dialog = true;
+      },
+      store() {
         axios.post("/admin/api-properties", this.property).then((response) => {
           if (response.status == 200) {
             this.index(0, '');
@@ -242,25 +282,13 @@
         });
       },
       edit_model() {
-        axios.put("/admin/api-properties/" + this.id_edit, {
-          title: this.title_edit,
-          dimension: this.dimension_edit,
-          information: this.information_edit,
-          price: this.price_edit,
-          status: this.status_id_edit,
-          currency_id: this.currency_id_edit
-        }).then((response) => {
+        axios.put("/admin/api-properties/" + this.property).then((response) => {
           if (response.status == 200) {
             this.index(0, '');
-            this.title_edit = '';
-            this.information_edit = '';
-            this.price_edit = '';
-            this.dimension_edit = '';
-            this.status_id_edit = '';
+            this.property = {};
             this.dialogedit = false;
-            this.currency_id_edit = ''
             this.$swal.fire(
-              'Propiedad editada con exito',
+              'Propiedad actualizada con exito',
               'Para agregar imagenes seleccione el boton de imagenes a la derecha de la tabla.',
               'success'
             );
@@ -294,22 +322,25 @@
           )
         });
       },
-      edit(id, title, dimension, price, info) {
-        this.dialogedit = true;
-        this.id_edit = id;
-        this.title_edit = title;
-        this.information_edit = info;
-        this.price_edit = price;
-        this.dimension_edit = dimension;
-        console.log(this.id_edit)
+      edit(id) {
+        axios.get("/admin/property-user/" + id).then((response) => {
+          if (response.status == 200) {
+            this.property = response.data.property;
+            //this.property.type = types[response.data.property.type];
+            this.dialogedit = true;
+          }
+        }).catch(error => {
+          this.$swal.fire(
+            'Error',
+            'Hubo un error al tratar de editar la propiedad, intente nuevamente.',
+            'error'
+          )
+        });
       },
       delete_dialog(id, title) {
         this.id_delete = id;
         this.dialogdelete = true;
         this.propiedad_eliminar = title;
-      },
-      prueba() {
-        console.log(this.currency_id_edit);
       },
       images(id) {
         window.location.href = "/property-images/" + id;
@@ -373,6 +404,10 @@
           },
           {
             text: 'Propiedad',
+            value: 'title',
+          },
+          {
+            text: 'Tipo',
             value: 'type',
           },
           {
@@ -388,16 +423,12 @@
             value: 'currency'
           },
           {
-            text: 'Dimensión',
-            value: 'dimension'
-          },
-          {
             text: 'Estatus',
             value: 'status'
           },
           {
             text: 'Usuario',
-            value: 'name'
+            value: 'user'
           },
           {
             text: 'Acciones',

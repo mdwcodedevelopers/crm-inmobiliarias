@@ -13,7 +13,7 @@ class CreateProenvironmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('proenviroments', function (Blueprint $table) {
+        Schema::create('proenvironments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('property_id');
             $table->foreignId('environment_id');

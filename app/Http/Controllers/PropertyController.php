@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\User;
 use App\Currency;
 use App\Property;
@@ -39,31 +40,28 @@ class PropertyController extends Controller
 
     public function properties(Request $request)
     {
-        $properties = Property::selectRaw('properties.*, images.url image, status.name status, users.name user, currencies.name currency')
+        $properties = Property::selectRaw('properties.*, status.name status, users.name user, currencies.name currency')
         ->join('status', 'properties.status_id', 'status.id')
         ->join('users', 'properties.user_id', 'users.id')
         ->join('currencies', 'properties.currency_id', 'currencies.id')
-        ->join('images', 'properties.id', 'images.property_id')
         ->where('properties.user_id', Auth::user()->id)
-        ->where('images.principal', 1)
         ->get();
 
         return response()->json([
-            'Properties' => $properties,
+            'properties' => $properties,
             'total' => count($properties),
             'status' => Status::get(),
             'currencies' => Currency::get(),
-            'types' => types(),
+            'types' => types()
         ]);
     }
 
     public function propertiesAdmin(Request $request)
     {
-        $properties = Property::selectRaw('properties.*, images.url image, status.name status, users.name user, currencies.name currency')
+        $properties = Property::selectRaw('properties.*, status.name status, users.name user, currencies.name currency')
         ->join('status', 'properties.status_id', 'status.id')
         ->join('users', 'properties.user_id', 'users.id')
         ->join('currencies', 'properties.currency_id', 'currencies.id')
-        ->join('images', 'properties.id', 'images.property_id')
         ->where('images.principal', 1)
         ->get();
 
@@ -95,6 +93,16 @@ class PropertyController extends Controller
             'information' => 'Se creo la propiedad: ID#' . $property->id . " " . $request->title,
         ]);
     }
+
+    public function edit($id)
+    {
+        $property = Property::where('id',$id)->with('Status','Currency','Categories','Images','Environments','Services')->first();
+
+        return response()->json([
+            'property' => $property,
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
         $prop = Property::where('id', '=', "$id")->first();
@@ -116,9 +124,9 @@ class PropertyController extends Controller
         ]);
         return response()->json("success");
     }
+
     public function property($id)
     {
-
         $property = Status::orderBy('properties.updated_at', 'desc')->where('properties.id', '=', "$id")
             ->join('properties', 'properties.status_id', 'status.id')->first();
         if ($user = User::find(Auth::auth()->id)) {
@@ -128,17 +136,18 @@ class PropertyController extends Controller
         }
         $property->image= Image::select('url_image')->whereProperty_id($property->id)->get();
         return view('property',['property'=>$property,'rol'=>$user->role_id]);
+
     }
+
     public function destroy($id)
     {
         $prop = Property::where('id', '=', "$id")->first();
-        $property = Property::find($id);
+        $property = Property::find($id)->delete();
 
-        $property->delete();
         Report::create([
             'type' => 'Eliminación',
             'table' => 'Propiedad',
-            'information' => 'Se eliminó la propiedad: ' . $prop->title . ' con la información ' . $prop->information . ' dimensiones:' . $prop->dimension . '  precio: ' . $prop->precio
+            'information' => 'Se eliminó la propiedad: ID#' . $id . " " . $prop->title . ' con la información ' . $prop->information . ' dimensiones:' . $prop->dimension . '  precio: ' . $prop->precio
         ]);
         return response()->json("success", 200);
     }

@@ -36,6 +36,7 @@ class CreatePropertiesTable extends Migration
             $table->decimal('price',20,2);
             $table->decimal('dimension',20,2)->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
