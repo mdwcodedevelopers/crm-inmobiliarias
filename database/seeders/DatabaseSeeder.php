@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ContactSeeder::class);
         $this->call(StatusOportunitySeeder::class);
         $this->call(CurrencySeeder::class);
+        $this->call(EnvironmentSeeder::class);
+        $this->call(ServiceSeeder::class);
     }
 }
