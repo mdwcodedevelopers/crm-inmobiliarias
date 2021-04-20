@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Environment;
+use App\Environment_property;
+use App\Service_property;
 use App\Image;
 use App\Currency;
 use App\Property;
@@ -89,15 +91,15 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
 
-        $property = Property::create([
-            'user_id' => Auth::user()->id,
-            'title' => $request->title,
-            'type' => $request->type,
-            'province' => $request->province,
-            'price' => $request->price,
-            'currency_id' => $request->currency,
-            'status_id' => $request->status_id,
-        ]);
+        $property = new Property();
+        $property->user_id = Auth::user()->id;
+        $property->status_id = $request->status_id;
+        $property->currency_id = $request->currency;
+        $property->title = $request->title;
+        $property->province = $request->province;
+        $property->type = $request->type;
+        $property->price = $request->price;
+        $property->save();
 
         Report::create([
             'type' => 'Creación',
@@ -120,25 +122,9 @@ class PropertyController extends Controller
 
     public function update(Request $request, $id)
     {
-        /*
-array:33 [
-
-  "environments" => array:2 [
-    0 => 2
-    1 => 6
-  ]
-  "services" => array:2 [
-    0 => 2
-    1 => 6
-  ]
-  "extras" => 24
-]
-
-         */
-
         $property = Property::find($request->id);
         $property->status_id = $request->status_id;
-        $property->currency_id = $request->currency;
+        $property->currency_id = $request->currency_id;
         $property->title = $request->title;
         $property->province = $request->province;
         $property->location = $request->location;
@@ -152,7 +138,7 @@ array:33 [
         $property->keys = $request->key;
         $property->price = $request->price;
         $property->dimension = $request->dimension;
-        $property->environments = $request->environments;
+        $property->environments = $request->environ;
         $property->plants = $request->plants;
         $property->bedrooms = $request->bedrooms;
         $property->toilettes = $request->toilettes;
@@ -160,18 +146,56 @@ array:33 [
         $property->chocheras = $request->chocheras;
         $property->save();
 
+        //AMBIENTES
+        $environments = $request->environments;
 
         Environment_property::where('property_id',$property->id)->whereNotIn("environment_id",$environments)->delete();
 
-        $envs = Environment_property::where('property_id',$property->id)->whereIn("environment_id",$environments)->get();
+        foreach( $environments as $env_id ):
+            $environment = Environment_property::where('property_id',$property->id)->where('environment_id',$env_id);
 
-        for ( $i = 0; $i < count($request->environments); $i++ ):
-        endfor;
+            if( !isset($environment->id) ):
+                $environment = new Environment_property();
+                $environment->property_id = $property->id;
+                $environment->environment_id = $env_id;
+                $environment->save();
+            endif;
+        endforeach;
+
+        //SERVICIOS
+        $services = $request->services;
+
+        Service_property::where('property_id',$property->id)->whereNotIn("service_id",$services)->delete();
+
+        foreach( $services as $service_id ):
+            $service = Service_property::where('property_id',$property->id)->where('service_id',$service_id);
+
+            if( !isset($service->id) ):
+                $service = new Service_property();
+                $service->property_id = $property->id;
+                $service->service_id = $service_id;
+                $service->save();
+            endif;
+        endforeach;
+
+        //ADICIONALES
+        $environments = $request->extras;
+
+        foreach( $environments as $env_id ):
+            $environment = Environment_property::where('property_id',$property->id)->where('environment_id',$env_id);
+
+            if( !isset($environment->id) ):
+                $environment = new Environment_property();
+                $environment->property_id = $property->id;
+                $environment->environment_id = $env_id;
+                $environment->save();
+            endif;
+        endforeach;
 
         Report::create([
             'type' => 'Actualización',
             'table' => 'Propiedad',
-            'information' => 'Se actualizó la propiedad: ' . $prop->title . ' a ' . $request['title'] . ' con la información ' . $prop->information . ' a ' . $request['information'] . ' dimensiones anteriores:' . $prop->dimension . ' dimensiones nuevas: ' . $request['dimension'] . ' precio anterior: ' . $prop->precio . ' precio nuevo: ' . $request['price']
+            'information' => 'Se actualizó la propiedad a: ' . $property->title . ' dimensiones nuevas: ' . $property->dimension . ' precio nuevo: ' . $property->price
         ]);
 
         return response()->json("success");
