@@ -233,7 +233,7 @@
                                   <v-container fluid>
                                     <v-row>
                                       <v-col cols="3"  class="m-0 py-0" v-for="(extra,index) in extras" :key="index">
-                                        <v-checkbox class="m-0 p-0" light :label="extra.name" v-model="property.extras"      :value="extra.id">
+                                        <v-checkbox class="m-0 p-0" light :label="extra.name" v-model="property.extras" :value="extra.id">
                                         </v-checkbox>
                                       </v-col>
                                     </v-row>
@@ -404,8 +404,9 @@
             this.property = response.data.property;
             this.envs = response.data.envs;
             this.services = response.data.services;
-            this.extras = response.data.extras;
+            this.extras = response.data.extra;
             this.dialogedit = true;
+            this.property.extras=[];
             //this.property.type = types[response.data.property.type];
           }
         }).catch(error => {

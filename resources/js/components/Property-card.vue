@@ -7,13 +7,13 @@
                 sm="12"
                 class="p-3 d-flex justify-space-between my-2">
                     <div class="text--primary h2 ">
-                        {{property.name}}
+                        {{property.title}}
                     </div>
                     <div class="d-flex align-items-center">
                         <h5>
                                 Precio: 
                         <span   class="success--text ">
-                            {{property.price}} USD
+                            {{property.price}} {{property.currency.name}}
                         </span>
                         </h5>
                     </div>
@@ -33,7 +33,7 @@
             <v-col
             class="d-flex mx-4"
             >
-                    {{property.dimension}} mt2 | 2 baños | 3 cuartos
+                    {{property.status.name}} | {{property.dimension}} mt2  | {{property.toilettes}}  baños | {{property.bedrooms}}  cuartos
             </v-col>
             <v-col
             >
@@ -55,11 +55,11 @@
                     </v-card-title>
                     <v-card-text class="d-flex mx-3 black--text" style="text-align:left">
                         <ul class="list-info">
-                            <li>Antiguedad: </li>
-                            <li>Condición: </li>
-                            <li>Región: </li>
-                            <li>Situación: </li>
-                            <li>Estado: </li>
+                            <li>Antiguedad: {{property.antiquity}}</li>
+                            <li>Condición: {{property.condition}}</li>
+                            <li>Provincia: {{property.location}}</li>
+                            <li>Región: {{property.location}}</li>
+                            <li>Situación: {{property.situation}}</li>
                         </ul>
                     </v-card-text>
                 </v-card>
