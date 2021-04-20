@@ -38,8 +38,16 @@ class Oportunity extends Model
     return $this->hasMany(NoteOportunity::class, 'oportunity_id');
   }
 
-  //PORQUE HAY 3 METODOS QUE HACEN LO MISMO?  getUpdatedAtAttribute  getVigencyAttribute
+  //PORQUE HAY 3 METODOS QUE HACEN LO MISMO?    
   public function getCreatedAtAttribute($value)
+  {
+    return Carbon::parse($value)->format('d-m-Y');
+  }
+  public function getUpdatedAtAttribute($value)
+  {
+    return Carbon::parse($value)->format('d-m-Y');
+  }
+  public function getVigencyAttribute($value)
   {
     return Carbon::parse($value)->format('d-m-Y');
   }

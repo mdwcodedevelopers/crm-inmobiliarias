@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('cache-clear', function () {
+    $exitCode = Artisan::call('composer update');
+    return '<h1>Cache value cleared</h1>';
+  });
 Route::get('register/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::get('register/verify/{id}/{hash}', 'Auth\VerificationController@index')->name('verification.verify');
 Route::post('register/resend', 'Auth\VerificationController@resend')->name('verification.resend');
