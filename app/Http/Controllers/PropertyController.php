@@ -52,7 +52,9 @@ class PropertyController extends Controller
         ->join('currencies', 'properties.currency_id', 'currencies.id')
         ->where('properties.user_id', Auth::user()->id)
         ->get();
-
+        foreach ($properties as $property) {
+            $property->image = Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first()->url;
+        }
         return response()->json([
             'properties' => $properties,
             'total' => count($properties),
@@ -74,7 +76,7 @@ class PropertyController extends Controller
         ->join('currencies', 'properties.currency_id', 'currencies.id')
         ->where('images.principal', 1)
         ->get();
-
+        
         return response()->json([
             'Properties' => $properties,
             'total' => count($properties),

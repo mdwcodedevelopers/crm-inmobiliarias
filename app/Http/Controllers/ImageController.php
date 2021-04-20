@@ -28,7 +28,7 @@ class ImageController extends Controller
             
             $image = new Image();
             
-            $image->url_image =$path.$file->getClientOriginalName();
+            $image->url =$path.$file->getClientOriginalName();
             $image->property_id = $request->property_id;
             $image->save();
             // $file = $request->file('imagen');
@@ -42,10 +42,13 @@ class ImageController extends Controller
         }
     }
     public function setimage(Request $request,$id){
-        $property = Property::find($id);
-        $property->update([
-            'image'=>$request['image']
-        ]);
+        $image = Image::find($id);
+        $oldImage =Image::whereProperty_id($image->property_id)->wherePrincipal(1)->first();
+        $oldImage->principal = 0;
+        $oldImage->save();
+        $image->principal = $request->principal;
+        $image->save();
+
         return response()->json("success");
     }
     public function update(Request $request, $id)

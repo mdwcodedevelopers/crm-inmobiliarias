@@ -11,7 +11,7 @@
       </v-card-title>
       <v-data-table :headers="headers"  no-results-text="No hay resultados" no-data-text="No hay propiedades " :items="properties" item-key="propeties-user" class="elevation-1" :search="search">
         <template v-slot:item.imagen="{ item }">
-          <v-img :src="'../'+item.image" height="100" width="100"></v-img>
+          <v-img :src="'../../'+item.image" height="100" width="100"></v-img>
         </template>
           <template v-slot:item.type="{ item }">
             {{ types[item.type-1]['name'] }}
@@ -250,6 +250,7 @@
                                   <v-form ref="form" v-model="valid">
                                     <v-layout wrap>
                                       <v-flex xs12 sm6 md6>
+                                      <image-propertie  :id="property.id" />
                                       </v-flex>
                                     </v-layout>
                                   </v-form>
@@ -380,11 +381,6 @@
             this.services = response.data.services;
             this.extras = response.data.extra;
             this.dialogedit = true;
-<<<<<<< HEAD
-            this.property.extras=[];
-            //this.property.type = types[response.data.property.type];
-=======
->>>>>>> 5c6e4c473eaa7814515dfb7d6beb43a59502a0bc
           }
         }).catch(error => {
           this.$swal.fire(
