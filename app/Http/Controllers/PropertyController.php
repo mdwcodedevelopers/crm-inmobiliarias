@@ -132,7 +132,8 @@ class PropertyController extends Controller
         $property = Status::orderBy('properties.updated_at', 'desc')->where('properties.id', '=', "$id")
             ->join('properties', 'properties.status_id', 'status.id')->first();
             $property->image= Image::select('url')->whereProperty_id($property->id)->get();
-        if ($user = User::find(Auth::user()->id)) {
+        if (!is_null(Auth::user())) {
+            $user = User::find(Auth::user()->id);
             return view('property', ['property' => $property, 'rol' => $user->role_id]);
         } else {
             return view('property', ['property' => $property, 'rol' => 0]);

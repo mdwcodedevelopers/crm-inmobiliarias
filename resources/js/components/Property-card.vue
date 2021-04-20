@@ -65,21 +65,6 @@
                 </v-card>
             </v-col>
 
-            <v-col
-            >
-                <v-card elevation="2">
-                    <v-card-title class="primary--text">
-                        Servicios
-                    </v-card-title>
-                    <v-card-text class="d-flex mx-3 black--text">
-                         <ul class="list-info">
-                            <li v-for="item in services" :key="item.id">
-                                 {{item.name}}
-                            </li>
-                        </ul>
-                    </v-card-text>
-                </v-card>
-            </v-col>
                 <v-col
             >
                 <v-card elevation="2">
@@ -90,6 +75,21 @@
                          <ul class="list-info">
                             <li v-for="item in environments" :key="item.id">
                                  {{item.name}}: {{item.quantity}}
+                            </li>
+                        </ul>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+            <v-col
+            >
+                <v-card elevation="2">
+                    <v-card-title class="primary--text">
+                        Servicios
+                    </v-card-title>
+                    <v-card-text class="d-flex mx-3 black--text">
+                         <ul class="list-info">
+                            <li v-for="item in services" :key="item.id">
+                                 {{item.name}}
                             </li>
                         </ul>
                     </v-card-text>
