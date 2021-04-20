@@ -379,7 +379,7 @@
             this.property = response.data.property;
             this.envs = response.data.envs;
             this.services = response.data.services;
-            this.extras = response.data.extra;
+            this.extras = response.data.extras;
             this.dialogedit = true;
           }
         }).catch(error => {

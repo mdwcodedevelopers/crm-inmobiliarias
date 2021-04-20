@@ -27,7 +27,11 @@ class PropertyController extends Controller
 
         $Properties = Status::orderBy('properties.updated_at', 'desc')->where('show_web',1)->where('title', 'LIKE', "%$search%")->join('properties', 'properties.status_id', 'status.id')->paginate(9);
         foreach ($Properties as $property) {
-            $property->image = Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first()->url;
+            if (Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first() != null) {
+                $property->image = Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first()->url;
+            }else{
+                $property->image = null;
+            }
         }
         return response()->json([
             'properties' => $Properties,
@@ -53,7 +57,11 @@ class PropertyController extends Controller
         ->where('properties.user_id', Auth::user()->id)
         ->get();
         foreach ($properties as $property) {
-            $property->image = Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first()->url;
+            if (Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first() != null) {
+                $property->image = Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first()->url;
+            }else{
+                $property->image = null;
+            }
         }
         return response()->json([
             'properties' => $properties,

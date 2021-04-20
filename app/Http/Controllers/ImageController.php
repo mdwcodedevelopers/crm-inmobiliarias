@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Image;
 use App\Property;
 use Illuminate\Http\Request;
+use Auth;
 
 class ImageController extends Controller
 {
@@ -43,9 +44,11 @@ class ImageController extends Controller
     }
     public function setimage(Request $request,$id){
         $image = Image::find($id);
-        $oldImage =Image::whereProperty_id($image->property_id)->wherePrincipal(1)->first();
-        $oldImage->principal = 0;
-        $oldImage->save();
+        if(Image::whereProperty_id($image->property_id)->wherePrincipal(1)->first()!=null){
+            $oldImage =Image::whereProperty_id($image->property_id)->wherePrincipal(1)->first();
+            $oldImage->principal = 0;
+            $oldImage->save();
+        }
         $image->principal = $request->principal;
         $image->save();
 
@@ -76,7 +79,17 @@ class ImageController extends Controller
     }
     public function Images($id)
     {
-        $property= Property::where('id','=',$id)->first();
+        // $property= Property::where('id','=',$id)->first();
+        $properties = Property::selectRaw('properties.*, status.name status, users.name user, currencies.name currency')
+        ->join('status', 'properties.status_id', 'status.id')
+        ->join('users', 'properties.user_id', 'users.id')
+        ->join('currencies', 'properties.currency_id', 'currencies.id')
+        ->where('properties.user_id', Auth::user()->id)
+        ->get();
+        foreach ($properties as $property) {
+            dd();
+            $property->image = Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first()->url;
+        }
         return view('images_property',['property'=>$property,'id'=>$id]);
     }
 }
