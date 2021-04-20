@@ -100,16 +100,16 @@
                       <v-flex xs12>
                         <v-text-field label="Titulo" :rules="inputRules" v-model="property.title" required></v-text-field>
                       </v-flex>
-                      <v-flex xs12 sm6 md6>
+                      <v-flex xs12>
                         <v-text-field label="Provincia" :rules="inputRules" v-model="property.province"></v-text-field>
                       </v-flex>
-                      <v-flex xs12 sm6 md6>
+                      <v-flex xs12>
                         <v-text-field label="Localidad" :rules="inputRules" v-model="property.location"></v-text-field>
                       </v-flex>
-                      <v-flex xs12 sm6 md6>
+                      <v-flex xs12>
                         <v-text-field label="Sub-división" :rules="inputRules" v-model="property.subdivision_1"></v-text-field>
                       </v-flex>
-                      <v-flex xs12 sm6 md6>
+                      <v-flex xs12>
                         <v-text-field label="Sub-división"  v-model="property.subdivision_2"></v-text-field>
                       </v-flex>
                       <v-flex xs12>
@@ -121,9 +121,6 @@
                         <v-tabs background-color="grey accent-4" center-active dark  v-model="tab" width="100%">
                           <v-tab>DETALLES</v-tab>
                           <v-tab>MULTIMEDIA</v-tab>
-                          <v-tab>ARCHIVOS</v-tab>
-                          <v-tab>HISTORIA</v-tab>
-                          <v-tab>PORTALES</v-tab>
                         </v-tabs>
                         <v-tabs-items v-model="tab">
                           <v-tab-item>
@@ -163,7 +160,7 @@
                                         <v-select no-data-text="No existen ubicaciones registradas" v-model="property.key" :items="locations" :rules="selectRules" item-text="name" item-value="id" label="Ubicación de llaves" ></v-select>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Cantidad de Ambientes" :rules="numberRules" v-model="property.environments"></v-text-field>
+                                        <v-text-field label="Cantidad de Ambientes" :rules="numberRules" v-model="property.environ"></v-text-field>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
                                         <v-text-field label="Cantidad de Plantas" :rules="numberRules" v-model="property.plants"></v-text-field>
@@ -233,7 +230,7 @@
                                   <v-container fluid>
                                     <v-row>
                                       <v-col cols="3"  class="m-0 py-0" v-for="(extra,index) in extras" :key="index">
-                                        <v-checkbox class="m-0 p-0" light :label="extra.name" v-model="property.extras" :value="extra.id">
+                                        <v-checkbox class="m-0 p-0" light :label="extra.name" v-model="propertyextras" :value="extra.id">
                                         </v-checkbox>
                                       </v-col>
                                     </v-row>
@@ -244,44 +241,19 @@
                           </v-tab-item>
 
                           <v-tab-item>
-                            <v-card flat>
+                            <v-card flat  width="100%">
                               <v-card-title class="headline">
-                                Fotos y Videos
+                                Subir Imagenes de la Propiedad
                               </v-card-title>
                               <v-card-text>
-
-                              </v-card-text>
-                            </v-card>
-                            <v-card flat>
-                              <v-card-title class="headline">
-                                Archivos de la Propiedad
-                              </v-card-title>
-                              <v-card-text>
-
-                              </v-card-text>
-                            </v-card>
-                            <v-card flat>
-                              <v-card-title class="headline">
-                                Detalles de la Propiedad
-                              </v-card-title>
-                              <v-card-text>
-
-                              </v-card-text>
-                            </v-card>
-                            <v-card flat>
-                              <v-card-title class="headline">
-                                Detalles de la Propiedad
-                              </v-card-title>
-                              <v-card-text>
-
-                              </v-card-text>
-                            </v-card>
-                            <v-card flat>
-                              <v-card-title class="headline">
-                                Detalles de la Propiedad
-                              </v-card-title>
-                              <v-card-text>
-
+                                <v-container>
+                                  <v-form ref="form" v-model="valid">
+                                    <v-layout wrap>
+                                      <v-flex xs12 sm6 md6>
+                                      </v-flex>
+                                    </v-layout>
+                                  </v-form>
+                                </v-container>
                               </v-card-text>
                             </v-card>
                           </v-tab-item>
@@ -345,6 +317,7 @@
         envs: [],
         services: [],
         extras: [],
+        propertyextras: [],
         tab: null,
         search: '',
         valid: false,
@@ -400,14 +373,18 @@
       },
       edit(id) {
         axios.get("/admin/property-user/" + id).then((response) => {
+          console.log(response);
           if (response.status == 200) {
             this.property = response.data.property;
             this.envs = response.data.envs;
             this.services = response.data.services;
             this.extras = response.data.extra;
             this.dialogedit = true;
+<<<<<<< HEAD
             this.property.extras=[];
             //this.property.type = types[response.data.property.type];
+=======
+>>>>>>> 5c6e4c473eaa7814515dfb7d6beb43a59502a0bc
           }
         }).catch(error => {
           this.$swal.fire(
@@ -418,14 +395,8 @@
         });
       },
       update(id) {
+        this.property.extras = this.propertyextras;
         axios.patch("/admin/property-user/" + id, this.property).then((response) => {
-          if( this.property.environments.filter(s => s === true).length >= 3 ) {
-            this.$swal.fire(
-              'Error',
-              'Debe seleccionar al menos 3 ambientes. Por favor, intente nuevamente.',
-              'error'
-            )
-          }
           if (response.status == 200) {
             this.index(0, '');
             this.property = {};
