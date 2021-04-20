@@ -47,7 +47,7 @@
             <v-container fluid>
 
                 <v-row>
-                    <v-col  v-for="card in properties" :key="card.id" cols="4" >
+                    <v-col  v-for="card in properties" :key="card.id" cols="12" sm="12" md="4">
                         <h3 class="text-center venta mt-3">{{card.name}}</h3>
                         <v-card>
                             <v-img :src="'../'+card.image" class="" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="200px">
@@ -119,7 +119,7 @@ export default {
     methods: {
         index() {
             axios.get("/admin/api-properties?page=" +this.paginate.current_page + "&search=" + this.search).then((response) => {
-                this.properties = response.data.Properties.data;
+                this.properties = response.data.properties.data;
                 this.paginate = response.data.pagination;
                 this.total=response.data.total;
             });

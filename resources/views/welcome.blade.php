@@ -24,7 +24,7 @@
         </div>
         @endif --}}
         @endguest
-        <div style="text-align: center">
+        <div style="text-align: center;" >
             <img src="/images/logo.png" alt="">
         </div>
         <div >

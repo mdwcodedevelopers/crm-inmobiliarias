@@ -27,12 +27,12 @@
             <v-list nav dense  class="nav-list my-6">
 
                 <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
-                    <!-- <v-list-item>
+                    <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-file-document
                         </v-icon>
-                        <a href="/admin/">Pagina web</a>
-                    </v-list-item> -->
+                        <a href="/">Pagina web</a>
+                    </v-list-item>
                     <!-- <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-account-box-multiple

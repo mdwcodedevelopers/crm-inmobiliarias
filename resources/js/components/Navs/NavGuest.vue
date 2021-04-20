@@ -1,14 +1,20 @@
 <template>
     <div class="">
-        <v-app-bar color="light-blue darken-1 " dark>
+        <v-app-bar 
+          color="white  "  
+          prominent 
+          dark 
+          dense>
+      
+            <v-toolbar-title class="d-flex" >
 
-            <v-toolbar-title> <a href="/admin/" class="text-white" style="text-decoration:none">Home</a> </v-toolbar-title>
-
+              <a href="/" class="" style="text-decoration:none">
+                <v-img src="/images/logo.png"  contain width="200" height="100"></v-img>
+              </a> 
+            </v-toolbar-title>
             <v-spacer></v-spacer>
-
-                <a class="text-white mx-2" href="/admin/login">Iniciar sesión</a>
-
-                <a class="text-white mx-2" href="/admin/register">Registrarse</a>
+                <a class="mx-2 my-auto black--text " style="font-size:1rem"  href="/admin/login">Iniciar sesión</a>
+                <a class=" mx-2 my-auto black--text " style="font-size:1rem"  href="/admin/register">Registrarse</a>
         </v-app-bar>
         <v-navigation-drawer
         absolute
