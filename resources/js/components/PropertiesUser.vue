@@ -54,7 +54,7 @@
                       <v-select no-data-text="No existen tipos de propiedad registradas" v-model="property.type" :items="types" :rules="selectRules" item-text="name" item-value="id" label="Tipo de Propiedad"></v-select>
                     </v-flex>
                     <v-flex xs12 sm6 md6>
-                      <v-text-field label="Dirección" :rules="inputRules" v-model="property.country"></v-text-field>
+                      <v-text-field label="Provincia" :rules="inputRules" v-model="property.province"></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm6 md6>
                       <v-select no-data-text="No existen estatus registrados" v-model="property.status_id" :items="status" :rules="selectRules" item-text="name" item-value="id" label="Estatus" ></v-select>
@@ -93,46 +93,157 @@
               <v-container grid-list-md>
                 <v-form ref="form" v-model="valid">
                   <v-layout wrap>
-                    <v-flex xs12 sm6 md6>
-                      <v-text-field label="Titulo" :rules="inputRules" v-model="property.title" required></v-text-field>
+                    <v-flex xs12 sm6 md4>
+                       <v-img :src="'../'+property.image" width="100%"></v-img>
                     </v-flex>
-                    <v-flex xs12 sm6 md6>
-                      <v-select no-data-text="No existen tipos de propiedad registradas" v-model="property.type" :items="types" :rules="selectRules" item-text="name" item-value="id" label="Tipo de Propiedad"></v-select>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6>
-                      <v-text-field label="Dirección" :rules="inputRules" v-model="property.country"></v-text-field>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6>
-                      <v-select no-data-text="No existen estatus registrados" v-model="property.status_id" :items="status" :rules="selectRules" item-text="name" item-value="id" label="Estatus" ></v-select>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6>
-                      <v-text-field label="Precio" :rules="numberRules" v-model="property.price" persistent-hint required></v-text-field>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6>
-                      <v-select no-data-text="No existen monedas registradas" v-model="property.currency" :items="currencies" :rules="selectRules" item-text="name" item-value="id" label="Moneda" ></v-select>
-                    </v-flex>
-                    <v-flex xs12>
-                      {{error}}
+                    <v-flex xs12 sm6 md8>
+                      <v-flex xs12>
+                        <v-text-field label="Titulo" :rules="inputRules" v-model="property.title" required></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm6 md6>
+                        <v-text-field label="Provincia" :rules="inputRules" v-model="property.province"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm6 md6>
+                        <v-text-field label="Localidad" :rules="inputRules" v-model="property.location"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm6 md6>
+                        <v-text-field label="Sub-división" :rules="inputRules" v-model="property.subdivision_1"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12 sm6 md6>
+                        <v-text-field label="Sub-división"  v-model="property.subdivision_2"></v-text-field>
+                      </v-flex>
+                      <v-flex xs12>
+                        <v-checkbox class="pr-6" v-model="property.show_web" label="Mostrar en la Web" value="1"></v-checkbox>
+                      </v-flex>
                     </v-flex>
                     <template>
                       <v-card>
-                        <v-tabs background-color="grey accent-4" center-active dark >
+                        <v-tabs background-color="grey accent-4" center-active dark  v-model="tab" width="100%">
                           <v-tab>DETALLES</v-tab>
                           <v-tab>MULTIMEDIA</v-tab>
                           <v-tab>ARCHIVOS</v-tab>
                           <v-tab>HISTORIA</v-tab>
                           <v-tab>PORTALES</v-tab>
                         </v-tabs>
-                        <v-tabs-items v-model="tabs">
+                        <v-tabs-items v-model="tab">
                           <v-tab-item>
                             <v-card flat>
                               <v-card-title class="headline">
-                                Detalles de la Propiedad
+                                Información Básica
                               </v-card-title>
                               <v-card-text>
-
+                                <v-container>
+                                  <v-form ref="form" v-model="valid">
+                                    <v-layout wrap>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Precio" :rules="numberRules" v-model="property.price" persistent-hint required></v-text-field>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-select no-data-text="No existen monedas registradas" v-model="property.currency" :items="currencies" :rules="selectRules" item-text="name" item-value="id" label="Moneda" ></v-select>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Dimensiones" :rules="numberRules" v-model="property.dimension"></v-text-field>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-select no-data-text="No existen tipos de propiedad registradas" v-model="property.type" :items="types" :rules="selectRules" item-text="name" item-value="id" label="Tipo de Propiedad"></v-select>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-select no-data-text="No existen situaciones registradas" v-model="property.situation" :items="situations" :rules="selectRules" item-text="name" item-value="id" label="Situación actual" ></v-select>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-select no-data-text="No existen estatus registrados" v-model="property.status_id" :items="status" :rules="selectRules" item-text="name" item-value="id" label="Estatus" ></v-select>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-select no-data-text="No existen antiguedades registradas" v-model="property.antiquity" :items="antiquitys" :rules="selectRules" item-text="name" item-value="id" label="Antigüedad" ></v-select>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-select no-data-text="No existen condiciones registradas" v-model="property.condition" :items="conditions" :rules="selectRules" item-text="name" item-value="id" label="Condición" ></v-select>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-select no-data-text="No existen ubicaciones registradas" v-model="property.key" :items="locations" :rules="selectRules" item-text="name" item-value="id" label="Ubicación de llaves" ></v-select>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Cantidad de Ambientes" :rules="numberRules" v-model="property.environments"></v-text-field>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Cantidad de Plantas" :rules="numberRules" v-model="property.plants"></v-text-field>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Cantidad de Baños" :rules="numberRules" v-model="property.bedrooms"></v-text-field>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Cantidad de Toilettes" :rules="numberRules" v-model="property.toilettes"></v-text-field>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Cantidad de Tocadores" :rules="numberRules" v-model="property.dresser"></v-text-field>
+                                      </v-flex>                                                                         <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Cantidad de Cocheras" :rules="numberRules" v-model="property.chocheras"></v-text-field>
+                                      </v-flex>
+                                      <v-flex xs12>
+                                        {{error}}
+                                      </v-flex>
+                                    </v-layout>
+                                  </v-form>
+                                </v-container>
                               </v-card-text>
                             </v-card>
+                            <v-divider></v-divider>
+                            <v-card flat>
+                              <v-card-title class="headline">
+                                Servicios
+                              </v-card-title>
+                              <v-card-text>
+                                <template>
+                                  <v-container fluid>
+                                    <v-row>
+                                      <v-col cols="3"  class="m-0 py-0" v-for="(service,index) in services" :key="index">
+                                        <v-checkbox class="m-0 p-0" light :label="service.name" v-model="property.services" :value="service.id">
+                                        </v-checkbox>
+                                      </v-col>
+                                    </v-row>
+                                  </v-container>
+                                </template>
+                              </v-card-text>
+                            </v-card>
+                            <v-divider></v-divider>
+                            <v-card flat>
+                              <v-card-title class="headline">
+                                Ambientes
+                              </v-card-title>
+                              <v-card-text>
+                                <template>
+                                  <v-container fluid>
+                                    <v-row>
+                                      <v-col cols="3" class="m-0 py-0" v-for="(env,index) in envs" :key="index">
+                                        <v-checkbox class="m-0 p-0" light :label="env.name" v-model="property.environments" :value="env.id">
+                                        </v-checkbox>
+                                      </v-col>
+                                    </v-row>
+                                  </v-container>
+                                </template>
+                              </v-card-text>
+                            </v-card>
+                            <v-divider></v-divider>
+                            <v-card flat>
+                              <v-card-title class="headline">
+                                Adicionales
+                              </v-card-title>
+                              <v-card-text>
+                                <template>
+                                  <v-container fluid>
+                                    <v-row>
+                                      <v-col cols="3"  class="m-0 py-0" v-for="(extra,index) in extras" :key="index">
+                                        <v-checkbox class="m-0 p-0" light :label="extra.name" v-model="property.extras"      :value="extra.id">
+                                        </v-checkbox>
+                                      </v-col>
+                                    </v-row>
+                                  </v-container>
+                                </template>
+                              </v-card-text>
+                            </v-card>
+                          </v-tab-item>
+
+                          <v-tab-item>
                             <v-card flat>
                               <v-card-title class="headline">
                                 Fotos y Videos
@@ -184,7 +295,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="danger" @click="dialogedit = false">Cancelar</v-btn>
-              <v-btn color="success" :disabled="!valid" @click.prevent="edit_model()">Editar</v-btn>
+              <v-btn color="success" :disabled="!valid" @click.prevent="update(property.id)">Editar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -227,18 +338,21 @@
         status: [],
         currencies: [],
         types: [],
+        situations: [],
+        antiquitys: [],
+        conditions: [],
+        locations: [],
+        envs: [],
+        services: [],
+        extras: [],
+        tab: null,
         search: '',
         valid: false,
         dialog: false,
         dialogedit: false,
         dialogdelete: false,
         error: '',
-
-
         id_delete: '',
-        propiedad_eliminar: '',
-
-
         inputRules: [
           v => !!v || 'El campo es obligatorio',
         ],
@@ -254,11 +368,14 @@
     methods: {
       index(page, search) {
         axios.get("/admin/api-properties-user?&search=" + search).then((response) => {
-          console.log(response);
           this.properties = response.data.properties;
           this.status = response.data.status;
           this.currencies = response.data.currencies;
           this.types = response.data.types;
+          this.situations = response.data.situations;
+          this.antiquitys = response.data.antiquitys;
+          this.conditions = response.data.conditions;
+          this.locations = response.data.locations;
         });
       },
       create() {
@@ -281,28 +398,52 @@
           )
         });
       },
-      edit_model() {
-        axios.put("/admin/api-properties/" + this.property).then((response) => {
+      edit(id) {
+        axios.get("/admin/property-user/" + id).then((response) => {
+          if (response.status == 200) {
+            this.property = response.data.property;
+            this.envs = response.data.envs;
+            this.services = response.data.services;
+            this.extras = response.data.extras;
+            this.dialogedit = true;
+            //this.property.type = types[response.data.property.type];
+          }
+        }).catch(error => {
+          this.$swal.fire(
+            'Error',
+            'Hubo un error al tratar de editar la propiedad, intente nuevamente.',
+            'error'
+          )
+        });
+      },
+      update(id) {
+        axios.patch("/admin/property-user/" + id, this.property).then((response) => {
+          if( this.property.environments.filter(s => s === true).length >= 3 ) {
+            this.$swal.fire(
+              'Error',
+              'Debe seleccionar al menos 3 ambientes. Por favor, intente nuevamente.',
+              'error'
+            )
+          }
           if (response.status == 200) {
             this.index(0, '');
             this.property = {};
             this.dialogedit = false;
             this.$swal.fire(
               'Propiedad actualizada con exito',
-              'Para agregar imagenes seleccione el boton de imagenes a la derecha de la tabla.',
               'success'
             );
           }
-        }).catch(error => {
+        })
+        .catch(error => {
           this.$swal.fire(
             'Error',
-            'Hubo un error al tratar de editar la propiedad, intente nuevamente, recuerde que los precios y las dimensiones deben ser unicamente en numeros y máximo 2 decimales.',
+            'Hubo un error al tratar de modificar la propiedad. Por favor, intente nuevamente.',
             'error'
           )
         });
       },
       delete_model() {
-        console.log(this.id_delete);
         axios.delete("/admin/api-properties/" + this.id_delete).then((response) => {
           console.log(response);
           if (response.status == 200) {
@@ -322,25 +463,9 @@
           )
         });
       },
-      edit(id) {
-        axios.get("/admin/property-user/" + id).then((response) => {
-          if (response.status == 200) {
-            this.property = response.data.property;
-            //this.property.type = types[response.data.property.type];
-            this.dialogedit = true;
-          }
-        }).catch(error => {
-          this.$swal.fire(
-            'Error',
-            'Hubo un error al tratar de editar la propiedad, intente nuevamente.',
-            'error'
-          )
-        });
-      },
       delete_dialog(id, title) {
         this.id_delete = id;
         this.dialogdelete = true;
-        this.propiedad_eliminar = title;
       },
       images(id) {
         window.location.href = "/property-images/" + id;
@@ -411,8 +536,8 @@
             value: 'type',
           },
           {
-            text: 'Dirección',
-            value: 'country'
+            text: 'Provincia',
+            value: 'province'
           },
           {
             text: 'Precio',

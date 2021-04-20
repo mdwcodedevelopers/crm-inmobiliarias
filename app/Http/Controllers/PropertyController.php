@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\User;
+use App\Environment;
+use App\Image;
 use App\Currency;
 use App\Property;
 use App\Report;
+use App\Service;
 use App\Status;
-use App\Image;
+use App\User;
 
 use Auth;
 
@@ -48,13 +50,17 @@ class PropertyController extends Controller
         ->join('currencies', 'properties.currency_id', 'currencies.id')
         ->where('properties.user_id', Auth::user()->id)
         ->get();
-        
+
         return response()->json([
             'properties' => $properties,
             'total' => count($properties),
             'status' => Status::get(),
             'currencies' => Currency::get(),
-            'types' => types()
+            'types' => types(),
+            'situations' => situations(),
+            'antiquitys' => antiquity(),
+            'conditions' => conditions(),
+            'locations' => locationsKeys()
         ]);
     }
 
@@ -73,6 +79,10 @@ class PropertyController extends Controller
             'status' => Status::get(),
             'currencies' => Currency::get(),
             'types' => types(),
+            'situations' => situations(),
+            'antiquitys' => antiquity(),
+            'conditions' => conditions(),
+            'locations' => locationsKeys()
         ]);
     }
 
@@ -83,7 +93,7 @@ class PropertyController extends Controller
             'user_id' => Auth::user()->id,
             'title' => $request->title,
             'type' => $request->type,
-            'country' => $request->country,
+            'province' => $request->province,
             'price' => $request->price,
             'currency_id' => $request->currency,
             'status_id' => $request->status_id,
@@ -102,28 +112,68 @@ class PropertyController extends Controller
 
         return response()->json([
             'property' => $property,
+            'envs' => Environment::where('type','1')->get(),
+            'services' => Service::get(),
+            'extras' => Environment::where('type','2')->get(),
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $prop = Property::where('id', '=', "$id")->first();
-        $property = Property::find($id);
-        $property->update([
-            'user_id' => Auth::auth()->id,
-            'title' => $request['title'],
-            'information' => $request['information'],
-            'price' => $request['price'],
-            'dimension' => $request['dimension'],
-            'status_id' => $request['status'],
-            'city' => 1,
-            'currency_id' => $request['currency_id']
-        ]);
+        /*
+array:33 [
+
+  "environments" => array:2 [
+    0 => 2
+    1 => 6
+  ]
+  "services" => array:2 [
+    0 => 2
+    1 => 6
+  ]
+  "extras" => 24
+]
+
+         */
+
+        $property = Property::find($request->id);
+        $property->status_id = $request->status_id;
+        $property->currency_id = $request->currency;
+        $property->title = $request->title;
+        $property->province = $request->province;
+        $property->location = $request->location;
+        $property->subdivision_1 = $request->subdivision_1;
+        $property->subdivision_2 = $request->subdivision_2;
+        $property->show_web = $request->show_web;
+        $property->type = $request->type;
+        $property->situation = $request->situation;
+        $property->antiquity = $request->antiquity;
+        $property->condition = $request->condition;
+        $property->keys = $request->key;
+        $property->price = $request->price;
+        $property->dimension = $request->dimension;
+        $property->environments = $request->environments;
+        $property->plants = $request->plants;
+        $property->bedrooms = $request->bedrooms;
+        $property->toilettes = $request->toilettes;
+        $property->dresser = $request->dresser;
+        $property->chocheras = $request->chocheras;
+        $property->save();
+
+
+        Environment_property::where('property_id',$property->id)->whereNotIn("environment_id",$environments)->delete();
+
+        $envs = Environment_property::where('property_id',$property->id)->whereIn("environment_id",$environments)->get();
+
+        for ( $i = 0; $i < count($request->environments); $i++ ):
+        endfor;
+
         Report::create([
             'type' => 'Actualización',
             'table' => 'Propiedad',
             'information' => 'Se actualizó la propiedad: ' . $prop->title . ' a ' . $request['title'] . ' con la información ' . $prop->information . ' a ' . $request['information'] . ' dimensiones anteriores:' . $prop->dimension . ' dimensiones nuevas: ' . $request['dimension'] . ' precio anterior: ' . $prop->precio . ' precio nuevo: ' . $request['price']
         ]);
+
         return response()->json("success");
     }
 
@@ -145,6 +195,7 @@ class PropertyController extends Controller
     public function destroy($id)
     {
         $prop = Property::where('id', '=', "$id")->first();
+
         $property = Property::find($id)->delete();
 
         Report::create([
@@ -152,6 +203,7 @@ class PropertyController extends Controller
             'table' => 'Propiedad',
             'information' => 'Se eliminó la propiedad: ID#' . $id . " " . $prop->title . ' con la información ' . $prop->information . ' dimensiones:' . $prop->dimension . '  precio: ' . $prop->precio
         ]);
+
         return response()->json("success", 200);
     }
 }

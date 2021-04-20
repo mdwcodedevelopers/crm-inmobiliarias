@@ -13,8 +13,8 @@
   function situations()
   {
     $situation = array(
-      "1" => "Habitada",
-      "2" => "Vacía",
+      [ "id" => 1, "name" => "Habitada"],
+      [ "id" => 2, "name" => "Vacía"]
     );
 
     return $situation;
@@ -23,9 +23,9 @@
   function antiquity()
   {
     $antiquity = array(
-      "1" => "A estrenar",
-      "2" => "Años",
-      "3" => "En construcción",
+      [ "id" => 1, "name" => "A estrenar"],
+      [ "id" => 2, "name" => "Años"],
+      [ "id" => 3, "name" => "En construcción"]
     );
 
     return $antiquity;
@@ -34,12 +34,12 @@
   function conditions()
   {
     $conditions = array(
-      "1" => "Regular",
-      "2" => "A refaccionar",
-      "3" => "Reciclado",
-      "4" => "Bueno",
-      "5" => "Muy bueno",
-      "6" => "Excelente",
+    [ "id" => 1, "name" => "Regular"],
+    [ "id" => 2, "name" => "A refaccionar"],
+    [ "id" => 3, "name" => "Reciclado"],
+    [ "id" => 4, "name" => "Bueno"],
+    [ "id" => 5, "name" => "Muy bueno"],
+    [ "id" => 6, "name" => "Excelente"]
     );
 
     return $conditions;
@@ -48,11 +48,11 @@
   function locationsKeys()
   {
     $locations = array(
-      "1" => "En nuestra posesión",
-      "2" => "En la propiedad",
-      "3" => "Portero",
-      "4" => "Agente",
-      "5" => "Desconocido",
+    [ "id" => 1, "name" => "En nuestra posesión"],
+    [ "id" => 2, "name" => "En la propiedad"],
+    [ "id" => 3, "name" => "Portero"],
+    [ "id" => 4, "name" => "Agente"],
+    [ "id" => 5, "name" => "Desconocido"]
     );
 
     return $locations;
