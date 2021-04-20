@@ -35,7 +35,7 @@ class Oportunity extends Model
 
   public function NotesOportunities()
   {
-    return $this->hasMany(NoteOportunity::class, 'oportunity_id');
+    return $this->hasMany(Note_oportunity::class, 'oportunity_id');
   }
 
   //PORQUE HAY 3 METODOS QUE HACEN LO MISMO?    

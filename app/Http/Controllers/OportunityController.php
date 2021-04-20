@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Oportunity;
-use App\NoteOportunity;
+use App\Note_oportunity;
 use App\Contact;
 use App\StatusOportunity;
 use Illuminate\Http\Request;

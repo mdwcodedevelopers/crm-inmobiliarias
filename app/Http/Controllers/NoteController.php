@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\NoteOportunity;
+use App\Note_oportunity;
 
 class NoteController extends Controller
 {
@@ -20,7 +20,7 @@ class NoteController extends Controller
     }
     public function store(Request $request)
     {
-        $note = new NoteOportunity;
+        $note = new Note_oportunity;
         $note->title = $request->title;
         $note->description = $request->description;
         $note->oportunity_id = $request->oportunity_id;
@@ -38,7 +38,7 @@ class NoteController extends Controller
      */
     public function show($id)
     {
-        $notes = NoteOportunity::where('oportunity_id', $id)->orderByRaw('created_at ASC')->get();
+        $notes = Note_oportunity::where('oportunity_id', $id)->orderByRaw('created_at ASC')->get();
         return $notes;
     }
 
