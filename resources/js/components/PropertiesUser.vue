@@ -242,19 +242,30 @@
 
                           <v-tab-item>
                             <v-card flat  width="100%">
-                              <v-card-title class="headline">
-                                Subir Imagenes de la Propiedad
-                              </v-card-title>
-                              <v-card-text>
-                                <v-container>
-                                  <v-form ref="form" v-model="valid">
-                                    <v-layout wrap>
-                                      <v-flex xs12 sm6 md6>
-                                      </v-flex>
-                                    </v-layout>
-                                  </v-form>
-                                </v-container>
-                              </v-card-text>
+
+                                    <v-card-title>
+                                        <span class="headline">Añadir imagen</span>
+                                    </v-card-title>
+                                    <v-card-text>
+                                        <v-container grid-list-md>
+                                            <v-layout wrap>
+                                                <v-flex xs12 sm6 md6>
+                                                    <v-file-input
+                                                    v-model="image" accept="image/*" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon="mdi-archive" ></v-file-input>
+                                                </v-flex>
+
+                                                <v-flex xs12>
+                                                    {{error}}
+                                                </v-flex>
+                                            </v-layout>
+                                        </v-container>
+                                    </v-card-text>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="danger" @click="dialog = false">Cancelar</v-btn>
+                                        <v-btn color="success" @click.prevent="saveImage()">Crear</v-btn>
+                                    </v-card-actions>
+
                             </v-card>
                           </v-tab-item>
                         </v-tabs-items>
@@ -305,6 +316,7 @@
     },
     data() {
       return {
+        image: null,
         property: {},
         properties: [],
         status: [],
@@ -434,8 +446,29 @@
         this.id_delete = id;
         this.dialogdelete = true;
       },
-      images(id) {
-        window.location.href = "/property-images/" + id;
+      saveImage() {
+        let InstFormData = new FormData();
+        InstFormData.append('image' , this.image);
+        InstFormData.append('property_id' , this.property.id);
+
+        axios.post('/admin/api-images', InstFormData , {headers : {'content-type': 'multipart/form-data'}}).then((response) => {
+          if (response.status == 200) {
+            this.dialog= false;
+            this.index();
+            this.$swal.fire(
+            'Imagen subida con exito',
+            '',
+            'success'
+            );
+          }
+        }).catch(error => {
+          this.$swal.fire({
+            icon: 'Error',
+            title: 'Ocurrio un error al subir la imagen',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        });
       },
       exportPDF() {
         var columns = [
@@ -486,6 +519,23 @@
     },
     created() {
       this.index(0, '');
+    },
+    validarImagen(uploadFile)
+    {
+      if (!window.FileReader) {
+          this.error= 'El navegador no soporta la lectura de archivos';
+          return false;
+      }
+      if (!(/\.(jpg|png|gif)$/i).test(uploadFile.name)) {
+          this.error = 'El archivo a adjuntar no es una imagen de un formato valido';
+          return false;
+      }
+      if (uploadFile.size > 500000)
+      {
+          this.error='El peso de la imagen no puede exceder los 500kb';
+          return false;
+      }
+      return true;
     },
     computed: {
       headers() {

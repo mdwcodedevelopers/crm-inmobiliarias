@@ -5,9 +5,9 @@
             <v-icon>mdi-chevron-left-circle-outline</v-icon>
         </v-btn>
         <span class="display-1">
-            Regresar a propiedades 
+            Regresar a propiedades
         </span>
-            
+
         </v-card>
         <v-card
         class="mx-auto
@@ -46,12 +46,7 @@
                                 <v-flex xs12 sm6 md6>
                                     <v-file-input
                                     v-model="archivo" accept="image/*" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon="mdi-archive" ></v-file-input>
-                                   <!-- <input
-                                            class="appearance-none border-2 border-gray-200 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                                            ref="image" type="file">-->
-                                   <!-- <v-file-input ref="image" prepend-icon="mdi-camera" accept="image/png, image/jpeg, image/bmp" show-size counter multiple label="File input"></v-file-input>
-                                   --></v-flex>
-
+                                </v-flex>
 
                                 <v-flex xs12>
                                     {{error}}
@@ -62,68 +57,11 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="danger" @click="dialog = false">Cancelar</v-btn>
-                        <v-btn color="success" @click.prevent="create()">Crear</v-btn>
+                        <v-btn color="success" @click.prevent="saveImage()">Crear</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
         </v-layout>
-       <!-- <template>
-            <v-layout row justify-center>
-                <v-dialog v-model="dialogedit" persistent max-width="600px">
-                    <v-card>
-                        <v-card-title>
-                            <span class="headline">Editar propiedad</span>
-                        </v-card-title>
-                        <v-card-text>
-                            <v-container grid-list-md>
-                                <v-layout wrap>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Titulo" v-model="title_edit" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Dimensiones" v-model="dimension_edit"></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Precio" v-model="price_edit" persistent-hint required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" @click="prueba()" v-model="currency_id_edit">
-                                            <option selected disabled>Moneda
-                                            </option>
-                                            <option v-for="item in currency" :value="item.id" >
-                                                {{ item.currency }}
-                                            </option>
-                                        </select>
-
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Información de la propiedad" v-model="information_edit" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <select class="form-control mt-2" placeholder="Estado" v-model="status_id_edit" required>
-                                            <option selected disabled>Estatus
-                                            </option>
-                                            <option v-for="item in status" :value="item.id">
-                                                {{ item.status }}
-                                            </option>
-                                        </select>
-
-                                    </v-flex>
-                                    <v-flex xs12>
-                                        {{error}}
-                                    </v-flex>
-                                </v-layout>
-                            </v-container>
-                        </v-card-text>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="danger" @click="dialogedit = false">Cancelar</v-btn>
-                            <v-btn color="success" @click.prevent="edit_model()">Editar</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
-            </v-layout>
-        </template>-->
         <template>
             <v-layout row justify-center>
                 <v-dialog v-model="dialogdelete" persistent max-width="600px">
@@ -165,7 +103,7 @@
         <v-row>
             <v-col  v-for="item in images" :key="item.id" cols="4" >
                 <v-card>
-                    
+
                     <v-img :src="'../'+item.url_image" ></v-img>
 
                     <v-card-actions>
@@ -179,7 +117,7 @@
                     </v-btn>
                     <v-btn color="warning" small class="m-3"  v-else @click="setimage(item.url_image)">
                             Seleccionar como principal
-                    </v-btn>        
+                    </v-btn>
                         <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
                             <v-icon color="#fff">
                                 mdi-delete
@@ -217,33 +155,19 @@ export default {
             dialogimage: false,
             dialogedit: false,
             dialogdelete: false,
-            error:'',
-            archivo:null,
+            error: '',
+            image: null,
             images: [],
             dialog:false
         }
     },
     methods: {
-        create() {
+        saveImage() {
             let InstFormData = new FormData();
-            InstFormData.append('imagen' , this.archivo);
+            InstFormData.append('image' , this.image);
             InstFormData.append('property_id' , this.id);
-            // if (this.$refs.image) {
-            //         this.image = this.$refs.image.files[0]
-            //     }
 
-            // // this.image = this.$refs.image.files[0];
-            // console.log(this.image);
-            // axios.post("/api-images", {
-            //     images_id: this.id,
-            //     imagen:this.image
-            //     // image:this.$refs.image.files[0]
-            // },).then((response) => {
-            //     console.log(response)
-            //     if (response.status == 200) {
-            //     }
-            // });
-            if(!this.validarImagen(this.archivo)){
+            if( !this.validarImagen(this.image) ){
                 this.$swal.fire(
                       'Error',
                       this.error,
@@ -326,7 +250,6 @@ export default {
                 this.error= 'El navegador no soporta la lectura de archivos';
                 return false;
             }
-
             if (!(/\.(jpg|png|gif)$/i).test(uploadFile.name)) {
                 this.error = 'El archivo a adjuntar no es una imagen de un formato valido';
                 return false;
@@ -337,7 +260,6 @@ export default {
                 return false;
             }
             return true;
-                         
         }
     },
     created(){
