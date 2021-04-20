@@ -20,8 +20,7 @@ class CreatePropertiesTable extends Migration
             $table->foreignId('currency_id');
             $table->string('title');
             $table->string('information')->nullable();
-            $table->string('country')->nullable();
-            $table->string('region')->nullable();
+            $table->string('province')->nullable();
             $table->string('location')->nullable();
             $table->string('subdivision_1')->nullable();
             $table->string('subdivision_2')->nullable();
@@ -35,6 +34,14 @@ class CreatePropertiesTable extends Migration
             $table->enum('keys', [1, 2, 3, 4, 5]);
             $table->decimal('price',20,2);
             $table->decimal('dimension',20,2)->nullable();
+
+            $table->smallInteger('environments')->nullable();
+            $table->smallInteger('plants')->nullable();
+            $table->smallInteger('bedrooms')->nullable();
+            $table->smallInteger('toilettes')->nullable();
+            $table->smallInteger('dresser')->nullable();
+            $table->smallInteger('chocheras')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

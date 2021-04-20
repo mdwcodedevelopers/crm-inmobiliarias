@@ -31,6 +31,6 @@ class CreateProenvironmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proenviroments');
+        Schema::dropIfExists('proenvironments');
     }
 }
