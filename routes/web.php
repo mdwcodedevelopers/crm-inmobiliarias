@@ -21,10 +21,11 @@ Auth::routes(['verify' => true]);
 Route::get('/','WelcomeController@index');
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/property/{id}','PropertyController@property');
     Route::get('/property-images/{id}','ImageController@images');
     Route::put('/property-images-set/{id}','ImageController@setimage');
+
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/property/{id}','PropertyController@property');
     Route::post('/company-image/{id}','CompanyController@setimage');
     Route::post('/api-password/{id}','UsersController@updatepassword');
     Route::get('/currency','CurrencyController@view');

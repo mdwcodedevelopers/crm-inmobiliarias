@@ -306,6 +306,7 @@
     },
     data() {
       return {
+        image: null,
         property: {},
         properties: [],
         status: [],
@@ -435,8 +436,29 @@
         this.id_delete = id;
         this.dialogdelete = true;
       },
-      images(id) {
-        window.location.href = "/property-images/" + id;
+      saveImage() {
+        let InstFormData = new FormData();
+        InstFormData.append('image' , this.image);
+        InstFormData.append('property_id' , this.property.id);
+
+        axios.post('/admin/api-images', InstFormData , {headers : {'content-type': 'multipart/form-data'}}).then((response) => {
+          if (response.status == 200) {
+            this.dialog= false;
+            this.index();
+            this.$swal.fire(
+            'Imagen subida con exito',
+            '',
+            'success'
+            );
+          }
+        }).catch(error => {
+          this.$swal.fire({
+            icon: 'Error',
+            title: 'Ocurrio un error al subir la imagen',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        });
       },
       exportPDF() {
         var columns = [
@@ -487,6 +509,23 @@
     },
     created() {
       this.index(0, '');
+    },
+    validarImagen(uploadFile)
+    {
+      if (!window.FileReader) {
+          this.error= 'El navegador no soporta la lectura de archivos';
+          return false;
+      }
+      if (!(/\.(jpg|png|gif)$/i).test(uploadFile.name)) {
+          this.error = 'El archivo a adjuntar no es una imagen de un formato valido';
+          return false;
+      }
+      if (uploadFile.size > 500000)
+      {
+          this.error='El peso de la imagen no puede exceder los 500kb';
+          return false;
+      }
+      return true;
     },
     computed: {
       headers() {

@@ -15,12 +15,7 @@
                                 <v-flex xs12 sm6 md6>
                                     <v-file-input
                                     v-model="archivo" accept="image/*" placeholder="Subir Archivo" label="Subir Archivo" prepend-icon="mdi-archive" ></v-file-input>
-                                   <!-- <input
-                                            class="appearance-none border-2 border-gray-200 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                                            ref="image" type="file">-->
-                                   <!-- <v-file-input ref="image" prepend-icon="mdi-camera" accept="image/png, image/jpeg, image/bmp" show-size counter multiple label="File input"></v-file-input>
-                                   --></v-flex>
-
+                                </v-flex>
 
                                 <v-flex xs12>
                                     {{error}}
@@ -31,7 +26,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="danger" @click="dialog = false">Cancelar</v-btn>
-                        <v-btn color="success" @click.prevent="create()">Crear</v-btn>
+                        <v-btn color="success" @click.prevent="saveImage()">Crear</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -92,7 +87,7 @@
                     </v-btn>
                     <v-btn color="warning" small class="m-3"  v-else @click="setimage(item)">
                             Seleccionar como principal
-                    </v-btn>        
+                    </v-btn>
                         <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
                             <v-icon color="#fff">
                                 mdi-delete
@@ -116,16 +111,16 @@ export default {
             dialogimage: false,
             dialogedit: false,
             dialogdelete: false,
-            error:'',
-            archivo:null,
+            error: '',
+            image: null,
             images: [],
             dialog:false
         }
     },
     methods: {
-        create() {
+        saveImage() {
             let InstFormData = new FormData();
-            InstFormData.append('imagen' , this.archivo);
+            InstFormData.append('image' , this.image);
             InstFormData.append('property_id' , this.id);
     
             if(!this.validarImagen(this.archivo)){
@@ -208,7 +203,6 @@ export default {
                 this.error= 'El navegador no soporta la lectura de archivos';
                 return false;
             }
-
             if (!(/\.(jpg|png|gif)$/i).test(uploadFile.name)) {
                 this.error = 'El archivo a adjuntar no es una imagen de un formato valido';
                 return false;
@@ -219,7 +213,6 @@ export default {
                 return false;
             }
             return true;
-                         
         }
     },
     created(){

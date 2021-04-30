@@ -10,15 +10,15 @@ use Auth;
 
 class ImageController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-    public function index(Request $request){
-        $id=$request->id;
-        $images= Image::where('property_id','=',$id)->get();
-        return response()->json(['images'=>$images]);
+
+
+    public function index(Request $request)
+    {
+        $images = Image::where('property_id', $request->id)->get();
+
+        return response()->json(['images'=> $images]);
     }
+
     public function store(Request $request)
     {
 
@@ -41,6 +41,15 @@ class ImageController extends Controller
             //     'url_image'=>$image_path
             // ]);
         }
+
+
+        $image = new Image();
+        $image->url = $path . $fileName;
+        $image->property_id = $request->property_id;
+        $image->save();
+
+
+        return response()->json("success", 200);
     }
     public function setimage(Request $request,$id){
         $image = Image::find($id);
@@ -54,22 +63,45 @@ class ImageController extends Controller
 
         return response()->json("success");
     }
+
+
+    public function getImage(Request $request, $id)
+    {
+        $property = Property::find($id);
+
+        return response()->json([
+            'image' => $property->Images->first(),
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
 
-        if($request['image']!=null){
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            Storage::put('clients/'.$file->getFilename().'.'.$extension,  File::get($file));
-            $image_path=env('APP_URL').'storage'.'/images/'.$file->getFilename().'.'.$extension;
+        try
+        {
+          $extension = mb_strtolower($request->file('image')->getClientOriginalExtension());
+          $fileName = uniqid().'.'.$extension;
+          $path = "images/properties/";
+
+          if (\Request::file('image')->isValid()){
+            $request->file('image')->move($path, $fileName);
+          }
         }
+        catch (Exception $e) {
+          \File::delete($path."/".$fileName);
+          return redirect()->back()->withErrors($e->getMessage())->withInput($request->input());
+        }
+
+
         $image = Image::find($id);
-        $image->update([
-            'property_id'=>$request['property_id'],
-            'url_image'=>$image_path
-        ]);
+        $image->url = $path . $fileName;
+        $image->property_id = $request->property_id;
+        $image->save();
+
         return response()->json("success", 200);
     }
+
+
     public function destroy($id)
     {
         $image = Image::find($id);
@@ -77,6 +109,8 @@ class ImageController extends Controller
 
         return response()->json("success", 200);
     }
+
+
     public function Images($id)
     {
         // $property= Property::where('id','=',$id)->first();
