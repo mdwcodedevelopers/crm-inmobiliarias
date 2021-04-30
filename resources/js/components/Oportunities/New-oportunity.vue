@@ -127,7 +127,7 @@
     computed:{
         getContacts(){
           axios.get('/admin/api-contacts').then((response) =>{
-            this.contacts= response.data;
+            this.contacts= response.data.contacts;
           });
         },
         disabledButton(){

@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/company','CompanyController@view');
     Route::get('/users','UsersController@view');
     Route::get('/oportunities', "OportunityController@view");
+    Route::get('/contacts', "ContactController@view");
     Route::get('/contacts/tags', "TagController@view");
     Route::get('/config', "ConfigController@index");
     Route::resources(['api-properties' => PropertyController::class,
@@ -45,7 +46,8 @@ Route::group(['prefix' => 'admin'], function () {
     'api-service'=>ServiceController::class,
     'api-environment'=>EnvironmentController::class,
     'api-dashboard'=>DashboardController::class,
-    'api-oportunities'=>OportunityController::class]);
+    'api-oportunities'=>OportunityController::class,
+    'api-contacts'=>ContactController::class]);
     Auth::routes();
 
     Route::get('/api-properties-user', 'PropertyController@properties');
@@ -65,7 +67,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     Route::put('/api-oportunities/close/{id}', 'OportunityController@closeOportunity');
-    Route::get('/api-contacts','OportunityController@getContacts');
+    // Route::get('/api-contacts','OportunityController@getContacts');
     Route::get('/api-notes/{id}','NoteController@show');
     Route::post('/api-notes','NoteController@store');
     Route::post('/api-oportunities/sendMail','OportunityController@sendEmail');

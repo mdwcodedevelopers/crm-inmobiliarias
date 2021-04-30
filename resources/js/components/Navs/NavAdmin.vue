@@ -33,12 +33,12 @@
                         </v-icon>
                         <a href="/">Pagina web</a>
                     </v-list-item>
-                    <!-- <v-list-item>
+                    <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-account-box-multiple
                         </v-icon>
-                        <a href="/admin/users">Usuarios</a>
-                    </v-list-item> -->
+                        <a href="/admin/contacts">Contactos</a>
+                    </v-list-item>
 
                     <!-- <v-list-item>
                         <v-icon color="white" class="px-2">
@@ -46,7 +46,7 @@
                         </v-icon>
                         <a href="/admin/currency">Monedas</a>
                     </v-list-item> -->
-                    <v-list-item>
+                    <v-list-item v-if="rol == 1 || rol == 3 ">
                         <v-icon color="white"  class="px-2">
                            mdi-office-building
                         </v-icon>

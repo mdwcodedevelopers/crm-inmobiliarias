@@ -28,6 +28,7 @@ import colors from 'vuetify/lib/util/colors'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('contacts', require('./components/Contacts.vue').default);
 Vue.component('configuration', require('./components/Configuration.vue').default);
 Vue.component('tags', require('./components/Tags.vue').default);
 Vue.component('note-action', require('./components/Oportunities/Note-actions.vue').default);

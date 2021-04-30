@@ -23,7 +23,7 @@ class TagController extends Controller
         // $groups = GroupTag::selectRaw('group_tags.id As group_id, group_tags.name As groupName, tags.id, tags.name As tagName')
         // ->join('tags', 'tags.group_id', 'group_tags.id')->get();
         $groups = GroupTag::selectRaw('id, name')->get();
-        $tags = Tag::selectRaw('id, name, group_id')->get();
+        $tags = Tag::selectRaw('id, name, group_tag_id')->get();
 
         foreach ($tags as $key => $value) {
             $value->count = Contact::whereTagId($value->id)->count();

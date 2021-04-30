@@ -43,7 +43,7 @@
                         @click="selected=[]"
                     >
                         <v-expansion-panel-header
-                        color="grey lighten-1">
+                         color="blue lighten-1 white--text">
                             {{group.name}}
                             </v-expansion-panel-header>
 
@@ -158,7 +158,7 @@ export default {
     }),
     methods:{
         groupFilter(id){
-            let x = this.tags.filter(function (el) {return el.group_id == id});
+            let x = this.tags.filter(function (el) {return el.group_tag_id == id});
 
             return x;
         }

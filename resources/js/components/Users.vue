@@ -176,7 +176,7 @@
                                         mdi-delete
                                     </v-icon>
                                 </v-btn>
-                                <v-btn color="#66BB6A"  small @click="whatsapp(item.phone)">
+                                <v-btn color="#66BB6A"  small @click="whatsapp(item.phone_1)">
                                     <v-icon color="#fff">
                                         mdi-whatsapp
                                     </v-icon>

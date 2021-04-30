@@ -4,19 +4,24 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Contact extends Model
 {
   use HasFactory;
 
-  protected $fillable = ['tag_id','name', 'image','email','phone_1','phone_2'];
+  protected $fillable = ['name', 'image','email','phone_1','phone_2','direction','province','user_id'];
 
   protected $table = 'contacts';
 
 
-  public function Tag()
+  
+  public function getCreatedAtAttribute($value)
   {
-    return $this->belongsTo(Tag::class, "tag_id");
+    return Carbon::parse($value)->format('d-m-Y');
   }
-
+  public function getUpdatedAtAttribute($value)
+  {
+    return Carbon::parse($value)->format('d-m-Y');
+  }
 }
