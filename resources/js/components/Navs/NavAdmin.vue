@@ -26,19 +26,53 @@
 
             <v-list nav dense  class="nav-list my-6">
 
-                <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+                <v-list-item-group v-model="group" active-class=" text--accent-4">
                     <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-file-document
                         </v-icon>
                         <a href="/">Pagina web</a>
                     </v-list-item>
-                    <v-list-item>
+                    <v-list-group
+                        no-action
+                        sub-group
+                        prepend-icon=""
+                        color="light-blue darken-3"
+                        class="text--white drop-custom-list "
+                        >
+                        <template v-slot:activator>
+                            <v-list-item-content 
+                                color="white"
+                                 >
+                                <v-list-item-title> 
+                                    <v-icon color="white" class="px-2">
+                                        mdi-account-box-multiple
+                                    </v-icon>
+                                    Contactos
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </template>
+
+                        <v-list-item>
+                            <a href="/admin/contacts">Listado</a>
+                        </v-list-item>
+                        
+                        <v-list-item>
+                            <a href="/admin/contacts/tags">Etiquetas</a>
+                        </v-list-item>
+                        
+                        <v-list-item disabled>
+                            <a href="/admin/contacts">Migraciones</a>
+                        </v-list-item>
+                    </v-list-group>
+                    <!-- <v-list-item>
+                       <v-list-item>
                         <v-icon color="white" class="px-2">
                             mdi-account-box-multiple
                         </v-icon>
                         <a href="/admin/contacts">Contactos</a>
                     </v-list-item>
+                    </v-list-item> -->
 
                     <!-- <v-list-item>
                         <v-icon color="white" class="px-2">
@@ -106,8 +140,21 @@
     .v-list-item a:hover{
         text-decoration: none;
     }
-    .nav-list a{
-        color: #fff;
+    .nav-list a, .nav-list .v-list-item__title{
+        color: #fff !important;
+    }
+    
+   .v-list--nav  .v-list-item{
+        padding-left: 24px !important;
+    }
+    .v-list--dense .v-list-item .v-list-item__title{
+        font-weight: 400 !important;
+    }
+    .drop-custom-list .v-list-group__items{
+        background-color: #2a414d !important;
+    }
+    .drop-custom-list .v-list-group__items .v-list-item{
+        padding-left: 50px !important;
     }
 </style>
 
@@ -123,9 +170,9 @@ export default {
     }),
 
     watch: {
-        group() {
-            this.drawer = false
-        },
+        // group() {
+        //     this.drawer = false
+        // },
     },
     methods:{
         logout() {

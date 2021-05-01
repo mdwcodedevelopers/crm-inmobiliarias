@@ -40,7 +40,17 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $contact = new Contact();
+        $contact->name = $request->name; 
+        $contact->email = $request->email; 
+        $contact->phone_1 = $request->phone_1; 
+        $contact->phone_2 = $request->phone_2; 
+        $contact->direction = $request->direction; 
+        $contact->province = $request->province;
+        $contact->user_id =  auth()->id(); 
+        $contact->save(); 
+
+        return response()->json("success");
     }
 
     /**
@@ -85,7 +95,9 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contact = Contact::find($id)->delete();
+
+        return response()->json("success", 200);
     }
 
     public function view()

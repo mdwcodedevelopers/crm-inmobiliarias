@@ -1,9 +1,9 @@
 <template>
   <div class="text-center p-4 d-flex align-items-center flex-column">
 
-<v-flex md8 style="overflow: auto"> 
+<v-flex md10 style="overflow: auto"> 
     <v-card color="blue">
-      <v-card-title class="display-1 text-white">
+      <v-card-title class="display-1 text-white titulo-custom">
         Agenda de contactos
         <v-btn color="success" dark absolute right fab class="mt-1" @click="create()">
           <v-icon>mdi-plus</v-icon>
@@ -12,6 +12,11 @@
       <v-card-text class="d-flex text-white">
                 Un listado completo de clientes.
             </v-card-text>
+             <v-spacer></v-spacer>
+    </v-card>
+    <v-card>
+
+      <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
       <v-data-table 
         :headers="headers"  
         no-results-text="No hay resultados" 
@@ -19,6 +24,10 @@
         :items="contacts" 
         item-key="id" 
         class="elevation-1" 
+        hide-default-footer
+        disable-pagination
+        :loading="contacts.length === 0"
+        loading-text="Cargando... Por favor espere"
         :search="search">
         
         <template v-slot:item.image="{ item }">
@@ -32,7 +41,7 @@
                     mdi-pencil
                 </v-icon>
             </v-btn>
-            <v-btn color="#E53935" small @click="delete_dialog(item.id,item.name,item.email)">
+            <v-btn color="#E53935" small @click="delete_dialog(item.id)">
                 <v-icon color="#fff">
                     mdi-delete
                 </v-icon>
@@ -47,37 +56,37 @@
       </v-data-table>
     </v-card>
 </v-flex>
-    <!-- <template>
+    <template>
       <v-layout row justify-center>
         <v-dialog v-model="dialog" persistent max-width="600px">
           <v-card class="my-4">
             <v-card-title>
-              <span class="headline">Crear propiedad</span>
+              <span class="headline">Crear Contacto</span>
             </v-card-title>
             <v-card-text>
               <v-container grid-list-md>
                 <v-form ref="form" v-model="valid">
                   <v-layout wrap>
-                    <v-flex xs12 sm6 md6>
-                      <v-text-field label="Titulo" :rules="inputRules" v-model="property.title" required></v-text-field>
+                    <v-flex xs12 md6 >
+                        <v-text-field label="Nombre*" :rules="inputRule" v-model="contact.name" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 sm6 md6>
-                      <v-select no-data-text="No existen tipos de propiedad registradas" v-model="property.type" :items="types" :rules="selectRules" item-text="name" item-value="id" label="Tipo de Propiedad"></v-select>
+                    <v-flex xs12 md6>
+                        <v-text-field label="Correo*" :rules="mailRule" v-model="contact.email" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 sm6 md6>
-                      <v-text-field label="Provincia" :rules="inputRules" v-model="property.province"></v-text-field>
+                    <v-flex xs12 md6 >
+                        <v-text-field label="Telefono 1*" :rules="numberRule" v-model="contact.phone_1" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 sm6 md6>
-                      <v-select no-data-text="No existen estatus registrados" v-model="property.status_id" :items="status" :rules="selectRules" item-text="name" item-value="id" label="Estatus" ></v-select>
+                    <v-flex xs12 md6 >
+                        <v-text-field label="Telefono 2*" :rules="numberRule" v-model="contact.phone_2" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 sm6 md6>
-                      <v-text-field label="Precio" :rules="numberRules" v-model="property.price" persistent-hint required></v-text-field>
+                    <v-flex xs12 md6 >
+                        <v-text-field label="Dirección*" :rules="inputRule" v-model="contact.direction" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 sm6 md6>
-                      <v-select no-data-text="No existen monedas registradas" v-model="property.currency" :items="currencies" :rules="selectRules" item-text="name" item-value="id" label="Moneda" ></v-select>
+                    <v-flex xs12 md6 >
+                        <v-text-field label="Provincia*" :rules="inputRule" v-model="contact.province" required></v-text-field>
                     </v-flex>
                     <v-flex xs12>
-                        {{error}}
+                        <small class="red--text">Los campos marcados con * son obligatorios</small>
                     </v-flex>
                   </v-layout>
                 </v-form>
@@ -92,7 +101,7 @@
         </v-dialog>
       </v-layout>
     </template>
-
+<!-- 
     <template>
       <v-layout row justify-center>
         <v-dialog v-model="dialogedit" persistent max-width="967px">
@@ -285,13 +294,13 @@
         </v-dialog>
       </v-layout>
     </template>
-
+-->
     <template>
       <v-layout row justify-center>
         <v-dialog v-model="dialogdelete" persistent max-width="600px">
           <v-card>
             <v-card-title>
-              <span class="headline">¿Esta seguro que desea eliminar esta propiedad?</span>
+              <span class="headline">¿Esta seguro que desea eliminar este contacto?</span>
             </v-card-title>
             <v-card-text>
             </v-card-text>
@@ -303,12 +312,12 @@
           </v-card>
         </v-dialog>
       </v-layout>
-    </template> -->
+    </template> 
 
   </div>
 </template>
 
-<style>
+<style scoped>
 
 </style>
 
@@ -319,64 +328,136 @@ export default {
             contacts: [],
             search: '',
             total:'',
+            contact: {},
+            dialog: false,
+            dialogdelete: false,
+            valid: false,
+             inputRule: [
+                v => !!v || 'El campo es obligatorio',
+              ],
+              selectRule: [
+                v => !!v || 'Debe seleccionar una opción',
+              ],
+              mailRule: [
+                v => !!v || 'Debe dar un correo',
+                v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El Correo no es valido'
+              ],
+              numberRule: [
+                v => !!v || 'El campo es obligatorio',
+                v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
+              ],
         }
     },
      methods: {
         index() {
-            axios.get("/admin/api-contacts").then((response) => {
-                console.log(response);
+            axios.get("/admin/api-contacts/" ).then((response) => {
                 this.contacts = response.data.contacts;
                 this.total = response.data.total;
             });
         },
         whatsapp(phone) {
             window.location.href = 'https://api.whatsapp.com/send?phone=' + phone;
-        }
+        },
+         create() {
+          this.contact = {};
+          this.dialog = true;
+        },
+        store() {
+          axios.post("/admin/api-contacts", this.contact).then((response) => {
+            if (response.status == 200) {
+              console.log(response);
+              this.index();
+              this.contact = {};
+              this.dialog = false;
+              this.$swal.fire('Contacto registrado con exito');
+            }
+          }).catch(error => {
+            this.$swal.fire(
+              'Error',
+              'Ocurrío un error al tratar de registrar el contacto, intente nuevamente.',
+              'error'
+            )
+          });
+          },
+            delete_dialog(id) {
+              this.id_delete = id;
+              this.dialogdelete = true;
+            },
+           delete_model() {
+            axios.delete("/admin/api-contacts/" + this.id_delete).then((response) => {
+              console.log(response);
+              if (response.status == 200) {
+                this.index(0, '');
+                this.dialogdelete = false;
+                this.$swal.fire(
+                  'Propiedad eliminada con exito',
+                  '',
+                  'success'
+                );
+              }
+        }).catch(error => {
+          this.$swal.fire(
+            'Error',
+            'Hubo un error al tratar de eliminar la propiedad, intente nuevamente.',
+            'error'
+          )
+        });
+      },
         },
     computed: {
         headers() {
             return [
-                {
-                    text: 'Imagen',
-                    value: 'image'
-                },
+                // {
+                //     text: 'Imagen',
+                //     value: 'image',
+                //     width: '10rem'
+                // },
                 {
                     text: 'Nombre',
-                    value: 'name'
+                    value: 'name',
+                    width: '10rem'
                 },
                 {
                     text: 'Email',
-                    value: 'email'
+                    value: 'email',
+                    width: '10rem'
                 },
                 {
                     text: 'Telefono 1',
-                    value: 'phone_1'
+                    value: 'phone_1',
+                    width: '10rem'
                 },
                 {
                     text: 'Telefono 2',
-                    value: 'phone_2'
+                    value: 'phone_2',
+                    width: '10rem'
                 },
                 {
                     text: 'Dirección',
-                    value: 'direction'
+                    value: 'direction',
+                    width: '10rem'
                 },
                 {
                     text: 'Provincia',
-                    value: 'province'
+                    value: 'province',
+                    width: '10rem'
                 },
                 {
                     text: 'Creado',
-                    value: 'created_at'
+                    value: 'created_at',
+                    width: '10rem'
                 },
                 {
                     text: 'Agente',
-                    value: 'agent_id'
+                    value: 'agent_id',
+                    width: '10rem'
                 },
                 {
                     text: 'Acciones',
                     value: 'action',
                     sortable: false,
-                    align: 'center'
+                    align: 'center',
+                    width: '12rem'
                 },
                 ];
             }

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->text('direction')->nullable();
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
+            $table->foreignId('contact_id')->nullable(); //id de contacto en caso de ser un tipo cliente
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');

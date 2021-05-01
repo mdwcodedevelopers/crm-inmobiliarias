@@ -24,7 +24,9 @@
                 <v-flex xs12  >
                     <v-text-field label="Dirección" :rules="[v => !!v || 'Debe llenar la dirección']" v-model="direction" required></v-text-field>
                 </v-flex>
-
+                <v-flex xs12>
+                        <small class="red--text">Los campos marcados con * son obligatorios</small>
+                    </v-flex>
             </v-layout>
         <v-spacer></v-spacer>
         <v-btn color="danger" @click="dialog = false;error=''">Cancelar</v-btn>
