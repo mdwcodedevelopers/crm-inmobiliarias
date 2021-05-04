@@ -56,7 +56,7 @@
                         style="text-align:left"
                         >{{ item.color }}</td>
                         <td>
-                            <v-btn color="#66BB6A" @click="edit(item.id,item.name,item.color)">
+                            <v-btn color="#ff9800" @click="edit(item.id,item.name,item.color)">
                                 <v-icon color="#fff">
                                     mdi-pencil
                                 </v-icon>

@@ -13,7 +13,7 @@
                 </div>
             </v-card-text>
             <v-card-actions>
-                <v-btn color="#66BB6A" @click="edit(company.name,company.information)">
+                <v-btn color="#ff9800" @click="edit(company.name,company.information)">
                     <v-icon color="#fff">
                         mdi-pencil
                     </v-icon>

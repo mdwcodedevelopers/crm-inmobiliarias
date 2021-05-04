@@ -22,7 +22,7 @@
                 mdi-file-pdf
             </v-icon>
           </v-btn>
-          <v-btn color="#66BB6A" class="m-1" @click="edit(item.id)">
+          <v-btn color="#ff9800" class="m-1" @click="edit(item.id)">
             <v-icon color="#fff">
                 mdi-pencil
             </v-icon>

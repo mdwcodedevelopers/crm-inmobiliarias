@@ -8,6 +8,10 @@ use App\Contact;
 
 class ContactController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,10 +19,13 @@ class ContactController extends Controller
      */
     public function index()
     {
+        // $contacts = Contact::selectRaw('contacts.*, users.name AS agent')->join('users', 'contacts.user_id', '=', 'users.id')->get();
         $contacts = Contact::get();
+        $agents = User::selectRaw('name, id')->where('role_id','=',3)->orWhere('role_id','=',1)->get();
         return response()->json([
             'contacts' => $contacts,
             'total' => count($contacts),
+            'agents' => $agents,
     ]);
     }
 
@@ -84,7 +91,17 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contact = Contact::find($id);
+        $contact->name = $request->name; 
+        $contact->email = $request->email; 
+        $contact->phone_1 = $request->phone_1; 
+        $contact->phone_2 = $request->phone_2; 
+        $contact->direction = $request->direction; 
+        $contact->province = $request->province;
+        $contact->user_id = $request->user_id; 
+        $contact->save(); 
+
+        return response()->json("success");
     }
 
     /**

@@ -17,26 +17,29 @@
                                         >
                                             <v-layout wrap>
                                                 <v-flex xs12 sm6 md6>
-                                                    <v-text-field label="Nombre*" :rules="[v => !!v || 'Debe seleccionar un nombre']" v-model="name" required></v-text-field>
+                                                    <v-text-field label="Nombre*" :rules="inputRule" v-model="user.name" required></v-text-field>
                                                 </v-flex>
                                                 <v-flex xs12 sm6 md6>
-                                                    <v-text-field label="Correo*" :rules="mailRule" v-model="email" required></v-text-field>
+                                                    <v-text-field label="Correo*" :rules="mailRule" v-model="user.email" required></v-text-field>
                                                 </v-flex>
-                                                <v-flex xs12 sm6 md6 v-if="role_id==2 | rol==3">
-                                                    <v-text-field label="Telefono" :rules="phoneRule" v-model="phone" required></v-text-field>
+                                                <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
+                                                    <v-text-field label="Telefono 1*" :rules="numberRule" v-model="user.phone_1" required></v-text-field>
                                                 </v-flex>
-                                                <v-flex xs12 sm6 md6 v-if="role_id==2 | rol==3">
-                                                    <v-text-field label="Provincia" :rules="[v => !!v || 'Debe escoger una opción']" v-model="province" required></v-text-field>
+                                                 <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
+                                                    <v-text-field label="Telefono 2*" :rules="numberRule" v-model="user.phone_2" required></v-text-field>
                                                 </v-flex>
-                                                <v-flex xs12 sm6 md6 v-if="role_id==2 | rol==3">
-                                                    <v-text-field label="Dirección" :rules="[v => !!v || 'Debe llenar la dirección']" v-model="direction" required></v-text-field>
+                                                <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
+                                                    <v-text-field label="Dirección*" :rules="inputRule" v-model="user.direction" required></v-text-field>
+                                                </v-flex>
+                                                <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
+                                                    <v-text-field label="Provincia*" :rules="inputRule" v-model="user.province" required></v-text-field>
                                                 </v-flex>
 
                                                 <v-flex xs12 sm6 md6>
                                                     <v-select
                                                     v-if="rol == 1"
                                                         no-data-text="No hay Roles"
-                                                            v-model="role_id"
+                                                            v-model="user.role_id"
                                                             :items="roles"
                                                             :rules="selectRules"
                                                             item-text="name"
@@ -45,7 +48,7 @@
                                                     ></v-select>
                                                 </v-flex>
                                                 <v-flex xs12>
-                                                    {{error}}
+                                                    <small class="red--text">Los campos marcados con * son obligatorios</small>
                                                 </v-flex>
                                             </v-layout>
                                         </v-form>
@@ -100,7 +103,7 @@
                                 </template>
                                 <template v-slot:item.action="{ item }">
 
-                                    <v-btn color="#66BB6A" small @click="edit(item.id,item.name,item.email,1)">
+                                    <v-btn color="#ff9800" small @click="edit(item)">
                                         <v-icon color="#fff">
                                             mdi-pencil
                                         </v-icon>
@@ -133,7 +136,7 @@
                             </template>
                             <template v-slot:item.action="{ item }">
 
-                                <v-btn color="#66BB6A" small @click="edit(item.id,item.name,item.email,3)">
+                                <v-btn color="#ff9800" small @click="edit(item)">
                                     <v-icon color="#fff">
                                         mdi-pencil
                                     </v-icon>
@@ -166,7 +169,7 @@
                             </template>
                             <template v-slot:item.action="{ item }">
 
-                                <v-btn color="#66BB6A"  small @click="edit(item.id,item.name,item.email,2)">
+                                <v-btn color="#ff9800"  small @click="edit(item)">
                                     <v-icon color="#fff">
                                         mdi-pencil
                                     </v-icon>
@@ -202,28 +205,28 @@
                                     ref="form"
                                     v-model="valid"
                                 >
-                                    <v-layout wrap>
+                                   <v-layout wrap>
                                         <v-flex xs12 sm6 md6>
-                                            <v-text-field label="Nombre" :rules="[v => !!v || 'Debe seleccionar un nombre']" v-model="name_edit" required></v-text-field>
+                                            <v-text-field label="Nombre*" :rules="inputRule" v-model="user.name" required></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md6>
-                                            <v-text-field label="Correo" :rules="mailRule" v-model="email_edit" required></v-text-field>
+                                            <v-text-field label="Correo*" :rules="mailRule" v-model="user.email" required></v-text-field>
                                         </v-flex>
-                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2 || rol==3">
-                                            <v-text-field label="Telefono" :rules="phoneRule" v-model="phone_edit" required></v-text-field>
+                                        <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
+                                            <v-text-field label="Telefono 1*" :rules="numberRule" v-model="user.phone" required></v-text-field>
                                         </v-flex>
-                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2 || rol==3">
-                                            <v-text-field label="Provincia" :rules="[v => !!v || 'Debe escoger una opción']" v-model="province_edit" required></v-text-field>
+                                        <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
+                                            <v-text-field label="Dirección*" :rules="inputRule" v-model="user.direction" required></v-text-field>
                                         </v-flex>
-                                        <v-flex xs12 sm6 md6 v-if="role_id_edit==2 || rol==3" >
-                                            <v-text-field label="Dirección"  :rules="[v => !!v || 'Debe llenar la dirección']" v-model="direction_edit" required></v-text-field>
+                                        <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
+                                            <v-text-field label="Provincia*" :rules="inputRule" v-model="user.province" required></v-text-field>
                                         </v-flex>
 
                                         <v-flex xs12 sm6 md6>
                                             <v-select
-                                                    v-if="rol == 1"
+                                            v-if="rol == 1"
                                                 no-data-text="No hay Roles"
-                                                    v-model="role_id_edit"
+                                                    v-model="user.role_id"
                                                     :items="roles"
                                                     :rules="selectRules"
                                                     item-text="name"
@@ -232,7 +235,7 @@
                                             ></v-select>
                                         </v-flex>
                                         <v-flex xs12>
-                                            {{error_edit}}
+                                            <small class="red--text">Los campos marcados con * son obligatorios</small>
                                         </v-flex>
                                     </v-layout>
                                 </v-form>
@@ -288,19 +291,7 @@ export default {
             users: [],
             search: '',
             roles: [],
-            name: '',
-            role_id: 0,
-            email: '',
-            phone: '',
-            province: '',
-            direction: '',
-            name_edit: '',
-            role_id_edit: '',
-            email_edit: '',
-            phone_edit: '',
-            province_edit: '',
-            direction_edit: '',
-            error_edit: '',
+            user: {},
             name_delete: '',
             valid: false,
             email_delete: '',
@@ -310,18 +301,20 @@ export default {
             items: [
                 'Administradores', 'Agentes', 'Usuarios'
             ],
-             selectRules: [
-                v => !!v || 'Debe escoger una opción',
-            ],
-             mailRule: [
+             inputRule: [
+                v => !!v || 'El campo es obligatorio',
+              ],
+              selectRule: [
+                v => !!v || 'Debe seleccionar una opción',
+              ],
+              mailRule: [
                 v => !!v || 'Debe dar un correo',
                 v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El Correo no es valido'
-            ],
-             phoneRule: [
-                v => !!v || 'Debe dar un telefono',
-                v => v.length != 10 || "El télefono debe de ser valido",
-                v => /^([0-9])*$/.test(v) ||  "El télefono debe de ser valido"
-            ],
+              ],
+              numberRule: [
+                v => !!v || 'El campo es obligatorio',
+                v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
+              ],
         }
     },
     methods: {
@@ -336,46 +329,29 @@ export default {
 
         },
         create() {
-            if (this.role_id != 0 || this.email != '' || this.name != '') {
                 if(this.rol==3){
-                    this.role_id = 2;
+                    this.user.role_id = 2;
                 }
-                if (this.role_id == 1 || this.role_id == 3) {
-                    this.phone = "";
-                    this.province = "";
-                    this.direction = "";
+                this.user.contact_id = true;
+                if (this.user.role_id == 1 || this.user.role_id == 3) {
+                    this.user.phone = "";
+                    this.user.province = "";
+                    this.user.direction = "";
+                    this.user.contact_id = false;
                 }
-                axios.post("/admin/api-users", {
-                    name: this.name,
-                    email: this.email,
-                    role_id: this.role_id,
-                    phone: this.phone,
-                    province: this.province,
-                    direction: this.direction
-                }).then((response) => {
+                axios.post("/admin/api-users", this.user).then((response) => {
                         this.index();
                         this.dialog = false;
                         // this.error='';
                         this.$swal('Usuario creado con exito', 'La contraseña y verificación fueron enviados al usuario', 'OK');
-                        this.name = "";
-                        this.email = "";
-                        this.role_id = "";
-                        this.phone = "";
-                        this.province = "";
-                        this.direction = "";
+                        this.user= {};
                 }).catch((e) => {
                     this.$swal({
                         title: 'Error al crear usuario, correo en uso',
                         type: 'warning'
                     });
                 });
-            } else {
-                this.$swal({
-                    title: 'Complete todos los campos',
-                    type: 'warning'
-                });
-
-            }
+            
         },
         logout() {
             axios.post("/logout", {
@@ -387,28 +363,20 @@ export default {
             });
         },
         edit_model() {
-                if (this.role_id_edit == 1 || this.role_id_edit == 3) {
-                    this.phone_edit = '';
-                    this.province_edit = '';
-                    this.direction_edit = '';
+            this.user.contact_id = true;
+                if (this.user.role_id == 1 || this.user.role_id == 3) {
+                    this.user.phone_1 = '';
+                    this.user.phone_2 = '';
+                    this.user.province = '';
+                    this.user.direction = '';
+                    this.user.contact_id = false;
                 }
-                axios.put("/admin/api-users/" + this.id_edit, {
-                    name: this.name_edit,
-                    email: this.email_edit,
-                    role_id: this.role_id_edit,
-                    phone: this.phone_edit,
-                    province: this.province_edit,
-                    direction: this.direction_edit
-                }).then((response) => {
+                axios.put("/admin/api-users/" + this.user.id, this.user).then((response) => {
                     if (response.status == 200) {
                         this.index();
+                        this.$swal('Usuario editado con exito', '', 'OK');
+                        this.user = {};
                         this.dialogedit = false;
-                        this.name_edit = "";
-                        this.email_edit = "";
-                        this.role_id_edit = "";
-                        this.phone_edit = "";
-                        this.province_edit = "";
-                        this.direction_edit = "";
                     }
                 }).catch(
                     this.error = "Error al crear Usuario, el email ya esta en uso"
@@ -424,12 +392,9 @@ export default {
                 }
             });
         },
-        edit(id, name, email, rol) {
+        edit(item) {
             this.dialogedit = true;
-            this.id_edit = id;
-            this.name_edit = name;
-            this.email_edit = email;
-            this.role_id_edit = rol;
+            this.user = item;
         },
         delete_dialog(id, name, email) {
             this.id_delete = id;
@@ -458,7 +423,8 @@ export default {
                     text: 'Acciones',
                     value: 'action',
                     sortable: false,
-                    align: 'center'
+                    align: 'center',
+                    width: '12rem'
                 },
             ]
         },
@@ -491,7 +457,8 @@ export default {
                     text: 'Acciones',
                     value: 'action',
                     sortable: false,
-                    align: 'center'
+                    align: 'center',
+                    width: '12rem'
                 },
             ]
         }

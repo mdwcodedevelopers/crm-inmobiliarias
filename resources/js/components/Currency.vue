@@ -47,7 +47,7 @@
             </template>
             <template v-slot:item.action="{ item }">
 
-                <v-btn color="#66BB6A" @click="edit(item.id,item.currency)">
+                <v-btn color="#ff9800" @click="edit(item.id,item.currency)">
                     <v-icon color="#fff">
                         mdi-pencil
                     </v-icon>
