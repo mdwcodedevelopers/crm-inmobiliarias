@@ -42,7 +42,7 @@
                     mdi-delete
                 </v-icon>
             </v-btn>
-            <v-btn color="#66BB6A"  small @click="whatsapp(item.phone)">  
+            <v-btn color="#66BB6A"  small @click="whatsapp(item.phone_1)">  
                 <v-icon color="#fff">
                     mdi-whatsapp
                 </v-icon>
@@ -80,6 +80,39 @@
                     </v-flex>
                     <v-flex xs12 md6 >
                         <v-text-field label="Provincia*" :rules="inputRule" v-model="contact.province" required></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-select
+                        v-model="contact_tag"
+                        :items="tags"
+                        :rules="selectRule"
+                        item-value="id" 
+                        label="Etiquetas:" 
+                        attach
+                        color="blue-grey lighten-2"
+                        chips
+                        multiple
+                         hint="Escoge las etiquetas para segmentarlo"
+                      >
+                       <template v-slot:selection="data">
+                      <!-- HTML that describe how select should render selected items -->
+                     <v-chip
+                        v-bind="data.attrs"
+                        :input-value="data.selected"
+                        close
+                        @click="data.select"
+                        @click:close="remove(data.item)"
+                      > {{ data.item.group_name }} > {{ data.item.name }} </v-chip>
+
+                    </template>
+                    <template v-slot:item="data">
+                       <v-list-item-content>
+                        <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                        <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
+                      </v-list-item-content>
+                    </template>
+                     
+                      </v-select>
                     </v-flex>
                     <v-flex xs12>
                         <small class="red--text">Los campos marcados con * son obligatorios</small>
@@ -128,7 +161,41 @@
                         <v-text-field label="Provincia*" :rules="inputRule" v-model="contact.province" required></v-text-field>
                     </v-flex>
                     <v-flex xs12>
-                      <v-select no-data-text="No existen agentes registrados" v-model="contact.user_id" :items="agents" :rules="selectRule" item-text="name" item-value="id" label="Agente:"></v-select>
+
+                    <v-select
+                        v-model="contact_tag"
+                        :items="tags"
+                        :rules="selectRule"
+                        item-value="id" 
+                        label="Etiquetas:" 
+                        attach
+                        color="blue-grey lighten-2"
+                        chips
+                        multiple
+                         hint="Escoge las etiquetas para segmentarlo"
+                      >
+                       <template v-slot:selection="data">
+                      <!-- HTML that describe how select should render selected items -->
+                     <v-chip
+                        v-bind="data.attrs"
+                        :input-value="data.selected"
+                        close
+                        @click="data.select"
+                        @click:close="remove(data.item)"
+                      > {{ data.item.group_name }} > {{ data.item.name }} </v-chip>
+
+                    </template>
+                    <template v-slot:item="data">
+                       <v-list-item-content>
+                        <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                        <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
+                      </v-list-item-content>
+                    </template>
+                     
+                      </v-select>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-select no-data-text="No existen agentes registrados" v-model="contact.user_id" :items="tags" :rules="selectRule" item-text="name" item-value="id" label="Agente:"></v-select>
                     </v-flex>
                   </v-layout>
                 </v-form>
@@ -176,6 +243,8 @@ export default {
         return {
             contacts: [],
             agents: [],
+            tags: [],
+            contact_tag: [],
             search: '',
             total:'',
             contact: {},
@@ -205,6 +274,8 @@ export default {
                 this.contacts = response.data.contacts;
                 this.total = response.data.total;
                 this.agents = response.data.agents;
+                this.tags = response.data.tags;
+
                 this.contacts.forEach(contact => {
                   if (contact.user_id === null) {
                       contact.agent = "Sin asignar";
@@ -219,13 +290,20 @@ export default {
           });
         },
         whatsapp(phone) {
-            window.location.href = 'https://api.whatsapp.com/send?phone=' + phone;
+            window.open('https://api.whatsapp.com/send?phone=' + phone, '_blank');
         },
+        remove (item) {
+            const index = this.contact_tag.indexOf(item.id)
+            if (index >= 0){
+              this.contact_tag.splice(index, 1)
+            }
+          },
          create() {
           this.contact = {};
           this.dialog = true;
         },
         store() {
+          this.contact.tags = this.contact_tag;
           axios.post("/admin/api-contacts", this.contact).then((response) => {
             if (response.status == 200) {
               console.log(response);
@@ -233,11 +311,13 @@ export default {
               this.contact = {};
               this.dialog = false;
               this.$swal.fire('Contacto registrado con exito');
+              this.contact.tags = [];
+
             }
           }).catch(error => {
             this.$swal.fire(
               'Error',
-              'Ocurrío un error al tratar de registrar el contacto, intente nuevamente.',
+              'Ocurrío un error al tratar de registrar el contacto, el correo esta en uso.',
               'error'
             )
           });
@@ -247,12 +327,14 @@ export default {
                this.dialogedit = true;
           },
           update(){
+          this.contact.tags = this.contact_tag;
             axios.patch("/admin/api-contacts/" + this.contact.id, this.contact).then((response) => {
             if (response.status == 200) {
               this.index();
               this.contact = {};
               this.dialogedit = false;
               this.$swal.fire('Contacto actualizado con exito');
+              this.contact.tags = []; 
             }
           }).catch(error => {
             this.$swal.fire(

@@ -75,7 +75,7 @@ class OportunityController extends Controller
     public function show($id_user)
     {
         $oportunities = Oportunity::selectRaw('oportunities.*,  contacts.name AS contact, contacts.phone_1 AS tel_1,
-          contacts.phone_2 AS tel_2, contacts.email AS email, contacts.image AS img_contact, status_oportunities.name AS status, status_oportunities.color AS status_color, users.name AS user' )
+          contacts.phone_2 AS tel_2, contacts.email AS email, contacts.direction As direction, contacts.province As province, status_oportunities.name AS status, status_oportunities.color AS status_color, users.name AS user' )
         ->join('contacts', 'oportunities.contact_id', '=', 'contacts.id')
         ->join('users', 'oportunities.user_id', '=', 'users.id')
         ->join('status_oportunities', 'oportunities.status_id', '=', 'status_oportunities.id')

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Contact;
+use App\GroupTag;
+use App\Tag;
+use App\Contact_tag;
 
 class ContactController extends Controller
 {
@@ -19,13 +22,16 @@ class ContactController extends Controller
      */
     public function index()
     {
-        // $contacts = Contact::selectRaw('contacts.*, users.name AS agent')->join('users', 'contacts.user_id', '=', 'users.id')->get();
+        // $contacts = Contact::selectRaw('contacts.*, contact_tag.tag_id')->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->get();
         $contacts = Contact::get();
         $agents = User::selectRaw('name, id')->where('role_id','=',3)->orWhere('role_id','=',1)->get();
+        $tags = Tag::selectRaw('tags.id, tags.name, group_tags.name AS group_name')
+        ->join('group_tags', 'tags.group_tag_id', '=', 'group_tags.id')->get();
         return response()->json([
             'contacts' => $contacts,
             'total' => count($contacts),
             'agents' => $agents,
+            'tags' => $tags,
     ]);
     }
 
@@ -47,6 +53,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        
         $contact = new Contact();
         $contact->name = $request->name; 
         $contact->email = $request->email; 
@@ -56,6 +63,15 @@ class ContactController extends Controller
         $contact->province = $request->province;
         $contact->user_id =  auth()->id(); 
         $contact->save(); 
+
+        if (count($request->tags) > 0) {
+            foreach ($request->tags as $key => $value) {
+                $tag = new Contact_tag();
+                $tag->contact_id = $contact->id;
+                $tag->tag_id = $value;
+                $tag->save();
+            }
+        }
 
         return response()->json("success");
     }
@@ -100,6 +116,17 @@ class ContactController extends Controller
         $contact->province = $request->province;
         $contact->user_id = $request->user_id; 
         $contact->save(); 
+
+        if (count($request->tags) > 0) {
+            $deleteTags= Contact_tag::where('contact_id', $id)->delete();
+
+            foreach ($request->tags as $key => $value) {
+                $tag = new Contact_tag();
+                $tag->contact_id = $contact->id;
+                $tag->tag_id = $value;
+                $tag->save();
+            }
+        }
 
         return response()->json("success");
     }
