@@ -47,7 +47,9 @@ Route::group(['prefix' => 'admin'], function () {
     'api-environment'=>EnvironmentController::class,
     'api-dashboard'=>DashboardController::class,
     'api-oportunities'=>OportunityController::class,
-    'api-contacts'=>ContactController::class]);
+    'api-contacts'=>ContactController::class,
+    'api-tags'=>TagController::class,
+    'api-group-tags'=>GroupTagController::class]);
     Auth::routes();
 
     Route::get('/api-properties-user', 'PropertyController@properties');

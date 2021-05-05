@@ -26,9 +26,8 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         if ($request->role_id == 2) {
-            $contact = new Contact();
+            $contact = Contact::firstOrNew(['email' =>  request('email')]);
             $contact->name = $request->name; 
-            $contact->email = $request->email; 
             $contact->phone_1 = $request->phone_1; 
             $contact->phone_2 = $request->phone_2; 
             $contact->direction = $request->direction; 

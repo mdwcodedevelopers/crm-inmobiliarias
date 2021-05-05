@@ -5,9 +5,28 @@
     <v-card color="blue">
       <v-card-title class="display-1 text-white titulo-custom">
         Agenda de contactos
-        <v-btn color="success" dark absolute right fab class="mt-1" @click="create()">
+      <v-card-actions 
+          style="position:absolute; right:0px" 
+          >
+        <v-btn
+            @click="dialogFilter = true"
+        >
+            <v-icon>
+                mdi-filter
+            </v-icon>
+            FIltros
+        </v-btn>
+        <v-btn
+        >
+            <v-icon>
+                mdi-file-pdf
+            </v-icon>
+            Exportar a pdf
+        </v-btn>
+        <v-btn color="success" dark fab class="mt-1" @click="create()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
+      </v-card-actions>
       </v-card-title>
       <v-card-text class="d-flex text-white">
                 Un listado completo de clientes.
@@ -47,6 +66,13 @@
                     mdi-whatsapp
                 </v-icon>
             </v-btn>
+        </template>
+        <template v-slot:item.tags="{ item }">
+            <v-chip
+                v-for="tag in tagsName(item.tags)"
+                :key="tag.id"
+                class="m-1"
+            > {{tag[0].name}} </v-chip>
         </template>
 
       </v-data-table>
@@ -195,7 +221,7 @@
                       </v-select>
                     </v-flex>
                     <v-flex xs12>
-                      <v-select no-data-text="No existen agentes registrados" v-model="contact.user_id" :items="tags" :rules="selectRule" item-text="name" item-value="id" label="Agente:"></v-select>
+                      <v-select no-data-text="No existen agentes registrados" v-model="contact.user_id" :items="agents" :rules="selectRule" item-text="name" item-value="id" label="Agente:"></v-select>
                     </v-flex>
                   </v-layout>
                 </v-form>
@@ -227,6 +253,129 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        <!-- Dialog de filtros -->
+        <v-dialog v-model="dialogFilter" persistent max-width="600px">
+          <v-card class="my-4">
+            <v-card-title>
+              <span class="headline">Filtros</span>
+            </v-card-title>
+            <v-card-text>
+              <v-container grid-list-md>
+                <v-form ref="form" v-model="valid">
+                  <v-layout wrap>
+                    <v-flex xs12>
+                      <p class="black--text">Ver solo contactos de: </p>
+                      <v-flex xs12 md6>
+                        <v-select
+                          v-model="filter.agents"
+                          :items="agents"
+                          :rules="selectRule"
+                          item-text="name" 
+                          item-value="id" 
+                          label="Agentes:" 
+                        >              
+                        </v-select>
+                      </v-flex>  
+                    </v-flex>
+
+                    <v-flex xs12>
+                      <p class="black--text">Estados de oportunidades: </p>
+                      <v-flex xs12 md6>
+                        aca unos select y tal
+                      </v-flex>  
+                    </v-flex>
+                       
+                    <v-flex xs12>
+                      <p class="black--text">Con las etiquetas: </p>
+                      <v-flex xs12 md6>
+                        <v-select
+                          v-model="filter.tags"
+                          :items="tags"
+                          :rules="selectRule"
+                          item-value="id" 
+                          label="Etiquetas:" 
+                          attach
+                          color="blue-grey lighten-2"
+                          chips
+                          multiple
+                          hint="Selecciona las etiquetas"
+                        >
+                        <template v-slot:selection="data">
+                        <!-- HTML that describe how select should render selected items -->
+                      <v-chip
+                          v-bind="data.attrs"
+                          :input-value="data.selected"
+                          close
+                          @click="data.select"
+                          @click:close="remove(data.item)"
+                        > {{ data.item.group_name }} > {{ data.item.name }} </v-chip>
+
+                      </template>
+                      <template v-slot:item="data">
+                        <v-list-item-content>
+                          <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                          <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
+                        </v-list-item-content>
+                      </template>
+                      
+                        </v-select>
+                      </v-flex>
+                    </v-flex>
+                    <v-flex xs12>
+                      <p>Sin las etiquetas: </p>
+                      <v-flex xs12 md6>
+                        <v-select
+                          v-model="filter.noTags"
+                          :items="tags"
+                          :rules="selectRule"
+                          item-value="id" 
+                          label="Etiquetas:" 
+                          attach
+                          color="blue-grey lighten-2"
+                          chips
+                          multiple
+                          hint="Selecciona las etiquetas"
+                        >
+                        <template v-slot:selection="data">
+                        <!-- HTML that describe how select should render selected items -->
+                      <v-chip
+                          v-bind="data.attrs"
+                          :input-value="data.selected"
+                          close
+                          @click="data.select"
+                          @click:close="remove(data.item)"
+                        > {{ data.item.group_name }} > {{ data.item.name }} </v-chip>
+
+                      </template>
+                      <template v-slot:item="data">
+                        <v-list-item-content>
+                          <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                          <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
+                        </v-list-item-content>
+                      </template>
+                      
+                        </v-select>
+                      </v-flex>
+                    </v-flex>
+
+                    <v-flex xs12>
+                        <small class="red--text">Los campos marcados con * son obligatorios</small>
+                    </v-flex>
+                  </v-layout>
+                </v-form>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="danger" @click="dialogTag = false">Cancelar</v-btn>
+              <v-btn color="success" :disabled="!valid" @click.prevent="storeTag()">Crear</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+
+
       </v-layout>
     </template> 
 
@@ -248,7 +397,9 @@ export default {
             search: '',
             total:'',
             contact: {},
+            filter: {},
             dialog: false,
+            dialogFilter: false,
             dialogdelete: false,
             dialogedit: false,
             valid: false,
@@ -289,6 +440,15 @@ export default {
                 });
           });
         },
+        tagsName(tags){
+          let x =[];
+          var i = 0;
+          tags.forEach(element => {
+             x[i] = this.tags.filter(function (el) {return el.id == element.tag_id});
+             i++;
+          });
+            return x;
+        },
         whatsapp(phone) {
             window.open('https://api.whatsapp.com/send?phone=' + phone, '_blank');
         },
@@ -311,7 +471,7 @@ export default {
               this.contact = {};
               this.dialog = false;
               this.$swal.fire('Contacto registrado con exito');
-              this.contact.tags = [];
+              this.contact_tag = [];
 
             }
           }).catch(error => {
@@ -323,8 +483,14 @@ export default {
           });
           },
           edit(contact) {
-              this.contact= contact;
-               this.dialogedit = true;
+              this.contact = contact;
+              var i = 0;
+                this.contact_tag =[];
+                this.contact.tags.forEach(element => {
+                  this.contact_tag[i] = element.tag_id;
+                i++;
+              });
+              this.dialogedit = true;
           },
           update(){
           this.contact.tags = this.contact_tag;
@@ -334,7 +500,7 @@ export default {
               this.contact = {};
               this.dialogedit = false;
               this.$swal.fire('Contacto actualizado con exito');
-              this.contact.tags = []; 
+              this.contact_tag = []; 
             }
           }).catch(error => {
             this.$swal.fire(
@@ -403,13 +569,23 @@ export default {
                     width: '10rem'
                 },
                 {
+                    text: 'Etiquetas',
+                    value: 'tags',
+                    width: '20rem'
+                },
+                {
+                    text: 'Agente',
+                    value: 'agent',
+                    width: '10rem'
+                },
+                {
                     text: 'Creado',
                     value: 'created_at',
                     width: '10rem'
                 },
                 {
-                    text: 'Agente',
-                    value: 'agent',
+                    text: 'Actualizado',
+                    value: 'updated_at',
                     width: '10rem'
                 },
                 {

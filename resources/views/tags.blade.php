@@ -8,8 +8,6 @@
         
        
          <tags
-        :groups="{{$groups}}"
-        :tags="{{$tags}}"
         />
         
     </div>
