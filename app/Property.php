@@ -46,8 +46,28 @@ class Property extends Model
     return $this->hasMany(Environment_property::class, "property_id");
   }
 
+  public function EnvsOne()
+  {
+    $envs = Environment_property::where('property_id', $this->id)
+    ->join('environments','environments.id','proenvironments.environment_id')
+    ->where('type','1')
+    ->pluck("environment_id");
+
+    return $envs;
+  }
+
+  public function EnvsTwo()
+  {
+    $envs = Environment_property::where('property_id', $this->id)
+    ->join('environments','environments.id','proenvironments.environment_id')
+    ->where('type','2')
+    ->pluck("environment_id");
+
+    return $envs;
+  }
+
   public function Services()
   {
-    return $this->hasMany(Environment_property::class, "property_id");
+    return $this->hasMany(Service_property::class, "property_id");
   }
 }

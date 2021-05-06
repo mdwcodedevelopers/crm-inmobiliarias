@@ -84,7 +84,7 @@ class PropertyController extends Controller
         ->join('currencies', 'properties.currency_id', 'currencies.id')
         ->where('images.principal', 1)
         ->get();
-        
+
         return response()->json([
             'Properties' => $properties,
             'total' => count($properties),
@@ -120,44 +120,47 @@ class PropertyController extends Controller
 
     public function edit($id)
     {
-        $property = Property::where('id',$id)->with('Status','Currency','Categories','Images','Environments','Services')->first();
+        $property = Property::where('id',$id)->with('Status','Currency','Categories','Images')->first();
 
         return response()->json([
             'property' => $property,
             'envs' => Environment::where('type','1')->get(),
+            'env' => $property->EnvsOne(),
             'services' => Service::get(),
+            'service' => $property->Services->pluck("service_id"),
             'extras' => Environment::where('type','2')->get(),
+            'extra' => $property->EnvsTwo(),
         ]);
     }
 
     public function update(Request $request, $id)
     {
         $property = Property::find($request->id);
-        $property->status_id = $request->status_id;
-        $property->currency_id = $request->currency_id;
-        $property->title = $request->title;
-        $property->province = $request->province;
-        $property->location = $request->location;
-        $property->subdivision_1 = $request->subdivision_1;
-        $property->subdivision_2 = $request->subdivision_2;
-        $property->show_web = $request->show_web;
-        $property->type = $request->type;
-        $property->situation = $request->situation;
-        $property->antiquity = $request->antiquity;
-        $property->condition = $request->condition;
-        $property->keys = $request->key;
-        $property->price = $request->price;
-        $property->dimension = $request->dimension;
-        $property->environments = $request->environ;
-        $property->plants = $request->plants;
-        $property->bedrooms = $request->bedrooms;
-        $property->toilettes = $request->toilettes;
-        $property->dresser = $request->dresser;
-        $property->chocheras = $request->chocheras;
+        $property->status_id = $request->prop["status_id"];
+        $property->currency_id = $request->prop["currency_id"];
+        $property->title = $request->prop["title"];
+        $property->province = $request->prop["province"];
+        $property->location = $request->prop["location"];
+        $property->subdivision_1 = $request->prop["subdivision_1"];
+        $property->subdivision_2 = $request->prop["subdivision_2"];
+        $property->show_web = isset($request->prop["show_web"]) ? "1" : "0";
+        $property->type = $request->prop["type"];
+        $property->situation = $request->prop["situation"];
+        $property->antiquity = $request->prop["antiquity"];
+        $property->condition = $request->prop["condition"];
+        $property->keys = $request->prop["keys"];
+        $property->price = $request->prop["price"];
+        $property->dimension = $request->prop["dimension"];
+        $property->environments = $request->prop["environments"];
+        $property->plants = $request->prop["plants"];
+        $property->bedrooms = $request->prop["bedrooms"];
+        $property->toilettes = $request->prop["toilettes"];
+        $property->dresser = $request->prop["dresser"];
+        $property->chocheras = $request->prop["chocheras"];
         $property->save();
 
         //AMBIENTES
-        $environments = $request->environments;
+        $environments = $request->envs;
 
         Environment_property::where('property_id',$property->id)->whereNotIn("environment_id",$environments)->delete();
 
@@ -214,7 +217,7 @@ class PropertyController extends Controller
     public function property($id)
     {
         $property = Property::where('id',$id)->with('Status','Currency','Categories','Images','Environments','Services')->first();
-        
+
         // $property = Status::orderBy('properties.updated_at', 'desc')->where('properties.id', '=', "$id")
         //     ->join('properties', 'properties.status_id', 'status.id')->first();
         //     $property->image= Image::select('url')->whereProperty_id($property->id)->get();

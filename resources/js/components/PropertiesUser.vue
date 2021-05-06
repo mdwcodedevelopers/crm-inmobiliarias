@@ -113,7 +113,7 @@
                         <v-text-field label="Sub-división"  v-model="property.subdivision_2"></v-text-field>
                       </v-flex>
                       <v-flex xs12>
-                        <v-checkbox class="pr-6" v-model="property.show_web" label="Mostrar en la Web" value="1"></v-checkbox>
+                        <v-checkbox class="pr-6" v-model="property.show_web" label="Mostrar en la Web" :value="1"></v-checkbox>
                       </v-flex>
                     </v-flex>
                     <template>
@@ -157,10 +157,10 @@
                                         <v-select no-data-text="No existen condiciones registradas" v-model="property.condition" :items="conditions" :rules="selectRules" item-text="name" item-value="id" label="Condición" ></v-select>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
-                                        <v-select no-data-text="No existen ubicaciones registradas" v-model="property.key" :items="locations" :rules="selectRules" item-text="name" item-value="id" label="Ubicación de llaves" ></v-select>
+                                        <v-select no-data-text="No existen ubicaciones registradas" v-model="property.keys" :items="locations" :rules="selectRules" item-text="name" item-value="id" label="Ubicación de llaves" ></v-select>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Cantidad de Ambientes" :rules="numberRules" v-model="property.environ"></v-text-field>
+                                        <v-text-field label="Cantidad de Ambientes" :rules="numberRules" v-model="property.environments"></v-text-field>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
                                         <v-text-field label="Cantidad de Plantas" :rules="numberRules" v-model="property.plants"></v-text-field>
@@ -193,8 +193,8 @@
                                 <template>
                                   <v-container fluid>
                                     <v-row>
-                                      <v-col cols="3"  class="m-0 py-0" v-for="(service,index) in services" :key="index">
-                                        <v-checkbox class="m-0 p-0" light :label="service.name" v-model="property.services" :value="service.id">
+                                      <v-col cols="3"  class="m-0 py-0" v-for="(s,index) in services" :key="index">
+                                        <v-checkbox class="m-0 p-0" light :label="s.name" v-model="service" v-bind:value="s.id">
                                         </v-checkbox>
                                       </v-col>
                                     </v-row>
@@ -211,8 +211,8 @@
                                 <template>
                                   <v-container fluid>
                                     <v-row>
-                                      <v-col cols="3" class="m-0 py-0" v-for="(env,index) in envs" :key="index">
-                                        <v-checkbox class="m-0 p-0" light :label="env.name" v-model="property.environments" :value="env.id">
+                                      <v-col cols="3" class="m-0 py-0" v-for="(e,index) in envs" :key="index">
+                                        <v-checkbox class="m-0 p-0" light :label="e.name" v-model="env" :value="e.id">
                                         </v-checkbox>
                                       </v-col>
                                     </v-row>
@@ -229,8 +229,8 @@
                                 <template>
                                   <v-container fluid>
                                     <v-row>
-                                      <v-col cols="3"  class="m-0 py-0" v-for="(extra,index) in extras" :key="index">
-                                        <v-checkbox class="m-0 p-0" light :label="extra.name" v-model="propertyextras" :value="extra.id">
+                                      <v-col cols="3"  class="m-0 py-0" v-for="(e,index) in extras" :key="index">
+                                        <v-checkbox class="m-0 p-0" light :label="e.name" v-model="extra" :value="e.id">
                                         </v-checkbox>
                                       </v-col>
                                     </v-row>
@@ -319,7 +319,9 @@
         envs: [],
         services: [],
         extras: [],
-        propertyextras: [],
+        env: [],
+        service: [],
+        extra: [],
         tab: null,
         search: '',
         valid: false,
@@ -381,6 +383,9 @@
             this.envs = response.data.envs;
             this.services = response.data.services;
             this.extras = response.data.extras;
+            this.env = response.data.env;
+            this.service = response.data.service;
+            this.extra = response.data.extra;
             this.dialogedit = true;
           }
         }).catch(error => {
@@ -392,8 +397,13 @@
         });
       },
       update(id) {
-        this.property.extras = this.propertyextras;
-        axios.patch("/admin/property-user/" + id, this.property).then((response) => {
+        axios.patch("/admin/property-user/" + id,
+        {
+          prop: this.property,
+          envs: this.env,
+          services: this.service,
+          extras: this.extra
+        }).then((response) => {
           if (response.status == 200) {
             this.index(0, '');
             this.property = {};
