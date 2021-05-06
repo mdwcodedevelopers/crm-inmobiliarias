@@ -9,14 +9,6 @@
           style="position:absolute; right:0px" 
           >
         <v-btn
-            @click="dialogFilter = true"
-        >
-            <v-icon>
-                mdi-filter
-            </v-icon>
-            FIltros
-        </v-btn>
-        <v-btn
         >
             <v-icon>
                 mdi-file-pdf
@@ -33,8 +25,147 @@
             </v-card-text>
              <v-spacer></v-spacer>
     </v-card>
-    <v-card>
 
+    <v-card>
+      <v-card-title class="display-1 titulo-custom">
+          Filtros
+      </v-card-title>
+      <v-card-text>
+       
+          <v-form ref="form" v-model="valid" style="width: 100%" >
+                  <v-layout wrap>
+                    <v-flex xs12 md3 class="pr-3">
+                      <h5 class="black--text text-left">Ver solo contactos de: </h5>
+                        <v-select
+                          v-model="filter.agent"
+                          :items="agents"
+                          item-text="name" 
+                          item-value="id" 
+                          label="Agentes:" 
+                          attach
+                          :rules="selectRule"
+                          style="max-height=42px"
+                          color="blue-grey lighten-2"
+                          chips
+                        >       
+                        <template v-slot:selection="data">
+                        <!-- HTML that describe how select should render selected items -->
+                      <v-chip
+                          v-bind="data.attrs"
+                          :input-value="data.selected"
+                          close
+                          @click:close="filter.agent = ''"
+                        > {{ data.item.name }} </v-chip>
+
+                      </template>       
+                        </v-select>
+                    </v-flex>
+
+                    <v-flex xs12 md3 class="pr-3">
+                      <h5 class="black--text text-left">Estados de oportunidades: </h5>
+                        <v-select
+                        v-model="filter.oportunity"
+                        :items="oportunities"
+                        item-text="name" 
+                        item-value="id" 
+                        label="Oportunidades:" 
+                        attach
+                        style="max-height=42px"
+                        color="blue-grey lighten-2"
+                        chips
+                      >
+                      <template v-slot:selection="data">
+                        <!-- HTML that describe how select should render selected items -->
+                      <v-chip
+                          v-bind="data.attrs"
+                          :input-value="data.selected"
+                          close
+                          @click:close="filter.oportunity = ''"
+                        > {{ data.item.name }} </v-chip>
+                      </template>
+                      </v-select>
+                    </v-flex>
+
+                       
+                    <v-flex xs12 md3 class="pr-3">
+                      <h5 class="black--text text-left">Con la etiqueta: </h5>
+                        <v-select
+                          v-model="filter.tag"
+                          :items="tags"
+                          item-value="id" 
+                          label="Etiquetas:" 
+                          attach
+                          color="blue-grey lighten-2"
+                          :disabled="filter.noTag !== ''"
+                          style="max-height=42px"
+                          chips
+                        >
+                        <template v-slot:selection="data">
+                        <!-- HTML that describe how select should render selected items -->
+                      <v-chip
+                          v-bind="data.attrs"
+                          :input-value="data.selected"
+                          close
+                          @click:close="filter.tag = ''"
+                        > {{ data.item.name }} </v-chip>
+
+                      </template>
+                      <template v-slot:item="data">
+                        <v-list-item-content>
+                          <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                          <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
+                        </v-list-item-content>
+                      </template>
+                        </v-select>
+                    </v-flex>
+
+                    <v-flex xs12 md3 class="pr-3">
+                      <h5 class="black--text text-left">Sin la etiqueta: </h5>
+                        <v-select
+                          v-model="filter.noTag"
+                          :items="tags"
+                          item-value="id" 
+                          label="Etiquetas:" 
+                          attach
+                          style="max-height=42px"
+                          color="blue-grey lighten-2"
+                          :disabled="filter.tag !== '' "
+                          chips
+                        >
+                        <template v-slot:selection="data">
+                        <!-- HTML that describe how select should render selected items -->
+                      <v-chip
+                          v-bind="data.attrs"
+                          :input-value="data.selected"
+                          close
+                          @click:close="filter.noTag = ''"
+                        >  {{data.item.name}} </v-chip>
+
+                      </template>
+                      <template v-slot:item="data">
+                        <v-list-item-content>
+                          <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                          <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
+                        </v-list-item-content>
+                      </template>
+                      
+                        </v-select>
+                    </v-flex>
+
+                    <v-flex xs12 >
+                      <v-col class="ml-auto" md="6">
+                        <v-btn color="danger" @click="filter.agent = '', filterSearch()">Ver todos los contactos</v-btn>
+                        <v-btn color="danger" @click="filter.agent = '', filter.oportunity= '',filter.tag= '',filter.noTag= ''">Borrar</v-btn>
+                        <v-btn color="success" :disabled="!valid"  @click.prevent="filterSearch()">Buscar</v-btn>
+                      </v-col>
+                    </v-flex>
+                  </v-layout>
+          </v-form>
+      </v-card-text>
+    </v-card>
+
+
+    <v-card >
       <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
       <v-data-table 
         :headers="headers"  
@@ -45,7 +176,6 @@
         class="elevation-1" 
         hide-default-footer
         disable-pagination
-        :loading="contacts.length === 0"
         loading-text="Cargando... Por favor espere"
         :search="search">
         
@@ -72,6 +202,8 @@
                 v-for="tag in tagsName(item.tags)"
                 :key="tag.id"
                 class="m-1"
+                color="orange"
+                text-color="white"
             > {{tag[0].name}} </v-chip>
         </template>
 
@@ -253,137 +385,16 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-
-        <!-- Dialog de filtros -->
-        <v-dialog v-model="dialogFilter" persistent max-width="600px">
-          <v-card class="my-4">
-            <v-card-title>
-              <span class="headline">Filtros</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container grid-list-md>
-                <v-form ref="form" v-model="valid">
-                  <v-layout wrap>
-                    <v-flex xs12>
-                      <p class="black--text">Ver solo contactos de: </p>
-                      <v-flex xs12 md6>
-                        <v-select
-                          v-model="filter.agents"
-                          :items="agents"
-                          :rules="selectRule"
-                          item-text="name" 
-                          item-value="id" 
-                          label="Agentes:" 
-                        >              
-                        </v-select>
-                      </v-flex>  
-                    </v-flex>
-
-                    <v-flex xs12>
-                      <p class="black--text">Estados de oportunidades: </p>
-                      <v-flex xs12 md6>
-                        aca unos select y tal
-                      </v-flex>  
-                    </v-flex>
-                       
-                    <v-flex xs12>
-                      <p class="black--text">Con las etiquetas: </p>
-                      <v-flex xs12 md6>
-                        <v-select
-                          v-model="filter.tags"
-                          :items="tags"
-                          :rules="selectRule"
-                          item-value="id" 
-                          label="Etiquetas:" 
-                          attach
-                          color="blue-grey lighten-2"
-                          chips
-                          multiple
-                          hint="Selecciona las etiquetas"
-                        >
-                        <template v-slot:selection="data">
-                        <!-- HTML that describe how select should render selected items -->
-                      <v-chip
-                          v-bind="data.attrs"
-                          :input-value="data.selected"
-                          close
-                          @click="data.select"
-                          @click:close="remove(data.item)"
-                        > {{ data.item.group_name }} > {{ data.item.name }} </v-chip>
-
-                      </template>
-                      <template v-slot:item="data">
-                        <v-list-item-content>
-                          <v-list-item-title v-html="data.item.name"></v-list-item-title>
-                          <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
-                        </v-list-item-content>
-                      </template>
-                      
-                        </v-select>
-                      </v-flex>
-                    </v-flex>
-                    <v-flex xs12>
-                      <p>Sin las etiquetas: </p>
-                      <v-flex xs12 md6>
-                        <v-select
-                          v-model="filter.noTags"
-                          :items="tags"
-                          :rules="selectRule"
-                          item-value="id" 
-                          label="Etiquetas:" 
-                          attach
-                          color="blue-grey lighten-2"
-                          chips
-                          multiple
-                          hint="Selecciona las etiquetas"
-                        >
-                        <template v-slot:selection="data">
-                        <!-- HTML that describe how select should render selected items -->
-                      <v-chip
-                          v-bind="data.attrs"
-                          :input-value="data.selected"
-                          close
-                          @click="data.select"
-                          @click:close="remove(data.item)"
-                        > {{ data.item.group_name }} > {{ data.item.name }} </v-chip>
-
-                      </template>
-                      <template v-slot:item="data">
-                        <v-list-item-content>
-                          <v-list-item-title v-html="data.item.name"></v-list-item-title>
-                          <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
-                        </v-list-item-content>
-                      </template>
-                      
-                        </v-select>
-                      </v-flex>
-                    </v-flex>
-
-                    <v-flex xs12>
-                        <small class="red--text">Los campos marcados con * son obligatorios</small>
-                    </v-flex>
-                  </v-layout>
-                </v-form>
-              </v-container>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="danger" @click="dialogTag = false">Cancelar</v-btn>
-              <v-btn color="success" :disabled="!valid" @click.prevent="storeTag()">Crear</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-
-
-
-      </v-layout>
+    </v-layout>
     </template> 
 
   </div>
 </template>
 
 <style scoped>
-
+  .v-select.v-select--chips .v-select__selections {
+    max-height: 42px !important;
+  }
 </style>
 
 <script>
@@ -397,9 +408,14 @@ export default {
             search: '',
             total:'',
             contact: {},
-            filter: {},
+            oportunities: [],
+            filter: {
+              agent: '',
+              oportunity: '',
+              tag: '',
+              noTag: ''
+            },
             dialog: false,
-            dialogFilter: false,
             dialogdelete: false,
             dialogedit: false,
             valid: false,
@@ -421,11 +437,23 @@ export default {
     },
      methods: {
         index() {
-            axios.get("/admin/api-contacts/" ).then((response) => {
-                this.contacts = response.data.contacts;
-                this.total = response.data.total;
+            axios.get("/admin/api-contacts").then((response) => {
                 this.agents = response.data.agents;
                 this.tags = response.data.tags;
+                this.oportunities = response.data.oportunities;
+          });
+        },
+        filterSearch() {
+            axios.get("/admin/api-contacts-search?agent=" + this.filter.agent + "&oportunity=" + this.filter.oportunity + "&tag=" + this.filter.tag + "&noTag=" + this.filter.noTag ).then((response) => {
+                this.$swal.fire({
+                  icon: 'success',
+                  title: 'Busqueda terminada',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+               
+                this.contacts = response.data.contacts;
+                this.total = response.data.total;
 
                 this.contacts.forEach(contact => {
                   if (contact.user_id === null) {
@@ -467,7 +495,7 @@ export default {
           axios.post("/admin/api-contacts", this.contact).then((response) => {
             if (response.status == 200) {
               console.log(response);
-              this.index();
+              this.filterSearch();
               this.contact = {};
               this.dialog = false;
               this.$swal.fire('Contacto registrado con exito');
@@ -496,7 +524,7 @@ export default {
           this.contact.tags = this.contact_tag;
             axios.patch("/admin/api-contacts/" + this.contact.id, this.contact).then((response) => {
             if (response.status == 200) {
-              this.index();
+              this.filterSearch();
               this.contact = {};
               this.dialogedit = false;
               this.$swal.fire('Contacto actualizado con exito');
@@ -518,7 +546,7 @@ export default {
             axios.delete("/admin/api-contacts/" + this.id_delete).then((response) => {
               console.log(response);
               if (response.status == 200) {
-                this.index(0, '');
+                this.filterSearch();
                 this.dialogdelete = false;
                 this.$swal.fire(
                   'Propiedad eliminada con exito',
@@ -545,31 +573,36 @@ export default {
                 },
                 {
                     text: 'Email',
-                    value: 'email',
+                    value: 'email', 
                     width: '10rem'
                 },
                 {
                     text: 'Telefono 1',
+                    sortable: false,
                     value: 'phone_1',
                     width: '10rem'
                 },
                 {
                     text: 'Telefono 2',
+                    sortable: false,
                     value: 'phone_2',
                     width: '10rem'
                 },
                 {
                     text: 'Dirección',
+                    sortable: false,
                     value: 'direction',
                     width: '10rem'
                 },
                 {
                     text: 'Provincia',
+                    sortable: false,
                     value: 'province',
                     width: '10rem'
                 },
                 {
                     text: 'Etiquetas',
+                    sortable: false,
                     value: 'tags',
                     width: '20rem'
                 },

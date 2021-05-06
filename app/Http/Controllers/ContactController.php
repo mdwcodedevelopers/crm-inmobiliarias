@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Contact;
+use App\StatusOportunity;
 use App\GroupTag;
 use App\Tag;
+use App\Oportunity;
 use App\Contact_tag;
 
 class ContactController extends Controller
@@ -20,20 +22,23 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $contacts = Contact::selectRaw('contacts.*, contact_tag.tag_id')->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->get();
         $contacts = Contact::get();
-        foreach ($contacts as $key => $value) {
-            $value->tags = Contact_tag::selectRaw('tag_id')->whereContact_id($value->id)->get();
-        }
+        // foreach ($contacts as $key => $value) {
+        //     $value->tags = Contact_tag::selectRaw('tag_id')->whereContact_id($value->id)->get();
+        // }
         $agents = User::selectRaw('name, id')->where('role_id','=',3)->orWhere('role_id','=',1)->get();
         $tags = Tag::selectRaw('tags.id, tags.name, group_tags.name AS group_name')
         ->join('group_tags', 'tags.group_tag_id', '=', 'group_tags.id')->get();
+        $oportunities = StatusOportunity::selectRaw('name, id')->get();
+
         return response()->json([
             'contacts' => $contacts,
-            'total' => count($contacts),
+            // 'total' => count($contacts),
             'agents' => $agents,
+            'oportunities' => $oportunities,
             'tags' => $tags,
     ]);
     }
@@ -147,10 +152,38 @@ class ContactController extends Controller
         return response()->json("success", 200);
     }
 
-    public function view()
+    public function view(Request $request)
     {
         $rol=User::find(auth()->id())->role_id;
         // dd($contacts);
         return view('contacts', compact('rol'));
     }
+
+    public function search(Request $request)
+    {
+        
+        // $oportunitiy = $request->oportunitiy != null ? $request->oportunitiy : true;
+        
+        
+        // $search = isset($request->search) ? $request->search : '';
+
+        // $sku = isset($request->sku) ? $request->sku : '';
+        // // $contacts = Contact::selectRaw('contacts.*, contact_tag.tag_id')->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->get();
+        $query = Contact::selectRaw('contacts.*');
+        
+        ($request->agent != null) ? $query = $query->where('contacts.user_id',$request->agent) : '';
+        ($request->oportunity != null) ? $query = $query->join('oportunities', 'oportunities.contact_id', '=', 'contacts.id')->where('oportunities.status_id',$request->oportunity) : '';
+        ($request->tag != null) ? $query = $query->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->where('contact_tag.tag_id',$request->tag) : '';
+        ($request->noTag != null) ? $query = $query->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->where('contact_tag.tag_id','!=',$request->noTag) : '';
+        $contacts = $query->get();
+        foreach ($contacts as $key => $value) {
+            $value->tags = Contact_tag::selectRaw('tag_id')->whereContact_id($value->id)->get();
+        }
+        return response()->json([
+            'contacts' => $contacts,
+            // 'total' => count($contacts),
+    ]);
+    }
+
 }
+

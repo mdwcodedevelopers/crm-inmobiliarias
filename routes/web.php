@@ -10,10 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('actualizar-composer', function () {
-    $exitCode = Artisan::call('composer update');
-    return '<h1>actualizado</h1>';
-  });
+
 Route::get('register/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::get('register/verify/{id}/{hash}', 'Auth\VerificationController@index')->name('verification.verify');
 Route::post('register/resend', 'Auth\VerificationController@resend')->name('verification.resend');
@@ -63,6 +60,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/api-properties-user', 'PropertyController@properties');
     Route::get('/property-user/{id}', 'PropertyController@edit');
+    Route::get('/api-contacts-search', 'ContactController@search');
     Route::patch('/property-user/{id}', 'PropertyController@update');
     Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
 
