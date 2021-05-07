@@ -162,18 +162,13 @@ class ContactController extends Controller
     public function search(Request $request)
     {
         
-        // $oportunitiy = $request->oportunitiy != null ? $request->oportunitiy : true;
         
-        
-        // $search = isset($request->search) ? $request->search : '';
-
-        // $sku = isset($request->sku) ? $request->sku : '';
-        // // $contacts = Contact::selectRaw('contacts.*, contact_tag.tag_id')->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->get();
         $query = Contact::selectRaw('contacts.*');
         
-        ($request->agent != null) ? $query = $query->where('contacts.user_id',$request->agent) : '';
+        ($request->agent == -2 ) ? $query = $query->whereNULL('contacts.user_id') : '';
+        ($request->agent > 0) ? $query = $query->where('contacts.user_id',$request->agent) : '';
         ($request->oportunity != null) ? $query = $query->join('oportunities', 'oportunities.contact_id', '=', 'contacts.id')->where('oportunities.status_id',$request->oportunity) : '';
-        ($request->tag != null) ? $query = $query->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->where('contact_tag.tag_id',$request->tag) : '';
+        ($request->tag != null) ? $query = $query->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->whereIn('contact_tag.tag_id',$request->tag) : '';
         ($request->noTag != null) ? $query = $query->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->where('contact_tag.tag_id','!=',$request->noTag) : '';
         $contacts = $query->get();
         foreach ($contacts as $key => $value) {

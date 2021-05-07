@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div>
         <v-app-bar 
           color="white  "  
           prominent 
@@ -12,9 +12,17 @@
                 <v-img src="/images/logo.png"  contain width="200" height="100"></v-img>
               </a> 
             </v-toolbar-title>
+
             <v-spacer></v-spacer>
-                <a class="mx-2 my-auto black--text " style="font-size:1rem"  href="/admin/login">Iniciar sesión</a>
-                <a class=" mx-2 my-auto black--text " style="font-size:1rem"  href="/admin/register">Registrarse</a>
+
+            <a class="mx-2 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#">Home</a>
+            <a class="mx-2 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#we-are">Quienes somos</a>
+            <a class="mx-2 mr-5 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#properties">Propiedades</a>
+            <a class="mx-2 mr-5 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#contacts">Contactos</a>
+
+            <v-btn rounded color="success" href="/admin/login"  class="my-auto">Iniciar sesión</v-btn>
+            <!-- <a class="mx-2 my-auto black--text "  style="font-size:1rem"  href="/admin/login">Iniciar sesión</a> -->
+            <a class=" mx-2 my-auto black--text " style="font-size:1rem"  href="/admin/register">Registrarse</a>
         </v-app-bar>
         <v-navigation-drawer
         absolute
@@ -46,3 +54,11 @@
 
 
 </template>
+
+<script>
+export default {
+  props:{
+    homepage: String
+  }
+}
+</script>

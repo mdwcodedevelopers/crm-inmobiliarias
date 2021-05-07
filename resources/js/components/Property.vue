@@ -14,107 +14,59 @@
             >
                        
                         <v-card
-                            class="mx-auto"
-                            max-width="344"
+                            class="mx-auto px-4"
                             outlined
                         >
-                            <v-list-item three-line>
-                            <v-list-item-avatar
-                                tile
-                                size="80"
-                                color="grey"
-                            ></v-list-item-avatar>
-                            <v-list-item-content>
-                                <v-list-item-title class="h5 mb-1">
-                                <a href="#">Contacto de prueba</a>
-                                <div class="overline">
-                                OVERLINE
+                            <v-list-item four-line>
+                            
+                            <v-list-item-content >
+                                <div>
+
+                                <v-icon class="p-4 white--text blue darken-3 rounded-circle my-5 "  x-large>mdi-contacts-outline</v-icon>
                                 </div>
+
+                                <v-list-item-title class="h5 mb-1 blue--text text--darken-4">
+                                Contactate con nosotros
                                 </v-list-item-title>
-                                <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-                                <div text class="primary--text">
-                                    <v-icon color="primary accent-4">
-                                        mdi-phone-outline
-                                    </v-icon>
-                                   <span>+11 22 33 456</span> 
-                                </div>
-                                <div text class="primary--text">
-                                    <v-icon color="primary accent-4">
-                                        mdi-email-outline
-                                    </v-icon>
-                                   <span>mail@mail.com</span> 
-                                </div>
+                                <v-list-item-subtitle class="text-left mt-5">Si estás interesado en esta propiedad dejanos <br> tus datos para que pronto uno de nuestros <br> agentes se contacte contigo</v-list-item-subtitle>
+                                
                             </v-list-item-content>
 
                             </v-list-item>
 
                             <v-card-actions>
-                            <v-form v-model="valid">
-                            <v-container>
-                                <v-row>
-                                    <v-col
-                                        cols=12
-                                        class="py-0"
-                                    >
-                                    <v-text-field
-                                        v-model="firstname"
-                                        :rules="nameRules"
-                                        :counter="10"
-                                        label="Nombre y Apellido"
-                                        required
-                                    ></v-text-field>
-                                    </v-col>
-
-                                    <v-col
-                                        cols=12
-                                        class="py-0"
-                                    >
-                                    <v-text-field
-                                        v-model="email"
-                                        :rules="emailRules"
-                                        label="E-mail"
-                                        required
-                                    ></v-text-field>
-                                    </v-col>
-
-                                    <v-col
-                                        cols=12
-                                        class="py-0"
-                                    >
-                                    <v-text-field
-                                        v-model="phone"
-                                        :rules="phoneRules"
-                                        :counter="10"
-                                        label="Telefono"
-                                        required
-                                    ></v-text-field>
-                                    </v-col>
-                                    
-                                    <v-col
-                                        cols=12
-                                        class="py-0"
-                                    >
-                                    <v-textarea
-                                    v-model="message"
-                                    label="Mensaje"
-                                    color="teal"
-                                    ></v-textarea>
-                                    </v-col>
-                                    
-                                    <v-btn
-                                        outlined
-                                        rounded
-                                        text
-                                        :disabled="!valid"
-                                        color="white"
-                                        class="success"
-                                        @click="sendEmail()"
-                                    >
-                                        Enviar
-                                    </v-btn>
-                                </v-row>
-                            </v-container>
-                            </v-form>
+                             <v-form
+                                    ref="form"
+                                    v-model="valid"
+                                >
+                                    <v-layout wrap>
+                                            <v-flex xs12  >
+                                                <v-text-field label="Nombre*" :rules="inputRule" v-model="user.name" required></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12 >
+                                                <v-text-field label="Correo*" :rules="mailRule" v-model="user.email" required></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12  >
+                                                <v-text-field label="Telefono 1*" :rules="numberRule" v-model="user.phone_1" required></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12  >
+                                                <v-text-field label="Telefono 2*" :rules="numberRule" v-model="user.phone_2" required></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12  >
+                                                <v-text-field label="Dirección*" :rules="inputRule" v-model="user.direction" required></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12  >
+                                                <v-text-field label="Provincia*" :rules="inputRule" v-model="user.province" required></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12>
+                                                <small class="red--text">Los campos marcados con * son obligatorios</small>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-layout>
+                                <v-spacer></v-spacer>
+                                <v-btn color="danger" @click="user={}">Borrar</v-btn>
+                                <v-btn color="success" :disabled="!valid" @click.prevent="create()">Estoy interesado</v-btn>
+                                </v-form>
                             
                             </v-card-actions>
                         </v-card>
@@ -136,21 +88,21 @@ export default {
             firstname: '',
             message:'',
             lastname: '',
-            nameRules: [
-                v => !!v || 'Name is required',
-                v => v.length <= 10 || 'Name must be less than 10 characters',
-            ],
-            email: '',
-            emailRules: [
-                v => !!v || 'E-mail is required',
-                v => /.+@.+/.test(v) || 'E-mail must be valid',
-            ],
-            phone: '',
-            phoneRules:[
-                v=> !!v || 'Telefono es requerido',
-                v => /^([0-9])*$/.test(v) ||  "El télefono debe de ser valido"
-
-            ]
+            user: {},
+            inputRule: [
+                v => !!v || 'El campo es obligatorio',
+              ],
+              selectRule: [
+                v => !!v || 'Debe seleccionar una opción',
+              ],
+              mailRule: [
+                v => !!v || 'Debe dar un correo',
+                v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El Correo no es valido'
+              ],
+              numberRule: [
+                v => !!v || 'El campo es obligatorio',
+                v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
+              ],
         }
     },
     methods: {

@@ -31,70 +31,71 @@
                 </v-carousel>
             </v-col>
             <v-col
-            class="d-flex mx-4"
+            class="d-flex justify-space-between mx-4"
             >
-                    {{property.status.name}} | {{property.dimension}} mt2  | {{property.toilettes}}  baños | {{property.bedrooms}}  cuartos
+            <v-card-text class="font-weight-bold blue--text text--darken-4 text-left" style="font-size:1.25rem">
+                {{property.status.name}} | {{property.dimension}} mt2  | {{property.toilettes}}  baños | {{property.bedrooms}}  cuartos
+            </v-card-text>
+                <v-card-actions absolute right>
+                    <v-btn color="blue darken-4"><v-icon class="white--text">mdi-facebook</v-icon></v-btn>
+                    <v-btn color="purple lighten-2"><v-icon class="white--text">mdi-instagram</v-icon></v-btn>
+                    <v-btn color="light-blue darken-2"><v-icon class="white--text">mdi-twitter</v-icon></v-btn>
+                </v-card-actions>
             </v-col>
+                <v-card elevation="2">
             <v-col
             >
-                <v-card elevation="2">
                     <v-card-title class="primary--text">
                         Descripción
                     </v-card-title>
                     <v-card-text class="d-flex mx-3 black--text">
                         {{property.information}}
                     </v-card-text>
-                </v-card>
             </v-col>
             
             <v-col
             >   
-                <v-card elevation="2">
                     <v-card-title class="primary--text">
                         Información basica
                     </v-card-title>
                     <v-card-text class="d-flex mx-3 black--text" style="text-align:left">
                         <ul class="list-info">
-                            <li>Antiguedad: {{property.antiquity}}</li>
-                            <li>Condición: {{property.condition}}</li>
-                            <li>Provincia: {{property.location}}</li>
+                            <li>Provincia: {{property.province}}</li>
                             <li>Región: {{property.location}}</li>
-                            <li>Situación: {{property.situation}}</li>
+                            <li>Antiguedad: {{helper_show(antiquitys,property.antiquity).name}}</li>
+                            <li>Condición: {{helper_show(conditions,property.condition).name}}</li>
+                            <li>Situación: {{helper_show(situations,property.situation).name}}</li>
                         </ul>
                     </v-card-text>
-                </v-card>
             </v-col>
 
                 <v-col
             >
-                <v-card elevation="2">
                     <v-card-title class="primary--text">
                         Ambientes
                     </v-card-title>
                     <v-card-text class="d-flex mx-3 black--text">
-                         <ul class="list-info">
-                            <li v-for="item in environments" :key="item.id">
-                                 {{item.name}}: {{item.quantity}}
-                            </li>
-                        </ul>
+                             <v-row no-gutters class="text-left ">
+                            <v-col cols="12" sm="3" v-for="item in  environments" :key="item.id">
+                                <span class="d-flex align-start my-2">
+                                    <v-icon>mdi-check-box-outline</v-icon> {{item.name}}
+                                </span>
+                            </v-col>
+                            </v-row>
                     </v-card-text>
-                </v-card>
             </v-col>
             <v-col
             >
-                <v-card elevation="2">
                     <v-card-title class="primary--text">
                         Servicios
                     </v-card-title>
                     <v-card-text class="d-flex mx-3 black--text">
-                         <ul class="list-info">
-                            <li v-for="item in services" :key="item.id">
-                                 {{item.name}}
-                            </li>
-                        </ul>
+                            <span v-for="item in services" :key="item.id">
+                                <v-icon>mdi-check-box-outline</v-icon> {{item.name}}
+                            </span>
                     </v-card-text>
-                </v-card>
             </v-col>
+        </v-card>
             
         </v-card>
    </div>
@@ -118,10 +119,13 @@ export default {
                 items:[],
                 environments:[],
                 services:[],
+                situations:[],
+                antiquitys:[],
+                conditions:[],
+                locations:[],
             }
         },
         created(){
-            console.log('kfñsd');
                 this.index();
         },
         methods: {
@@ -131,11 +135,19 @@ export default {
                 });
                 axios.get("/admin/api-environment/" + this.property.id).then((response) => {
                     this.environments = response.data.environments; 
+                    this.situations = response.data.situations; 
+                    this.antiquitys = response.data.antiquitys; 
+                    this.conditions = response.data.conditions; 
+                    this.locations = response.data.locations; 
                 });
                 axios.get("/admin/api-service/" + this.property.id).then((response) => {
                     this.services = response.data.services; 
                 });
             },
+            helper_show(helper, id){
+            let x = helper.filter(function (el) {return el.id == id});
+                return x[0];
+            }
             }
 }
 </script>

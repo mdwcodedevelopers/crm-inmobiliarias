@@ -1,31 +1,10 @@
 <template>
-  <div class="text-center p-4 d-flex align-items-center flex-column">
+  <div class="text-center  d-flex">
 
-<v-flex md10 style="overflow: auto"> 
-    <v-card color="blue">
-      <v-card-title class="display-1 text-white titulo-custom">
-        Agenda de contactos
-      <v-card-actions 
-          style="position:absolute; right:0px" 
-          >
-        <v-btn
-        >
-            <v-icon>
-                mdi-file-pdf
-            </v-icon>
-            Exportar a pdf
-        </v-btn>
-        <v-btn color="success" dark fab class="mt-1" @click="create()">
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </v-card-actions>
-      </v-card-title>
-      <v-card-text class="d-flex text-white">
-                Un listado completo de clientes.
-            </v-card-text>
-             <v-spacer></v-spacer>
-    </v-card>
-
+ 
+ <v-col
+    cols="12"
+    sm="3">
     <v-card>
       <v-card-title class="display-1 titulo-custom">
           Filtros
@@ -34,11 +13,11 @@
        
           <v-form ref="form" v-model="valid" style="width: 100%" >
                   <v-layout wrap>
-                    <v-flex xs12 md3 class="pr-3">
+                    <v-flex xs12 class="pr-3">
                       <h5 class="black--text text-left">Ver solo contactos de: </h5>
                         <v-select
                           v-model="filter.agent"
-                          :items="agents"
+                          :items="agents_filter"
                           item-text="name" 
                           item-value="id" 
                           label="Agentes:" 
@@ -61,7 +40,7 @@
                         </v-select>
                     </v-flex>
 
-                    <v-flex xs12 md3 class="pr-3">
+                    <v-flex xs12  class="pr-3">
                       <h5 class="black--text text-left">Estados de oportunidades: </h5>
                         <v-select
                         v-model="filter.oportunity"
@@ -87,7 +66,7 @@
                     </v-flex>
 
                        
-                    <v-flex xs12 md3 class="pr-3">
+                    <v-flex xs12  class="pr-3">
                       <h5 class="black--text text-left">Con la etiqueta: </h5>
                         <v-select
                           v-model="filter.tag"
@@ -119,7 +98,7 @@
                         </v-select>
                     </v-flex>
 
-                    <v-flex xs12 md3 class="pr-3">
+                    <v-flex xs12  class="pr-3">
                       <h5 class="black--text text-left">Sin la etiqueta: </h5>
                         <v-select
                           v-model="filter.noTag"
@@ -153,17 +132,42 @@
                     </v-flex>
 
                     <v-flex xs12 >
-                      <v-col class="ml-auto" md="6">
-                        <v-btn color="danger" @click="filter.agent = '', filterSearch()">Ver todos los contactos</v-btn>
-                        <v-btn color="danger" @click="filter.agent = '', filter.oportunity= '',filter.tag= '',filter.noTag= ''">Borrar</v-btn>
-                        <v-btn color="success" :disabled="!valid"  @click.prevent="filterSearch()">Buscar</v-btn>
-                      </v-col>
+                        <v-btn  class="my-1" @click="filter.agent = '', filter.oportunity= '',filter.tag= '',filter.noTag= ''">Borrar</v-btn>
+                        <v-btn  class="my-1" color="success" :disabled="!valid"  @click.prevent="filterSearch()">Buscar</v-btn>
                     </v-flex>
                   </v-layout>
           </v-form>
       </v-card-text>
     </v-card>
-
+ </v-col>
+  
+  <v-col
+      cols="12"
+      sm="9"
+  >
+    <v-card color="blue">
+      <v-card-title class="display-1 text-white titulo-custom">
+        Agenda de contactos
+      <v-card-actions 
+          style="position:absolute; right:0px" 
+          >
+        <v-btn
+        >
+            <v-icon>
+                mdi-file-pdf
+            </v-icon>
+            Exportar a pdf
+        </v-btn>
+        <v-btn color="success" dark fab class="mt-1" @click="create()">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </v-card-actions>
+      </v-card-title>
+      <v-card-text class="d-flex text-white">
+                Un listado completo de clientes.
+            </v-card-text>
+             <v-spacer></v-spacer>
+    </v-card>
 
     <v-card >
       <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
@@ -209,7 +213,8 @@
 
       </v-data-table>
     </v-card>
-</v-flex>
+ </v-col>
+
     <template>
       <v-layout row justify-center>
         <v-dialog v-model="dialog" persistent max-width="600px">
@@ -386,8 +391,9 @@
           </v-card>
         </v-dialog>
     </v-layout>
-    </template> 
+    </template>
 
+ 
   </div>
 </template>
 
@@ -408,6 +414,17 @@ export default {
             search: '',
             total:'',
             contact: {},
+            agents_filter: [
+              {
+                id: -1,
+                name: "Ver todos los contactos"
+              },
+              {
+                id: -2,
+                name: "Contactos sin asignar"
+              },
+              
+            ],
             oportunities: [],
             filter: {
               agent: '',
@@ -441,6 +458,13 @@ export default {
                 this.agents = response.data.agents;
                 this.tags = response.data.tags;
                 this.oportunities = response.data.oportunities;
+                var i=2;
+                this.agents.forEach(element => {
+                  this.agents_filter.push({
+                      id: element.id,
+                      name: element.name
+                  });
+                });
           });
         },
         filterSearch() {

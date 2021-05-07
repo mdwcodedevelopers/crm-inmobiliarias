@@ -217,10 +217,7 @@ class PropertyController extends Controller
     public function property($id)
     {
         $property = Property::where('id',$id)->with('Status','Currency','Categories','Images','Environments','Services')->first();
-
-        // $property = Status::orderBy('properties.updated_at', 'desc')->where('properties.id', '=', "$id")
-        //     ->join('properties', 'properties.status_id', 'status.id')->first();
-        //     $property->image= Image::select('url')->whereProperty_id($property->id)->get();
+        
         if (!is_null(Auth::user())) {
             $user = User::find(Auth::user()->id);
             return view('property', ['property' => $property, 'rol' => $user->role_id, 'types' => types()]);

@@ -17,7 +17,8 @@ class CreateOportunitiesTable extends Migration
         Schema::create('oportunities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('contact_id');
+            $table->foreignId('contact_id')->nullable();
+            $table->foreignId('property_id')->nullable();
             $table->foreignId('status_id');
             $table->string('name');
             $table->date('vigency');
@@ -29,6 +30,7 @@ class CreateOportunitiesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
+            $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
         });
     }
 
