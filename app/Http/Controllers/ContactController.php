@@ -179,6 +179,20 @@ class ContactController extends Controller
             // 'total' => count($contacts),
     ]);
     }
+    public function propertyContact(Request $request){
+
+        $contact = Contact::firstOrNew(['email' =>  request('email')]);
+        $contact->name = $request->name; 
+        $contact->phone_1 = $request->phone_1; 
+        $contact->phone_2 = $request->phone_2; 
+        $contact->direction = $request->direction; 
+        $contact->province = $request->province;
+        $contact->user_id =  auth()->id(); 
+        $contact->save();
+        
+        return response()->json("success");
+
+    }
 
 }
 

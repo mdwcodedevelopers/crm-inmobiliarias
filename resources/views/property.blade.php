@@ -4,7 +4,7 @@
 
             @guest
                 <div class="">
-                    <nav-guest />
+                    <nav-guest/>
                 </div>
             @else
             <div class="">
@@ -12,6 +12,6 @@
             </div>
             @endguest
   <div class="">
-    <property :property="{{$property}}"  />
+    <property :property="{{$property}}" :user="{{$user}}" />
   </div>
 @endsection

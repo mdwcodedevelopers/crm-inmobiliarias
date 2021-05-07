@@ -65,7 +65,7 @@
                                     </v-layout>
                                 <v-spacer></v-spacer>
                                 <v-btn color="danger" @click="user={}">Borrar</v-btn>
-                                <v-btn color="success" :disabled="!valid" @click.prevent="create()">Estoy interesado</v-btn>
+                                <v-btn color="success" :disabled="!valid" @click.prevent="store()">Estoy interesado</v-btn>
                                 </v-form>
                             
                             </v-card-actions>
@@ -80,6 +80,7 @@
 export default {
     props: {
         property: Object,
+        user: Object,
     },
     data() {
         return {
@@ -88,7 +89,6 @@ export default {
             firstname: '',
             message:'',
             lastname: '',
-            user: {},
             inputRule: [
                 v => !!v || 'El campo es obligatorio',
               ],
@@ -112,7 +112,20 @@ export default {
                       'Los correos serán enviados cuando se pase ha desarrollo.',
                       'success'
                     );
-    }
+    },
+        store() {
+          axios.post("/admin/api-contacts-property", this.user).then((response) => {
+            if (response.status == 200) {
+              this.$swal.fire('Mensaje enviado, pronto nos estaremos comunicando con usted');
+            }
+          }).catch(error => {
+            this.$swal.fire(
+              'Error',
+              'Ocurrío un error al tratar de registrar el contacto, el correo esta en uso.',
+              'error'
+            )
+          });
+          },
     },
     
 }

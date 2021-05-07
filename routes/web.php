@@ -61,6 +61,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/api-properties-user', 'PropertyController@properties');
     Route::get('/property-user/{id}', 'PropertyController@edit');
     Route::get('/api-contacts-search', 'ContactController@search');
+    Route::get('/api-contacts-property', 'propertyContact@search');
     Route::patch('/property-user/{id}', 'PropertyController@update');
     Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
 
