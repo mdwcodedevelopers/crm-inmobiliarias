@@ -1,36 +1,9 @@
 <template>
-    <v-container>
-        <!--<carousel>
-            <slide class="py-4">
-                <v-card color="#0D47A1" class="mx-auto text-white" max-width="344">
-                    <v-card-text>
-                        <h1 class="text-white">
-                            Bienvenidos a la familia Cánepa
-                        </h1>
-                    </v-card-text>
-                    <h3 class="mx-2 ">Somos la inmobiliaria con más de 40 años en el mercado.</h3>
-                </v-card>
-            </slide>
-            <slide class="py-4">
-                <v-card color="#fff" class="mx-auto " max-width="344">
-                    <v-card-text>
-                        <h5 class=" text--primary">
-                            Desarrollamos viviendas, edificios, barrios; pero sobre todo, desarrollamos sueños.
-                        </h5>
-                    </v-card-text>
-                </v-card>
-            </slide>
-            <slide class="py-4">
-
-            </slide>
-        </carousel>-->
+    <v-container >
 
        <v-row align="center">
 
-            <v-col class="d-flex" cols="12" sm="4">
-                <v-select :items="items" label="Ciudad"></v-select>
-            </v-col>
-            <v-col class="d-flex" cols="12" sm="6">
+            <v-col class="d-flex" cols="12" sm="10">
 
                 <v-text-field label="Buscar propiedades" v-model="search"></v-text-field>
             </v-col>
@@ -56,20 +29,23 @@
                             <v-card-title v-text="card.title"></v-card-title>
 
                             <v-card-actions>
-                                <v-chip color="#2979FF" text-color="#fff" class="mr-1">
-                                    {{card.dimension}} mt2
-                                </v-chip>
-                                <v-chip color="#38c172" text-color="#fff" class="mr-3">
-                                    {{card.price}} 
-                                    <span class="px-1" v-if="card.currency_id==1"> USD</span>
-                                    <span class="px-1" v-else> EUR</span>
-                                    
-                                </v-chip>
+                                <div class="d-flex flex-column">
+                                    <v-chip color="#38c172" text-color="#fff" class="m-1 font-weight-bold">
+                                        {{card.price}} 
+                                        <span class="px-1" v-if="card.currency_id==1"> USD</span>
+                                        <span class="px-1" v-else> EUR</span>
+                                    </v-chip>
+                                    <v-chip color="#2979FF" text-color="#fff" class="m-1 font-weight-bold">
+                                        {{card.dimension}} mt2
+                                    </v-chip>
+                                </div>
                                 <v-btn
                                 class="ma-2"
                                 outlined
                                 color="indigo"
                                 @click="show(card.id)"
+                                absolute     
+                                right
                               >
                                 Ver más
                               </v-btn>
@@ -114,7 +90,6 @@ export default {
 
         ],
         model: 0,
-        items:['sads']
     }),
     methods: {
         index() {
