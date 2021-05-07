@@ -16,7 +16,7 @@
                 <v-list-item>
                     <v-list-item-content>
                         <a href="/admin/" class="">
-                            
+
                             <v-img src="/images/logo.png"  contain width="200" height="100"></v-img>
 
                         </a>
@@ -29,7 +29,7 @@
                 <v-list-item-group v-model="group" active-class=" text--accent-4">
                     <v-list-item>
                         <v-icon color="white" class="px-2">
-                            mdi-file-document
+                            mdi-web
                         </v-icon>
                         <a href="/">Pagina web</a>
                     </v-list-item>
@@ -41,10 +41,10 @@
                         class="text--white drop-custom-list "
                         >
                         <template v-slot:activator>
-                            <v-list-item-content 
+                            <v-list-item-content
                                 color="white"
                                  >
-                                <v-list-item-title> 
+                                <v-list-item-title>
                                     <v-icon color="white" class="px-2">
                                         mdi-account-box-multiple
                                     </v-icon>
@@ -56,11 +56,11 @@
                         <v-list-item>
                             <a href="/admin/contacts">Listado</a>
                         </v-list-item>
-                        
+
                         <v-list-item>
                             <a href="/admin/contacts/tags">Etiquetas</a>
                         </v-list-item>
-                        
+
                         <v-list-item disabled>
                             <a href="/admin/contacts">Migraciones</a>
                         </v-list-item>
@@ -110,12 +110,18 @@
                         </v-icon>
                         <a href="/admin/profile">Mi perfil</a>
                     </v-list-item>
-                     
+
                     <v-list-item v-if="rol == 1" disabled>
                         <v-icon color="white" class="px-2">
                             mdi-chart-bar
                         </v-icon>
                         <a href="/admin/home" >Estaditicas</a>
+                    </v-list-item>
+                    <v-list-item v-if="rol == 1">
+                        <v-icon color="white" class="px-2">
+                            mdi-file-document
+                        </v-icon>
+                        <a href="/admin/reports" >Reportes</a>
                     </v-list-item>
                     <v-list-item v-if="rol == 1" disabled>
                         <v-icon color="white" class="px-2">
@@ -143,7 +149,7 @@
     .nav-list a, .nav-list .v-list-item__title{
         color: #fff !important;
     }
-    
+
    .v-list--nav  .v-list-item{
         padding-left: 24px !important;
     }
@@ -179,7 +185,7 @@ export default {
             axios.post("/admin/logout", {
 
             }).then((response) => {
-                console.log(response);  
+                console.log(response);
                     window.location.href ="/admin/"
             });
         }
