@@ -48,11 +48,16 @@ class EnvironmentController extends Controller
      */
     public function show($id)
     {
-        $environments = Environment_property::selectRaw('proenvironments.*, environments.name,  environments.quantity')
+        $environments = Environment_property::selectRaw('proenvironments.*, environments.name')
         ->join('environments', 'proenvironments.environment_id', '=', 'environments.id')
         ->whereProperty_id($id)->get();
-
-        return compact('environments');
+        return response()->json([
+            'environments' => $environments,
+            'situations' => situations(),
+            'antiquitys' => antiquity(),
+            'conditions' => conditions(),
+            'locations' => locationsKeys(),    
+        ]);
     }
 
     /**
