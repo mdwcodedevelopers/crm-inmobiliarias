@@ -152,11 +152,12 @@
           style="position:absolute; right:0px" 
           >
         <v-btn
+          @click="tableToExcel('table', 'Contact Table')"
         >
             <v-icon>
                 mdi-file-pdf
             </v-icon>
-            Exportar a pdf
+            Exportar a excel
         </v-btn>
         <v-btn color="success" dark fab class="mt-1" @click="create()">
           <v-icon>mdi-plus</v-icon>
@@ -177,11 +178,13 @@
         no-data-text="No hay contactos " 
         :items="contacts" 
         item-key="id" 
+        id="contactTable"
         class="elevation-1" 
         hide-default-footer
         disable-pagination
         loading-text="Cargando... Por favor espere"
-        :search="search">
+        :search="search"
+        ref="table">
         
         <template v-slot:item.action="{ item }">
 
@@ -450,6 +453,10 @@ export default {
                 v => !!v || 'El campo es obligatorio',
                 v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
               ],
+              uri :'data:application/vnd.ms-excel;base64,',
+              template:'<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+              base64: function(s){ return window.btoa(unescape(encodeURIComponent(s))) },
+              format: function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
         }
     },
      methods: {
@@ -466,6 +473,13 @@ export default {
                   });
                 });
           });
+        },
+        tableToExcel(table, name){
+          if (!table.nodeType){
+             table = this.$refs.table
+          var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+          window.location.href = this.uri + this.base64(this.format(this.template, ctx))
+          }
         },
         filterSearch() {
             axios.get("/admin/api-contacts-search?agent=" + this.filter.agent + "&oportunity=" + this.filter.oportunity + "&tag=" + this.filter.tag + "&noTag=" + this.filter.noTag ).then((response) => {

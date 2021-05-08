@@ -15,7 +15,7 @@
                 fab
                 class="mt-1"
                 v-bind="attrs"
-          v-on="on"
+                v-on="on"
                 @click="newOps()"
               >
                 <v-icon>mdi-plus</v-icon>
@@ -45,8 +45,7 @@
                   :items="contacts"
                   item-text="name"
                   item-value="id"
-                  label="Contacto*"
-                  required
+                  label="Contacto"
                 ></v-select>
                 <v-select
                   v-model="oportunity.status_id"
@@ -54,6 +53,14 @@
                   item-text="name"
                   item-value="id"
                   label="Estado*"
+                  required
+                ></v-select>
+                <v-select
+                  v-model="oportunity.property_id"
+                  :items="properties"
+                  item-text="name"
+                  item-value="id"
+                  label="Propiedades"
                   required
                 ></v-select>
               </v-col>
@@ -121,6 +128,7 @@
           vigency: "",
           status_id: ""
       },
+      properties:[],
       contacts:[],
       responseRequest:[],
     }),
@@ -129,9 +137,12 @@
           axios.get('/admin/api-contacts').then((response) =>{
             this.contacts= response.data.contacts;
           });
+          axios.get('/admin/api-properties').then((response) =>{
+            this.properties= response.data.properties.data;
+          });
         },
         disabledButton(){
-            if (  this.oportunity.contact_id == "" |  this.oportunity.name  == "" | this.oportunity.vigency == "" | this.oportunity.status_id == "") {
+            if (  this.oportunity.name  == "" | this.oportunity.vigency == "" | this.oportunity.status_id == "") {
                        return true;
             }else{
                 return false;
@@ -144,13 +155,7 @@
         this.responseRequest=[];
       },
         newOportunity(){
-          console.log("agregando oportunidad");
-            axios.post('/admin/api-oportunities', {
-                 name: this.oportunity.name,
-                vigency: this.oportunity.vigency,
-                contact_id: this.oportunity.contact_id,
-                status_id: this.oportunity.status_id 
-            }).then((response) => {
+            axios.post('/admin/api-oportunities', this.oportunity).then((response) => {
                 this.dialog = false;
               this.$swal("Oportunidad guardada con exito","", "success").then(() => {
               this.$emit('updateData');

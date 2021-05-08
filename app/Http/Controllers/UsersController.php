@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Roles;
 use App\User;
 use App\Contact;
+use App\Oportunity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+
+use Auth;
 
 class UsersController extends Controller
 {
@@ -116,5 +119,34 @@ class UsersController extends Controller
         else{
             return view('welcome');
         }
+    }
+    
+    public function propertyContact(Request $request){
+
+        $contact = Contact::firstOrNew(['email' =>  request('email')]);
+        $contact->name = $request->name; 
+        $contact->phone_1 = $request->phone_1; 
+        $contact->phone_2 = $request->phone_2; 
+        $contact->direction = $request->direction; 
+        $contact->province = $request->province;
+        $contact->user_id =  auth()->id(); 
+        $contact->save();
+
+        $oportunity = new Oportunity();
+        $oportunity->user_id = $request->agent_id;
+        $oportunity->name = $request->name;
+        $oportunity->contact_id = $contact->id;
+        $oportunity->status_id = 1;
+        $oportunity->vigency = date("Y-m-d",strtotime(date('Y-m-d')."+ 3 days")); ;
+
+        $oportunity->save();
+
+        return response()->json("success", 200);
+
+    }
+
+    public function myUser(){
+        $user =  is_null(Auth::user()) ? '' : User::find(Auth::user()->id);
+        return compact('user');
     }
 }

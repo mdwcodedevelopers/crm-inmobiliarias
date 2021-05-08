@@ -73,6 +73,8 @@
                         
             </v-col>
         </v-card>
+    <front-footer></front-footer>  
+
     </div>
 </template>
 
@@ -80,7 +82,6 @@
 export default {
     props: {
         property: Object,
-        user: Object,
     },
     data() {
         return {
@@ -89,6 +90,7 @@ export default {
             firstname: '',
             message:'',
             lastname: '',
+            user: {},
             inputRule: [
                 v => !!v || 'El campo es obligatorio',
               ],
@@ -105,6 +107,11 @@ export default {
               ],
         }
     },
+     created(){
+        axios.get("/api-user-info").then((response) => {
+            this.user= response.data.user;
+          });
+        },
     methods: {
         sendEmail(){
         this.$swal.fire(
@@ -114,7 +121,9 @@ export default {
                     );
     },
         store() {
-          axios.post("/admin/api-contacts-property", this.user).then((response) => {
+            this.user.property_id = this.property.id;
+            this.user.agent_id = this.property.user_id;
+          axios.post("/api-contacts-property", this.user).then((response) => {
             if (response.status == 200) {
               this.$swal.fire('Mensaje enviado, pronto nos estaremos comunicando con usted');
             }

@@ -16,6 +16,8 @@ Route::get('register/verify/{id}/{hash}', 'Auth\VerificationController@index')->
 Route::post('register/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 Auth::routes(['verify' => true]);
 Route::get('/','WelcomeController@index');
+Route::post('/api-contacts-property', 'UsersController@propertyContact');
+Route::get('/api-user-info', 'UsersController@myUser');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/property-images/{id}','ImageController@images');
@@ -61,7 +63,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/api-properties-user', 'PropertyController@properties');
     Route::get('/property-user/{id}', 'PropertyController@edit');
     Route::get('/api-contacts-search', 'ContactController@search');
-    Route::get('/api-contacts-property', 'propertyContact@search');
     Route::patch('/property-user/{id}', 'PropertyController@update');
     Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
 

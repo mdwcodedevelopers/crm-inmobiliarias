@@ -24,11 +24,7 @@ class ContactController extends Controller
      */
     public function index(Request $request)
     {
-        // $contacts = Contact::selectRaw('contacts.*, contact_tag.tag_id')->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->get();
         $contacts = Contact::get();
-        // foreach ($contacts as $key => $value) {
-        //     $value->tags = Contact_tag::selectRaw('tag_id')->whereContact_id($value->id)->get();
-        // }
         $agents = User::selectRaw('name, id')->where('role_id','=',3)->orWhere('role_id','=',1)->get();
         $tags = Tag::selectRaw('tags.id, tags.name, group_tags.name AS group_name')
         ->join('group_tags', 'tags.group_tag_id', '=', 'group_tags.id')->get();
@@ -179,20 +175,7 @@ class ContactController extends Controller
             // 'total' => count($contacts),
     ]);
     }
-    public function propertyContact(Request $request){
-
-        $contact = Contact::firstOrNew(['email' =>  request('email')]);
-        $contact->name = $request->name; 
-        $contact->phone_1 = $request->phone_1; 
-        $contact->phone_2 = $request->phone_2; 
-        $contact->direction = $request->direction; 
-        $contact->province = $request->province;
-        $contact->user_id =  auth()->id(); 
-        $contact->save();
-        
-        return response()->json("success");
-
-    }
+    
 
 }
 

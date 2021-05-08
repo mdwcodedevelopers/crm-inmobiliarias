@@ -5,7 +5,7 @@
         <div>
             <ul class="d-flex list-status flex-wrap justify-center  ">
                 <li v-for="state in status" :style="{ backgroundColor: state.color}" :key="state.id">
-                    <!-- <span>{{counterStatus[state.id-1] }}</span>  -->
+                    <span>{{state.count }}</span> 
                     <p>{{state.name}}</p>
                 </li>
             </ul>
@@ -34,13 +34,21 @@
 export default {
     props:{
         users:Array,
-        status:Array,
         rol: Number,
     },
     data: () => ({
+        status: [],
         counterStatus: [0,0,0,0,0,0,0],
     }),
+    created() {
+        this.index();
+    },
     methods:{
+        index(){
+            axios.get("/admin/api-oportunities").then((response) => {
+                this.status = response.data.status;
+            });
+        },
         updateStatusList(datas){  
             let i=0;
             this.status.forEach(element => {

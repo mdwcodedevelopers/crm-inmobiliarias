@@ -12,6 +12,6 @@
             </div>
             @endguest
   <div class="">
-    <property :property="{{$property}}" :user="{{$user}}" />
+    <property :property="{{$property}}"/>
   </div>
 @endsection
