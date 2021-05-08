@@ -111,11 +111,8 @@ class PropertyController extends Controller
         $property->price = $request->price;
         $property->save();
 
-        Report::create([
-            'type' => 'Creación',
-            'table' => 'Propiedad',
-            'information' => 'Se creo la propiedad: ID#' . $property->id . " " . $request->title,
-        ]);
+        //HISTÓRICO
+        saveReport(10, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$request->type]["name"].". Precio: ".$property->price);
     }
 
     public function edit($id)
@@ -131,6 +128,9 @@ class PropertyController extends Controller
             'extras' => Environment::where('type','2')->get(),
             'extra' => $property->EnvsTwo(),
         ]);
+
+        //HISTÓRICO
+        saveReport(11, "Propiedades", "Ver formulario de editar propiedad");
     }
 
     public function update(Request $request, $id)
@@ -161,11 +161,16 @@ class PropertyController extends Controller
 
         //AMBIENTES
         $environments = $request->envs;
+        //SERVICIOS
+        $services = $request->services;
+        //ADICIONALES
+        $extras = $request->extras;
 
-        Environment_property::where('property_id',$property->id)->whereNotIn("environment_id",$environments)->delete();
+
+        Environment_property::where('property_id',$property->id)->whereNotIn("environment_id",array_merge($environments,$services))->delete();
 
         foreach( $environments as $env_id ):
-            $environment = Environment_property::where('property_id',$property->id)->where('environment_id',$env_id);
+            $environment = Environment_property::where('property_id',$property->id)->where('environment_id',$env_id)->first();
 
             if( !isset($environment->id) ):
                 $environment = new Environment_property();
@@ -175,13 +180,11 @@ class PropertyController extends Controller
             endif;
         endforeach;
 
-        //SERVICIOS
-        $services = $request->services;
 
         Service_property::where('property_id',$property->id)->whereNotIn("service_id",$services)->delete();
 
         foreach( $services as $service_id ):
-            $service = Service_property::where('property_id',$property->id)->where('service_id',$service_id);
+            $service = Service_property::where('property_id',$property->id)->where('service_id',$service_id)->first();
 
             if( !isset($service->id) ):
                 $service = new Service_property();
@@ -191,11 +194,9 @@ class PropertyController extends Controller
             endif;
         endforeach;
 
-        //ADICIONALES
-        $environments = $request->extras;
 
-        foreach( $environments as $env_id ):
-            $environment = Environment_property::where('property_id',$property->id)->where('environment_id',$env_id);
+        foreach( $extras as $env_id ):
+            $environment = Environment_property::where('property_id',$property->id)->where('environment_id',$env_id)->first();
 
             if( !isset($environment->id) ):
                 $environment = new Environment_property();
@@ -205,11 +206,8 @@ class PropertyController extends Controller
             endif;
         endforeach;
 
-        Report::create([
-            'type' => 'Actualización',
-            'table' => 'Propiedad',
-            'information' => 'Se actualizó la propiedad a: ' . $property->title . ' dimensiones nuevas: ' . $property->dimension . ' precio nuevo: ' . $property->price
-        ]);
+        //HISTÓRICO
+        saveReport(12, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type]["name"].". Precio: ".$property->price.". Provincia: ".$property->province.". Ubicación: ".$property->location.". Dimensión: ".$property->dimension.". Cantidad de Ambientes: ".$property->environments.". Plantas: ".$property->plants.". Baños: ".$property->bedrooms.". Toilettes: ".$property->toilettes.". Tocadores: ".$property->dresser.". Chocheras: ".$property->chocheras);
 
         return response()->json("success");
     }
@@ -217,7 +215,7 @@ class PropertyController extends Controller
     public function property($id)
     {
         $property = Property::where('id',$id)->with('Status','Currency','Categories','Images','Environments','Services')->first();
-        
+
         if (!is_null(Auth::user())) {
             $user = User::find(Auth::user()->id);
             return view('property', ['property' => $property, 'rol' => $user->role_id]);
@@ -233,11 +231,7 @@ class PropertyController extends Controller
 
         $property = Property::find($id)->delete();
 
-        Report::create([
-            'type' => 'Eliminación',
-            'table' => 'Propiedad',
-            'information' => 'Se eliminó la propiedad: ID#' . $id . " " . $prop->title . ' con la información ' . $prop->information . ' dimensiones:' . $prop->dimension . '  precio: ' . $prop->precio
-        ]);
+        //HISTÓRICO
 
         return response()->json("success", 200);
     }
