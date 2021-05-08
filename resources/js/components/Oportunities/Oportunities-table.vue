@@ -339,7 +339,7 @@
       </template>
 
       <template v-slot:group.header="{ group, toggle, isOpen }"> 
-        <td :colspan="6" style="text-align: initial; padding-left:2rem;" :style="{ backgroundColor: col}" >
+        <td :colspan="7" style="text-align: initial; padding-left:2rem;" >
           <v-btn @click="toggle" x-small icon :ref="group">
               <v-icon v-if="isOpen">mdi-minus</v-icon>
               <v-icon v-else>mdi-plus</v-icon>
@@ -370,7 +370,7 @@
               v-on="on"
               onclick="return false"
             >
-              {{item.contact}}
+              {{item.contact.name}}
             </a>
           </template>
           <v-list>
@@ -385,7 +385,12 @@
 
       </template>
 
+      <template v-slot:item.property="{ item } ">
+      
+              {{item.property}}
+            
 
+      </template>
       <!-- <template v-slot:item.vigency="{ item }">
 
         <v-progress-linear
@@ -434,14 +439,19 @@
        headers(){
               return[
                 {
-                    text: 'Contacto',
-                    value: 'contact'
-                },
-                {
                     text: 'Nombre',
                     align: 'start',
                     sortable: true,
                     value: 'name',
+                },
+                {
+                    text: 'Contacto',
+                    value: 'contact'
+                },
+                
+                {
+                    text: 'Propiedad',
+                    value: 'property'
                 },
                 {
                     text: 'Vigencia',
@@ -493,9 +503,6 @@
     },
 
     methods: {
-      initialize () {
-        // this.datas = this.oportunities
-      },
       sendEmail(item){
         let params;
         item.forEach(element => {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Oportunity;
 use App\Note_oportunity;
+use App\Property;
 use App\Contact;
 use App\StatusOportunity;
 use Illuminate\Http\Request;
@@ -25,14 +26,19 @@ class OportunityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-
+        $status = StatusOportunity::get();
+        foreach ($status as $key => $value) {
+            $value->count = Oportunity::whereStatus_id($value->id)->count();
+        }
+        return response()->json([
+            'status' => $status,
+    ]);
     }
     public function view(Request $request)
     {           
         $rol=User::find(auth()->id())->role_id;
         $users = User::selectRaw('id, name')->get();
-        $status = StatusOportunity::get();
-        return view('oportunities', compact('users', 'status', 'rol'));
+        return view('oportunities', compact('users', 'rol'));
     }
 
     /**
@@ -60,6 +66,7 @@ class OportunityController extends Controller
         $oportunity->contact_id = $request->contact_id;
         $oportunity->vigency = $request->vigency;
         $oportunity->status_id = $request->status_id;
+        $oportunity->property_id = $request->property_id;
 
         $oportunity->save();
 
@@ -74,13 +81,15 @@ class OportunityController extends Controller
      */
     public function show($id_user)
     {
-        $oportunities = Oportunity::selectRaw('oportunities.*,  contacts.name AS contact, contacts.phone_1 AS tel_1,
-          contacts.phone_2 AS tel_2, contacts.email AS email, contacts.direction As direction, contacts.province As province, status_oportunities.name AS status, status_oportunities.color AS status_color, users.name AS user' )
-        ->join('contacts', 'oportunities.contact_id', '=', 'contacts.id')
+        $oportunities = Oportunity::selectRaw('oportunities.*, status_oportunities.name AS status, status_oportunities.color AS status_color, users.name AS user' )
         ->join('users', 'oportunities.user_id', '=', 'users.id')
         ->join('status_oportunities', 'oportunities.status_id', '=', 'status_oportunities.id')
         ->where('oportunities.user_id', $id_user)->get();
-        // dd($oportunities);
+        foreach ($oportunities as $key => $value) {
+            $value->contact = ($value->contact_id == null) ? null : Contact::find($value->contact_id );
+            $value->property = ($value->property_id == null) ? null : Property::selectRaw('title')->find($value->property_id)->title;
+        }
+
         return compact('oportunities');
     }
 

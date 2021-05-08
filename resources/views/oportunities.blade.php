@@ -8,7 +8,6 @@
 
         <oportunities
             :users="{{$users}}"
-            :status="{{$status}}"
             :rol="{{$rol}}"
         />
 

@@ -220,11 +220,10 @@ class PropertyController extends Controller
         
         if (!is_null(Auth::user())) {
             $user = User::find(Auth::user()->id);
-            return view('property', ['property' => $property, 'rol' => $user->role_id, 'types' => types()]);
+            return view('property', ['property' => $property, 'rol' => $user->role_id]);
         } else {
-            return view('property', ['property' => $property, 'rol' => 0, 'types' => types(),]);
+            return view('property', ['property' => $property, 'rol' => 0]);
         }
-        return view('property',['property'=>$property,'rol'=>$user->role_id, 'types' => types(),]);
 
     }
 

@@ -65,7 +65,7 @@
                                     </v-layout>
                                 <v-spacer></v-spacer>
                                 <v-btn color="danger" @click="user={}">Borrar</v-btn>
-                                <v-btn color="success" :disabled="!valid" @click.prevent="create()">Estoy interesado</v-btn>
+                                <v-btn color="success" :disabled="!valid" @click.prevent="store()">Estoy interesado</v-btn>
                                 </v-form>
                             
                             </v-card-actions>
@@ -73,6 +73,8 @@
                         
             </v-col>
         </v-card>
+    <front-footer></front-footer>  
+
     </div>
 </template>
 
@@ -105,6 +107,11 @@ export default {
               ],
         }
     },
+     created(){
+        axios.get("/api-user-info").then((response) => {
+            this.user= response.data.user;
+          });
+        },
     methods: {
         sendEmail(){
         this.$swal.fire(
@@ -112,7 +119,22 @@ export default {
                       'Los correos serán enviados cuando se pase ha desarrollo.',
                       'success'
                     );
-    }
+    },
+        store() {
+            this.user.property_id = this.property.id;
+            this.user.agent_id = this.property.user_id;
+          axios.post("/api-contacts-property", this.user).then((response) => {
+            if (response.status == 200) {
+              this.$swal.fire('Mensaje enviado, pronto nos estaremos comunicando con usted');
+            }
+          }).catch(error => {
+            this.$swal.fire(
+              'Error',
+              'Ocurrío un error al tratar de registrar el contacto, el correo esta en uso.',
+              'error'
+            )
+          });
+          },
     },
     
 }

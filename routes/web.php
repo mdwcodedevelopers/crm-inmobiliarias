@@ -17,6 +17,8 @@ Route::get('register/verify/{id}/{hash}', 'Auth\VerificationController@index')->
 Route::post('register/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 Auth::routes(['verify' => true]);
 Route::get('/','WelcomeController@index');
+Route::post('/api-contacts-property', 'UsersController@propertyContact');
+Route::get('/api-user-info', 'UsersController@myUser');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/property-images/{id}','ImageController@images');

@@ -3,33 +3,35 @@
         <v-card class="mx-auto">
 
             <v-card-text>
-                <p class="display-2 text--primary">
+                <p class="display-2 blue--text text--darken-2 font-weight-bold">
                     Mi perfil
                 </p>
-                <v-form>
-                <div class="text--primary">
-                    Nombre: {{profile.name}}
-                </div>
-                    <v-text-field  :rules="[v => !!v || 'Debe seleccionar un nombre']" v-model="name_edit" v-if="disabledInput" :placeholder="profile.name" required></v-text-field>
-                <div class="text--primary">
-                    Correo: {{profile.email}}
-                </div>
-                    <v-text-field  :rules="mailRule" v-model="email_edit" v-if="disabledInput" :placeholder="profile.email" required></v-text-field>
-                <div v-if="profile.role_id == 2">
-                    <div class="text--primary">
-                        Telefono: {{profile.phone}}
-                    </div>
-                    <v-text-field  :rules="phoneRule" v-model="phone_edit" v-if="disabledInput" :placeholder="profile.phone" required></v-text-field>
-                    <div class="text--primary">
-                        Provincia: {{profile.province}}
-                    </div>
-                    <v-text-field  :rules="[v => !!v || 'Debe seleccionar una provincia']" v-model="province_edit" v-if="disabledInput" :placeholder="profile.province" required></v-text-field>
-                    <div class="text--primary">
-                        Dirección: {{profile.direction}}
-                    </div>
-                    <v-text-field  :rules="[v => !!v || 'Debe seleccionar una dirección']" v-model="direction_edit" v-if="disabledInput" :placeholder="profile.direction" required></v-text-field>
-                </div>
-                {{error}}
+                <v-form
+                    ref="form"
+                    v-model="valid"
+                >
+                    <v-layout wrap style="width">
+                            <v-flex xs12  >
+                                <v-text-field label="Nombre*" :rules="inputRule" :disabled="!disabledInput" v-model="profile.name" required></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 >
+                                <v-text-field label="Correo*" :rules="mailRule" :disabled="!disabledInput" v-model="profile.email" required></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 v-if="profile.role_id == 2" >
+                                <v-text-field label="Telefono 1*" :rules="numberRule" :disabled="!disabledInput" v-model="profile.phone_1" required></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 v-if="profile.role_id == 2" >
+                                <v-text-field label="Telefono 2*" :rules="numberRule" :disabled="!disabledInput" v-model="profile.phone_2" required></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 v-if="profile.role_id == 2" >
+                                <v-text-field label="Dirección*" :rules="inputRule" :disabled="!disabledInput" v-model="profile.direction" required></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 v-if="profile.role_id == 2" >
+                                <v-text-field label="Provincia*" :rules="inputRule" :disabled="!disabledInput" v-model="profile.province" required></v-text-field>
+                            </v-flex>
+                            
+                        </v-layout>
+                <v-spacer></v-spacer>
                 </v-form>
             </v-card-text>
             <v-card-actions>
@@ -95,56 +97,37 @@ export default {
     },
     data() {
         return {
-            
+            valid:false,
             disabledInput: false,
             dialogpass: false,
             dialogedit: false,
-            name_edit: '',
-            email_edit: '',
-            phone_edit: '',
-            province_edit: '',
-            passold: '',
-            direction_edit: '',
             passnew: '',
             cpassnew: '',
             error: '',
             error_edit: '',
+             inputRule: [
+                v => !!v || 'El campo es obligatorio',
+              ],
+              selectRule: [
+                v => !!v || 'Debe seleccionar una opción',
+              ],
               mailRule: [
                 v => !!v || 'Debe dar un correo',
                 v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El Correo no es valido'
-            ],
-             phoneRule: [
-                v => !!v || 'Debe dar un telefono',
-                v => v.length != 10 || "El télefono debe de ser valido",
-                v => /^([0-9])*$/.test(v) ||  "El télefono debe de ser valido"
-            ],
+              ],
+              numberRule: [
+                v => !!v || 'El campo es obligatorio',
+                v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
+              ],
         }
     },
     methods: {
         
         update() {
-            if (this.profile.role_id == 1 || this.profile.role_id == 3) {
-                    this.phone_edit = '';
-                    this.province_edit = '';
-                    this.direction_edit = '';
-                }
-                axios.put("/admin/api-users/" + this.profile.id, {
-                    name: this.name_edit,
-                    email: this.email_edit,
-                    role_id: this.profile.role_id,
-                    phone: this.phone_edit,
-                    province: this.province_edit,
-                    direction: this.direction_edit
-                }).then((response) => {
+                axios.put("/admin/api-users/" + this.profile.id,this.profile).then((response) => {
                         // console.log(response.data);
                         this.profile = response.data.user;
                         this.disabledInput = false;
-                        this.name_edit = "";
-                        this.email_edit = "";
-                        this.role_id_edit = "";
-                        this.phone_edit = "";
-                        this.province_edit = "";
-                        this.direction_edit = "";
                         this.$swal({
                         title: 'Usuario editado con exito',
                         type: 'ok'
