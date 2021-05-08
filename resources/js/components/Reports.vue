@@ -1,62 +1,92 @@
 <template>
-    <div class="text-center">
-        <v-card color="blue">
-            <div class="display-1 text-white">Lista de reportes</div>
-            <v-data-table :headers="headers"  no-results-text="No hay resultados" no-data-text="No hay historial de reportes" :items="reports"  class="elevation-1" :search="search">
-                <template v-slot:item.imagen="{ item }">
-
-                    <v-img :src="'../'+item.image" height="100" width="100"></v-img>
-                </template>
-                <template v-slot:top>
-                    <v-toolbar flat>
-                        <v-text-field v-model="search" label="Buscar" class="mt-3"></v-text-field>
-                        <v-spacer></v-spacer>
-                        <v-btn color="#E53935" class="m-1" @click="exportPDF()" dark>PDF
-                                <v-icon>mdi-file-pdf</v-icon>
-                        </v-btn>
-                    </v-toolbar>
-
-                </template>
-                <template>
-                    <tr>
-                        <td></td>
-                        <td>
-                        </td>
-                        <td colspan="4"></td>
-                    </tr>
-                </template>
-                <template v-slot:item.action="{ item }">
-                    <v-btn color="#E53935" class="m-1" @click="delete_dialog(item.id,item.information)">
-                        <v-icon color="#fff">
-                            mdi-delete
-                        </v-icon>
-                    </v-btn>
-
-                </template>
-
-            </v-data-table>
-        </v-card>
-
-        <template>
-            <v-layout row justify-center>
-                <v-dialog v-model="dialogdelete" persistent max-width="600px">
-                    <v-card>
-                        <v-card-title>
-                            <span class="headline">Desea eliminar: {{propiedad_eliminar}}</span>
-                        </v-card-title>
-                        <v-card-text>
-
-                        </v-card-text>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn @click="dialogdelete = false">Cancelar</v-btn>
-                            <v-btn color="#E53935" class="text-white" @click.prevent="delete_model()">Eliminar</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
+  <div class="text-left">
+    <v-card color="blue">
+      <v-card-title class="display-1 text-white">
+        Reportes
+      </v-card-title>
+    </v-card>
+    <v-card color="white">
+      <v-hover>
+        <template v-slot:default="{ hover }">
+          <v-card :elevation="hover ? 10 : 5" class="mx-auto pa-6">
+          <v-container>
+            <v-layout wrap>
+              <v-flex xs1>
+                <v-icon color="dark" class="px-2" size="45">
+                  mdi-account-circle
+                </v-icon>
+              </v-flex>
+              <v-flex xs11>
+                <h6><a href="#">CONTACTOS CREADOS POR ETIQUETAS</a></h6>
+                <small>Información estadística para analizar las operaciones de la compañia.</small>
+              </v-flex>
             </v-layout>
+          </v-container>
+          </v-card>
         </template>
-    </div>
+      </v-hover>
+      <div class="my-6"></div>
+      <v-hover>
+        <template v-slot:default="{ hover }">
+          <v-card :elevation="hover ? 10 : 5" class="mx-auto pa-6">
+          <v-container>
+            <v-layout wrap>
+              <v-flex xs1>
+                <v-icon color="dark" class="px-2" size="45">
+                  mdi-format-list-bulleted
+                </v-icon>
+              </v-flex>
+              <v-flex xs11>
+                <h6><a href="#">ANALISIS DE CONTACTO POR CADA USUARIO</a></h6>
+                <small>Información estadística para analizar las operaciones de la compañia.</small>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          </v-card>
+        </template>
+      </v-hover>
+      <div class="my-6"></div>
+      <v-hover>
+        <template v-slot:default="{ hover }">
+          <v-card :elevation="hover ? 10 : 5" class="mx-auto pa-6">
+          <v-container>
+            <v-layout wrap>
+              <v-flex xs1>
+                <v-icon color="dark" class="px-2" size="45">
+                  mdi-home
+                </v-icon>
+              </v-flex>
+              <v-flex xs11>
+                <h6><a href="#">MOVIMIENTO DE PROPIEDADES</a></h6>
+                <small>Información estadística para analizar las operaciones de la compañia.</small>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          </v-card>
+        </template>
+      </v-hover>
+      <div class="my-6"></div>
+      <v-hover>
+        <template v-slot:default="{ hover }">
+          <v-card :elevation="hover ? 10 : 5" class="mx-auto pa-6">
+          <v-container>
+            <v-layout wrap>
+              <v-flex xs1>
+                <v-icon color="dark" class="px-2" size="45">
+                  mdi-filter-variant
+                </v-icon>
+              </v-flex>
+              <v-flex xs11>
+                <h6><a href="#">PATRONES DE BÚSQUEDA</a></h6>
+                <small>Información estadística para analizar las operaciones de la compañia.</small>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          </v-card>
+        </template>
+      </v-hover>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -69,34 +99,10 @@ export default {
     data() {
         return {
             reports: [],
-            dialogdelete: false,
-            id_delete: '',
-            propiedad_eliminar: '',
             search: ''
         }
     },
     methods: {
-        index() {
-            axios.get("api-reports").then((response) => {
-                this.reports = response.data.reports;
-            });
-        },
-        delete_dialog(id, title) {
-            this.id_delete = id;
-            this.dialogdelete = true;
-            this.propiedad_eliminar = title;
-        },
-        delete_model() {
-            axios.delete("/admin/api-reports/" + this.id_delete).then((response) => {
-                console.log(response);
-                if (response.status == 200) {
-                    this.index(0, '');
-                    this.dialogdelete = false;
-                } else {
-                    this.error = "Error al añadir propiedad";
-                }
-            });
-        },
         exportPDF() {
             let columns = [{
                     title: "Operación",
@@ -127,9 +133,6 @@ export default {
         }
     },
 
-    created() {
-        this.index();
-    },
     computed: {
         headers() {
             return [{

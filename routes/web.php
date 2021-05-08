@@ -54,11 +54,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/api-properties-user', 'PropertyController@properties');
     Route::get('/users', 'UserController@view');
     Route::get('/profile', 'UserController@profile');
-    Route::get('/reports', 'ReportController@view');
     Route::get('/categories', 'CategorieController@categories')->name('categories');
     Route::get('/status', 'StatusViewController@index')->name('status');
     Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
-
 
     Route::get('/api-properties-user', 'PropertyController@properties');
     Route::get('/property-user/{id}', 'PropertyController@edit');
@@ -66,11 +64,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::patch('/property-user/{id}', 'PropertyController@update');
     Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
 
-
-
     Route::put('/api-oportunities/close/{id}', 'OportunityController@closeOportunity');
     // Route::get('/api-contacts','OportunityController@getContacts');
     Route::get('/api-notes/{id}','NoteController@show');
     Route::post('/api-notes','NoteController@store');
     Route::post('/api-oportunities/sendMail','OportunityController@sendEmail');
+
+    Route::get('/reports', 'ReportController@index');
+    Route::get('/reports/list', 'ReportController@list');
 });

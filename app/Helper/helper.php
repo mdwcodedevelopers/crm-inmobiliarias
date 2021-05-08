@@ -57,3 +57,27 @@
 
     return $locations;
   }
+
+  function realType($index, $item = "")
+  {
+    $type = array(
+    [ "id" => "1", "name" => "Este contacto es ahora propietario de"],
+    [ "id" => "2", "name" => "Nueva búsqueda"],
+    [ "id" => "3", "name" => "El campo $item ha sido cambiado a"],
+    [ "id" => "4", "name" => "Contacto creado"],
+    [ "id" => "5", "name" => "Desconocido"]
+    );
+
+    return $type[$index];
+  }
+
+  function saveReport($type, $table, $info)
+  {
+    $report = new \App\Report();
+    $report->type = realType($type);
+    $report->table = $table;
+    $report->information = $info;
+    $report->save();
+
+    return $report;
+  }
