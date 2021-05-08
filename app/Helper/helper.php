@@ -61,23 +61,98 @@
   function realType($index, $item = "")
   {
     $type = array(
-    [ "id" => "1", "name" => "Este contacto es ahora propietario de"],
-    [ "id" => "2", "name" => "Nueva búsqueda"],
-    [ "id" => "3", "name" => "El campo $item ha sido cambiado a"],
-    [ "id" => "4", "name" => "Contacto creado"],
-    [ "id" => "5", "name" => "Desconocido"]
+      1 => "Este contacto es ahora propietario de:",
+      2 => "Contacto registrado",
+      3 => "Contacto modificado a:",
+      4 => "Este contacto ha sido eliminado:",
+      5 => "Lista y búsqueda de Contactos:",
+      6 => "Nueva búsqueda",
+      7 => "El campo $item ha sido cambiado a: ",
+      8 => "Filtrar contactos por: ",
+      9 => "Lista de Propiedades",
+      10 => "Propiedad registrada:",
+      11 => "Formulario de editar propiedad:",
+      12 => "Propiedad Modificada a:"
     );
 
     return $type[$index];
   }
 
-  function saveReport($type, $table, $info)
+  function saveReport($type, $table, $info, $item = '')
   {
     $report = new \App\Report();
-    $report->type = realType($type);
+    $report->user_id = \Auth::user()->id;
+    $report->type = realType($type, $item);
     $report->table = $table;
     $report->information = $info;
     $report->save();
 
     return $report;
   }
+
+  function tagsToString($tags)
+  {
+    $string = '';
+
+    if( is_array($tags) ):
+      foreach ($tags as $value):
+        $string .= \App\Tag::select("name")->where("id",$value)->first()->name . " ";
+      endforeach;
+    else:
+      $string = \App\Tag::select("name")->where("id",$tags)->first()->name;
+    endif;
+
+    return $string;
+  }
+
+  function userToString($id)
+  {
+    $string = \App\User::select("name")->where("id",$id)->first()->name;
+
+    return $string;
+  }
+
+  function statusToString($id)
+  {
+    $string = \App\Status::selectRaw('name')->where("id",$id)->first()->name;
+
+    return $string;
+  }
+
+  function currenciesToString($id)
+  {
+    $string = \App\Currency::selectRaw('name')->where("id",$id)->first()->name;
+
+    return $string;
+  }
+
+  function envsToString($environments)
+  {
+    $string = '';
+
+    if( is_array($environments) ):
+      foreach ($environments as $env):
+        $string .= \App\Environment::select("name")->where("id",$env)->first()->name . " ";
+      endforeach;
+    else:
+      $string = \App\Environment::select("name")->where("id",$environments)->first()->name;
+    endif;
+
+    return $string;
+  }
+
+  function servicesToString($services)
+  {
+    $string = '';
+
+    if( is_array($services) ):
+      foreach ($services as $service):
+        $string .= \App\Service::select("name")->where("id",$service)->first()->name . " ";
+      endforeach;
+    else:
+      $string = \App\Service::select("name")->where("id",$services)->first()->name;
+    endif;
+
+    return $string;
+  }
+//.". Ambientes: ".envsToString($environments).". Servicios: ".servicesToString($services).". Extras: ".envsToString($environmentss)

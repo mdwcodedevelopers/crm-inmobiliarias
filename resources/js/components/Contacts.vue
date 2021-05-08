@@ -1,7 +1,7 @@
 <template>
   <div class="text-center  d-flex">
 
- 
+
  <v-col
     cols="12"
     sm="3">
@@ -10,7 +10,7 @@
           Filtros
       </v-card-title>
       <v-card-text>
-       
+
           <v-form ref="form" v-model="valid" style="width: 100%" >
                   <v-layout wrap>
                     <v-flex xs12 class="pr-3">
@@ -18,15 +18,15 @@
                         <v-select
                           v-model="filter.agent"
                           :items="agents_filter"
-                          item-text="name" 
-                          item-value="id" 
-                          label="Agentes:" 
+                          item-text="name"
+                          item-value="id"
+                          label="Agentes:"
                           attach
                           :rules="selectRule"
                           style="max-height=42px"
                           color="blue-grey lighten-2"
                           chips
-                        >       
+                        >
                         <template v-slot:selection="data">
                         <!-- HTML that describe how select should render selected items -->
                       <v-chip
@@ -36,7 +36,7 @@
                           @click:close="filter.agent = ''"
                         > {{ data.item.name }} </v-chip>
 
-                      </template>       
+                      </template>
                         </v-select>
                     </v-flex>
 
@@ -45,9 +45,9 @@
                         <v-select
                         v-model="filter.oportunity"
                         :items="oportunities"
-                        item-text="name" 
-                        item-value="id" 
-                        label="Oportunidades:" 
+                        item-text="name"
+                        item-value="id"
+                        label="Oportunidades:"
                         attach
                         style="max-height=42px"
                         color="blue-grey lighten-2"
@@ -65,14 +65,14 @@
                       </v-select>
                     </v-flex>
 
-                       
+
                     <v-flex xs12  class="pr-3">
                       <h5 class="black--text text-left">Con la etiqueta: </h5>
                         <v-select
                           v-model="filter.tag"
                           :items="tags"
-                          item-value="id" 
-                          label="Etiquetas:" 
+                          item-value="id"
+                          label="Etiquetas:"
                           attach
                           color="blue-grey lighten-2"
                           :disabled="filter.noTag !== ''"
@@ -103,8 +103,8 @@
                         <v-select
                           v-model="filter.noTag"
                           :items="tags"
-                          item-value="id" 
-                          label="Etiquetas:" 
+                          item-value="id"
+                          label="Etiquetas:"
                           attach
                           style="max-height=42px"
                           color="blue-grey lighten-2"
@@ -127,7 +127,7 @@
                           <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
                         </v-list-item-content>
                       </template>
-                      
+
                         </v-select>
                     </v-flex>
 
@@ -140,7 +140,7 @@
       </v-card-text>
     </v-card>
  </v-col>
-  
+
   <v-col
       cols="12"
       sm="9"
@@ -148,8 +148,8 @@
     <v-card color="blue">
       <v-card-title class="display-1 text-white titulo-custom">
         Agenda de contactos
-      <v-card-actions 
-          style="position:absolute; right:0px" 
+      <v-card-actions
+          style="position:absolute; right:0px"
           >
         <v-btn
         >
@@ -171,18 +171,18 @@
 
     <v-card >
       <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
-      <v-data-table 
-        :headers="headers"  
-        no-results-text="No hay resultados" 
-        no-data-text="No hay contactos " 
-        :items="contacts" 
-        item-key="id" 
-        class="elevation-1" 
+      <v-data-table
+        :headers="headers"
+        no-results-text="No hay resultados"
+        no-data-text="No hay contactos "
+        :items="contacts"
+        item-key="id"
+        class="elevation-1"
         hide-default-footer
         disable-pagination
         loading-text="Cargando... Por favor espere"
         :search="search">
-        
+
         <template v-slot:item.action="{ item }">
 
             <v-btn color="#ff9800"  small @click="edit(item)">
@@ -195,7 +195,7 @@
                     mdi-delete
                 </v-icon>
             </v-btn>
-            <v-btn color="#66BB6A"  small @click="whatsapp(item.phone_1)">  
+            <v-btn color="#66BB6A"  small @click="whatsapp(item.phone_1)">
                 <v-icon color="#fff">
                     mdi-whatsapp
                 </v-icon>
@@ -249,8 +249,8 @@
                         v-model="contact_tag"
                         :items="tags"
                         :rules="selectRule"
-                        item-value="id" 
-                        label="Etiquetas:" 
+                        item-value="id"
+                        label="Etiquetas:"
                         attach
                         color="blue-grey lighten-2"
                         chips
@@ -274,7 +274,7 @@
                         <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
                       </v-list-item-content>
                     </template>
-                     
+
                       </v-select>
                     </v-flex>
                     <v-flex xs12>
@@ -329,8 +329,8 @@
                         v-model="contact_tag"
                         :items="tags"
                         :rules="selectRule"
-                        item-value="id" 
-                        label="Etiquetas:" 
+                        item-value="id"
+                        label="Etiquetas:"
                         attach
                         color="blue-grey lighten-2"
                         chips
@@ -354,7 +354,7 @@
                         <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
                       </v-list-item-content>
                     </template>
-                     
+
                       </v-select>
                     </v-flex>
                     <v-flex xs12>
@@ -393,7 +393,7 @@
     </v-layout>
     </template>
 
- 
+
   </div>
 </template>
 
@@ -423,7 +423,7 @@ export default {
                 id: -2,
                 name: "Contactos sin asignar"
               },
-              
+
             ],
             oportunities: [],
             filter: {
@@ -475,7 +475,7 @@ export default {
                   showConfirmButton: false,
                   timer: 1500
                 })
-               
+
                 this.contacts = response.data.contacts;
                 this.total = response.data.total;
 
@@ -552,7 +552,7 @@ export default {
               this.contact = {};
               this.dialogedit = false;
               this.$swal.fire('Contacto actualizado con exito');
-              this.contact_tag = []; 
+              this.contact_tag = [];
             }
           }).catch(error => {
             this.$swal.fire(
@@ -597,7 +597,7 @@ export default {
                 },
                 {
                     text: 'Email',
-                    value: 'email', 
+                    value: 'email',
                     width: '10rem'
                 },
                 {
