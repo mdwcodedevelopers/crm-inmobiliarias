@@ -33,6 +33,9 @@ class PropertyController extends Controller
                 $property->image = null;
             }
         }
+        //HISTÓRICO
+        saveReport(9, "Propiedades", "Se visualizo la lista de Propiedades.");
+
         return response()->json([
             'properties' => $Properties,
             'total' => count($Properties),
@@ -63,6 +66,9 @@ class PropertyController extends Controller
                 $property->image = null;
             }
         }
+        //HISTÓRICO
+        saveReport(9, "Propiedades", "Se visualizo la lista de Propiedades.");
+
         return response()->json([
             'properties' => $properties,
             'total' => count($properties),
@@ -119,6 +125,9 @@ class PropertyController extends Controller
     {
         $property = Property::where('id',$id)->with('Status','Currency','Categories','Images')->first();
 
+        //HISTÓRICO
+        saveReport(11, "Propiedades", "Se vizualizo formulario de editar propiedad");
+
         return response()->json([
             'property' => $property,
             'envs' => Environment::where('type','1')->get(),
@@ -129,8 +138,6 @@ class PropertyController extends Controller
             'extra' => $property->EnvsTwo(),
         ]);
 
-        //HISTÓRICO
-        saveReport(11, "Propiedades", "Ver formulario de editar propiedad");
     }
 
     public function update(Request $request, $id)
@@ -207,7 +214,7 @@ class PropertyController extends Controller
         endforeach;
 
         //HISTÓRICO
-        saveReport(12, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type]["name"].". Precio: ".$property->price.". Provincia: ".$property->province.". Ubicación: ".$property->location.". Dimensión: ".$property->dimension.". Cantidad de Ambientes: ".$property->environments.". Plantas: ".$property->plants.". Baños: ".$property->bedrooms.". Toilettes: ".$property->toilettes.". Tocadores: ".$property->dresser.". Chocheras: ".$property->chocheras);
+        saveReport(12, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type]["name"].". Precio: ".$property->price.". Provincia: ".$property->province.". Ubicación: ".$property->location.". Dimensión: ".$property->dimension.". Cantidad de Ambientes: ".$property->environments.". Plantas: ".$property->plants.". Baños: ".$property->bedrooms.". Toilettes: ".$property->toilettes.". Tocadores: ".$property->dresser.". Chocheras: ".$property->chocheras.". Ambientes: ".envsToString($environments).". Servicios: ".servicesToString($services).". Extras: ".envsToString($extras));
 
         return response()->json("success");
     }
