@@ -7,10 +7,9 @@ use Illuminate\Http\Request;
 use App\Contact;
 use App\Contact_tag;
 use App\Report;
-use App\Tag;
-use App\User;
 
 use Auth;
+use Datetime;
 
 class ReportController extends Controller
 {
@@ -32,6 +31,28 @@ class ReportController extends Controller
         ->join('group_tags', 'tags.group_tag_id', '=', 'group_tags.id')->get();
 
     return response()->json(['tags' => $tags]);
+  }
+
+  public function view()
+  {
+    $role = Auth::user()->role_id;
+
+    return view('historical', compact('role'));
+  }
+
+  public function historical(Request $request)
+  {
+    $reports = Report::with('User')->get();
+
+    foreach ($reports as $key => $report):
+      $date1 = new DateTime( date('Y-m-d H:i', strtotime($report->created_at)) );
+      $date2 = new DateTime( date("Y-m-d H:i") );
+      $diff = $date1->diff($date2);
+      $report->created = date('d/m/Y H:i', strtotime($report->created_at));
+      $report->diff = 'hace ' . ($diff->d > 0 ? $diff->d.' días ' : '' ) . ($diff->h > 0 ? $diff->h.' horas ' : '') . ($diff->i > 0 ? $diff->i.' minutos ' : '');
+    endforeach;
+
+    return response()->json([ 'reports' => $reports ]);
   }
 
   public function contactsPDF(Request $request)

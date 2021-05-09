@@ -123,11 +123,11 @@
                         </v-icon>
                         <a href="/admin/reports" >Reportes</a>
                     </v-list-item>
-                    <v-list-item v-if="rol == 1" disabled>
+                    <v-list-item v-if="rol == 1">
                         <v-icon color="white" class="px-2">
                             mdi-history
                         </v-icon>
-                        <a href="/admin/reports" >Historial de operaciones</a>
+                        <a href="/admin/reports/view" >Historial de operaciones</a>
                     </v-list-item>
                     <v-list-item v-if="rol == 1">
                         <v-icon color="white" class="px-2">
