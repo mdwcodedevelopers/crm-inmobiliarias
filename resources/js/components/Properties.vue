@@ -14,7 +14,7 @@
             </v-col>
 
             </v-row>
-            <v-alert dense color="#2196F3" class="text-white">
+            <v-alert dense color="#2196F3" class="text-white mt-5 mt-lg-0">
                 Propiedades disponibles: {{total}}
             </v-alert>
             <v-container fluid>

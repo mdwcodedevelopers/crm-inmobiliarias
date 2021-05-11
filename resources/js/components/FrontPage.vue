@@ -16,23 +16,23 @@
                         <div class="d-flex pl-9 align-center" style="height:100%">
                             <v-fade-transition>
                                 <div class="d-flex flex-column ">
-                                    <h2 class="text-md-h1 text-h3 font-weight-bold">
+                                    <h2 class="text-md-h1 text-h4 font-weight-bold">
                                         {{item.title}}
                                     </h2>
                                     
-                                    <span class="text-md-h3 text-h4">
+                                    <span class="text-md-h3 text-h5">
                                         {{item.subtitle}}
                                     </span>
-                                    <v-btn
-                                        elevation="7"
-                                        outlined
-                                        x-large
-                                        rounded
-                                        color="white my-9"
-                                        width="6rem"
-                                        class="my-3"
-                                        @click="item.url"
-                                        >Ver más</v-btn>
+                                    <div class="mt-3">
+                                        <v-btn
+                                            elevation="7"
+                                            outlined
+                                            x-large
+                                            rounded
+                                            color="white my-9"
+                                            @click="item.url"
+                                            >Ver más</v-btn>
+                                    </div>
                                 </div>
                             </v-fade-transition>
                         </div>

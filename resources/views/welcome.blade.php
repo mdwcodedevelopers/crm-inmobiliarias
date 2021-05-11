@@ -16,7 +16,7 @@
                         <li><a href="#" class="black--text">Institucional</a></li>
                     </ul>
                 </nav>
-                <div class="d-flex align-start align-md-center blue-grey--text font-weight-medium  flex-column flex-sm-column  flex-md-row    ">
+                <div class="d-flex align-start align-md-center blue-grey--text font-weight-medium  flex-column flex-sm-column  flex-md-row mt-5 mt-lg-0 ">
                     <p class="m-0 mr-2">
                         Comunicáte con nosotros: <a href="https://api.whatsapp.com/send?phone=+542204823266" target="_blank">+54 220 482-3266</a> 
                     </p>
