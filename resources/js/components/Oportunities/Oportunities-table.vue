@@ -375,11 +375,7 @@
           </template>
           <v-list>
             <contact-card
-                :contact="item.contact"
-                :img="item.img_contact"
-                :tel1="item.tel_1"
-                :tel2="item.tel_2"
-                :email="item.email"></contact-card>
+                :contact="item.contact"></contact-card>
           </v-list>
         </v-menu>
 
