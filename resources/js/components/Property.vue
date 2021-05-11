@@ -109,7 +109,7 @@ export default {
     },
      created(){
         axios.get("/api-user-info").then((response) => {
-            this.user= response.data.user;
+            this.user = response.data.user;
           });
         },
     methods: {

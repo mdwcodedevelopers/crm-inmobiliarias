@@ -33,6 +33,7 @@ Vue.component('front-page', require('./components/FrontPage.vue').default);
 Vue.component('contacts', require('./components/Contacts.vue').default);
 Vue.component('configuration', require('./components/Configuration.vue').default);
 Vue.component('tags', require('./components/Tags.vue').default);
+Vue.component('property-ops-card', require('./components/Oportunities/Property-ops-card.vue').default);
 Vue.component('note-action', require('./components/Oportunities/Note-actions.vue').default);
 Vue.component('status-oportunities', require('./components/Oportunities/Status-oportunities.vue').default);
 Vue.component('new-oportunity', require('./components/Oportunities/New-oportunity.vue').default);

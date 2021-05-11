@@ -383,7 +383,27 @@
 
       <template v-slot:item.property="{ item } ">
       
+        <v-menu
+          top
+          offset-y
+          :close-on-content-click = "false"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <a href="#"
+              class="ma-2"
+              v-bind="attrs"
+              v-on="on"
+              onclick="return false"
+            >
               {{item.property}}
+            </a>
+          </template>
+          <v-list>
+            <property-ops-card
+                :property_id="item.property_id"></property-ops-card>
+          </v-list>
+        </v-menu>
+        
             
 
       </template>

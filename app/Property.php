@@ -70,4 +70,13 @@ class Property extends Model
   {
     return $this->hasMany(Service_property::class, "property_id");
   }
+
+  public function getPriceAttribute($value)
+  {
+    return number_format($value, 2, ',', '.');
+  }
+  public function getDimensionAttribute($value)
+  {
+    return number_format($value, 2, ',', '.');
+  }
 }

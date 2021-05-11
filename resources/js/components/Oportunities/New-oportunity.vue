@@ -58,7 +58,7 @@
                 <v-select
                   v-model="oportunity.property_id"
                   :items="properties"
-                  item-text="name"
+                  item-text="title"
                   item-value="id"
                   label="Propiedades"
                   required

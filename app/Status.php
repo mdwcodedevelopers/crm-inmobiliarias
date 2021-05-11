@@ -23,4 +23,13 @@ class Status extends Model
   {
     return $this->hasMany(Property::class, "status_id");
   }
+
+  public function getPriceAttribute($value)
+  {
+    return number_format($value, 2, ',', '.');
+  }
+  public function getDimensionAttribute($value)
+  {
+    return number_format($value, 2, ',', '.');
+  }
 }
