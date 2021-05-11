@@ -15,10 +15,12 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->string('type');
             $table->string('table');
-            $table->string('information');
+            $table->longText('information');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

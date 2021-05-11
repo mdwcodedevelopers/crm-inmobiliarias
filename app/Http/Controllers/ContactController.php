@@ -11,6 +11,8 @@ use App\Tag;
 use App\Oportunity;
 use App\Contact_tag;
 
+use Auth;
+
 class ContactController extends Controller
 {
     public function __construct()
@@ -29,6 +31,9 @@ class ContactController extends Controller
         $tags = Tag::selectRaw('tags.id, tags.name, group_tags.name AS group_name')
         ->join('group_tags', 'tags.group_tag_id', '=', 'group_tags.id')->get();
         $oportunities = StatusOportunity::selectRaw('name, id')->get();
+
+        //HISTORIAL
+        saveReport(5, "Contactos", "Se visualizo la lista de contactos con Agentes, Etiquetas y Oportunidades.");
 
         return response()->json([
             'contacts' => $contacts,
@@ -57,16 +62,15 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        
         $contact = new Contact();
-        $contact->name = $request->name; 
-        $contact->email = $request->email; 
-        $contact->phone_1 = $request->phone_1; 
-        $contact->phone_2 = $request->phone_2; 
-        $contact->direction = $request->direction; 
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->phone_1 = $request->phone_1;
+        $contact->phone_2 = $request->phone_2;
+        $contact->direction = $request->direction;
         $contact->province = $request->province;
-        $contact->user_id =  auth()->id(); 
-        $contact->save(); 
+        $contact->user_id =  Auth::user()->id;
+        $contact->save();
 
         if (count($request->tags) > 0) {
             foreach ($request->tags as $key => $value) {
@@ -76,6 +80,9 @@ class ContactController extends Controller
                 $tag->save();
             }
         }
+
+        //HISTORIAL
+        saveReport(2, "Contactos", "Nombre: ".$contact->name.". Email: ".$contact->email.". Teléfono 1: ".$contact->phone_1.". Teléfono 2: ".$contact->phone_2.". Etiquetas: ".tagsToString($request->tags));
 
         return response()->json("success");
     }
@@ -112,14 +119,14 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         $contact = Contact::find($id);
-        $contact->name = $request->name; 
-        $contact->email = $request->email; 
-        $contact->phone_1 = $request->phone_1; 
-        $contact->phone_2 = $request->phone_2; 
-        $contact->direction = $request->direction; 
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->phone_1 = $request->phone_1;
+        $contact->phone_2 = $request->phone_2;
+        $contact->direction = $request->direction;
         $contact->province = $request->province;
-        $contact->user_id = $request->user_id; 
-        $contact->save(); 
+        $contact->user_id = $request->user_id;
+        $contact->save();
 
         if (count($request->tags) > 0) {
             $deleteTags= Contact_tag::where('contact_id', $id)->delete();
@@ -132,6 +139,9 @@ class ContactController extends Controller
             }
         }
 
+        //HISTORIAL
+        saveReport(1, "Contactos", "Nombre: ".$contact->name.". Email: ".$contact->email.". Teléfono 1: ".$contact->phone_1.". Teléfono 2: ".$contact->phone_2.". Etiquetas: ".tagsToString($request->tags));
+
         return response()->json("success");
     }
 
@@ -143,7 +153,11 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        $contact = Contact::find($id)->delete();
+        $contact = Contact::find($id);
+
+        saveReport(4, "Contactos", "Nombre: ".$contact->name.". Email: ".$contact->email.". Teléfono 1: ".$contact->phone_1.". Teléfono 2: ".$contact->phone_2);
+
+        $contact->delete();
 
         return response()->json("success", 200);
     }
@@ -157,19 +171,40 @@ class ContactController extends Controller
 
     public function search(Request $request)
     {
-        
-        
+        $filtro = "";
         $query = Contact::selectRaw('contacts.*');
-        
+
         ($request->agent == -2 ) ? $query = $query->whereNULL('contacts.user_id') : '';
-        ($request->agent > 0) ? $query = $query->where('contacts.user_id',$request->agent) : '';
-        ($request->oportunity != null) ? $query = $query->join('oportunities', 'oportunities.contact_id', '=', 'contacts.id')->where('oportunities.status_id',$request->oportunity) : '';
-        ($request->tag != null) ? $query = $query->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->whereIn('contact_tag.tag_id',$request->tag) : '';
-        ($request->noTag != null) ? $query = $query->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->where('contact_tag.tag_id','!=',$request->noTag) : '';
+
+        if($request->agent > 0):
+            $query = $query->where('contacts.user_id',$request->agent);
+            $filtro .= "Agente: ".userToString($request->agent).". ";
+        endif;
+
+        if($request->oportunity != null):
+            $query = $query->join('oportunities', 'oportunities.contact_id', '=', 'contacts.id')->where('oportunities.status_id',$request->oportunity);
+            $filtro .= "Oportunidad: ".oportunityToString($request->oportunity).". ";
+        endif;
+
+        if($request->tag != null):
+            $query = $query->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->where('contact_tag.tag_id',$request->tag);
+            $filtro .= "Con la etiqueta: ".tagsToString($request->tag).". ";
+        endif;
+
+        if($request->noTag != null):
+            $query = $query->join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id')->where('contact_tag.tag_id','!=',$request->noTag);
+            $filtro .= "Sin la etiqueta: ".tagsToString($request->noTag).". ";
+        endif;
+
         $contacts = $query->get();
-        foreach ($contacts as $key => $value) {
+
+        foreach ($contacts as $key => $value):
             $value->tags = Contact_tag::selectRaw('tag_id')->whereContact_id($value->id)->get();
-        }
+        endforeach;
+
+        //HISTORIAL
+        saveReport(8, "Contactos", $filtro);
+
         return response()->json([
             'contacts' => $contacts,
             // 'total' => count($contacts),

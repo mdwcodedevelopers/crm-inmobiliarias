@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('register/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::get('register/verify/{id}/{hash}', 'Auth\VerificationController@index')->name('verification.verify');
 Route::post('register/resend', 'Auth\VerificationController@resend')->name('verification.resend');
@@ -34,7 +35,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/contacts', "ContactController@view");
     Route::get('/contacts/tags', "TagController@view");
     Route::get('/config', "ConfigController@index");
-    Route::resources(['api-properties' => PropertyController::class,
+    Route::resources([
+    'api-properties' => PropertyController::class,
     'api-status'=>StatusController::class,
     'api-status-oportunities'=>StatusOportunitiesController::class,
     'api-currency'=>CurrencyController::class,
@@ -71,5 +73,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/api-oportunities/sendMail','OportunityController@sendEmail');
 
     Route::get('/reports', 'ReportController@index');
-    Route::get('/reports/list', 'ReportController@list');
+    Route::get('/reports/created', 'ReportController@created');
+    Route::get('/reports/view', 'ReportController@view');
+    Route::get('/reports/historical', 'ReportController@historical');
+    Route::get('/reports/contacts-pdf', 'ReportController@contactsPDF');
 });

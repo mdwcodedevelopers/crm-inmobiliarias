@@ -14,8 +14,12 @@ class Contact extends Model
 
   protected $table = 'contacts';
 
+  public function User()
+  {
+      return $this->belongsTo(User::class, "user_id");
+  }
 
-  
+
   public function getCreatedAtAttribute($value)
   {
     return Carbon::parse($value)->format('d-m-Y');

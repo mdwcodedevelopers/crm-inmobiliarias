@@ -9,8 +9,12 @@ class Report extends Model
 {
   use HasFactory;
 
-  protected $fillable = ['type','table','information'];
+  protected $fillable = ['user_id','type','table','information'];
 
   protected $table = 'reports';
 
+  public function User()
+  {
+      return $this->belongsTo(User::class, "user_id");
+  }
 }
