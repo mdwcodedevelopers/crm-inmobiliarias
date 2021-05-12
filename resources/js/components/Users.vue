@@ -75,7 +75,7 @@
 
             
             <v-tabs  v-else v-model="tab" background-color="blue" dark>
-                <v-tab>Usuarios</v-tab>
+                <v-tab>Clientes</v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab" class="px-5 py-2">
@@ -154,7 +154,7 @@
 
                 <v-tab-item>
                     <v-card class="my-4" color="cyan darken-3">
-                        <v-card-title class="subtitle-2 text-white">Usuarios</v-card-title>
+                        <v-card-title class="subtitle-2 text-white">Clientes</v-card-title>
                         <v-data-table no-data-text="No hay Usuarios" no-results-text="No hay resultados" :headers="usersheader" :items="users" class="elevation-1" :search="search">
                             <template v-slot:top>
                                 <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
@@ -299,7 +299,7 @@ export default {
             itemtab: '',
             error_edit: '',
             items: [
-                'Administradores', 'Agentes', 'Usuarios'
+                'Administradores', 'Agentes', 'Clientes'
             ],
              inputRule: [
                 v => !!v || 'El campo es obligatorio',

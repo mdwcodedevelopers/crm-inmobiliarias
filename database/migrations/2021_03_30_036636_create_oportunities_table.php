@@ -21,13 +21,17 @@ class CreateOportunitiesTable extends Migration
             $table->foreignId('property_id')->nullable();
             $table->foreignId('status_id');
             $table->string('name');
+            $table->text('description');
             $table->date('vigency');
             $table->boolean('closed')->default(0); //0abierto, 1cerrado
             $table->string('closed_reason')->nullable();
             $table->text('closed_description')->nullable();
+            $table->timestamp('closed_at', $precision = 0);
+            $table->foreignId('closed_user_id');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('closed_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
             $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');

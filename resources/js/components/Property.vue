@@ -1,16 +1,18 @@
 <template>
     <div class="text-center px-4 d-flex align-items-center flex-column">
-        <v-card class="d-flex my-2 px-1 justify-space-around" style="width:100%">
+        <v-card class="d-flex flex-column flex-lg-row my-2 px-1 justify-space-around" style="width:100%">
            
             <v-col
                 cols="12"
-                sm="8"
+                md="12"
+                lg="8"
             >
                 <property-card :property="property"></property-card>            
             </v-col>
             <v-col
                 cols="12"
-                sm="4"
+                md="12"
+                lg="4"
             >
                        
                         <v-card

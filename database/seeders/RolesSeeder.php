@@ -17,7 +17,7 @@ class RolesSeeder extends Seeder
         //EUR USD
         $roles = [
             array('name' => 'SuperAdmin'),
-            array('name' => 'Usuario'),
+            array('name' => 'Cliente'),
             array('name' => 'Agente'),
         ];
 

@@ -10,28 +10,27 @@
             v-else
         >
             <v-layout wrap>
-                    <v-flex xs12 md6 >
+                    <v-flex xs12 md6 class="px-3" >
                         <v-text-field label="Nombre*" :rules="inputRule" v-model="user.name" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 md6>
+                    <v-flex xs12 md6 class="px-3">
                         <v-text-field label="Correo*" :rules="mailRule" v-model="user.email" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 md6 >
+                    <v-flex xs12 md6 class="px-3" >
                         <v-text-field label="Telefono 1*" :rules="numberRule" v-model="user.phone_1" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 md6 >
+                    <v-flex xs12 md6 class="px-3" >
                         <v-text-field label="Telefono 2*" :rules="numberRule" v-model="user.phone_2" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 md6 >
+                    <v-flex xs12 md6 class="px-3" >
                         <v-text-field label="Dirección*" :rules="inputRule" v-model="user.direction" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 md6 >
+                    <v-flex xs12 md6 class="px-3" >
                         <v-text-field label="Provincia*" :rules="inputRule" v-model="user.province" required></v-text-field>
                     </v-flex>
                     <v-flex xs12>
                         <small class="red--text">Los campos marcados con * son obligatorios</small>
                     </v-flex>
-                  </v-layout>
             </v-layout>
         <v-spacer></v-spacer>
         <v-btn color="danger" @click="user={}">Borrar</v-btn>
@@ -52,18 +51,18 @@ export default {
             user:{},
             inputRule: [
                 v => !!v || 'El campo es obligatorio',
-              ],
-              selectRule: [
+            ],
+            selectRule: [
                 v => !!v || 'Debe seleccionar una opción',
-              ],
-              mailRule: [
+            ],
+            mailRule: [
                 v => !!v || 'Debe dar un correo',
                 v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El Correo no es valido'
-              ],
-              numberRule: [
+            ],
+            numberRule: [
                 v => !!v || 'El campo es obligatorio',
                 v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
-              ],
+            ],
         }
     },
     methods: {

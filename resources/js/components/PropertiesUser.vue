@@ -17,17 +17,17 @@
             {{ types[item.type-1]['name'] }}
           </template>
         <template v-slot:item.action="{ item }">
-          <v-btn v-if="rol==1" color="#E53935" class="m-1" @click="exportPDF(item.id)">
+          <v-btn  small v-if="rol==1" color="#E53935" class="m-1" @click="exportPDF(item.id)">
             <v-icon color="#fff">
                 mdi-file-pdf
             </v-icon>
           </v-btn>
-          <v-btn color="#ff9800" class="m-1" @click="edit(item.id)">
+          <v-btn  small color="#ff9800" class="m-1" @click="edit(item.id)">
             <v-icon color="#fff">
                 mdi-pencil
             </v-icon>
           </v-btn>
-          <v-btn v-if="rol==1" color="#E53935" class="m-1" @click="delete_dialog(item.id)">
+          <v-btn small  v-if="rol==1" color="#E53935" class="m-1" @click="delete_dialog(item.id)">
             <v-icon color="#fff">
                 mdi-delete
             </v-icon>
@@ -575,6 +575,7 @@
           {
             text: 'Acciones',
             value: 'action',
+            width: '13rem',
             sortable: false
           },
         ];
