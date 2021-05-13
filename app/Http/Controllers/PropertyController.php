@@ -34,7 +34,9 @@ class PropertyController extends Controller
             }
         }
         //HISTÓRICO
-        saveReport(9, "Propiedades", "Se visualizo la lista de Propiedades.");
+        if (is_null(Auth::user() == null)) {
+            saveReport(9, "Propiedades", "Se visualizo la lista de Propiedades.");
+        }
 
         return response()->json([
             'properties' => $Properties,
@@ -139,7 +141,12 @@ class PropertyController extends Controller
         ]);
 
     }
-
+   public function show($id){
+        $property = Property::where('id',$id)->with('Status','Currency','Categories','Images','Environments','Services')->first();
+        return response()->json([
+            'property' => $property,
+        ]);
+    }
     public function update(Request $request, $id)
     {
         $property = Property::find($request->id);

@@ -375,11 +375,7 @@
           </template>
           <v-list>
             <contact-card
-                :contact="item.contact"
-                :img="item.img_contact"
-                :tel1="item.tel_1"
-                :tel2="item.tel_2"
-                :email="item.email"></contact-card>
+                :contact="item.contact"></contact-card>
           </v-list>
         </v-menu>
 
@@ -387,7 +383,27 @@
 
       <template v-slot:item.property="{ item } ">
       
+        <v-menu
+          top
+          offset-y
+          :close-on-content-click = "false"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <a href="#"
+              class="ma-2"
+              v-bind="attrs"
+              v-on="on"
+              onclick="return false"
+            >
               {{item.property}}
+            </a>
+          </template>
+          <v-list>
+            <property-ops-card
+                :property_id="item.property_id"></property-ops-card>
+          </v-list>
+        </v-menu>
+        
             
 
       </template>
