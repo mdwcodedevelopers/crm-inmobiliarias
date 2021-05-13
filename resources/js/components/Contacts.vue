@@ -152,7 +152,7 @@
           style="position:absolute; right:0px"
           >
         <v-btn
-          @click="tableToExcel('table', 'Contact Table')"
+          @click="tableToExcel()"
         >
             <v-icon>
                 mdi-file-pdf
@@ -454,10 +454,6 @@ export default {
                 v => !!v || 'El campo es obligatorio',
                 v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
               ],
-              uri :'data:application/vnd.ms-excel;base64,',
-              template:'<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
-              base64: function(s){ return window.btoa(unescape(encodeURIComponent(s))) },
-              format: function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
         }
     },
      methods: {
@@ -475,12 +471,16 @@ export default {
                 });
           });
         },
-        tableToExcel(table, name){
-          if (!table.nodeType){
-             table = this.$refs.table
-          var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-          window.location.href = this.uri + this.base64(this.format(this.template, ctx))
-          }
+        tableToExcel() {
+          axios.post("/admin/api-contacts/export", this.contacts).then((response) => {
+              console.log(response);
+          }).catch(error => {
+            this.$swal.fire(
+              'Error',
+              'Ocurrío un error al tratar de descargar el archivo, por favor haga una busqueda primero.',
+              'error'
+            )
+          });
         },
         filterSearch() {
             axios.get("/admin/api-contacts-search?agent=" + this.filter.agent + "&oportunity=" + this.filter.oportunity + "&tag=" + this.filter.tag + "&noTag=" + this.filter.noTag ).then((response) => {
@@ -673,5 +673,6 @@ export default {
     created() {
         this.index();
     },
+
     }
 </script>

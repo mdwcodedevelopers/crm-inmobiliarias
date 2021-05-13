@@ -26,8 +26,8 @@ class CreateOportunitiesTable extends Migration
             $table->boolean('closed')->default(0); //0abierto, 1cerrado
             $table->string('closed_reason')->nullable();
             $table->text('closed_description')->nullable();
-            $table->timestamp('closed_at', $precision = 0);
-            $table->foreignId('closed_user_id');
+            $table->timestamp('closed_at')->nullable();
+            $table->foreignId('closed_user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
