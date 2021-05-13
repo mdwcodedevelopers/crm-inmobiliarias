@@ -108,19 +108,19 @@ class PropertyController extends Controller
 
     public function store(Request $request)
     {
-
         $property = new Property();
         $property->user_id = Auth::user()->id;
         $property->status_id = $request->status_id;
-        $property->currency_id = $request->currency;
+        $property->currency_id = $request->currency_id;
         $property->title = $request->title;
+        $property->information = $request->information;
         $property->province = $request->province;
         $property->type = $request->type;
         $property->price = $request->price;
         $property->save();
 
         //HISTÓRICO
-        saveReport(10, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$request->type]["name"].". Precio: ".$property->price);
+        saveReport(10, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type-1]["name"].". Precio: ".$property->price);
     }
 
     public function edit($id)
@@ -153,6 +153,7 @@ class PropertyController extends Controller
         $property->status_id = $request->prop["status_id"];
         $property->currency_id = $request->prop["currency_id"];
         $property->title = $request->prop["title"];
+        $property->information = $request->prop["information"];
         $property->province = $request->prop["province"];
         $property->location = $request->prop["location"];
         $property->subdivision_1 = $request->prop["subdivision_1"];
@@ -221,7 +222,7 @@ class PropertyController extends Controller
         endforeach;
 
         //HISTÓRICO
-        saveReport(12, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type]["name"].". Precio: ".$property->price.". Provincia: ".$property->province.". Ubicación: ".$property->location.". Dimensión: ".$property->dimension.". Cantidad de Ambientes: ".$property->environments.". Plantas: ".$property->plants.". Baños: ".$property->bedrooms.". Toilettes: ".$property->toilettes.". Tocadores: ".$property->dresser.". Chocheras: ".$property->chocheras.". Ambientes: ".envsToString($environments).". Servicios: ".servicesToString($services).". Extras: ".envsToString($extras));
+        saveReport(12, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type-1]["name"].". Precio: ".$property->price.". Provincia: ".$property->province.". Ubicación: ".$property->location.". Dimensión: ".$property->dimension.". Cantidad de Ambientes: ".$property->environments.". Plantas: ".$property->plants.". Baños: ".$property->bedrooms.". Toilettes: ".$property->toilettes.". Tocadores: ".$property->dresser.". Chocheras: ".$property->chocheras.". Ambientes: ".envsToString($environments).". Servicios: ".servicesToString($services).". Extras: ".envsToString($extras));
 
         return response()->json("success");
     }
@@ -245,9 +246,11 @@ class PropertyController extends Controller
     {
         $prop = Property::where('id', '=', "$id")->first();
 
+        //HISTÓRICO
+        saveReport(13, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type]["name"].". Precio: ".$property->price.". Provincia: ".$property->province.". Ubicación: ".$property->location.". Dimensión: ".$property->dimension.". Cantidad de Ambientes: ".$property->environments.". Plantas: ".$property->plants.". Baños: ".$property->bedrooms.". Toilettes: ".$property->toilettes.". Tocadores: ".$property->dresser.". Chocheras: ".$property->chocheras);
+
         $property = Property::find($id)->delete();
 
-        //HISTÓRICO
 
         return response()->json("success", 200);
     }

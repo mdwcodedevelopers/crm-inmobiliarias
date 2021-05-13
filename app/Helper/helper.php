@@ -72,7 +72,8 @@
       9 => "Lista de Propiedades",
       10 => "Propiedad registrada:",
       11 => "Formulario de editar propiedad:",
-      12 => "Propiedad Modificada a:"
+      12 => "Propiedad Eliminada:",
+      13 => "Propiedad Modificada a:",
     );
 
     return $type[$index];
@@ -130,13 +131,9 @@
   {
     $string = '';
 
-    if( is_array($environments) ):
-      foreach ($environments as $env):
-        $string .= \App\Environment::select("name")->where("id",$env)->first()->name . " ";
-      endforeach;
-    else:
-      $string = \App\Environment::select("name")->where("id",$environments)->first()->name;
-    endif;
+    foreach ($environments as $env):
+      $string .= \App\Environment::select("name")->where("id",$env)->first()->name . " ";
+    endforeach;
 
     return $string;
   }
@@ -145,14 +142,18 @@
   {
     $string = '';
 
-    if( is_array($services) ):
-      foreach ($services as $service):
-        $string .= \App\Service::select("name")->where("id",$service)->first()->name . " ";
-      endforeach;
-    else:
-      $string = \App\Service::select("name")->where("id",$services)->first()->name;
-    endif;
+    foreach ($services as $service):
+      $string .= \App\Service::select("name")->where("id",$service)->first()->name . " ";
+    endforeach;
 
     return $string;
   }
 
+  function renderIMG($path)
+  {
+    $type = pathinfo($path, PATHINFO_EXTENSION);
+    $data = file_get_contents($path);
+    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+    return  $base64;
+  }

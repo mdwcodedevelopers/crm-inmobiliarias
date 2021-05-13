@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 use App\Contact;
 use App\Contact_tag;
+use App\Property;
 use App\Report;
 
 use Auth;
 use Datetime;
+use PDF;
 
 class ReportController extends Controller
 {
@@ -87,6 +90,15 @@ class ReportController extends Controller
     endif;
 
     return response()->json(['contacts' => $contacts]);
+  }
+
+  public function propertyPDF(Request $request, $id)
+  {
+    $property = Property::where('id',$id)->with('Status','Currency','Categories','Images')->first();
+
+    $pdf = PDF::loadView('reports.property', compact('property'));
+
+    return $pdf->download("Pripiedad-".$property->id.".pdf");
   }
 
 }
