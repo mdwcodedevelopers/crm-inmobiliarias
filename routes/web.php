@@ -76,5 +76,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/reports/created', 'ReportController@created');
     Route::get('/reports/view', 'ReportController@view');
     Route::get('/reports/historical', 'ReportController@historical');
+    Route::get('/reports/property/{id}', 'ReportController@propertyPDF');
     Route::get('/reports/contacts-pdf', 'ReportController@contactsPDF');
 });

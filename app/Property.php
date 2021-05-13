@@ -46,6 +46,11 @@ class Property extends Model
     return $this->hasMany(Environment_property::class, "property_id");
   }
 
+  public function Services()
+  {
+    return $this->hasMany(Service_property::class, "property_id");
+  }
+
   public function EnvsOne()
   {
     $envs = Environment_property::where('property_id', $this->id)
@@ -54,6 +59,15 @@ class Property extends Model
     ->pluck("environment_id");
 
     return $envs;
+  }
+
+  public function Servs()
+  {
+    $servs = Service_property::where('property_id', $this->id)
+    ->join('services','services.id','proservices.service_id')
+    ->pluck("service_id");
+
+    return $servs;
   }
 
   public function EnvsTwo()
@@ -66,8 +80,14 @@ class Property extends Model
     return $envs;
   }
 
-  public function Services()
+  public function ImagePrincipal()
   {
-    return $this->hasMany(Service_property::class, "property_id");
+    $image = Image::where('property_id', $this->id)->where('principal','1')->first();
+
+    if( !isset($image->url) ):
+      $image = Image::where('property_id', $this->id)->first();
+    endif;
+
+    return isset($image->url) ? $image->url : '';
   }
 }

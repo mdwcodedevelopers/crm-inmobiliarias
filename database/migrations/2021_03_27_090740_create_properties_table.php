@@ -19,7 +19,7 @@ class CreatePropertiesTable extends Migration
             $table->foreignId('status_id');
             $table->foreignId('currency_id');
             $table->string('title');
-            $table->string('information')->nullable();
+            $table->longText('information')->nullable();
             $table->string('province')->nullable();
             $table->string('location')->nullable();
             $table->string('subdivision_1')->nullable();

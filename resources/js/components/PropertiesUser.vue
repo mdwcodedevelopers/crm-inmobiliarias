@@ -13,15 +13,22 @@
         <template v-slot:item.imagen="{ item }">
           <v-img :src="'../../'+item.image" height="100" width="100"></v-img>
         </template>
-          <template v-slot:item.type="{ item }">
-            {{ types[item.type-1]['name'] }}
-          </template>
+        <template v-slot:top>
+          <v-toolbar flat>
+            <v-text-field v-model="search" label="Buscar" class="mt-3"></v-text-field>
+            <v-spacer></v-spacer>
+            <v-btn @click="exportPdfProperties()" color="#E53935" dark>Pdf General <v-icon>mdi-file-pdf</v-icon></v-btn>
+          </v-toolbar>
+        </template>
+        <template v-slot:item.type="{ item }">
+          {{ types[item.type-1]['name'] }}
+        </template>
         <template v-slot:item.action="{ item }">
-          <v-btn v-if="rol==1" color="#E53935" class="m-1" @click="exportPDF(item.id)">
+          <a v-if="rol==1" class="m-1 btn" style="background:#E53935;height:36px;min-width:64px;padding:4px 16px;" :href="'/admin/reports/property/'+item.id">
             <v-icon color="#fff">
                 mdi-file-pdf
             </v-icon>
-          </v-btn>
+          </a>
           <v-btn color="#ff9800" class="m-1" @click="edit(item.id)">
             <v-icon color="#fff">
                 mdi-pencil
@@ -63,7 +70,10 @@
                       <v-text-field label="Precio" :rules="numberRules" v-model="property.price" persistent-hint required></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm6 md6>
-                      <v-select no-data-text="No existen monedas registradas" v-model="property.currency" :items="currencies" :rules="selectRules" item-text="name" item-value="id" label="Moneda" ></v-select>
+                      <v-select no-data-text="No existen monedas registradas" v-model="property.currency_id" :items="currencies" :rules="selectRules" item-text="name" item-value="id" label="Moneda" ></v-select>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-textarea name="input-7-1" rows="3" label="Información de la Propiedad" :rules="inputRules" v-model="property.information"></v-textarea>
                     </v-flex>
                     <v-flex xs12>
                         {{error}}
@@ -132,6 +142,9 @@
                                 <v-container>
                                   <v-form ref="form" v-model="valid">
                                     <v-layout wrap>
+                                      <v-flex xs12>
+                                        <v-textarea name="input-7-1" rows="3" label="Información de la Propiedad" :rules="inputRules"></v-textarea>
+                                      </v-flex>
                                       <v-flex xs12 sm6 md6>
                                         <v-text-field label="Precio" :rules="numberRules" v-model="property.price" persistent-hint required></v-text-field>
                                       </v-flex>
@@ -470,7 +483,7 @@
           })
         });
       },
-      exportPDF() {
+      exportPdfProperties() {
         var columns = [
           {
             title: 'Propiedad',
@@ -478,7 +491,7 @@
           },
           {
             title: 'Ciudad',
-            dataKey: 'city'
+            dataKey: 'province'
           },
           {
             title: "Información",
@@ -487,6 +500,10 @@
           {
             title: 'Precio',
             dataKey: 'price'
+          },
+          {
+            title: 'Moneda',
+            dataKey: 'currency'
           },
           {
             title: 'Dimensión',
@@ -499,10 +516,6 @@
           {
             title: 'Usuario',
             dataKey: 'name'
-          },
-          {
-            title: 'Moneda',
-            dataKey: 'currency'
           },
         ];
 
