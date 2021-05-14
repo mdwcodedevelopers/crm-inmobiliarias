@@ -98,6 +98,18 @@
                         </v-icon>
                         <a href="/admin/oportunities">Oportunidades</a>
                     </v-list-item>
+                    <v-list-item v-if="rol == 1">
+                        <v-icon color="white" class="px-2">
+                            mdi-cog-transfer-outline
+                        </v-icon>
+                        <a href="/admin/environments/init" >Ambientes</a>
+                    </v-list-item>
+                    <v-list-item v-if="rol == 1">
+                        <v-icon color="white" class="px-2">
+                            mdi-cog-transfer-outline
+                        </v-icon>
+                        <a href="/admin/services/init" >Servicios</a>
+                    </v-list-item>
                     <v-list-item v-if="rol == 1 || rol == 3 ">
                         <v-icon color="white" class="px-2">
                             mdi-account-multiple
@@ -125,9 +137,9 @@
                     </v-list-item>
                     <v-list-item v-if="rol == 1">
                         <v-icon color="white" class="px-2">
-                            mdi-history
+                            mdi-chat-typing
                         </v-icon>
-                        <a href="/admin/reports/view" >Historial de operaciones</a>
+                        <a href="/admin/reports/view" >Notificaciones del Sistema</a>
                     </v-list-item>
                     <v-list-item v-if="rol == 1">
                         <v-icon color="white" class="px-2">

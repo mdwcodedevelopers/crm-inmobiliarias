@@ -5,18 +5,34 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Environment;
 use App\Environment_property;
+use App\User;
 
+use Auth;
 
 class EnvironmentController extends Controller
 {
+
+    public function init(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+
+        return view( 'environments', [ 'role' => $user->role_id ] );
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = isset($request->search) ? $request->search : '';
+
+        $environments = Environment::where('name', 'LIKE', "%$search%")->get();
+
+        return response()->json([
+            'environments' => $environments
+        ]);
     }
 
     /**
@@ -24,9 +40,9 @@ class EnvironmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
     }
 
     /**
@@ -37,7 +53,12 @@ class EnvironmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Environment::create([
+            'name' => $request['name'],
+            'type' => isset($request['type']) ? '2' : '1',
+        ]);
+
+        return response()->json("success", 200);
     }
 
     /**
@@ -50,13 +71,14 @@ class EnvironmentController extends Controller
     {
         $environments = Environment_property::selectRaw('proenvironments.*, environments.name')
         ->join('environments', 'proenvironments.environment_id', '=', 'environments.id')
-        ->whereProperty_id($id)->get();
+        ->where('property_id',$id)->get();
+
         return response()->json([
             'environments' => $environments,
             'situations' => situations(),
             'antiquitys' => antiquity(),
             'conditions' => conditions(),
-            'locations' => locationsKeys(),    
+            'locations' => locationsKeys(),
         ]);
     }
 
@@ -68,7 +90,9 @@ class EnvironmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $environment = Environment::find($id);
+
+        return response()->json(["success" => 200, 'environment' => $environment]);
     }
 
     /**
@@ -80,7 +104,14 @@ class EnvironmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $environment = Environment::find($id);
+
+        $environment->update([
+            'name' => $request['name'],
+            'type' => isset($request['type']) ? '2' : '1',
+        ]);
+
+        return response()->json(["success" => 200, 'environment' => $environment]);
     }
 
     /**
@@ -91,6 +122,8 @@ class EnvironmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $environment = Environment::find($id)->delete();
+
+        return response()->json("success", 200);
     }
 }

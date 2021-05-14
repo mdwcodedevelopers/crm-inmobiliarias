@@ -59,6 +59,8 @@ Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('categories', require('./components/Categories.vue').default);
 Vue.component('reports', require('./components/Reports.vue').default);
 Vue.component('historical', require('./components/Historical.vue').default);
+Vue.component('services', require('./components/Services.vue').default);
+Vue.component('environments', require('./components/Environments.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
