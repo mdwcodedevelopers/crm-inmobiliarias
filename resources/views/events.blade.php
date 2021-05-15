@@ -3,10 +3,10 @@
 @section('content')
     <div class="">
         <div class="">
-            <nav-admin :title="'Contactos'" :role="{{$rol}}"/>
+            <nav-admin :title="'Mis Eventos'" :role="{{$role}}"/>
         </div>
 
-        <events
+        <events :types="{{$events_types}}"
         />
 
     </div>

@@ -5,6 +5,39 @@
             <v-toolbar-title>{{ title }}</v-toolbar-title>
 
             <v-spacer></v-spacer>
+           
+            <v-menu
+                bottom
+                offset-y
+                left
+                :close-on-content-click = "false"
+                >
+                <template v-slot:activator="{ on, attrs }">
+                    <a href="#"
+                    class="mx-4"
+                    v-bind="attrs"
+                    v-on="on"
+                    onclick="return false"
+                    >
+                    <v-icon>mdi-bell</v-icon>
+                    </a>
+                </template>
+
+                <v-list min-height="5rem" max-height="70vh" width="300px" dense>
+                    <v-subheader class="mx-1 text-h5">Notificaciones</v-subheader>
+                     <v-list-item-group
+                        color="primary"
+                        max='0'
+                    >
+                    <v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-title>No tienes notificaciones aún</v-list-item-title>
+                        </v-list-item-content> 
+                    </v-list-item>
+                    </v-list-item-group>
+                </v-list>
+                
+            </v-menu>
             <button @click.prevent="logout()">
                 <v-icon>mdi-import</v-icon>
 
@@ -79,7 +112,7 @@
                     </v-list-item>
                     <v-list-item v-if="role == 1 || role == 3">
                         <v-icon color="white" class="px-2">
-                            mdi-cog-calendar
+                            mdi-calendar
                         </v-icon>
                         <a href="/admin/events" >Mis Eventos</a>
                     </v-list-item>

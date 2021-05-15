@@ -14,9 +14,13 @@ class Event_types extends Model
 
     protected $table = 'event_types';
   
+    public function Event_type()
+    {
+      return $this->belongsTo(Event_type::class, "event_types_id")->orderBy('name','ASC');
+    }
   
-    // public function Events()
-    // {
-    //   return $this->hasMany(Tag::class, "group_tag_id");
-    // }
+    public function Events()
+    {
+      return $this->hasMany(Event::class, "event_types_id");
+    }
 }

@@ -35,7 +35,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/contacts', "ContactController@view");
     Route::get('/contacts/tags', "TagController@view");
     Route::get('/config', "ConfigController@index");
-    Route::get('/events', "EventController@index");
+    Route::get('/events', "EventController@view");
     Route::resources([
     'api-properties' => PropertyController::class,
     'api-status'=>StatusController::class,
