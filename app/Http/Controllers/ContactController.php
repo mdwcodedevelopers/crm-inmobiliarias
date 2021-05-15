@@ -33,7 +33,7 @@ class ContactController extends Controller
         $oportunities = StatusOportunity::selectRaw('name, id')->get();
 
         //HISTORIAL
-        saveReport(5, "Contactos", "Se visualizo la lista de contactos con Agentes, Etiquetas y Oportunidades.");
+        saveReport(5, 2, 1, "Se visualizo la lista de contactos con Agentes, Etiquetas y Oportunidades.");
 
         return response()->json([
             'contacts' => $contacts,
@@ -82,7 +82,7 @@ class ContactController extends Controller
         }
 
         //HISTORIAL
-        saveReport(2, "Contactos", "Nombre: ".$contact->name.". Email: ".$contact->email.". Teléfono 1: ".$contact->phone_1.". Teléfono 2: ".$contact->phone_2.". Etiquetas: ".tagsToString($request->tags));
+        saveReport(2, 2, 1, "Nombre: ".$contact->name.". Email: ".$contact->email.". Teléfono 1: ".$contact->phone_1.". Teléfono 2: ".$contact->phone_2.". Etiquetas: ".tagsToString($request->tags));
 
         return response()->json("success");
     }
@@ -140,7 +140,7 @@ class ContactController extends Controller
         }
 
         //HISTORIAL
-        saveReport(1, "Contactos", "Nombre: ".$contact->name.". Email: ".$contact->email.". Teléfono 1: ".$contact->phone_1.". Teléfono 2: ".$contact->phone_2.". Etiquetas: ".tagsToString($request->tags));
+        saveReport(1, 2, 1, "Nombre: ".$contact->name.". Email: ".$contact->email.". Teléfono 1: ".$contact->phone_1.". Teléfono 2: ".$contact->phone_2.". Etiquetas: ".tagsToString($request->tags));
 
         return response()->json("success");
     }
@@ -155,7 +155,7 @@ class ContactController extends Controller
     {
         $contact = Contact::find($id);
 
-        saveReport(4, "Contactos", "Nombre: ".$contact->name.". Email: ".$contact->email.". Teléfono 1: ".$contact->phone_1.". Teléfono 2: ".$contact->phone_2);
+        saveReport(4, 2, 1, "Nombre: ".$contact->name.". Email: ".$contact->email.". Teléfono 1: ".$contact->phone_1.". Teléfono 2: ".$contact->phone_2);
 
         $contact->delete();
 
@@ -203,14 +203,14 @@ class ContactController extends Controller
         endforeach;
 
         //HISTORIAL
-        saveReport(8, "Contactos", $filtro);
+        saveReport(8, 2, 1, $filtro);
 
         return response()->json([
             'contacts' => $contacts,
             // 'total' => count($contacts),
     ]);
     }
-    
+
 
 }
 
