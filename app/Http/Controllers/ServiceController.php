@@ -5,17 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Service;
 use App\Service_property;
+use App\User;
+
+use Auth;
 
 class ServiceController extends Controller
 {
+
+    public function init(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+
+        return view( 'services', [ 'role' => $user->role_id ] );
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = isset($request->search) ? $request->search : '';
+
+        $services = Service::where('name', 'LIKE', "%$search%")->get();
+
+        return response()->json(['services' => $services]);
     }
 
     /**
@@ -23,9 +38,9 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
     }
 
     /**
@@ -36,7 +51,9 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Service::create(['name' => $request['name']]);
+
+        return response()->json("success", 200);
     }
 
     /**
@@ -49,7 +66,7 @@ class ServiceController extends Controller
     {
         $services = Service_property::selectRaw('proservices.*, services.name')
         ->join('services', 'proservices.service_id', '=', 'services.id')
-        ->whereProperty_id($id)->get();
+        ->where('property_id',$id)->get();
 
         return compact('services');
     }
@@ -62,7 +79,9 @@ class ServiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $service = Service::find($id);
+
+        return response()->json(["success" => 200, 'service' => $service]);
     }
 
     /**
@@ -74,7 +93,11 @@ class ServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $service = Service::find($id);
+
+        $service->update(['name' => $request['name']]);
+
+        return response()->json(["success" => 200, 'service' => $service]);
     }
 
     /**
@@ -85,6 +108,8 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $service = Service::find($id)->delete();
+
+        return response()->json("success", 200);
     }
 }

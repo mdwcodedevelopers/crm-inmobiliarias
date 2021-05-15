@@ -80,4 +80,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/reports/property/{id}', 'ReportController@propertyPDF');
     Route::get('/reports/contacts-pdf', 'ReportController@contactsPDF');
     Route::post('/api-contacts/export', 'ContactController@exportXLS');
+
+    Route::get('/environments/init', 'EnvironmentController@init');
+    Route::resource('environments', 'EnvironmentController');
+    Route::get('/services/init', 'ServiceController@init');
+    Route::resource('services', 'ServiceController');
 });
