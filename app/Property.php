@@ -96,12 +96,4 @@ class Property extends Model
     return isset($image->url) ? $image->url : '';
   }
 
-  public function getPriceAttribute($value)
-  {
-    return number_format($value, 2, ',', '.');
-  }
-  public function getDimensionAttribute($value)
-  {
-    return number_format($value, 2, ',', '.');
-  }
 }

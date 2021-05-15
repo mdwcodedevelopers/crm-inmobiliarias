@@ -50,7 +50,8 @@ Route::group(['prefix' => 'admin'], function () {
     'api-oportunities'=>OportunityController::class,
     'api-contacts'=>ContactController::class,
     'api-tags'=>TagController::class,
-    'api-group-tags'=>GroupTagController::class]);
+    'api-group-tags'=>GroupTagController::class,
+    'api-event-types'=>EventTypesController::class]);
     Auth::routes();
 
     Route::get('/api-properties-user', 'PropertyController@properties');
@@ -78,6 +79,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/reports/historical', 'ReportController@historical');
     Route::get('/reports/property/{id}', 'ReportController@propertyPDF');
     Route::get('/reports/contacts-pdf', 'ReportController@contactsPDF');
+    Route::post('/api-contacts/export', 'ContactController@exportXLS');
 
     Route::get('/environments/init', 'EnvironmentController@init');
     Route::resource('environments', 'EnvironmentController');

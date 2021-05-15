@@ -15,7 +15,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <v-card color="blue">
+            <v-card color="blue my-8">
                 <p class="display-1 text-center mt-3 text-white">
                     Recuperar contraseña
                   </p>
@@ -50,9 +50,10 @@
                             </div>
                         </div>
                     </form>
-                </->
+                </v-card>
             </v-card>
         </div>
     </div>
 </div>
+<front-footer></front-footer>  
 @endsection

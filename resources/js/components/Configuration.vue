@@ -70,6 +70,7 @@
                             <currency/>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
+
                     <v-expansion-panel
                         class="panel-expansion"
                     >
@@ -95,6 +96,7 @@
                             <status/>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
+
                       <v-expansion-panel
                         class="panel-expansion"
                     >
@@ -120,8 +122,33 @@
                             <status-oportunities/>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
-                </v-expansion-panels>
+                      <v-expansion-panel
+                        class="panel-expansion"
+                    >
+                        <v-expansion-panel-header
+                                color="blue lighten-1 white--text"
+                            >
+                            <span class="white--text font-weight-bold">
+                                    <v-icon color="white">
+                                    mdi-calendar
+                                </v-icon>
+                                Tipos de eventos
+                            </span>
+                            
+                            <template v-slot:actions>
+                                <v-icon color="white">
+                                $expand
+                                </v-icon>
+                            </template>
+                            </v-expansion-panel-header>
 
+
+                        <v-expansion-panel-content class="p-3">
+                            <event-types/>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                    
+                </v-expansion-panels>
              </v-col>
         </v-card>
   </div>

@@ -82,7 +82,7 @@
                   <ul>
                     <li>Creado el {{element.created_at}}</li>
                     <li v-for="item in list" :key="item.note_id"> 
-                        Nota:{{item.title}} <br> 
+                        <b>{{item.title}}</b> <br> 
                          &nbsp;&nbsp;&nbsp;&nbsp;{{item.description}} <br> 
                          &nbsp;&nbsp;&nbsp;&nbsp;Creada el {{item.created_at}} </li>
                     <li v-if="element.closed">Cerrada el {{element.deleted_at}} por</li>

@@ -90,9 +90,14 @@
                         Servicios
                     </v-card-title>
                     <v-card-text class="d-flex mx-3 black--text">
-                            <span v-for="item in services" :key="item.id">
-                                <v-icon>mdi-check-box-outline</v-icon> {{item.name}}
-                            </span>
+                        <v-row no-gutters class="text-left ">
+                            <v-col v-for="item in services" :key="item.id" cols="12" sm="3">
+                                <span class="d-flex align-start my-2" >
+                                    <v-icon>mdi-check-box-outline</v-icon> {{item.name}}
+                                </span>
+                            </v-col>
+                        </v-row>
+                        
                     </v-card-text>
             </v-col>
         </v-card>

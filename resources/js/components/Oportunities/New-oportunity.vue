@@ -28,8 +28,9 @@
         </v-card-title>
         <v-card-text>
           <v-container>
+            <v-form ref="form" v-model="valid">
             <v-row>
-            
+
               <v-col
                 cols="12"
                 sm="6"
@@ -38,7 +39,7 @@
               <v-text-field
                   v-model="oportunity.name"
                   label="Nombre de la oportunidad*"
-                  required
+                  :rules="inputRule"
                 ></v-text-field>    
                 <v-select
                   v-model="oportunity.contact_id"
@@ -53,7 +54,7 @@
                   item-text="name"
                   item-value="id"
                   label="Estado*"
-                  required
+                  :rules="selectRule"
                 ></v-select>
                 <v-select
                   v-model="oportunity.property_id"
@@ -61,8 +62,12 @@
                   item-text="title"
                   item-value="id"
                   label="Propiedades"
-                  required
                 ></v-select>
+                <v-textarea
+                  v-model="oportunity.description"
+                  :rules="inputRule"
+                  label="Descripción de la oportunidad*"
+                ></v-textarea>
               </v-col>
               <v-col
                 cols="12"
@@ -73,12 +78,12 @@
                         <v-date-picker
                         small
                         v-model="oportunity.vigency"
-                        required
                         full-width
                         >
                         </v-date-picker>
               </v-col>
             </v-row>
+            </v-form>
           </v-container>
         </v-card-text>
         <v-card-actions>
@@ -93,8 +98,8 @@
           <v-btn
             color="blue darken-1"
             text
-            :disabled="disabledButton"
-            @click="newOportunity()"
+            :disabled="!valid || oportunity.vigency == null"
+            @click="store()"
           >
             Guardar
           </v-btn>
@@ -121,16 +126,18 @@
           status: Array,
       },
     data: () => ({
+      valid: false,
       dialog: false,
-      oportunity:{
-          contact_id: "",
-          name: "",
-          vigency: "",
-          status_id: ""
-      },
+      oportunity:{},
       properties:[],
       contacts:[],
       responseRequest:[],
+      inputRule: [
+          v => !!v || 'El campo es obligatorio',
+      ],
+      selectRule: [
+          v => !!v || 'Debe seleccionar una opción',
+      ],
     }),
     computed:{
         getContacts(){
@@ -154,19 +161,19 @@
         this.getContacts,
         this.responseRequest=[];
       },
-        newOportunity(){
+        store(){
+            this.valid= false;
             axios.post('/admin/api-oportunities', this.oportunity).then((response) => {
                 this.dialog = false;
               this.$swal("Oportunidad guardada con exito","", "success").then(() => {
               this.$emit('updateData');
-              console.log(response);
               });
             }).catch(error => {
                 this.dialog = false;
               this.$swal("Ocurrio un error al crear la oportunidad", "","error");
             });;
            
-            this.oportunity= [];
+            this.oportunity= {};
         },
     }
   }

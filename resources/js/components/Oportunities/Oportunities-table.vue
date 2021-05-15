@@ -339,7 +339,7 @@
       </template>
 
       <template v-slot:group.header="{ group, toggle, isOpen }"> 
-        <td :colspan="7" style="text-align: initial; padding-left:2rem;" >
+        <td :colspan="8" style="text-align: initial; padding-left:2rem;" :style="{ backgroundColor: color(group)}"  >
           <v-btn @click="toggle" x-small icon :ref="group">
               <v-icon v-if="isOpen">mdi-minus</v-icon>
               <v-icon v-else>mdi-plus</v-icon>
@@ -407,14 +407,7 @@
             
 
       </template>
-      <!-- <template v-slot:item.vigency="{ item }">
 
-        <v-progress-linear
-              :value=item.vigency
-              color="light-green darken-4">
-        </v-progress-linear>
-
-      </template> -->
     </v-data-table>
   </v-card>
 </template>
@@ -459,6 +452,12 @@
                     align: 'start',
                     sortable: true,
                     value: 'name',
+                },
+                {
+                    text: 'Descripción',
+                    width: '13rem',
+                    sortable: false,
+                    value: 'description',
                 },
                 {
                     text: 'Contacto',
@@ -599,6 +598,13 @@
                     )
                 });
                 
+      },
+      color(item){
+        if(item != "Cerrado"){
+          let index = this.status.filter(function (el) {return el.name == item});
+          console.log(index[0].color);
+          return index[0].color;
+        }
       },
       assignUser(){
         let params;

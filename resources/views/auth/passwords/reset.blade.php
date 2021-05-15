@@ -62,4 +62,5 @@
         </div>
     </div>
 </div>
+<front-footer></front-footer>  
 @endsection

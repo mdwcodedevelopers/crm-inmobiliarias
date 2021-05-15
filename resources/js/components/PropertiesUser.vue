@@ -34,7 +34,7 @@
                 mdi-pencil
             </v-icon>
           </v-btn>
-          <v-btn v-if="rol==1" color="#E53935" class="m-1" @click="delete_dialog(item.id)">
+          <v-btn small  v-if="rol==1" color="#E53935" class="m-1" @click="delete_dialog(item.id)">
             <v-icon color="#fff">
                 mdi-delete
             </v-icon>
@@ -611,6 +611,7 @@
           {
             text: 'Acciones',
             value: 'action',
+            width: '13rem',
             sortable: false
           },
         ];

@@ -28,6 +28,7 @@ import colors from 'vuetify/lib/util/colors'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('event-types', require('./components/Events/Events-types.vue').default);
 Vue.component('front-footer', require('./components/Front-footer.vue').default);
 Vue.component('front-page', require('./components/FrontPage.vue').default);
 Vue.component('contacts', require('./components/Contacts.vue').default);
