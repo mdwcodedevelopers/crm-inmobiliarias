@@ -16,11 +16,14 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->foreignId('property_id')->nullable();
             $table->string('type');
             $table->string('table');
             $table->longText('information');
+            $table->enum("status", [0, 1])->default(1);  //0LEIDO 1NO LEIDO
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
         });
     }
 

@@ -58,7 +58,7 @@
     return $locations;
   }
 
-  function realType($index, $item = "")
+  function realType($index)
   {
     $type = array(
       1 => "Este contacto es ahora propietario de:",
@@ -67,25 +67,40 @@
       4 => "Este contacto ha sido eliminado:",
       5 => "Lista y búsqueda de Contactos:",
       6 => "Nueva búsqueda",
-      7 => "El campo $item ha sido cambiado a: ",
+      7 => "El campo ha sido cambiado a: ",
       8 => "Filtrar contactos por: ",
       9 => "Lista de Propiedades",
       10 => "Propiedad registrada:",
       11 => "Formulario de editar propiedad:",
-      12 => "Propiedad Eliminada:",
-      13 => "Propiedad Modificada a:",
+      12 => "Propiedad Modificada a:",
+      13 => "Propiedad Eliminada:",
     );
 
     return $type[$index];
   }
 
-  function saveReport($type, $table, $info, $item = '')
+  function realTable($id)
+  {
+    $modules = array(
+      1 => "Propiedades",
+      2 => "Contactos",
+      3 => "Eventos",
+      4 => "Oportunidades",
+      5 => "Preguntas",
+    );
+
+    return $modules[$id];
+  }
+
+  function saveReport($type, $table, $status, $info, $property = NULL)
   {
     $report = new \App\Report();
     $report->user_id = \Auth::user()->id;
-    $report->type = realType($type, $item);
-    $report->table = $table;
+    $report->property_id = $property;
+    $report->type = realType($type);
+    $report->table = realTable($table);
     $report->information = $info;
+    $report->status = "$status";
     $report->save();
 
     return $report;

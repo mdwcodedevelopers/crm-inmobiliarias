@@ -104,7 +104,7 @@
                 <v-form ref="form" v-model="valid">
                   <v-layout wrap>
                     <v-flex xs12 sm6 md4>
-                       <v-img :src="'../'+property.image" width="100%"></v-img>
+                       <v-img :src="imageprincipal" width="100%"></v-img>
                     </v-flex>
                     <v-flex xs12 sm6 md8>
                       <v-flex xs12>
@@ -131,6 +131,7 @@
                         <v-tabs background-color="grey accent-4" center-active dark  v-model="tab" width="100%">
                           <v-tab>DETALLES</v-tab>
                           <v-tab>MULTIMEDIA</v-tab>
+                          <v-tab>NOTIFICACIONES</v-tab>
                         </v-tabs>
                         <v-tabs-items v-model="tab">
                           <v-tab-item>
@@ -143,7 +144,7 @@
                                   <v-form ref="form" v-model="valid">
                                     <v-layout wrap>
                                       <v-flex xs12>
-                                        <v-textarea name="input-7-1" rows="3" label="Información de la Propiedad" :rules="inputRules"></v-textarea>
+                                        <v-textarea name="input-7-1" rows="3" label="Información de la Propiedad" :rules="inputRules" v-model="property.information"></v-textarea>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
                                         <v-text-field label="Precio" :rules="numberRules" v-model="property.price" persistent-hint required></v-text-field>
@@ -271,6 +272,24 @@
                               </v-card-text>
                             </v-card>
                           </v-tab-item>
+
+                          <v-tab-item>
+                            <v-card flat  width="100%">
+                              <v-card-title class="headline">
+                                Notificaciones de la Propiedad
+                              </v-card-title>
+                              <v-card-text>
+                                <v-container>
+                                  <v-row  v-for="report in reports" :key="report.id">
+                                    <v-col xs12 class="border-bottom border-secondary px-0">
+                                      <p class="m-0">{{ report.type }} {{ report.information }}</p>
+                                      <p class="m-0" style="color:#999">por {{ report.user.name }} -- {{ report.diff }} ({{ report.created }})</p>
+                                    </v-col>
+                                  </v-row>
+                                </v-container>
+                              </v-card-text>
+                            </v-card>
+                          </v-tab-item>
                         </v-tabs-items>
                       </v-card>
                     </template>
@@ -320,6 +339,7 @@
     data() {
       return {
         image: null,
+        imageprincipal: '',
         property: {},
         properties: [],
         status: [],
@@ -329,6 +349,7 @@
         antiquitys: [],
         conditions: [],
         locations: [],
+        reports: [],
         envs: [],
         services: [],
         extras: [],
@@ -351,7 +372,7 @@
         ],
         numberRules: [
           v => !!v || 'El campo es obligatorio',
-          v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
+          v => /^[0-9]+([,][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
         ],
       }
     },
@@ -390,15 +411,16 @@
       },
       edit(id) {
         axios.get("/admin/property-user/" + id).then((response) => {
-          console.log(response);
           if (response.status == 200) {
             this.property = response.data.property;
+            this.reports = response.data.reports;
             this.envs = response.data.envs;
             this.services = response.data.services;
             this.extras = response.data.extras;
             this.env = response.data.env;
             this.service = response.data.service;
             this.extra = response.data.extra;
+            this.imageprincipal = response.data.imagen;
             this.dialogedit = true;
           }
         }).catch(error => {
@@ -421,6 +443,7 @@
             this.index(0, '');
             this.property = {};
             this.dialogedit = false;
+            this.imageprincipal = '';
             this.$swal.fire(
               'Propiedad actualizada con exito',
               'success'

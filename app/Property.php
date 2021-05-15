@@ -51,6 +51,11 @@ class Property extends Model
     return $this->hasMany(Service_property::class, "property_id");
   }
 
+  public function Reports()
+  {
+    return $this->hasMany(Report::class, "property_id");
+  }
+
   public function EnvsOne()
   {
     $envs = Environment_property::where('property_id', $this->id)

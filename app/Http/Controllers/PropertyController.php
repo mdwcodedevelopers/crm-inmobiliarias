@@ -17,6 +17,7 @@ use App\Status;
 use App\User;
 
 use Auth;
+use Datetime;
 
 class PropertyController extends Controller
 {
@@ -34,8 +35,8 @@ class PropertyController extends Controller
             }
         }
         //HISTÓRICO
-        if (is_null(Auth::user() == null)) {
-            saveReport(9, "Propiedades", "Se visualizo la lista de Propiedades.");
+        if ( !Auth::user()->id ) {
+            saveReport(9, 1, 1, "Se visualizo la lista de Propiedades.");
         }
 
         return response()->json([
@@ -69,7 +70,7 @@ class PropertyController extends Controller
             }
         }
         //HISTÓRICO
-        saveReport(9, "Propiedades", "Se visualizo la lista de Propiedades.");
+        saveReport(9, 1, 1, "Se visualizo la lista de Propiedades.");
 
         return response()->json([
             'properties' => $properties,
@@ -120,29 +121,45 @@ class PropertyController extends Controller
         $property->save();
 
         //HISTÓRICO
-        saveReport(10, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type-1]["name"].". Precio: ".$property->price);
+        saveReport(10, 1, 1, "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type-1]["name"].". Precio: ".$property->price, $property->id);
     }
 
     public function edit($id)
     {
         $property = Property::where('id',$id)->with('Status','Currency','Categories','Images')->first();
 
+        $reports = Report::where('property_id', $id)->with('User')->get();
+
+        foreach ($reports as $key => $report):
+          $date1 = new DateTime( date('Y-m-d H:i', strtotime($report->created_at)) );
+          $date2 = new DateTime( date("Y-m-d H:i") );
+          $diff = $date1->diff($date2);
+          $report->created = date('d/m/Y H:i', strtotime($report->created_at));
+          $report->diff = 'hace ' . ($diff->d > 0 ? $diff->d.' días ' : '' ) . ($diff->h > 0 ? $diff->h.' horas ' : '') . ($diff->i > 0 ? $diff->i.' minutos ' : '');
+        endforeach;
+
         //HISTÓRICO
-        saveReport(11, "Propiedades", "Se vizualizo formulario de editar propiedad");
+        saveReport(11, 1, 1, "Se vizualizo formulario de editar propiedad", $property->id);
 
         return response()->json([
             'property' => $property,
+            'reports' => $reports,
             'envs' => Environment::where('type','1')->get(),
             'env' => $property->EnvsOne(),
             'services' => Service::get(),
             'service' => $property->Services->pluck("service_id"),
             'extras' => Environment::where('type','2')->get(),
             'extra' => $property->EnvsTwo(),
+            'imagen' => $property->ImagePrincipal(),
         ]);
 
     }
    public function show($id){
         $property = Property::where('id',$id)->with('Status','Currency','Categories','Images','Environments','Services')->first();
+
+        //HISTÓRICO
+        saveReport(11, 1, 1, "Se vizualizo formulario de editar propiedad", $property->id);
+
         return response()->json([
             'property' => $property,
         ]);
@@ -222,7 +239,7 @@ class PropertyController extends Controller
         endforeach;
 
         //HISTÓRICO
-        saveReport(12, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type-1]["name"].". Precio: ".$property->price.". Provincia: ".$property->province.". Ubicación: ".$property->location.". Dimensión: ".$property->dimension.". Cantidad de Ambientes: ".$property->environments.". Plantas: ".$property->plants.". Baños: ".$property->bedrooms.". Toilettes: ".$property->toilettes.". Tocadores: ".$property->dresser.". Chocheras: ".$property->chocheras.". Ambientes: ".envsToString($environments).". Servicios: ".servicesToString($services).". Extras: ".envsToString($extras));
+        saveReport(12, 1, 1, "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type-1]["name"].". Precio: ".$property->price.". Provincia: ".$property->province.". Ubicación: ".$property->location.". Dimensión: ".$property->dimension.". Cantidad de Ambientes: ".$property->environments.". Plantas: ".$property->plants.". Baños: ".$property->bedrooms.". Toilettes: ".$property->toilettes.". Tocadores: ".$property->dresser.". Chocheras: ".$property->chocheras.". Ambientes: ".envsToString($environments).". Servicios: ".servicesToString($services).". Extras: ".envsToString($extras), $property->id);
 
         return response()->json("success");
     }
@@ -244,12 +261,12 @@ class PropertyController extends Controller
 
     public function destroy($id)
     {
-        $prop = Property::where('id', '=', "$id")->first();
+        $property = Property::where('id', $id)->first();
 
         //HISTÓRICO
-        saveReport(13, "Propiedades", "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type]["name"].". Precio: ".$property->price.". Provincia: ".$property->province.". Ubicación: ".$property->location.". Dimensión: ".$property->dimension.". Cantidad de Ambientes: ".$property->environments.". Plantas: ".$property->plants.". Baños: ".$property->bedrooms.". Toilettes: ".$property->toilettes.". Tocadores: ".$property->dresser.". Chocheras: ".$property->chocheras);
+        saveReport(13, 1, 1, "Estatus: ".statusToString($property->status_id).". Moneda: ".currenciesToString($property->currency_id).". Título: ".$property->title.". Tipo de Propiedad: ".types()[$property->type]["name"].". Precio: ".$property->price.". Provincia: ".$property->province.". Ubicación: ".$property->location.". Dimensión: ".$property->dimension.". Cantidad de Ambientes: ".$property->environments.". Plantas: ".$property->plants.". Baños: ".$property->bedrooms.". Toilettes: ".$property->toilettes.". Tocadores: ".$property->dresser.". Chocheras: ".$property->chocheras, $property->id);
 
-        $property = Property::find($id)->delete();
+        $property->delete();
 
 
         return response()->json("success", 200);
