@@ -8,7 +8,7 @@
                 </div>
             @else
             <div class="">
-                <nav-admin title="Propiedad {{$property->name}}" :rol="{{$rol}}"  />
+                <nav-admin title="Propiedad {{$property->name}}" :role="{{$rol}}"  />
             </div>
             @endguest
   <div class="">

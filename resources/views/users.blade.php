@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="">
-        <nav-admin title="Usuarios" :rol="{{$rol}}" />
+        <nav-admin title="Usuarios" :role="{{$rol}}" />
     </div>
     <div class="container">
-        <users :rol="{{$rol}}" />
+        <users :role="{{$rol}}" />
     </div>
 
 @endsection

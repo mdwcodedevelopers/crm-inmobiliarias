@@ -33,7 +33,7 @@
             </div>
         @else
         <div class="">
-            <nav-admin title="Home" :rol="{{$rol}}" />
+            <nav-admin title="Home" :role="{{$rol}}" />
         </div>
         @endguest
         <front-page></front-page>

@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="">
-        <nav-admin :title="'Reportes'" :rol="{{$role}}"/>
+        <nav-admin :title="'Reportes'" :role="{{$role}}"/>
     </div>
     <div class="container">
         <reports/>

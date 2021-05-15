@@ -65,52 +65,37 @@
                             <a href="/admin/contacts">Migraciones</a>
                         </v-list-item>
                     </v-list-group>
-                    <!-- <v-list-item>
-                       <v-list-item>
-                        <v-icon color="white" class="px-2">
-                            mdi-account-box-multiple
-                        </v-icon>
-                        <a href="/admin/contacts">Contactos</a>
-                    </v-list-item>
-                    </v-list-item> -->
-
-                    <!-- <v-list-item>
-                        <v-icon color="white" class="px-2">
-                            mdi-home-currency-usd
-                        </v-icon>
-                        <a href="/admin/currency">Monedas</a>
-                    </v-list-item> -->
-                    <v-list-item v-if="rol == 1 || rol == 3 ">
+                    <v-list-item v-if="role == 1 || role == 3 ">
                         <v-icon color="white"  class="px-2">
                            mdi-office-building
                         </v-icon>
                         <a href="/admin/properties-user">Propiedades</a>
                     </v-list-item>
-                    <!-- <v-list-item>
-                        <v-icon color="white" class="px-2">
-                            mdi-list-status
-                        </v-icon>
-                        <a href="/admin/status">Estatus de propiedades</a>
-                    </v-list-item> -->
-                    <v-list-item v-if="rol == 1 || rol == 3 ">
+                    <v-list-item v-if="role == 1 || role == 3 ">
                         <v-icon color="white"  class="px-2">
                             mdi-speedometer
                         </v-icon>
                         <a href="/admin/oportunities">Oportunidades</a>
                     </v-list-item>
-                    <v-list-item v-if="rol == 1">
+                    <v-list-item v-if="role == 1 || role == 3">
+                        <v-icon color="white" class="px-2">
+                            mdi-cog-calendar
+                        </v-icon>
+                        <a href="/admin/events" >Mis Eventos</a>
+                    </v-list-item>
+                    <v-list-item v-if="role == 1">
                         <v-icon color="white" class="px-2">
                             mdi-cog-transfer-outline
                         </v-icon>
                         <a href="/admin/environments/init" >Ambientes</a>
                     </v-list-item>
-                    <v-list-item v-if="rol == 1">
+                    <v-list-item v-if="role == 1">
                         <v-icon color="white" class="px-2">
                             mdi-cog-transfer-outline
                         </v-icon>
                         <a href="/admin/services/init" >Servicios</a>
                     </v-list-item>
-                    <v-list-item v-if="rol == 1 || rol == 3 ">
+                    <v-list-item v-if="role == 1 || role == 3 ">
                         <v-icon color="white" class="px-2">
                             mdi-account-multiple
                         </v-icon>
@@ -123,25 +108,25 @@
                         <a href="/admin/profile">Mi perfil</a>
                     </v-list-item>
 
-                    <v-list-item v-if="rol == 1" disabled>
+                    <v-list-item v-if="role == 1" disabled>
                         <v-icon color="white" class="px-2">
                             mdi-chart-bar
                         </v-icon>
                         <a href="/admin/home" >Estaditicas</a>
                     </v-list-item>
-                    <v-list-item v-if="rol == 1">
+                    <v-list-item v-if="role == 1">
                         <v-icon color="white" class="px-2">
                             mdi-file-document
                         </v-icon>
                         <a href="/admin/reports" >Reportes</a>
                     </v-list-item>
-                    <v-list-item v-if="rol == 1">
+                    <v-list-item v-if="role == 1">
                         <v-icon color="white" class="px-2">
                             mdi-chat-typing
                         </v-icon>
                         <a href="/admin/reports/view" >Notificaciones del Sistema</a>
                     </v-list-item>
-                    <v-list-item v-if="rol == 1">
+                    <v-list-item v-if="role == 1">
                         <v-icon color="white" class="px-2">
                             mdi-cog
                         </v-icon>
@@ -180,7 +165,7 @@
 export default {
     props:{
             title:String,
-            rol: Number,
+            role: Number,
         },
     data: () => ({
         drawer: false,

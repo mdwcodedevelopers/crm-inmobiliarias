@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/contacts', "ContactController@view");
     Route::get('/contacts/tags', "TagController@view");
     Route::get('/config', "ConfigController@index");
+    Route::get('/events', "EventController@index");
     Route::resources([
     'api-properties' => PropertyController::class,
     'api-status'=>StatusController::class,
@@ -51,7 +52,8 @@ Route::group(['prefix' => 'admin'], function () {
     'api-contacts'=>ContactController::class,
     'api-tags'=>TagController::class,
     'api-group-tags'=>GroupTagController::class,
-    'api-event-types'=>EventTypesController::class]);
+    'api-event-types'=>EventTypesController::class,
+    'api-events'=>EventController::class]);
     Auth::routes();
 
     Route::get('/api-properties-user', 'PropertyController@properties');
