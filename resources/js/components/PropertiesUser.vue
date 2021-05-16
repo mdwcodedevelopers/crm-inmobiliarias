@@ -4,7 +4,7 @@
 
     <v-card color="blue">
       <v-card-title class="display-1 text-white">
-        Propiedades
+        Lista de Propiedades
         <v-btn color="success" dark absolute right fab class="mt-1" @click="create()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
@@ -104,7 +104,7 @@
                 <v-form ref="form" v-model="valid">
                   <v-layout wrap>
                     <v-flex xs12 sm6 md4>
-                       <v-img :src="imageprincipal" width="100%"></v-img>
+                       <v-img :src="'../../'+imageprincipal" width="100%"></v-img>
                     </v-flex>
                     <v-flex xs12 sm6 md8>
                       <v-flex xs12>

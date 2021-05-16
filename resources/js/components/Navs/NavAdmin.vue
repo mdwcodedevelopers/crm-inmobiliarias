@@ -5,7 +5,7 @@
             <v-toolbar-title>{{ title }}</v-toolbar-title>
 
             <v-spacer></v-spacer>
-           
+
             <v-menu
                 bottom
                 offset-y
@@ -32,11 +32,11 @@
                     <v-list-item>
                         <v-list-item-content>
                             <v-list-item-title>No tienes notificaciones aún</v-list-item-title>
-                        </v-list-item-content> 
+                        </v-list-item-content>
                     </v-list-item>
                     </v-list-item-group>
                 </v-list>
-                
+
             </v-menu>
             <button @click.prevent="logout()">
                 <v-icon>mdi-import</v-icon>
@@ -98,12 +98,31 @@
                             <a href="/admin/contacts">Migraciones</a>
                         </v-list-item>
                     </v-list-group>
-                    <v-list-item v-if="role == 1 || role == 3 ">
-                        <v-icon color="white"  class="px-2">
-                           mdi-office-building
-                        </v-icon>
-                        <a href="/admin/properties-user">Propiedades</a>
-                    </v-list-item>
+
+                    <v-list-group no-action sub-group prepend-icon="" color="light-blue darken-3"
+                        class="text--white drop-custom-list" v-if="role == 1 || role == 3 ">
+                        <template v-slot:activator>
+                            <v-list-item-content
+                                color="white"
+                                 >
+                                <v-list-item-title>
+                                    <v-icon color="white" class="px-2">
+                                        mdi-office-building
+                                    </v-icon>
+                                    Propiedades
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </template>
+
+                        <v-list-item>
+                            <a href="/admin/properties-user">Listado</a>
+                        </v-list-item>
+
+                        <v-list-item  v-if="role == 3 ">
+                            <a href="/admin/properties-user/view-web">Vista Web</a>
+                        </v-list-item>
+                    </v-list-group>
+
                     <v-list-item v-if="role == 1 || role == 3 ">
                         <v-icon color="white"  class="px-2">
                             mdi-speedometer

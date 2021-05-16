@@ -63,6 +63,7 @@ Vue.component('reports', require('./components/Reports.vue').default);
 Vue.component('historical', require('./components/Historical.vue').default);
 Vue.component('services', require('./components/Services.vue').default);
 Vue.component('environments', require('./components/Environments.vue').default);
+Vue.component('properties-web', require('./components/Properties-web.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
