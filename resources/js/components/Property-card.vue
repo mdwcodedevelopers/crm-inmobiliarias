@@ -11,7 +11,7 @@
                     </div>
                     <div class="d-flex align-items-center">
                         <h5>
-                                Precio: 
+                                Precio:
                         <span   class="success--text ">
                             {{property.price}} {{property.currency.name}}
                         </span>
@@ -22,9 +22,9 @@
                 <v-col
             >
                 <v-carousel :show-arrows="true">
-                    <v-carousel-item 
-                        v-for="(item,i) in items" :key="i" 
-                        :src="'../../'+item.url" 
+                    <v-carousel-item
+                        v-for="(item,i) in items" :key="i"
+                        :src="'../../'+item.url"
                         >
 
                         </v-carousel-item>
@@ -52,9 +52,9 @@
                         {{property.information}}
                     </v-card-text>
             </v-col>
-            
+
             <v-col
-            >   
+            >
                     <v-card-title class="primary--text">
                         Información basica
                     </v-card-title>
@@ -97,11 +97,11 @@
                                 </span>
                             </v-col>
                         </v-row>
-                        
+
                     </v-card-text>
             </v-col>
         </v-card>
-            
+
         </v-card>
    </div>
 </template>
@@ -136,17 +136,17 @@ export default {
         methods: {
             index() {
                 axios.get("/admin/api-images?id=" + this.property.id).then((response) => {
-                    this.items = response.data.images; 
+                    this.items = response.data.images;
                 });
                 axios.get("/admin/api-environment/" + this.property.id).then((response) => {
-                    this.environments = response.data.environments; 
-                    this.situations = response.data.situations; 
-                    this.antiquitys = response.data.antiquitys; 
-                    this.conditions = response.data.conditions; 
-                    this.locations = response.data.locations; 
+                    this.environments = response.data.environments;
+                    this.situations = response.data.situations;
+                    this.antiquitys = response.data.antiquitys;
+                    this.conditions = response.data.conditions;
+                    this.locations = response.data.locations;
                 });
                 axios.get("/admin/api-service/" + this.property.id).then((response) => {
-                    this.services = response.data.services; 
+                    this.services = response.data.services;
                 });
             },
             helper_show(helper, id){

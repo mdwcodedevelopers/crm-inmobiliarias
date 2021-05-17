@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 
+use Auth;
+
 class PropertiesUserController extends Controller
 {
 
@@ -17,10 +19,18 @@ class PropertiesUserController extends Controller
   {
     $search = isset($request->search) ? $request->search : '';
 
-    $user = User::find(auth()->id());
+    $user = User::find(Auth::user()->id);
 
     return view('properties', ['rol' => $user->role_id] );
   }
 
+  public function web(Request $request)
+  {
+    $search = isset($request->search) ? $request->search : '';
+
+    $user = User::find(Auth::user()->id);
+
+    return view('properties-web', ['rol' => $user->role_id] );
+  }
 
 }

@@ -23,6 +23,7 @@ Route::get('/api-user-info', 'UsersController@myUser');
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/property-images/{id}','ImageController@images');
     Route::put('/property-images-set/{id}','ImageController@setimage');
+    Route::get('/properties-user/view-web', 'PropertiesUserController@web');
 
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/property/{id}','PropertyController@property');
