@@ -2,17 +2,17 @@
   <div class="text-center p-4 d-flex align-items-center flex-column">
         
         <div>
-            <h4>Tus eventos:</h4>
+            <h4>Eventos:</h4>
             <ul class="d-flex list-types flex-wrap justify-center  ">
                 <li v-for="type in types" :style="{ backgroundColor: type.color}" :key="type.id">
-                    <p>{{type.name}}</p>
-                    <span>{{type.count }}</span> 
+                    <p class="h4">{{type.name}}</p>
+                    <span class="h4">{{type.count }}</span> 
                 </li>
             </ul>
         </div>
         <v-card color="blue w-100">
             <v-card-title class="display-1 text-white titulo-custom">
-                Nuevo evento
+                Tus Eventos:
                 <v-card-actions
                 style="position:absolute; right:0px"
                 >
@@ -23,14 +23,21 @@
             </v-card-title>
             <v-spacer></v-spacer>
         </v-card>
-
-          <v-data-table
-            v-model="selected"
+    <v-tabs v-model="tab">
+        <v-tab><v-icon>mdi-calendar</v-icon></v-tab>
+        <v-tab><v-icon>mdi-format-list-bulleted</v-icon></v-tab>
+    </v-tabs>
+    <v-tabs-items class="w-100" v-model="tab">
+        <v-tab-item>
+            <calendar></calendar>
+        </v-tab-item>
+        <v-tab-item>
+            <v-data-table
             :headers="headers"
             item-key="id"
             group-by="event_type"
             :items="datas"
-            class="w-100 elevation-1"
+            class="elevation-1"
             no-data-text="No tienes eventos registrados"
             no-results-text="No hay resultados"
             >
@@ -61,6 +68,208 @@
 
             </v-data-table>
 
+        </v-tab-item>
+    </v-tabs-items>
+          <!--Modal de crear nuevo evento -->
+        <v-dialog v-model="dialog" persistent max-width="800px">
+             <v-card>
+                <v-card-title>
+                    <v-row>
+                        <v-col cols="6 d-flex align-items-center">
+                            <span class="headline">Nuevo Evento</span>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-select
+                                v-model="event.event_types_id"
+                                :items="types"
+                                item-text="name"
+                                item-value="id"
+                                label="Tipo de evento*"
+                                :rules="selectRule"
+                                absolute
+                                right
+                            ></v-select>
+                        </v-col>
+                    </v-row>
+
+                </v-card-title>
+                <v-card-text>
+                <v-container>
+                    <v-form ref="form" v-model="valid">
+                    <v-row>
+
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        class="py-0"
+                    >
+                    <v-alert v-if="event.event_types_id" :color="alertColor"> {{descriptionEvent(event.event_types_id)}}</v-alert>
+                        <v-select
+                        v-model="event.property_id"
+                        :items="properties"
+                        item-text="title"
+                        item-value="id"
+                        label="Escoge una Propiedad"
+                        ></v-select>
+                        <v-select
+                            v-model="event.contacts"
+                            :items="contacts"
+                            :rules="selectRule"
+                            item-value="id"
+                            label="Seleccione los clientes:"
+                            attach
+                            color="blue-grey lighten-2"
+                            chips
+                            multiple
+                            hint="min: 1 max: 3"
+                        >
+                            <template v-slot:selection="data">
+                            <!-- HTML that describe how select should render selected items -->
+                            <v-chip
+                                v-bind="data.attrs"
+                                :input-value="data.selected"
+                                close
+                                @click="data.select"
+                                @click:close="remove(data.item, event.contacts)"
+                            > {{ data.item.group_name }} > {{ data.item.name }} </v-chip>
+
+                            </template>
+                            <template v-slot:item="data">
+                            <v-list-item-content>
+                                <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                                <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
+                            </v-list-item-content>
+                            </template>
+                        </v-select>    
+                        <v-select
+                            v-model="event.agents"
+                            :items="agentes"
+                            :rules="selectRule"
+                            item-value="id"
+                            label="Seleccione los agentes:"
+                            attach
+                            color="blue-grey lighten-2"
+                            chips
+                            multiple
+                            hint="min: 1 max: 3"
+                        >
+                            <template v-slot:selection="data">
+                            <!-- HTML that describe how select should render selected items -->
+                            <v-chip
+                                v-bind="data.attrs"
+                                :input-value="data.selected"
+                                close
+                                @click="data.select"
+                                @click:close="remove(data.item, event.agents)"
+                            > {{ data.item.group_name }} > {{ data.item.name }} </v-chip>
+
+                            </template>
+                            <template v-slot:item="data">
+                            <v-list-item-content>
+                                <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                                <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
+                            </v-list-item-content>
+                            </template>
+                        </v-select>    
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        class="py-0"
+                    >
+                        <div class="text-overline">*Indica la Fecha del evento</div>
+                        
+                        <v-date-picker
+                        v-model="event.date_1"
+                        >
+                        </v-date-picker>
+                        <div class="text-overline">*Indica la hora de inicio</div>
+                        <v-menu
+                            ref="menu_1"
+                            v-model="menu1"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            :return-value.sync="event.hour_ini"
+                            transition="scale-transition"
+                            offset-y
+                            max-width="290px"
+                            min-width="290px"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="event.hour_ini"
+                                label="HH:MM:SS"
+                                prepend-icon="mdi-clock-time-four-outline"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                            ></v-text-field>
+                            </template>
+                            <v-time-picker
+                                v-if="menu1"
+                                v-model="event.hour_ini"
+                                full-width
+                                use-seconds
+                                @click:second="$refs.menu_1.save(event.hour_ini)"
+                            ></v-time-picker>
+                        </v-menu>
+                        <!-- <div class="text-overline">*Indica la hora de finalizacion</div>
+                        <v-menu
+                            ref="menu_2"
+                            v-model="menu2"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            :return-value.sync="event.hour_end"
+                            transition="scale-transition"
+                            offset-y
+                            max-width="290px"
+                            min-width="290px"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="event.hour_end"
+                                label="HH:MM:SS"
+                                use-seconds
+                                prepend-icon="mdi-clock-time-four-outline"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                            ></v-text-field>
+                            </template>
+                            <v-time-picker
+                            v-if="menu2"
+                            v-model="event.hour_end"
+                            full-width
+                            use-seconds
+                            @click:second="$refs.menu_2.save(event.hour_end)"
+                            ></v-time-picker>
+                        </v-menu> -->
+                    </v-col>
+                    </v-row>
+                    </v-form>
+                </v-container>
+                </v-card-text>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="dialog = false"
+                >
+                    Cancelar
+                </v-btn>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    :disabled="!valid"
+                    @click="store()"
+                >
+                    Guardar
+                </v-btn>
+
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
    </div>
 </template>
 
@@ -70,20 +279,56 @@
         list-style: none;
     }
     .list-types li{
-        padding: 20px 20px;
+        padding: 1rem 3rem;
         color: rgb(250, 240, 240);
         font-weight: 500;
     }
 </style>
 <script>
 export default {
-    props:{
+    props:{ 
         types: Array,
     },
      data: () => ({
       datas:[],
+      tab: null,
+      alertColor: '',
+      valid: false,
+      dialog: true,
+      menu1: false,
+      menu2: false,
+      event:{},
+      inputRule: [
+          v => !!v || 'El campo es obligatorio',
+      ],
+      selectRule: [
+          v => !!v || 'Debe seleccionar una opción',
+      ],
     }),
     methods:{
+        getContacts(){
+          axios.get('/admin/api-contacts').then((response) =>{
+            this.contacts= response.data.contacts;
+          });
+          axios.get('/admin/api-properties').then((response) =>{
+            this.properties= response.data.properties.data;
+          });
+        },
+        create(){
+            this.dialog= true;
+             this.event = {};
+        },
+         remove (item, selected) {
+            const index = selected.indexOf(item.id)
+            if (index >= 0){
+              selected.splice(index, 1)
+            }
+          },
+        descriptionEvent(item){
+            let index = this.types.filter(function (el) {return el.id == item});
+            this.alertColor= index[0].color;
+            return index[0].description;
+        },
         color(item){
         if(item != "Cerrado"){
           let index = this.types.filter(function (el) {return el.name == item});
