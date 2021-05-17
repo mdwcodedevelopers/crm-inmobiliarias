@@ -131,7 +131,7 @@
                                 close
                                 @click="data.select"
                                 @click:close="remove(data.item, event.contacts)"
-                            > {{ data.item.group_name }} > {{ data.item.name }} </v-chip>
+                            > {{ data.item.name }} </v-chip>
 
                             </template>
                             <template v-slot:item="data">
@@ -143,7 +143,7 @@
                         </v-select>    
                         <v-select
                             v-model="event.agents"
-                            :items="agentes"
+                            :items="agents"
                             :rules="selectRule"
                             item-value="id"
                             label="Seleccione los agentes:"
@@ -161,7 +161,7 @@
                                 close
                                 @click="data.select"
                                 @click:close="remove(data.item, event.agents)"
-                            > {{ data.item.group_name }} > {{ data.item.name }} </v-chip>
+                            > {{ data.item.name }} </v-chip>
 
                             </template>
                             <template v-slot:item="data">
@@ -293,8 +293,12 @@ export default {
       datas:[],
       tab: null,
       alertColor: '',
+      events:[],
       valid: false,
-      dialog: true,
+      contacts:[],
+      agents:[],
+      properties:[],
+      dialog: false,
       menu1: false,
       menu2: false,
       event:{},
@@ -305,18 +309,29 @@ export default {
           v => !!v || 'Debe seleccionar una opción',
       ],
     }),
+    created() {
+        this.index();
+    },
     methods:{
-        getContacts(){
+        index(){
+            axios.get('/admin/api-events').then((response) =>{
+            this.events= response.data.event_types;
+            this.datas= response.data.events;
+          });
+        },
+        getData(){
           axios.get('/admin/api-contacts').then((response) =>{
             this.contacts= response.data.contacts;
+            this.agents= response.data.agents;
           });
           axios.get('/admin/api-properties').then((response) =>{
             this.properties= response.data.properties.data;
           });
         },
         create(){
+            this.getData();
             this.dialog= true;
-             this.event = {};
+            this.event = {};
         },
          remove (item, selected) {
             const index = selected.indexOf(item.id)
@@ -335,6 +350,23 @@ export default {
           console.log(index[0].color);
           return index[0].color;
         }
+      },
+      store() {
+        this.event.date = this.event.date_1 + " " + this.event.hour_ini;
+        this.valid = false; 
+        axios.post("/admin/api-events", this.event).then((response) => {
+            this.index();
+            this.property = {};
+            this.dialog = false;
+            this.$swal.fire('Evento registrado con exito');
+        }).catch(error => {
+          this.$swal.fire(
+            'Error',
+            'Ocurrío un error al tratar de registrar la propiedad, intente nuevamente, recuerde que los precios y las dimensiones deben ser unicamente en numeros y máximo 2 decimales.',
+            'error'
+          )
+          this.valid = true; 
+        });
       },
     },
      computed: {

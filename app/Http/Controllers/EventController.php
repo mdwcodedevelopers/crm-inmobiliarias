@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Event_types;
 use App\Event;
 use App\User;
+use App\User_event;
 use Auth;
 
 class EventController extends Controller
@@ -27,8 +28,12 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $events = Event_types::get();
-        return compact('events');
+        $event_types = Event_types::get();
+        $events = Event::get();
+        return response()->json([
+            'event_types' => $event_types,
+            'events'=>$events,
+        ]);
     }
 
     /**
@@ -50,19 +55,28 @@ class EventController extends Controller
     public function store(Request $request)
     {
         //
-        $status = new Event_types();
-        $status->name = $request->name;
-        $status->min_agents = $request->min_agents;
-        $status->description = $request->description;
-        $status->min_clients = $request->min_clients;
-        $status->notify_after = ($request->notify_after) ? '1' : '0' ;
-        $status->notify_after_agent = ($request->notify_after_agent) ? '1' : '0' ;
-        $status->notify_before = ($request->notify_before) ? '1' : '0' ;
-        $status->notify_before_agent = ($request->notify_before_agent) ? '1' : '0' ;
-        $status->message_after = $request->message_after;
-        $status->message_before = $request->message_before;
-        $status->color = $request->color;
-        $status->save();
+        $event = new Event();
+        $event->date = $request->date;
+        $event->user_id = Auth::user()->id;
+        $event->event_types_id = $request->event_types_id;
+        $event->property_id = $request->property_id;
+        $event->save();
+
+        foreach ($request->contacts as $key => $value) {
+            $contact = new User_event();
+            $contact->event_id = $event->id;
+            $contact->user_id = $value;
+            $contact->role_id = 2;
+            $contact->save();
+        }
+        foreach ($request->agents as $key => $value) {
+            $contact = new User_event();
+            $contact->event_id = $event->id;
+            $contact->user_id = $value;
+            $contact->role_id = 3;
+            $contact->save();
+        }
+
         return response()->json("success", 200);
     
     }

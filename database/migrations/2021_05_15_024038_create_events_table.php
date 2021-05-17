@@ -17,7 +17,7 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->date('date');
             $table->foreignId('user_id');  //Propietario 
-            $table->foreignId('event_types_id');  //Propietario 
+            $table->foreignId('event_types_id');  
             $table->foreignId('property_id')->nullable();
             $table->enum('completed', [0, 1, 2])->default(0); //0 En espera, 1 Completado con exito, 2 Fallido
             $table->enum('postponed', [0, 1, 2, 3])->default(0); //0 Sin posponer. #1-3 veces de intento 
