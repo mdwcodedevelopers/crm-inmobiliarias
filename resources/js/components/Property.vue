@@ -55,15 +55,18 @@
                                                 <v-text-field label="Telefono 2*" :rules="numberRule" v-model="user.phone_2" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12  >
-                                                <v-text-field label="Dirección*" :rules="inputRule" v-model="user.direction" required></v-text-field>
+                                                <v-text-field label="Dirección*" :rules="inputRule" v-model="direction" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12  >
-                                                <v-text-field label="Provincia*" :rules="inputRule" v-model="user.province" required></v-text-field>
+                                                <v-text-field label="Provincia*" :rules="inputRule" v-model="province" required></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12>
+                                                <v-textarea label="Mensaje de contacto*" :rules="inputRule" v-model="user.information"></v-textarea>
                                             </v-flex>
                                             <v-flex xs12>
                                                 <small class="red--text">Los campos marcados con * son obligatorios</small>
                                             </v-flex>
-                                        </v-layout>
+
                                     </v-layout>
                                 <v-spacer></v-spacer>
                                 <v-btn color="danger" @click="user={}">Borrar</v-btn>
@@ -72,7 +75,24 @@
                             
                             </v-card-actions>
                         </v-card>
-                        
+                        <v-row no-gutters class="my-3">
+
+                         <GmapMap
+                                :center="{lat:10, lng:10}"
+                                :zoom="7"
+                                map-type-id="terrain"
+                                style="width: 500px; height: 300px"
+                                >
+                                <GmapMarker
+                                    :key="index"
+                                    v-for="(m, index) in markers"
+                                    :position="m.position"
+                                    :clickable="true"
+                                    :draggable="true"
+                                    @click="center=m.position"
+                                />
+                        </GmapMap>
+                        </v-row>
             </v-col>
         </v-card>
     <front-footer></front-footer>  
@@ -81,6 +101,7 @@
 </template>
 
 <script>
+import {gmapApi} from 'vue2-google-maps'
 export default {
     props: {
         property: Object,
@@ -89,24 +110,28 @@ export default {
         return {
             items:[],
             valid: false,
-            firstname: '',
-            message:'',
-            lastname: '',
+            markers:[
+                {
+                    position: 12
+                }
+            ],
+            province: '',
+            direction: '',
             user: {},
             inputRule: [
                 v => !!v || 'El campo es obligatorio',
-              ],
-              selectRule: [
+            ],
+            selectRule: [
                 v => !!v || 'Debe seleccionar una opción',
-              ],
-              mailRule: [
-                v => !!v || 'Debe dar un correo',
+            ],
+            mailRule: [
+            v => !!v || 'Debe dar un correo',
                 v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El Correo no es valido'
-              ],
-              numberRule: [
+            ],
+            numberRule: [
                 v => !!v || 'El campo es obligatorio',
                 v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
-              ],
+            ],
         }
     },
      created(){
@@ -115,17 +140,12 @@ export default {
           });
         },
     methods: {
-        sendEmail(){
-        this.$swal.fire(
-                      'Su correo de pruebas ha sido enviado',
-                      'Los correos serán enviados cuando se pase ha desarrollo.',
-                      'success'
-                    );
-    },
         store() {
             this.user.property_id = this.property.id;
             this.user.agent_id = this.property.user_id;
-          axios.post("/api-contacts-property", this.user).then((response) => {
+            this.user.province = this.province;
+            this.user.direction = this.direction;
+          axios.post("/api-users-property", this.user).then((response) => {
             if (response.status == 200) {
               this.$swal.fire('Mensaje enviado, pronto nos estaremos comunicando con usted');
             }
@@ -138,6 +158,9 @@ export default {
           });
           },
     },
+    computed: {
+        google: gmapApi
+    }
     
 }
 </script>

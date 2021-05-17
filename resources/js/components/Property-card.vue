@@ -5,9 +5,18 @@
             <v-col
                 cols="12"
                 sm="12"
-                class="p-3 d-flex justify-space-between my-2">
-                    <div class="text--primary h2 ">
-                        {{property.title}}
+                class="pt-3 d-flex justify-space-between align-items-start my-2">
+                    <div class="d-flex flex-column">
+                        <div class="text--primary h2 ">
+                            {{property.title}}
+                        </div>
+                        <div class="text-left grey--text text--lighten-1 ">
+                            <v-icon class=" grey--text text--lighten-1 ">mdi-map-marker</v-icon>
+                            <span>{{property.province}}</span>
+                        </div>
+                        <div class="text-left mt-3">
+                             {{property.dimension}} mt2  | {{property.toilettes}}  baños | {{property.bedrooms}}  cuartos
+                        </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <h5>
@@ -15,6 +24,12 @@
                         <span   class="success--text ">
                             {{property.price}} {{property.currency.name}}
                         </span>
+                        <v-chip
+                            class="ma-2"
+                            color="primary"
+                        >
+                            {{property.status.name}}
+                        </v-chip>
                         </h5>
                     </div>
             </v-col>
@@ -33,9 +48,14 @@
             <v-col
             class="d-flex justify-space-between mx-4"
             >
-            <v-card-text class="font-weight-bold blue--text text--darken-4 text-left" style="font-size:1.25rem">
+            <v-btn rounded class="purple darken-1 white--text" @click="favorite = !favorite" >
+                <v-icon v-if="!favorite" class="white--text">mdi-star-outline</v-icon>
+                <v-icon v-else class="orange--text lighten-1--text">mdi-star</v-icon>
+                Agregar a favoritos
+            </v-btn>
+            <!-- <v-card-text class="font-weight-bold blue--text text--darken-4 text-left" style="font-size:1.25rem">
                 {{property.status.name}} | {{property.dimension}} mt2  | {{property.toilettes}}  baños | {{property.bedrooms}}  cuartos
-            </v-card-text>
+            </v-card-text> -->
                 <v-card-actions absolute right>
                     <v-btn color="blue darken-4"><v-icon class="white--text">mdi-facebook</v-icon></v-btn>
                     <v-btn color="purple lighten-2"><v-icon class="white--text">mdi-instagram</v-icon></v-btn>
@@ -48,7 +68,7 @@
                     <v-card-title class="primary--text">
                         Descripción
                     </v-card-title>
-                    <v-card-text class="d-flex mx-3 black--text">
+                    <v-card-text class="d-flex mx-3 black--text text-left">
                         {{property.information}}
                     </v-card-text>
             </v-col>
@@ -56,15 +76,45 @@
             <v-col
             >
                     <v-card-title class="primary--text">
-                        Información basica
+                        Información básica
                     </v-card-title>
-                    <v-card-text class="d-flex mx-3 black--text" style="text-align:left">
-                        <ul class="list-info">
-                            <li>Provincia: {{property.province}}</li>
-                            <li>Región: {{property.location}}</li>
-                            <li>Antiguedad: {{helper_show(antiquitys,property.antiquity).name}}</li>
-                            <li>Condición: {{helper_show(conditions,property.condition).name}}</li>
-                            <li>Situación: {{helper_show(situations,property.situation).name}}</li>
+                    <v-card-text class="d-flex mx-3 black--text pb-0" style="text-align:left">
+                        <ul class="list-info m-0">
+                             <v-row no-gutters class="text-left">
+                                <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Propósito:</strong> {{property.status.name}}</li>
+                                </v-col>
+                                <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Provincia:</strong> {{property.province}}</li>
+                                </v-col>
+                                <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Región:</strong> {{property.location}}</li>                                
+                                </v-col>
+                                <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Antiguedad:</strong> {{helper_show(antiquitys,property.antiquity).name}}</li>
+                                </v-col>
+                                <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Condición:</strong> {{helper_show(conditions,property.condition).name}}</li>
+                                </v-col>
+                                <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Situación:</strong> {{helper_show(situations,property.situation).name}}</li>
+                                </v-col>
+                                 <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Plantas:</strong> {{property.plants}}</li>
+                                </v-col>
+                                 <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Dormitorios:</strong> {{property.bedrooms}}</li>
+                                </v-col>
+                                 <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Baño:</strong> {{property.toilettes}}</li>
+                                </v-col>
+                                 <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Cocheras:</strong> {{property.chocheras}}</li>
+                                </v-col>
+                                 <v-col cols="12" sm="4" class="mb-2">
+                                    <li><strong>Tamaño:</strong> {{property.dimension}} mt2</li>
+                                </v-col>
+                             </v-row>
                         </ul>
                     </v-card-text>
             </v-col>
@@ -128,6 +178,7 @@ export default {
                 antiquitys:[],
                 conditions:[],
                 locations:[],
+                favorite: false,
             }
         },
         created(){

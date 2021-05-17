@@ -137,6 +137,7 @@ class UsersController extends Controller
         $oportunity->name = $request->name;
         $oportunity->contact_id = $contact->id;
         $oportunity->status_id = 1;
+        $oportunity->description = "Mensaje de cliente: " . $request->information;
         $oportunity->vigency = date("Y-m-d",strtotime(date('Y-m-d')."+ 3 days")); ;
 
         $oportunity->save();

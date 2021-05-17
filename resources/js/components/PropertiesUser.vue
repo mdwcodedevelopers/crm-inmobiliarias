@@ -300,7 +300,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="danger" @click="dialogedit = false">Cancelar</v-btn>
-              <v-btn color="success" :disabled="!valid" @click.prevent="update(property.id)">Editar</v-btn>
+              <v-btn color="success" :disabled="!valid" @click.prevent="update(property.id)">Guardar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>

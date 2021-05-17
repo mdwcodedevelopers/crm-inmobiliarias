@@ -1,11 +1,41 @@
 <template>
     <div class="">
-        <v-app-bar color="light-blue darken-1 " dark>
+        <v-app-bar color="blue darken-4 " dark>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>{{ title }}</v-toolbar-title>
 
             <v-spacer></v-spacer>
+            <v-menu
+                bottom
+                offset-y
+                left
+                :close-on-content-click = "false"
+                >
+                <template v-slot:activator="{ on, attrs }">
+                    <a href="#"
+                    v-bind="attrs"
+                    v-on="on"
+                    onclick="return false"
+                    >
+                    <v-icon>mdi-calendar</v-icon>
+                    </a>
+                </template>
 
+                <v-list min-height="5rem" max-height="70vh" width="300px" dense>
+                    <v-subheader class="mx-1 text-h5">Eventos</v-subheader>
+                     <v-list-item-group
+                        color="primary"
+                        max='0'
+                    >
+                    <v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-title>No tienes Eventos aún</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                    </v-list-item-group>
+                </v-list>
+
+            </v-menu>
             <v-menu
                 bottom
                 offset-y
@@ -43,7 +73,7 @@
 
             </button>
         </v-app-bar>
-        <v-navigation-drawer v-model="drawer" color="light-blue darken-1 " absolute bottom temporary>
+        <v-navigation-drawer v-model="drawer" color="blue darken-4 " absolute bottom temporary>
 
             <v-list color="white ">
                 <v-list-item>
@@ -57,7 +87,7 @@
                 </v-list-item>
             </v-list>
 
-            <v-list nav dense  class="nav-list my-6">
+            <v-list nav dense  class="nav-list my-6 list-nav-sidebar">
 
                 <v-list-item-group v-model="group" active-class=" text--accent-4">
                     <v-list-item>
@@ -210,6 +240,10 @@
     }
     .drop-custom-list .v-list-group__items .v-list-item{
         padding-left: 50px !important;
+    }
+    .list-nav-sidebar{
+        max-height: calc(100vh - 12rem);
+        overflow: auto;
     }
 </style>
 
