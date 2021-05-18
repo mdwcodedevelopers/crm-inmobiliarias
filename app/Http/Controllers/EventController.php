@@ -33,6 +33,8 @@ class EventController extends Controller
         $events = Event::get();
         foreach ($events as $key => $value) {
             $value->event_type = Event_types::find($value->event_types_id)->name;
+            $value->agents = User_event::whereEvent_id($value->id)->whereRole_id(3)->get();
+            $value->clients = User_event::whereEvent_id($value->id)->whereRole_id(2)->get();
         }
         return response()->json([
             'event_types' => $event_types,
@@ -65,7 +67,7 @@ class EventController extends Controller
         $event->event_types_id = $request->event_types_id;
         $event->property_id = $request->property_id;
         $event->save();
-        saveReport(15, 3, 1, "El agente <strong>". Auth::user()->name ."</strong> ha creado un evento", $request->property_id);
+        saveReport(15, 3, 1, "El agente ". Auth::user()->name ." ha creado un evento", $request->property_id);
 
         foreach ($request->contacts as $key => $value) {
             $contact = new User_event();
@@ -73,7 +75,7 @@ class EventController extends Controller
             $contact->user_id = $value;
             $contact->role_id = 2;
             $contact->save();
-            saveReport(16, 3, 1, "El agente <strong>". Auth::user()->name ."</strong> ha invitado a un evento a " . Contact::find($value)->name, $request->property_id, $value);
+            saveReport(16, 3, 1, "El agente ". Auth::user()->name ." ha invitado a un evento a " . Contact::find($value)->name, $request->property_id, $value);
 
         }
         foreach ($request->agents as $key => $value) {
@@ -82,7 +84,7 @@ class EventController extends Controller
             $contact->user_id = $value;
             $contact->role_id = 3;
             $contact->save();
-            saveReport(16, 3, 1, "El agente <strong>". Auth::user()->name ."</strong> ha invitado a un evento a " . User::find($value)->name, $request->property_id, $value);
+            saveReport(16, 3, 1, "El agente ". Auth::user()->name ." ha invitado a un evento a " . User::find($value)->name, $request->property_id, $value);
 
         }
         return response()->json("success", 200);

@@ -69,7 +69,7 @@
                         
                         <v-list-item-content >
                             <v-list-item-title>{{notify.type}}</v-list-item-title>
-                            <v-list-item-subtitle>{{notify.information}}</v-list-item-subtitle>
+                            <v-list-item-subtitle style="white-space: inherit;">{{notify.information}}</v-list-item-subtitle>
                         </v-list-item-content>
                         
                     </v-list-item>

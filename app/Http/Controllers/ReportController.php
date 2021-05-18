@@ -103,9 +103,9 @@ class ReportController extends Controller
   public function NotifyUser()
   {
     // $notifications = Report::where([['user_id',Auth::user()->id], ['table','Preguntas'] ])->orderByRaw('updated_at - created_at DESC')->get();
-    $notifications = Report::where('user_id',Auth::user()->id)->where(function($query) {$query->where('table','Preguntas')->orWhere('table','Eventos');})->orderByRaw('updated_at - created_at DESC')->get();
+    $notifications = Report::where('user_id',Auth::user()->id)->where(function($query) {$query->where('table','Preguntas')->orWhere('table','Eventos');})->orderByRaw('updated_at - created_at ASC')->get();
     // $notifications = Report::where('user_id',Auth::user()->id)->orderByRaw('updated_at - created_at DESC')->get();
-
+    // $notifications->count =Report::where('user_id',Auth::user()->id)->where(function($query) {$query->where('table','Preguntas')->orWhere('table','Eventos');})->where->get()
     return response()->json(['notifications' => $notifications]);
   }
 

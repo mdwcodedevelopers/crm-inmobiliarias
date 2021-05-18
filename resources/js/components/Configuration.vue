@@ -155,7 +155,7 @@
                             >
                             <span class="white--text font-weight-bold">
                                     <v-icon color="white">
-                                    mdi-calendar
+                                    mdi-cog-transfer-outline
                                 </v-icon>
                                 Servicios
                             </span>
@@ -180,7 +180,7 @@
                             >
                             <span class="white--text font-weight-bold">
                                     <v-icon color="white">
-                                    mdi-calendar
+                                   mdi-cog-transfer-outline
                                 </v-icon>
                                 Ambientes
                             </span>
