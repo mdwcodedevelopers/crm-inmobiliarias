@@ -63,7 +63,6 @@
                     <v-subheader class="mx-1 text-h5">Notificaciones</v-subheader>
                      <v-list-item-group
                         color="primary"
-                        v-if="notifications.lenght !== 0"
                     >
                     <v-list-item v-for="(notify, index) in notifications" :key="index">
                         
@@ -74,18 +73,12 @@
                         
                     </v-list-item>
                     </v-list-item-group>
-                     <v-list-item-group
-                        color="primary"
-                        max='0'
-                        v-else
-                    >
-                    <v-list-item>
+                     
+                    <v-list-item  v-if="notifications.lenght === 0">
                          <v-list-item-content >
                             <v-list-item-title>No tienes notificaciones aún</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
-
-                    </v-list-item-group>
                 </v-list>
 
             </v-menu>
@@ -301,7 +294,8 @@ export default {
         getNotifications(){
             axios.get("/admin/notify").then((response) => {
                 this.notifications = response.data.notifications;
-                 this.countNotifications = notifications.forEach(element => {
+                 this.countNotifications = this.notifications.forEach(element => {
+                     this.countNotifications++;
                  });
                 
             });

@@ -41,7 +41,24 @@
             no-data-text="No tienes eventos registrados"
             no-results-text="No hay resultados"
             >
-                <
+                <template v-slot:item.agents="{ item }">
+                    <v-chip
+                        v-for="(agent, index) in getName(item.agents, agents)"
+                        :key="index"
+                        class="m-1"
+                        color="green"
+                        text-color="white"
+                    > {{agent[0].name}} </v-chip>
+                </template>
+                <template v-slot:item.clients="{ item }">
+                    <v-chip
+                        v-for="(client, index) in  getName(item.clients, contacts)"
+                        :key="index"
+                        class="m-1"
+                        color="green"
+                        text-color="white"
+                    > {{client[0].name}} </v-chip>
+                </template>
 
                 <template v-slot:group.header="{ group, toggle, isOpen }"> 
                     <!-- <td :colspan="8" style="text-align: initial; padding-left:2rem;" :style="{ backgroundColor: color(group)}"  > -->
@@ -312,6 +329,7 @@ export default {
       ],
     }),
     created() {
+        this.getData();
         this.index();
     },
     methods:{
@@ -320,6 +338,15 @@ export default {
             this.events= response.data.event_types;
             this.datas= response.data.events;
           });
+        },
+        getName(item, list){
+          let x =[];
+          let i =0;
+          item.forEach(element => {
+             x[i] = list.filter(function (el) {return el.id == element.user_id});
+             i++;
+          });
+            return x;
         },
         getData(){
           axios.get('/admin/api-contacts').then((response) =>{
@@ -331,7 +358,6 @@ export default {
           });
         },
         create(){
-            this.getData();
             this.dialog= true;
             this.event = {};
         },
