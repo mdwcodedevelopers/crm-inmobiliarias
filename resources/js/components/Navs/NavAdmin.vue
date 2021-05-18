@@ -302,10 +302,6 @@ export default {
             axios.get("/admin/notify").then((response) => {
                 this.notifications = response.data.notifications;
                  this.countNotifications = notifications.forEach(element => {
-                     if(element.status == 1){
-                         this.countNotifications++;
-                     }
-
                  });
                 
             });
