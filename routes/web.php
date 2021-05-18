@@ -75,6 +75,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/api-notes/{id}','NoteController@show');
     Route::post('/api-notes','NoteController@store');
     Route::post('/api-oportunities/sendMail','OportunityController@sendEmail');
+    Route::post('/api-oportunities/sendMail','OportunityController@sendEmail');
 
     Route::get('/reports', 'ReportController@index');
     Route::get('/reports/created', 'ReportController@created');
@@ -88,4 +89,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('environments', 'EnvironmentController');
     Route::get('/services/init', 'ServiceController@init');
     Route::resource('services', 'ServiceController');
+
+    Route::get('/notify', 'ReportController@NotifyUser');
 });

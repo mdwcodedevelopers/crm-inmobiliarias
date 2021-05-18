@@ -1,5 +1,5 @@
 <template>
-  <v-card color="blue">
+  <v-card color="blue darken-4">
   
     <new-oportunity 
     :status="status" 

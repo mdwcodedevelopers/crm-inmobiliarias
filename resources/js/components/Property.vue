@@ -61,7 +61,7 @@
                                                 <v-text-field label="Provincia*" :rules="inputRule" v-model="province" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12>
-                                                <v-textarea label="Mensaje de contacto*" :rules="inputRule" v-model="user.information"></v-textarea>
+                                                <v-textarea label="Mensaje de contacto*" v-model="user.information"></v-textarea>
                                             </v-flex>
                                             <v-flex xs12>
                                                 <small class="red--text">Los campos marcados con * son obligatorios</small>
@@ -70,7 +70,7 @@
                                     </v-layout>
                                 <v-spacer></v-spacer>
                                 <v-btn color="danger" @click="user={}">Borrar</v-btn>
-                                <v-btn color="success" :disabled="!valid" @click.prevent="store()">Estoy interesado</v-btn>
+                                <v-btn color="success" :disabled="!valid" @click="store()">Estoy interesado</v-btn>
                                 </v-form>
                             
                             </v-card-actions>
@@ -117,7 +117,11 @@ export default {
             ],
             province: '',
             direction: '',
-            user: {},
+            user: {
+                information:'',
+                property_id:'',
+                property_name:'',
+            },
             inputRule: [
                 v => !!v || 'El campo es obligatorio',
             ],
@@ -136,19 +140,26 @@ export default {
     },
      created(){
         axios.get("/api-user-info").then((response) => {
+            if(response.data.user!=="")
             this.user = response.data.user;
           });
         },
     methods: {
+                sendEmail(){
+        this.$swal.fire(
+                      'Su correo de pruebas ha sido enviado',
+                      'Los correos serán enviados cuando se pase ha desarrollo.',
+                      'success'
+                    );
+    },
         store() {
             this.user.property_id = this.property.id;
+            this.user.property_name = this.property.title;
             this.user.agent_id = this.property.user_id;
             this.user.province = this.province;
             this.user.direction = this.direction;
           axios.post("/api-users-property", this.user).then((response) => {
-            if (response.status == 200) {
               this.$swal.fire('Mensaje enviado, pronto nos estaremos comunicando con usted');
-            }
           }).catch(error => {
             this.$swal.fire(
               'Error',

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card color="blue">
+    <v-card color="blue darken-4">
       <v-card-title class="display-1 text-white">
         Ambientes
         <v-btn color="success" dark absolute right fab class="mt-1" @click="create()">

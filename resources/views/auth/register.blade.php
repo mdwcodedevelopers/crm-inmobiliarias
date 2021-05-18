@@ -15,7 +15,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <v-card color="blue">
+            <v-card color="blue darken-4">
                 <p class="display-1 text-center mt-3 text-white">
                     Registrarse
                   </p>

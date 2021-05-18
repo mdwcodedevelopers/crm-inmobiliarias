@@ -74,6 +74,8 @@
       11 => "Formulario de editar propiedad:",
       12 => "Propiedad Modificada a:",
       13 => "Propiedad Eliminada:",
+      14 => "Un Contacto está interesado en una propiedad:",
+      15 => "Evento creado",
     );
 
     return $type[$index];
@@ -92,10 +94,10 @@
     return $modules[$id];
   }
 
-  function saveReport($type, $table, $status, $info, $property = NULL)
+  function saveReport($type, $table, $status, $info, $property = NULL, $id= NULL)
   {
     $report = new \App\Report();
-    $report->user_id = \Auth::user()->id;
+    $report->user_id = ($id==null) ? \Auth::user()->id : $id;
     $report->property_id = $property;
     $report->type = realType($type);
     $report->table = realTable($table);

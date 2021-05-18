@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Event_types;
 use App\Event;
+use App\Contact;
 use App\User;
 use App\User_event;
 use Auth;
@@ -30,6 +31,9 @@ class EventController extends Controller
     public function index(Request $request){
         $event_types = Event_types::get();
         $events = Event::get();
+        foreach ($events as $key => $value) {
+            $value->event_type = Event_types::find($value->event_types_id)->name;
+        }
         return response()->json([
             'event_types' => $event_types,
             'events'=>$events,
@@ -61,6 +65,7 @@ class EventController extends Controller
         $event->event_types_id = $request->event_types_id;
         $event->property_id = $request->property_id;
         $event->save();
+        saveReport(15, 3, 1, "El agente <strong>". Auth::user()->name ."</strong> ha creado un evento", $request->property_id);
 
         foreach ($request->contacts as $key => $value) {
             $contact = new User_event();
@@ -68,6 +73,8 @@ class EventController extends Controller
             $contact->user_id = $value;
             $contact->role_id = 2;
             $contact->save();
+            saveReport(16, 3, 1, "El agente <strong>". Auth::user()->name ."</strong> ha invitado a un evento a " . Contact::find($value)->name, $request->property_id, $value);
+
         }
         foreach ($request->agents as $key => $value) {
             $contact = new User_event();
@@ -75,8 +82,9 @@ class EventController extends Controller
             $contact->user_id = $value;
             $contact->role_id = 3;
             $contact->save();
-        }
+            saveReport(16, 3, 1, "El agente <strong>". Auth::user()->name ."</strong> ha invitado a un evento a " . User::find($value)->name, $request->property_id, $value);
 
+        }
         return response()->json("success", 200);
     
     }

@@ -31,7 +31,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="danger" @click="dialog = false">Cancelar</v-btn>
-                        <v-btn color="success" @click.prevent="create()">Crear</v-btn>
+                        <v-btn color="success" @click.prevent="create()">Subir</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -76,7 +76,7 @@
             </v-layout>
         </template>
         <v-row>
-            <v-col  v-for="item in images" :key="item.id" cols="12" >
+            <v-col  v-for="item in images" :key="item.id" cols="12" sd="12"  >
                 <v-card>
                     
                     <v-img :src="'../../'+item.url" ></v-img>

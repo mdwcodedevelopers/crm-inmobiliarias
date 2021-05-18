@@ -35,7 +35,7 @@ class PropertyController extends Controller
             }
         }
         //HISTÓRICO
-        if ( !Auth::user()->id ) {
+        if (!is_null(Auth::user())) {
             saveReport(9, 1, 1, "Se visualizo la lista de Propiedades.");
         }
 

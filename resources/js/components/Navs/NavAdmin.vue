@@ -5,20 +5,21 @@
             <v-toolbar-title>{{ title }}</v-toolbar-title>
 
             <v-spacer></v-spacer>
-            <v-menu
+            <!-- <v-menu
                 bottom
                 offset-y
                 left
                 :close-on-content-click = "false"
                 >
                 <template v-slot:activator="{ on, attrs }">
-                    <a href="#"
-                    v-bind="attrs"
-                    v-on="on"
-                    onclick="return false"
-                    >
-                    <v-icon>mdi-calendar</v-icon>
-                    </a>
+                    
+                        <a href="#"
+                        v-bind="attrs"
+                        v-on="on"
+                        onclick="return false"
+                        >
+                        <v-icon>mdi-calendar</v-icon>
+                        </a>
                 </template>
 
                 <v-list min-height="5rem" max-height="70vh" width="300px" dense>
@@ -35,7 +36,7 @@
                     </v-list-item-group>
                 </v-list>
 
-            </v-menu>
+            </v-menu> -->
             <v-menu
                 bottom
                 offset-y
@@ -43,27 +44,47 @@
                 :close-on-content-click = "false"
                 >
                 <template v-slot:activator="{ on, attrs }">
+                    <v-badge
+                        color="red"
+                        :content="countNotifications"
+                        class="mx-4"
+                        >
                     <a href="#"
-                    class="mx-4"
                     v-bind="attrs"
                     v-on="on"
-                    onclick="return false"
+                    :onclick="getNotifications()"
                     >
                     <v-icon>mdi-bell</v-icon>
                     </a>
+                    </v-badge>
                 </template>
 
-                <v-list min-height="5rem" max-height="70vh" width="300px" dense>
+                <v-list min-height="5rem" max-height="70vh" width="300px">
                     <v-subheader class="mx-1 text-h5">Notificaciones</v-subheader>
                      <v-list-item-group
                         color="primary"
+                        v-if="notifications.lenght !== 0"
+                    >
+                    <v-list-item v-for="(notify, index) in notifications" :key="index">
+                        
+                        <v-list-item-content >
+                            <v-list-item-title>{{notify.type}}</v-list-item-title>
+                            <v-list-item-subtitle>{{notify.information}}</v-list-item-subtitle>
+                        </v-list-item-content>
+                        
+                    </v-list-item>
+                    </v-list-item-group>
+                     <v-list-item-group
+                        color="primary"
                         max='0'
+                        v-else
                     >
                     <v-list-item>
-                        <v-list-item-content>
+                         <v-list-item-content >
                             <v-list-item-title>No tienes notificaciones aún</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
+
                     </v-list-item-group>
                 </v-list>
 
@@ -148,7 +169,7 @@
                             <a href="/admin/properties-user">Listado</a>
                         </v-list-item>
 
-                        <v-list-item  v-if="role == 3 ">
+                        <v-list-item>
                             <a href="/admin/properties-user/view-web">Vista Web</a>
                         </v-list-item>
                     </v-list-group>
@@ -165,7 +186,7 @@
                         </v-icon>
                         <a href="/admin/events" >Mis Eventos</a>
                     </v-list-item>
-                    <v-list-item v-if="role == 1">
+                    <!-- <v-list-item v-if="role == 1">
                         <v-icon color="white" class="px-2">
                             mdi-cog-transfer-outline
                         </v-icon>
@@ -176,7 +197,7 @@
                             mdi-cog-transfer-outline
                         </v-icon>
                         <a href="/admin/services/init" >Servicios</a>
-                    </v-list-item>
+                    </v-list-item> -->
                     <v-list-item v-if="role == 1 || role == 3 ">
                         <v-icon color="white" class="px-2">
                             mdi-account-multiple
@@ -204,7 +225,7 @@
                     </v-list-item>
                     <v-list-item v-if="role == 1">
                         <v-icon color="white" class="px-2">
-                            mdi-chat-typing
+                            mdi-chat-processing
                         </v-icon>
                         <a href="/admin/reports/view" >Notificaciones del Sistema</a>
                     </v-list-item>
@@ -256,6 +277,8 @@ export default {
     data: () => ({
         drawer: false,
         group: null,
+        notifications: [],
+        countNotifications:0,
     }),
 
     watch: {
@@ -263,6 +286,9 @@ export default {
         //     this.drawer = false
         // },
     },
+    created() {
+        setInterval(this.getNotifications(),20000);
+  },
     methods:{
         logout() {
             axios.post("/admin/logout", {
@@ -270,6 +296,18 @@ export default {
             }).then((response) => {
                 console.log(response);
                     window.location.href ="/admin/"
+            });
+        },
+        getNotifications(){
+            axios.get("/admin/notify").then((response) => {
+                this.notifications = response.data.notifications;
+                 this.countNotifications = notifications.forEach(element => {
+                     if(element.status == 1){
+                         this.countNotifications++;
+                     }
+
+                 });
+                
             });
         }
     }

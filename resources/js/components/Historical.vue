@@ -1,6 +1,6 @@
 <template>
   <div class="text-left ">
-    <v-card color="blue">
+    <v-card color="blue darken-4">
       <v-card-title class="display-1 text-white">
         Historial de Operaciones
       </v-card-title>

@@ -2,7 +2,7 @@
 
     <div class="text-center">
 
-        <v-card color="blue">
+        <v-card color="blue darken-4">
             <v-card-title class="display-1 text-white">
                 Lista de Propiedades
             </v-card-title>

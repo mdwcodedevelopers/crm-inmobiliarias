@@ -145,7 +145,7 @@
       cols="12"
       sm="9"
   >
-    <v-card color="blue">
+    <v-card color="blue darken-4">
       <v-card-title class="display-1 text-white titulo-custom">
         Agenda de contactos
       <v-card-actions

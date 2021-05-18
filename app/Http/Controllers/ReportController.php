@@ -100,5 +100,13 @@ class ReportController extends Controller
 
     return $pdf->download("Pripiedad-".$property->id.".pdf");
   }
+  public function NotifyUser()
+  {
+    // $notifications = Report::where([['user_id',Auth::user()->id], ['table','Preguntas'] ])->orderByRaw('updated_at - created_at DESC')->get();
+    $notifications = Report::where('user_id',Auth::user()->id)->where(function($query) {$query->where('table','Preguntas')->orWhere('table','Eventos');})->orderByRaw('updated_at - created_at DESC')->get();
+    // $notifications = Report::where('user_id',Auth::user()->id)->orderByRaw('updated_at - created_at DESC')->get();
+
+    return response()->json(['notifications' => $notifications]);
+  }
 
 }

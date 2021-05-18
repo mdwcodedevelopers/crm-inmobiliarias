@@ -136,11 +136,13 @@ class UsersController extends Controller
         $oportunity->user_id = $request->agent_id;
         $oportunity->name = $request->name;
         $oportunity->contact_id = $contact->id;
+        $oportunity->property_id = $request->property_id;
         $oportunity->status_id = 1;
         $oportunity->description = "Mensaje de cliente: " . $request->information;
         $oportunity->vigency = date("Y-m-d",strtotime(date('Y-m-d')."+ 3 days")); ;
-
         $oportunity->save();
+        
+        saveReport(14, 5, 1, "El cliente ". $request->name ." Está interesado en la propiedad " . $request->property_name , $request->property_id, $request->agent_id);
 
         return response()->json("success", 200);
 

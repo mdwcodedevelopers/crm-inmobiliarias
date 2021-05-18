@@ -11,4 +11,9 @@ class Event extends Model
     protected $fillable = ['date', 'user_id', 'event_types_id', 'property_id', 'completed', 'postponed',
         'report' ];
 
+    public function Event_type()
+    {
+        return $this->belongsTo(Event_types::class, "event_types_id")->orderBy('name','ASC');
+    }
+      
 }

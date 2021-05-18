@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <v-card color="blue" dark>
+        <v-card color="blue darken-4" dark>
             <v-card-title class="text-center justify-center">
                 <template>
                     <v-layout row justify-center>
@@ -67,14 +67,14 @@
 
             <div class="display-1">Lista de Usuarios</div>
 
-            <v-tabs  v-if="rol==1" v-model="tab" background-color="blue" dark>
+            <v-tabs  v-if="rol==1" v-model="tab" background-color="blue darken-4" dark>
                 <v-tab v-for="itemtab in items" :key="itemtab">
                     {{ itemtab }}
                 </v-tab>
             </v-tabs>
 
             
-            <v-tabs  v-else v-model="tab" background-color="blue" dark>
+            <v-tabs  v-else v-model="tab" background-color="blue darken-4" dark>
                 <v-tab>Clientes</v-tab>
             </v-tabs>
 
@@ -88,7 +88,7 @@
 
                         <v-card  color="orange" class="text-white my-2">
 
-                            <v-card-title class="subtitle-2 mt-2" color="blue">Administradores</v-card-title>
+                            <v-card-title class="subtitle-2 mt-2" color="blue darken-4">Administradores</v-card-title>
                             <v-data-table no-results-text="No hay resultados" no-data-text="No hay Usuarios" :headers="headers" :items="admins" class="elevation-1" :search="search">
                                 <template v-slot:top>
                                     <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>

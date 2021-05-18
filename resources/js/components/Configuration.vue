@@ -24,7 +24,7 @@
                         class="panel-expansion"
                     >
                         <v-expansion-panel-header
-                                color="blue lighten-1 white--text"
+                                color="blue darken-4 white--text"
                             >
                             <span class="white--text font-weight-bold">
                                     <v-icon color="white">
@@ -49,7 +49,7 @@
                         class="panel-expansion"
                     >
                         <v-expansion-panel-header
-                                color="blue lighten-1 white--text"
+                                color="blue darken-4 white--text"
                             >
                             <span class="white--text font-weight-bold">
                                     <v-icon color="white">
@@ -75,7 +75,7 @@
                         class="panel-expansion"
                     >
                         <v-expansion-panel-header
-                                color="blue lighten-1 white--text"
+                                color="blue darken-4 white--text"
                             >
                             <span class="white--text font-weight-bold">
                                     <v-icon color="white">
@@ -101,7 +101,7 @@
                         class="panel-expansion"
                     >
                         <v-expansion-panel-header
-                                color="blue lighten-1 white--text"
+                                color="blue darken-4 white--text"
                             >
                             <span class="white--text font-weight-bold">
                                     <v-icon color="white">
@@ -126,7 +126,7 @@
                         class="panel-expansion"
                     >
                         <v-expansion-panel-header
-                                color="blue lighten-1 white--text"
+                                color="blue darken-4 white--text"
                             >
                             <span class="white--text font-weight-bold">
                                     <v-icon color="white">
@@ -147,7 +147,56 @@
                             <event-types/>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
-                    
+                      <v-expansion-panel
+                        class="panel-expansion"
+                    >
+                        <v-expansion-panel-header
+                                color="blue darken-4 white--text"
+                            >
+                            <span class="white--text font-weight-bold">
+                                    <v-icon color="white">
+                                    mdi-calendar
+                                </v-icon>
+                                Servicios
+                            </span>
+                            
+                            <template v-slot:actions>
+                                <v-icon color="white">
+                                $expand
+                                </v-icon>
+                            </template>
+                            </v-expansion-panel-header>
+
+
+                        <v-expansion-panel-content class="p-3">
+                            <services/>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                      <v-expansion-panel
+                        class="panel-expansion"
+                    >
+                        <v-expansion-panel-header
+                                color="blue darken-4 white--text"
+                            >
+                            <span class="white--text font-weight-bold">
+                                    <v-icon color="white">
+                                    mdi-calendar
+                                </v-icon>
+                                Ambientes
+                            </span>
+                            
+                            <template v-slot:actions>
+                                <v-icon color="white">
+                                $expand
+                                </v-icon>
+                            </template>
+                            </v-expansion-panel-header>
+
+
+                        <v-expansion-panel-content class="p-3">
+                             <environments/>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
                 </v-expansion-panels>
              </v-col>
         </v-card>

@@ -2,7 +2,7 @@
 
   <div class="text-center">
 
-    <v-card color="blue">
+    <v-card color="blue darken-4">
       <v-card-title class="display-1 text-white">
         Lista de Propiedades
         <v-btn color="success" dark absolute right fab class="mt-1" @click="create()">
@@ -372,7 +372,7 @@
         ],
         numberRules: [
           v => !!v || 'El campo es obligatorio',
-          v => /^[0-9]+([,][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
+          v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
         ],
       }
     },

@@ -10,7 +10,7 @@
                 </li>
             </ul>
         </div>
-        <v-card color="blue w-100">
+        <v-card color="blue darken-4 w-100">
             <v-card-title class="display-1 text-white titulo-custom">
                 Tus Eventos:
                 <v-card-actions
@@ -41,9 +41,11 @@
             no-data-text="No tienes eventos registrados"
             no-results-text="No hay resultados"
             >
+                <
 
                 <template v-slot:group.header="{ group, toggle, isOpen }"> 
-                    <td :colspan="8" style="text-align: initial; padding-left:2rem;" :style="{ backgroundColor: color(group)}"  >
+                    <!-- <td :colspan="8" style="text-align: initial; padding-left:2rem;" :style="{ backgroundColor: color(group)}"  > -->
+                    <td :colspan="8" style="text-align: initial; padding-left:2rem;" >
                     <v-btn @click="toggle" x-small icon :ref="group">
                         <v-icon v-if="isOpen">mdi-minus</v-icon>
                         <v-icon v-else>mdi-plus</v-icon>
@@ -97,7 +99,7 @@
                 <v-container>
                     <v-form ref="form" v-model="valid">
                     <v-row>
-
+                        
                     <v-col
                         cols="12"
                         sm="6"
@@ -353,6 +355,7 @@ export default {
       },
       store() {
         this.event.date = this.event.date_1 + " " + this.event.hour_ini;
+        console.log(this.event.date);
         this.valid = false; 
         axios.post("/admin/api-events", this.event).then((response) => {
             this.index();

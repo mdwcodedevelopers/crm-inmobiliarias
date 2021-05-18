@@ -15,11 +15,10 @@ class CreateUserseventsTable extends Migration
     {
         Schema::create('usersevents', function (Blueprint $table) {
             $table->foreignId('event_id');
-            $table->foreignId('user_id');
+            $table->integer('user_id'); //No es foranea porque a veces será de contacto
             $table->foreignId('role_id'); //2 cliente, 3 agente
             $table->timestamps();
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
