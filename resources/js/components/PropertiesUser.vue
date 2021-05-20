@@ -478,7 +478,7 @@
           )
         });
       },
-      delete_dialog(id, title) {
+      delete_dialog(id) {
         this.id_delete = id;
         this.dialogdelete = true;
       },

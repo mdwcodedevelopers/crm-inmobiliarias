@@ -76,7 +76,9 @@
       13 => "Propiedad Eliminada:",
       14 => "Un Contacto está interesado en una propiedad:",
       15 => "Evento creado",
-      16 => "Evento invitacion",
+      16 => "Invitacion a evento:",
+      17 => "Evento eliminado",
+
     );
 
     return $type[$index];

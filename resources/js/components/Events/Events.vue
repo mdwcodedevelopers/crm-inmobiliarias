@@ -29,13 +29,13 @@
     </v-tabs>
     <v-tabs-items class="w-100" v-model="tab">
         <v-tab-item>
-            <calendar></calendar>
+            <calendar :events="datas"></calendar>
         </v-tab-item>
         <v-tab-item>
             <v-data-table
             :headers="headers"
             item-key="id"
-            group-by="event_type"
+            group-by="name"
             :items="datas"
             class="elevation-1"
             no-data-text="No tienes eventos registrados"
@@ -58,6 +58,10 @@
                         color="green"
                         text-color="white"
                     > {{client[0].name}} </v-chip>
+                </template>
+
+                <template v-slot:item.completed="{ item }">
+                    {{item.completed === "0" ? 'En espera' : 'Terminado' }}
                 </template>
 
                 <template v-slot:group.header="{ group, toggle, isOpen }"> 
@@ -83,7 +87,6 @@
                         </v-icon>
                     </v-btn>
                 </template>       
-
 
             </v-data-table>
 
@@ -199,10 +202,10 @@
                         <div class="text-overline">*Indica la Fecha del evento</div>
                         
                         <v-date-picker
-                        v-model="event.date_1"
+                        v-model="event.date"
                         >
                         </v-date-picker>
-                        <div class="text-overline">*Indica la hora de inicio</div>
+                        <!-- <div class="text-overline">*Indica la hora de inicio</div>
                         <v-menu
                             ref="menu_1"
                             v-model="menu1"
@@ -231,7 +234,7 @@
                                 use-seconds
                                 @click:second="$refs.menu_1.save(event.hour_ini)"
                             ></v-time-picker>
-                        </v-menu>
+                        </v-menu> -->
                         <!-- <div class="text-overline">*Indica la hora de finalizacion</div>
                         <v-menu
                             ref="menu_2"
@@ -289,6 +292,241 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <!--Modal de editar evento -->
+        <v-dialog v-model="dialogedit" persistent max-width="800px">
+             <v-card>
+                <v-card-title>
+                    <v-row>
+                        <v-col cols="6 d-flex align-items-center">
+                            <span class="headline">Editar Evento</span>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-select
+                                v-model="event.event_types_id"
+                                :items="types"
+                                item-text="name"
+                                item-value="id"
+                                label="Tipo de evento*"
+                                :rules="selectRule"
+                                absolute
+                                right
+                            ></v-select>
+                        </v-col>
+                    </v-row>
+
+                </v-card-title>
+                <v-card-text>
+                <v-container>
+                    <v-form ref="form" v-model="valid">
+                    <v-row>
+                        
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        class="py-0"
+                    >
+                    <v-alert v-if="event.event_types_id" :color="alertColor"> {{descriptionEvent(event.event_types_id)}}</v-alert>
+                        <v-select
+                        v-model="event.property_id"
+                        :items="properties"
+                        item-text="title"
+                        item-value="id"
+                        label="Escoge una Propiedad"
+                        ></v-select>
+                        <v-select
+                            v-model="clients_events"
+                            :items="contacts"
+                            :rules="selectRule"
+                            item-value="id"
+                            label="Seleccione los clientes:"
+                            attach
+                            color="blue-grey lighten-2"
+                            chips
+                            multiple
+                            hint="min: 1 max: 3"
+                        >
+                            <template v-slot:selection="data">
+                            <!-- HTML that describe how select should render selected items -->
+                            <v-chip
+                                v-bind="data.attrs"
+                                :input-value="data.selected"
+                                close
+                                @click="data.select"
+                                @click:close="remove(data.item, event.contacts)"
+                            > {{ data.item.name }} </v-chip>
+
+                            </template>
+                            <template v-slot:item="data">
+                            <v-list-item-content>
+                                <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                                <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
+                            </v-list-item-content>
+                            </template>
+                        </v-select>    
+                        <v-select
+                            v-model="agents_events"
+                            :items="agents"
+                            :rules="selectRule"
+                            item-value="id"
+                            label="Seleccione los agentes:"
+                            attach
+                            color="blue-grey lighten-2"
+                            chips
+                            multiple
+                            hint="min: 1 max: 3"
+                        >
+                            <template v-slot:selection="data">
+                            <!-- HTML that describe how select should render selected items -->
+                            <v-chip
+                                v-bind="data.attrs"
+                                :input-value="data.selected"
+                                close
+                                @click="data.select"
+                                @click:close="remove(data.item, event.agents)"
+                            > {{ data.item.name }} </v-chip>
+
+                            </template>
+                            <template v-slot:item="data">
+                            <v-list-item-content>
+                                <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                                <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
+                            </v-list-item-content>
+                            </template>
+                        </v-select>    
+                         <v-select
+                                v-model="event.completed"
+                                :items="status"
+                                item-text="name"
+                                item-value="value"
+                                label="Estatus del evento"
+                                :rules="selectRule"
+                            ></v-select>
+                              <v-textarea
+                            v-model="event.report"
+                            :rules="inputRule"
+                            label="Reporte de finalizacion*"
+                            ></v-textarea>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        class="py-0"
+                    >
+                        <div class="text-overline">*Indica la Fecha del evento</div>
+                        
+                        <v-date-picker
+                        v-model="event.date"
+                        disabled
+                        >
+                        </v-date-picker>
+                        <!-- <div class="text-overline">*Indica la hora de inicio</div>
+                        <v-menu
+                            ref="menu_1"
+                            v-model="menu1"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            :return-value.sync="event.hour_ini"
+                            transition="scale-transition"
+                            offset-y
+                            max-width="290px"
+                            min-width="290px"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="event.hour_ini"
+                                label="HH:MM:SS"
+                                prepend-icon="mdi-clock-time-four-outline"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                            ></v-text-field>
+                            </template>
+                            <v-time-picker
+                                v-if="menu1"
+                                v-model="event.hour_ini"
+                                full-width
+                                use-seconds
+                                @click:second="$refs.menu_1.save(event.hour_ini)"
+                            ></v-time-picker>
+                        </v-menu> -->
+                        <!-- <div class="text-overline">*Indica la hora de finalizacion</div>
+                        <v-menu
+                            ref="menu_2"
+                            v-model="menu2"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            :return-value.sync="event.hour_end"
+                            transition="scale-transition"
+                            offset-y
+                            max-width="290px"
+                            min-width="290px"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="event.hour_end"
+                                label="HH:MM:SS"
+                                use-seconds
+                                prepend-icon="mdi-clock-time-four-outline"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                            ></v-text-field>
+                            </template>
+                            <v-time-picker
+                            v-if="menu2"
+                            v-model="event.hour_end"
+                            full-width
+                            use-seconds
+                            @click:second="$refs.menu_2.save(event.hour_end)"
+                            ></v-time-picker>
+                        </v-menu> -->
+                    </v-col>
+                    </v-row>
+                    </v-form>
+                </v-container>
+                </v-card-text>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="dialogedit = false; index() "
+                >
+                    Cancelar
+                </v-btn>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    :disabled="!valid"
+                    @click="store()"
+                >
+                    Guardar
+                </v-btn>
+
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+    <template>
+      <v-layout row justify-center>
+        <v-dialog v-model="dialogdelete" persistent max-width="600px">
+          <v-card>
+            <v-card-title>
+              <span class="headline">¿Esta seguro que desea eliminar este evento?</span>
+            </v-card-title>
+            <v-card-text>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn @click="dialogdelete = false">Cancelar</v-btn>
+              <v-btn color="#E53935" class="text-white" @click.prevent="delete_model()">Eliminar</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+    </template>
+
    </div>
 </template>
 
@@ -317,9 +555,14 @@ export default {
       contacts:[],
       agents:[],
       properties:[],
+      clients_events: [],
+      agents_events: [],
       dialog: false,
       menu1: false,
       menu2: false,
+      dialogedit: false,
+      dialogdelete: false,
+      id_delete: '',
       event:{},
       inputRule: [
           v => !!v || 'El campo es obligatorio',
@@ -361,6 +604,23 @@ export default {
             this.dialog= true;
             this.event = {};
         },
+        edit(item){
+            this.event = item;
+            var i = 0;
+            var j = 0;
+            this.clients_events =[];
+            this.agents_events =[];
+            this.event.clients.forEach(element => {
+                    this.clients_events[i] = element.user_id;
+                    i++;
+                });
+            i=0;
+            this.event.agents.forEach(element => {
+                this.agents_events[i] = element.user_id;
+                i++;
+            });
+            this.dialogedit= true;
+        },
          remove (item, selected) {
             const index = selected.indexOf(item.id)
             if (index >= 0){
@@ -380,8 +640,6 @@ export default {
         }
       },
       store() {
-        this.event.date = this.event.date_1 + " " + this.event.hour_ini;
-        console.log(this.event.date);
         this.valid = false; 
         axios.post("/admin/api-events", this.event).then((response) => {
             this.index();
@@ -397,6 +655,27 @@ export default {
           this.valid = true; 
         });
       },
+      delete_dialog(id) {
+        this.id_delete = id;
+        this.dialogdelete = true;
+      },
+       delete_model() {
+            axios.delete("/admin/api-events/" + this.id_delete).then((response) => {
+                this.index();
+                this.dialogdelete = false;
+                this.$swal.fire(
+                  'Evento eliminado con exito',
+                  '',
+                  'success'
+                );
+        }).catch(error => {
+          this.$swal.fire(
+            'Error',
+            'Hubo un error al tratar de eliminar el evento, intente nuevamente.',
+            'error'
+          )
+        });
+      },
     },
      computed: {
        headers(){
@@ -405,7 +684,7 @@ export default {
                     text: 'Fecha',
                     align: 'start',
                     sortable: true,
-                    value: 'date',
+                    value: 'start',
                 },
                 {
                     text: 'Agentes',
@@ -426,8 +705,31 @@ export default {
                     text: 'Reporte',
                     value: 'report'
                 },
+                {
+                    text: 'Acciones',
+                    value: 'action',
+                    width: '13rem',
+                    sortable: false
+                },
+                
             ]
          },
+         status(){
+             return[
+                 {
+                    name: 'En espera a ocurrir',
+                    value: "0",
+                 },
+                 {
+                    name: 'Completado con exito',
+                    value: "1",
+                 },
+                 {
+                    name: 'Fallido',
+                    value: "2",
+                 },
+             ]
+         }
     }
 
 }

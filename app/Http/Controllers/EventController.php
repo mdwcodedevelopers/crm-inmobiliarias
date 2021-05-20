@@ -30,9 +30,12 @@ class EventController extends Controller
      */
     public function index(Request $request){
         $event_types = Event_types::get();
-        $events = Event::get();
+        $events = Event::selectRaw('events.id, events.date AS start, events.completed, events.postponed,events.event_types_id, events.property_id, events.report, 
+        event_types.name, event_types.color AS color')
+        ->join('event_types', 'events.event_types_id', '=', 'event_types.id')
+        ->where('user_id', Auth::user()->id)->get();
+        // $events = Event::get();
         foreach ($events as $key => $value) {
-            $value->event_type = Event_types::find($value->event_types_id)->name;
             $value->agents = User_event::whereEvent_id($value->id)->whereRole_id(3)->get();
             $value->clients = User_event::whereEvent_id($value->id)->whereRole_id(2)->get();
         }
@@ -123,7 +126,7 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $status = Event_types::whereId($id)->first();
+        $status = Event::whereId($id)->first();
         $status->name = $request->name;
         $status->min_agents = $request->min_agents;
         $status->description = $request->description;
@@ -145,10 +148,15 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+   
     public function destroy($id)
     {
-        $status = Event_types::whereId($id)->first();
-        $status->delete();
+        $event = Event::find($id);
+
+        saveReport(17, 3, 1, "El agente: ". Auth::user()->name."ha eliminado un evento ");
+
+        $event->delete();
+
         return response()->json("success", 200);
     }
 }
