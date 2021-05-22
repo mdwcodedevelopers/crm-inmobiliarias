@@ -79,6 +79,7 @@ class EventController extends Controller
             $contact->role_id = 2;
             $contact->save();
             saveReport(16, 3, 1, "El agente ". Auth::user()->name ." ha invitado a un evento a " . Contact::find($value)->name, $request->property_id, $value);
+            saveReport(16, 6, 1, "El agente ". Auth::user()->name ." te ha invitado a un evento el " . $request->date, $request->property_id, $value);
 
         }
         foreach ($request->agents as $key => $value) {
@@ -88,7 +89,7 @@ class EventController extends Controller
             $contact->role_id = 3;
             $contact->save();
             saveReport(16, 3, 1, "El agente ". Auth::user()->name ." ha invitado a un evento a " . User::find($value)->name, $request->property_id, $value);
-
+            saveReport(16, 6, 1, "El agente ". Auth::user()->name ." te ha invitado a un evento el " . $request->date, $request->property_id, $value);
         }
         return response()->json("success", 200);
     

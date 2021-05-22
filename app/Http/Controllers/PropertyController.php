@@ -15,6 +15,7 @@ use App\Report;
 use App\Service;
 use App\Status;
 use App\User;
+use App\Fav_property;
 
 use Auth;
 use Datetime;
@@ -249,7 +250,7 @@ class PropertyController extends Controller
         $property = Property::where('id',$id)->with('Status','Currency','Categories','Images','Environments','Services')->first();
         $property->price = number_format($property->price, 2, ',', '.');
         $property->dimension = number_format($property->dimension, 2, ',', '.');
-
+        $property->favorite = is_null(Fav_property::where("user_id", Auth::user()->id)->where("property_id", $request->property_id)->first()) ? false : true;
         if (!is_null(Auth::user())) {
             $user = User::find(Auth::user()->id);
             return view('property', ['property' => $property, 'rol' => $user->role_id]);

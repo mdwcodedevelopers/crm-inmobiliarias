@@ -9,8 +9,44 @@
             </v-card-text>
             
             <v-card-title>Configuraciones principales</v-card-title>
-            
-            <!-- <v-card-title>Otras Configuraciones</v-card-title> -->
+               <v-col
+                cols="12"
+                sm="11"
+             >
+                <v-expansion-panels 
+                    accordion
+                    focusable
+                    inset
+                    >
+                    <v-expansion-panel
+                        class="panel-expansion"
+                    >
+                        <v-expansion-panel-header
+                                color="blue darken-4 white--text"
+                            >
+                            <span class="white--text font-weight-bold">
+                                    <v-icon color="white">
+                                    mdi-folder-multiple-image
+                                </v-icon>
+                                Slider
+                            </span>
+                            
+                            <template v-slot:actions>
+                                <v-icon color="white">
+                                $expand
+                                </v-icon>
+                            </template>
+                            </v-expansion-panel-header>
+
+
+                        <v-expansion-panel-content class="p-3">
+                            <sliders/>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                    
+                </v-expansion-panels>
+             </v-col>
+            <v-card-title>Otras Configuraciones</v-card-title>
              <v-col
                 cols="12"
                 sm="11"

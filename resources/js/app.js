@@ -37,6 +37,7 @@ Vue.use(VueGoogleMaps, {
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('sliders', require('./components/Sliders.vue').default);
 Vue.component('calendar', require('./components/Events/Calendar.vue').default);
 Vue.component('events', require('./components/Events/Events.vue').default);
 Vue.component('event-types', require('./components/Events/Events-types.vue').default);
@@ -54,6 +55,7 @@ Vue.component('oportunities', require('./components/Oportunities/Oportunities.vu
 Vue.component('oportunities-table', require('./components/Oportunities/Oportunities-table.vue').default);
 Vue.component('properties', require('./components/Properties.vue').default);
 Vue.component('property', require('./components/Property.vue').default);
+Vue.component('properties-card', require('./components/Properties-cards.vue').default);
 Vue.component('property-card', require('./components/Property-card.vue').default);
 Vue.component('profile', require('./components/Profile.vue').default);
 Vue.component('users', require('./components/Users.vue').default);

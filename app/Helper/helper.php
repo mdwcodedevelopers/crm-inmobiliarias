@@ -78,7 +78,7 @@
       15 => "Evento creado",
       16 => "Invitacion a evento:",
       17 => "Evento eliminado",
-
+      18 => "Un Contacto está interesado en tu propiedad:",
     );
 
     return $type[$index];
@@ -92,6 +92,7 @@
       3 => "Eventos",
       4 => "Oportunidades",
       5 => "Preguntas",
+      6 => "Notificaciones",
     );
 
     return $modules[$id];

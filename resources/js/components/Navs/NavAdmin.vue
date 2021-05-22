@@ -280,7 +280,7 @@ export default {
         // },
     },
     created() {
-        setInterval(this.getNotifications(),20000);
+        setInterval(this.getNotifications(),60000);
   },
     methods:{
         logout() {

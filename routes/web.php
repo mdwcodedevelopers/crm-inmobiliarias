@@ -54,6 +54,8 @@ Route::group(['prefix' => 'admin'], function () {
     'api-tags'=>TagController::class,
     'api-group-tags'=>GroupTagController::class,
     'api-event-types'=>EventTypesController::class,
+    'api-slider'=>SliderHomeController::class,
+    'api-fav-property'=>PropertyFavController::class,
     'api-events'=>EventController::class]);
     Auth::routes();
 

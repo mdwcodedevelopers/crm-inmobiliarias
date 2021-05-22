@@ -9,9 +9,9 @@
                 show-arrows-on-hover
                 >
                     <v-carousel-item 
-                        v-for="(item,i) in items" :key="i" 
+                        v-for="item in items" :key="item.id" 
                         gradient="to top right, rgba(21, 73, 129, 0.5), rgba(25,32,72,.7)"
-                        :src="item.src" 
+                        :src="item.image" 
                         >
                         <div class="d-flex pl-9 align-center" style="height:100%">
                             <v-fade-transition>
@@ -30,8 +30,8 @@
                                             x-large
                                             rounded
                                             color="white my-9"
-                                            @click="item.url"
-                                            >Ver más</v-btn>
+                                            :href="item.url"
+                                            >{{item.button}}</v-btn>
                                     </div>
                                 </div>
                             </v-fade-transition>
@@ -103,22 +103,14 @@
 export default {
      data() {
             return {
-                items:[
-                    {
-                        src: "/images/slideBg001.jpg",
-                        title: 'NAKABUCHI ACQUA',
-                        subtitle: 'Conocé una de nuestras mejores inversiones',
-                        url: ''
-                    },
-                     {
-                        src: "/images/slideBg002.jpg",
-                        title: 'PH EN VENTA',
-                        subtitle: 'Interesante inversión con una ubicación ideal',
-                        url: ''
-                    },
-                ],
+                items:[],
                 
             }
         },
+        created(){
+            axios.get("admin/api-slider").then((response) => {
+                this.items = response.data.sliders;
+            });
+        }
   }
 </script>

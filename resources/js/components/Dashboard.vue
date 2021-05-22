@@ -9,7 +9,7 @@
                         </h3> 
                     </v-card-title>
                     <v-card-subtitle></v-card-subtitle>
-                    <v-card-content class="d-flex">
+                    <v-card-text class="d-flex">
                         <v-card class="mx-auto text-white mt-3" width="300" max-width="600" color="blue darken-2">
                             <v-card-text>
                                 <p class="h3 text-white text-center">
@@ -58,7 +58,7 @@
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
-                    </v-card-content>
+                    </v-card-text>
                 </v-card>
             </div>
 </template>

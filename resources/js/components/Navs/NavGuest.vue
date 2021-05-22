@@ -3,7 +3,6 @@
         <v-toolbar 
           color="white"  
           prominent 
-          app
           dense
           class="d-none d-lg-block d-xl-block d-md-block">
       
@@ -26,7 +25,7 @@
             <a class=" mx-2 my-auto black--text " style="font-size:1rem"  href="/admin/register">Registrarse</a>
         </v-toolbar>
 
-      <v-toolbar app  prominent color="white" id="nav-mobile" class="d-lg-none d-xl-none">
+      <v-toolbar prominent color="white" id="nav-mobile" class="d-lg-none d-xl-none">
         <v-toolbar-title>
            <a href="/" class="" style="text-decoration:none">
             <v-img src="/images/logo.png"  contain width="200" height="100"></v-img>
@@ -39,7 +38,7 @@
       </v-toolbar>
       
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-          <v-toolbar-side-icon dark slot="activator"></v-toolbar-side-icon>
+          <!-- <v-toolbar-side-icon dark slot="activator"></v-toolbar-side-icon> -->
           <v-card>
             <v-toolbar flat prominent class="blue darken-4 white--text">
               <v-toolbar-title>

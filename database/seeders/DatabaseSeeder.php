@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrencySeeder::class);
         $this->call(EnvironmentSeeder::class);
         $this->call(ServiceSeeder::class);
+        $this->call(SliderHomeSeeder::class);
     }
 }

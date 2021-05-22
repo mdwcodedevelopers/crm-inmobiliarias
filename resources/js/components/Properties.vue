@@ -21,7 +21,8 @@
 
                 <v-row>
                     <v-col  v-for="card in properties" :key="card.id" cols="12" sm="12" md="4">
-                        <h3 class="text-center venta mt-3">{{card.name}}</h3>
+                       <properties-cards :card="card"></properties-cards>
+                        <!-- <h3 class="text-center venta mt-3">{{card.name}}</h3>
                         <v-card>
                             <v-img :src="'../../'+card.image" class="" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="200px">
 
@@ -50,7 +51,7 @@
                                 Ver más
                               </v-btn>
                             </v-card-actions>
-                        </v-card>
+                        </v-card> -->
                     </v-col>
                 </v-row>
             </v-container>
@@ -115,11 +116,6 @@ export default {
 </script>
 
 <style>
-.venta {
-    background-color: #38c172;
-    color: #fff;
-
-}
 
 .VueCarousel-slide {
     position: relative;

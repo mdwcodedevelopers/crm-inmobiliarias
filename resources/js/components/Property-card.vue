@@ -48,7 +48,7 @@
             <v-col
             class="d-flex justify-space-between mx-4"
             >
-            <v-btn rounded class="purple darken-1 white--text" @click="favorite = !favorite" >
+            <v-btn rounded class="purple darken-1 white--text" @click="favProperty()" >
                 <v-icon v-if="!favorite" class="white--text">mdi-star-outline</v-icon>
                 <v-icon v-else class="orange--text lighten-1--text">mdi-star</v-icon>
                 Agregar a favoritos
