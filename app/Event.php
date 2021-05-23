@@ -15,5 +15,5 @@ class Event extends Model
     {
         return $this->belongsTo(Event_types::class, "event_types_id")->orderBy('name','ASC');
     }
-      
+    
 }

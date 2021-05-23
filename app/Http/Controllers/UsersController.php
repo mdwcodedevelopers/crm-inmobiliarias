@@ -129,7 +129,7 @@ class UsersController extends Controller
         $contact->phone_2 = $request->phone_2; 
         $contact->direction = $request->direction; 
         $contact->province = $request->province;
-        $contact->user_id =  auth()->id(); 
+        $contact->user_id =  Auth::user()->id; 
         $contact->save();
 
         $oportunity = new Oportunity();
@@ -143,7 +143,7 @@ class UsersController extends Controller
         $oportunity->save();
         
         saveReport(14, 5, 1, "El cliente ". $request->name ." Está interesado en la propiedad " . $request->property_name , $request->property_id, $request->agent_id);
-        saveReport(18, 6, 1, "El cliente ". $request->name ." Está interesado en tu propiedad " . $request->property_name . ". No olvides revisar las oportunidades" , $request->property_id, $request->agent_id);
+        saveNotification(Auth::user()->id, 19,"El cliente ". $request->name ." Está interesado en tu propiedad " . $request->property_name . ". No olvides revisar las oportunidades", $request->property_id);
 
         return response()->json("success", 200);
 

@@ -88,16 +88,6 @@
               <v-container grid-list-md>
                 <v-form ref="form" v-model="valid">
                   <v-layout wrap>
-                    <v-flex xs12>
-                      <v-file-input
-                        :rules="ruleImage"
-                        accept="image/png, image/jpeg, image/bmp"
-                        placeholder="Sube la foto"
-                        prepend-icon="mdi-camera"
-                        label="Slide imagen"
-                        v-model="slide.image_edit"
-                      ></v-file-input>
-                    </v-flex>
                     <v-flex xs12 md6>
                       <v-text-field label="Título" :rules="inputRules" v-model="slide.title" required></v-text-field>
                     </v-flex>
@@ -185,7 +175,6 @@
           formData.append("button", this.slide.button);
           formData.append("image", this.slide.image);
         axios.post("/admin/api-slider", formData, {headers: { "Content-Type": "multipart/form-data" }}).then((response) => {
-            console.log(response.data);
           if (response.status == 200) {
             this.index();
             this.slide = {};
@@ -194,6 +183,7 @@
             }
         }).catch(error => {
           this.$swal.fire('Error','Ocurrío un error al tratar de registrar el slide, intente nuevamente.');
+          this.valid= true;
         });
       },
       edit(item) {
@@ -203,14 +193,8 @@
       },
       update() {
         this.valid= false;
-        let formData = new FormData();
-          formData.append("url", this.slide.url);
-          formData.append("title", this.slide.title);
-          formData.append("subtitle", this.slide.subtitle);
-          formData.append("button", this.slide.button);
-          formData.append("image", this.slide.image_edit);
-        axios.patch("/admin/api-slider/" + this.slide.id, formData, {headers: { "Content-Type": "multipart/form-data" }}).then((response) => {
-            console.log(response.data);
+      
+          axios.patch("/admin/api-slider/" + this.slide.id, this.slide).then((response) => {
             this.index();
             this.slide = {};
             this.dialogedit = false;
@@ -218,6 +202,7 @@
         })
         .catch(error => {
           this.$swal.fire('Error','Ocurrío un error al tratar de modificar el slide, intente nuevamente.');
+          this.valid= true;
         });
       },
       delete_dialog(id) {

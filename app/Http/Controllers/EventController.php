@@ -79,8 +79,7 @@ class EventController extends Controller
             $contact->role_id = 2;
             $contact->save();
             saveReport(16, 3, 1, "El agente ". Auth::user()->name ." ha invitado a un evento a " . Contact::find($value)->name, $request->property_id, $value);
-            saveReport(16, 6, 1, "El agente ". Auth::user()->name ." te ha invitado a un evento el " . $request->date, $request->property_id, $value);
-
+            (!is_null(Contact::find($value)->user_id)) ? saveNotification(Contact::find($value)->user_id, 16,"El agente ". Auth::user()->name ." te ha invitado a un evento el " . $request->date) : '';
         }
         foreach ($request->agents as $key => $value) {
             $contact = new User_event();
@@ -89,7 +88,7 @@ class EventController extends Controller
             $contact->role_id = 3;
             $contact->save();
             saveReport(16, 3, 1, "El agente ". Auth::user()->name ." ha invitado a un evento a " . User::find($value)->name, $request->property_id, $value);
-            saveReport(16, 6, 1, "El agente ". Auth::user()->name ." te ha invitado a un evento el " . $request->date, $request->property_id, $value);
+            saveNotification($value, 16,"El agente ". Auth::user()->name ." te ha invitado a un evento el " . $request->date);
         }
         return response()->json("success", 200);
     
@@ -127,19 +126,25 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $status = Event::whereId($id)->first();
-        $status->name = $request->name;
-        $status->min_agents = $request->min_agents;
-        $status->description = $request->description;
-        $status->min_clients = $request->min_clients;
-        $status->notify_after = ($request->notify_after) ? '1' : '0' ;
-        $status->notify_after_agent = ($request->notify_after_agent) ? '1' : '0' ;
-        $status->notify_before = ($request->notify_before) ? '1' : '0' ;
-        $status->notify_before_agent = ($request->notify_before_agent) ? '1' : '0' ;
-        $status->message_after = $request->message_after;
-        $status->message_before = $request->message_before;
-        $status->color = $request->color;
-        $status->save();
+        $event = Event::find($id);
+        
+       
+        if ($request->completed != '0') {
+            $event->completed = $request->completed;
+            $event->report = $request->report;
+        }else{
+            if ($request->postponed ) {
+                if ( $event->postponed == "3") {
+                    return response()->json("No puede posponer el evento más de 3 veces, debe marcarlo como fallido", 500);
+                }
+                $event->date = $request->start;
+                $event->postponed = (string)(((int)$event->postponed) +1);
+                saveReport(18, 3, 1, "El agente ". Auth::user()->name ." ha pospuesto un evento para el " . $request->start, $request->property_id);
+            }
+        }
+        
+        $event->save();
+
         return response()->json("success", 200);
     }
 

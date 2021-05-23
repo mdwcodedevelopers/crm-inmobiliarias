@@ -6,7 +6,7 @@
             <nav-admin :title="'Mis Eventos'" :role="{{$role}}"/>
         </div>
 
-        <events :types="{{$events_types}}"
+        <events :types="{{$events_types}}" :role="{{$role}}"
         />
 
     </div>

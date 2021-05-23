@@ -74,11 +74,12 @@
       11 => "Formulario de editar propiedad:",
       12 => "Propiedad Modificada a:",
       13 => "Propiedad Eliminada:",
-      14 => "Un Contacto está interesado en una propiedad:",
+      14 => "Un Contacto está interesado en una propiedad",
       15 => "Evento creado",
       16 => "Invitacion a evento:",
       17 => "Evento eliminado",
-      18 => "Un Contacto está interesado en tu propiedad:",
+      18=> "Evento actualizado",
+      19 => "Un Contacto está interesado en tu propiedad:",
     );
 
     return $type[$index];
@@ -92,21 +93,33 @@
       3 => "Eventos",
       4 => "Oportunidades",
       5 => "Preguntas",
-      6 => "Notificaciones",
     );
 
     return $modules[$id];
   }
 
-  function saveReport($type, $table, $status, $info, $property = NULL, $id= NULL)
+  function saveReport($type, $table, $status, $info, $property = NULL)
   {
     $report = new \App\Report();
-    $report->user_id = ($id==null) ? \Auth::user()->id : $id;
+    $report->user_id =  \Auth::user()->id;
     $report->property_id = $property;
     $report->type = realType($type);
     $report->table = realTable($table);
     $report->information = $info;
     $report->status = "$status";
+    $report->save();
+
+    return $report;
+  }
+  function saveNotification($id, $type, $info, $property = NULL)
+  {
+    $report = new \App\Report();
+    $report->user_id =  $id;
+    $report->property_id = $property;
+    $report->type = realType($type);
+    $report->table = "Notificaciones";
+    $report->information = $info;
+    $report->status = "1";
     $report->save();
 
     return $report;

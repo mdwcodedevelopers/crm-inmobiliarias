@@ -61,12 +61,11 @@
                 </template>
 
                 <template v-slot:item.completed="{ item }">
-                    {{item.completed === "0" ? 'En espera' : 'Terminado' }}
+                    {{item.completed === "0" ? 'En espera' : (item.completed === "1" ? 'Terminado': 'Fracasado') }}
                 </template>
 
                 <template v-slot:group.header="{ group, toggle, isOpen }"> 
-                    <!-- <td :colspan="8" style="text-align: initial; padding-left:2rem;" :style="{ backgroundColor: color(group)}"  > -->
-                    <td :colspan="8" style="text-align: initial; padding-left:2rem;" >
+                    <td :colspan="8" style="text-align: initial; padding-left:2rem;" :style="{ backgroundColor: color(group)}">
                     <v-btn @click="toggle" x-small icon :ref="group">
                         <v-icon v-if="isOpen">mdi-minus</v-icon>
                         <v-icon v-else>mdi-plus</v-icon>
@@ -76,12 +75,12 @@
                 </template>
                     
                   <template v-slot:item.action="{ item }">
-                    <v-btn color="#ff9800"  small @click="edit(item)">
+                    <v-btn color="success"  small @click="view(item)">
                         <v-icon color="#fff">
-                            mdi-pencil
+                            mdi-eye
                         </v-icon>
                     </v-btn>
-                    <v-btn color="#E53935" small @click="delete_dialog(item.id)">
+                    <v-btn color="#E53935" small @click="delete_dialog(item.id)" v-if="item.completed == '0' || role == 1">
                         <v-icon color="#fff">
                             mdi-delete
                         </v-icon>
@@ -203,69 +202,10 @@
                         
                         <v-date-picker
                         v-model="event.date"
+                        :min="today"
                         >
                         </v-date-picker>
-                        <!-- <div class="text-overline">*Indica la hora de inicio</div>
-                        <v-menu
-                            ref="menu_1"
-                            v-model="menu1"
-                            :close-on-content-click="false"
-                            :nudge-right="40"
-                            :return-value.sync="event.hour_ini"
-                            transition="scale-transition"
-                            offset-y
-                            max-width="290px"
-                            min-width="290px"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                                v-model="event.hour_ini"
-                                label="HH:MM:SS"
-                                prepend-icon="mdi-clock-time-four-outline"
-                                readonly
-                                v-bind="attrs"
-                                v-on="on"
-                            ></v-text-field>
-                            </template>
-                            <v-time-picker
-                                v-if="menu1"
-                                v-model="event.hour_ini"
-                                full-width
-                                use-seconds
-                                @click:second="$refs.menu_1.save(event.hour_ini)"
-                            ></v-time-picker>
-                        </v-menu> -->
-                        <!-- <div class="text-overline">*Indica la hora de finalizacion</div>
-                        <v-menu
-                            ref="menu_2"
-                            v-model="menu2"
-                            :close-on-content-click="false"
-                            :nudge-right="40"
-                            :return-value.sync="event.hour_end"
-                            transition="scale-transition"
-                            offset-y
-                            max-width="290px"
-                            min-width="290px"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                                v-model="event.hour_end"
-                                label="HH:MM:SS"
-                                use-seconds
-                                prepend-icon="mdi-clock-time-four-outline"
-                                readonly
-                                v-bind="attrs"
-                                v-on="on"
-                            ></v-text-field>
-                            </template>
-                            <v-time-picker
-                            v-if="menu2"
-                            v-model="event.hour_end"
-                            full-width
-                            use-seconds
-                            @click:second="$refs.menu_2.save(event.hour_end)"
-                            ></v-time-picker>
-                        </v-menu> -->
+                      
                     </v-col>
                     </v-row>
                     </v-form>
@@ -281,8 +221,7 @@
                     Cancelar
                 </v-btn>
                 <v-btn
-                    color="blue darken-1"
-                    text
+                    color="success"
                     :disabled="!valid"
                     @click="store()"
                 >
@@ -293,13 +232,13 @@
             </v-card>
         </v-dialog>
 
-        <!--Modal de editar evento -->
+        <!--Modal de ver evento -->
         <v-dialog v-model="dialogedit" persistent max-width="800px">
              <v-card>
                 <v-card-title>
                     <v-row>
                         <v-col cols="6 d-flex align-items-center">
-                            <span class="headline">Editar Evento</span>
+                            <span class="headline">Evento</span>
                         </v-col>
                         <v-col cols="6">
                             <v-select
@@ -309,6 +248,7 @@
                                 item-value="id"
                                 label="Tipo de evento*"
                                 :rules="selectRule"
+                                disabled
                                 absolute
                                 right
                             ></v-select>
@@ -332,17 +272,18 @@
                         :items="properties"
                         item-text="title"
                         item-value="id"
-                        label="Escoge una Propiedad"
+                        disabled
+                        label="Propiedades:"
                         ></v-select>
                         <v-select
                             v-model="clients_events"
                             :items="contacts"
-                            :rules="selectRule"
                             item-value="id"
-                            label="Seleccione los clientes:"
+                            label="Clientes invitados:"
                             attach
                             color="blue-grey lighten-2"
                             chips
+                            disabled
                             multiple
                             hint="min: 1 max: 3"
                         >
@@ -351,9 +292,7 @@
                             <v-chip
                                 v-bind="data.attrs"
                                 :input-value="data.selected"
-                                close
                                 @click="data.select"
-                                @click:close="remove(data.item, event.contacts)"
                             > {{ data.item.name }} </v-chip>
 
                             </template>
@@ -367,12 +306,12 @@
                         <v-select
                             v-model="agents_events"
                             :items="agents"
-                            :rules="selectRule"
                             item-value="id"
-                            label="Seleccione los agentes:"
+                            label="Agentes invitados:"
                             attach
                             color="blue-grey lighten-2"
                             chips
+                            disabled
                             multiple
                             hint="min: 1 max: 3"
                         >
@@ -381,9 +320,7 @@
                             <v-chip
                                 v-bind="data.attrs"
                                 :input-value="data.selected"
-                                close
                                 @click="data.select"
-                                @click:close="remove(data.item, event.agents)"
                             > {{ data.item.name }} </v-chip>
 
                             </template>
@@ -393,18 +330,20 @@
                                 <v-list-item-subtitle v-html="data.item.group_name"></v-list-item-subtitle>
                             </v-list-item-content>
                             </template>
-                        </v-select>    
+                        </v-select>
+                        
                          <v-select
                                 v-model="event.completed"
                                 :items="status"
                                 item-text="name"
                                 item-value="value"
                                 label="Estatus del evento"
-                                :rules="selectRule"
+                                :disabled="event.name == 'Completado con exito' ||  event.name == 'Fallido'"
+                                
                             ></v-select>
                               <v-textarea
                             v-model="event.report"
-                            :rules="inputRule"
+                            :disabled="event.completed === '0' || event.name == 'Completado con exito' || event.name == 'Fallido' "
                             label="Reporte de finalizacion*"
                             ></v-textarea>
                     </v-col>
@@ -413,74 +352,22 @@
                         sm="6"
                         class="py-0"
                     >
-                        <div class="text-overline">*Indica la Fecha del evento</div>
-                        
+                        <v-btn
+                            color="warning"
+                            @click="event.postponed = !event.postponed"
+                            class="my-2"
+                            v-if="event.completed == '0'"
+                            small
+                        >
+                            Posponer
+                        </v-btn>
                         <v-date-picker
-                        v-model="event.date"
-                        disabled
+                        v-model="event.start"
+                        :min="today"
+                        :disabled="!event.postponed"
                         >
                         </v-date-picker>
-                        <!-- <div class="text-overline">*Indica la hora de inicio</div>
-                        <v-menu
-                            ref="menu_1"
-                            v-model="menu1"
-                            :close-on-content-click="false"
-                            :nudge-right="40"
-                            :return-value.sync="event.hour_ini"
-                            transition="scale-transition"
-                            offset-y
-                            max-width="290px"
-                            min-width="290px"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                                v-model="event.hour_ini"
-                                label="HH:MM:SS"
-                                prepend-icon="mdi-clock-time-four-outline"
-                                readonly
-                                v-bind="attrs"
-                                v-on="on"
-                            ></v-text-field>
-                            </template>
-                            <v-time-picker
-                                v-if="menu1"
-                                v-model="event.hour_ini"
-                                full-width
-                                use-seconds
-                                @click:second="$refs.menu_1.save(event.hour_ini)"
-                            ></v-time-picker>
-                        </v-menu> -->
-                        <!-- <div class="text-overline">*Indica la hora de finalizacion</div>
-                        <v-menu
-                            ref="menu_2"
-                            v-model="menu2"
-                            :close-on-content-click="false"
-                            :nudge-right="40"
-                            :return-value.sync="event.hour_end"
-                            transition="scale-transition"
-                            offset-y
-                            max-width="290px"
-                            min-width="290px"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                                v-model="event.hour_end"
-                                label="HH:MM:SS"
-                                use-seconds
-                                prepend-icon="mdi-clock-time-four-outline"
-                                readonly
-                                v-bind="attrs"
-                                v-on="on"
-                            ></v-text-field>
-                            </template>
-                            <v-time-picker
-                            v-if="menu2"
-                            v-model="event.hour_end"
-                            full-width
-                            use-seconds
-                            @click:second="$refs.menu_2.save(event.hour_end)"
-                            ></v-time-picker>
-                        </v-menu> -->
+                       
                     </v-col>
                     </v-row>
                     </v-form>
@@ -493,15 +380,15 @@
                     text
                     @click="dialogedit = false; index() "
                 >
-                    Cancelar
+                    Cerrar
                 </v-btn>
                 <v-btn
-                    color="blue darken-1"
-                    text
-                    :disabled="!valid"
-                    @click="store()"
+                    color="success"
+                    :disabled="event.completed == '0' && !event.postponed "
+                    v-if="event.name != 'Completado con exito' && event.name != 'Fallido'"
+                    @click="update()"
                 >
-                    Guardar
+                    Actualizar
                 </v-btn>
 
                 </v-card-actions>
@@ -545,6 +432,7 @@
 export default {
     props:{ 
         types: Array,
+        role: Number,
     },
      data: () => ({
       datas:[],
@@ -564,7 +452,8 @@ export default {
       dialogdelete: false,
       id_delete: '',
       event:{},
-      inputRule: [
+      today: (new Date()).toISOString() ,  
+      inputRule: [  
           v => !!v || 'El campo es obligatorio',
       ],
       selectRule: [
@@ -580,7 +469,15 @@ export default {
             axios.get('/admin/api-events').then((response) =>{
             this.events= response.data.event_types;
             this.datas= response.data.events;
-          });
+             this.datas.forEach(element => {
+              if (element.completed =="1") {
+                element.name = "Completado con exito";
+              }else if(element.completed =="2"){
+                  element.name = "Fallido";
+              };
+              this.$emit('updateList', this.datas);
+            });
+          });    
         },
         getName(item, list){
           let x =[];
@@ -604,7 +501,7 @@ export default {
             this.dialog= true;
             this.event = {};
         },
-        edit(item){
+        view(item){
             this.event = item;
             var i = 0;
             var j = 0;
@@ -620,6 +517,7 @@ export default {
                 i++;
             });
             this.dialogedit= true;
+            this.event.postponed= false;
         },
          remove (item, selected) {
             const index = selected.indexOf(item.id)
@@ -633,23 +531,42 @@ export default {
             return index[0].description;
         },
         color(item){
-        if(item != "Cerrado"){
-          let index = this.types.filter(function (el) {return el.name == item});
-          console.log(index[0].color);
-          return index[0].color;
-        }
+            if (item == "Completado con exito") {
+                return "#4DCD12";
+            }else if(item == "Fallido"){
+                return "#F50000";
+            }else{
+                let index = this.types.filter(function (el) {return el.name == item});
+                return index[0].color;
+            }
       },
       store() {
         this.valid = false; 
         axios.post("/admin/api-events", this.event).then((response) => {
             this.index();
-            this.property = {};
+            this.event = {};
             this.dialog = false;
             this.$swal.fire('Evento registrado con exito');
         }).catch(error => {
           this.$swal.fire(
             'Error',
-            'Ocurrío un error al tratar de registrar la propiedad, intente nuevamente, recuerde que los precios y las dimensiones deben ser unicamente en numeros y máximo 2 decimales.',
+            'Ocurrío un error al tratar de registrar el evento, intente nuevamente, recuerde llenar todos los datos.',
+            'error'
+          )
+          this.valid = true; 
+        });
+      },
+      update() {
+        this.valid = false; 
+        axios.patch("/admin/api-events/" +  this.event.id, this.event).then((response) => {
+            this.index();
+            this.event = {};
+            this.dialogedit = false;
+            this.$swal.fire('Evento actualizado con exito');
+        }).catch(error => {
+          this.$swal.fire(
+            'Error',
+            'Solo puede posponer hasta 3 veces un evento, debe cerrarlo y crear el reporte',
             'error'
           )
           this.valid = true; 

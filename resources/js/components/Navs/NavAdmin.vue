@@ -44,19 +44,34 @@
                 :close-on-content-click = "false"
                 >
                 <template v-slot:activator="{ on, attrs }">
+                    <div
+                        v-if="countNotifications !== 0"
+                    >
                     <v-badge
                         color="red"
                         :content="countNotifications"
                         class="mx-4"
                         >
                     <a href="#"
-                    v-bind="attrs"
-                    v-on="on"
-                    :onclick="getNotifications()"
+                        v-bind="attrs"
+                        v-on="on"
                     >
                     <v-icon>mdi-bell</v-icon>
                     </a>
                     </v-badge>
+                    </div>
+                    <div
+                        v-else
+                    >
+                     <a href="#"
+                        v-bind="attrs"
+                        class="mx-4"
+                        v-on="on"
+                    >
+                    <v-icon>mdi-bell</v-icon>
+                    </a>
+                    </div>
+
                 </template>
 
                 <v-list min-height="5rem" max-height="70vh" width="300px">
@@ -74,7 +89,7 @@
                     </v-list-item>
                     </v-list-item-group>
                      
-                    <v-list-item  v-if="notifications.lenght === 0">
+                    <v-list-item  v-if="notifications.length=== 0">
                          <v-list-item-content >
                             <v-list-item-title>No tienes notificaciones aún</v-list-item-title>
                         </v-list-item-content>
@@ -271,7 +286,7 @@ export default {
         drawer: false,
         group: null,
         notifications: [],
-        countNotifications:0,
+        countNotifications: 0,
     }),
 
     watch: {
@@ -280,7 +295,9 @@ export default {
         // },
     },
     created() {
-        setInterval(this.getNotifications(),60000);
+        setInterval(function () {
+		    this.getNotifications();
+		 }.bind(this), 300000);
   },
     methods:{
         logout() {
@@ -292,12 +309,13 @@ export default {
             });
         },
         getNotifications(){
+            let count = 0;
             axios.get("/admin/notify").then((response) => {
                 this.notifications = response.data.notifications;
-                 this.countNotifications = this.notifications.forEach(element => {
-                     this.countNotifications++;
+                 this.notifications.forEach(element => {
+                     (element.status==1) ? count++ : ''; 
                  });
-                
+                 this.countNotifications =count;
             });
         }
     }
