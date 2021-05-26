@@ -1,26 +1,26 @@
 <template>
     <div class="text-center px-4 d-flex align-items-center flex-column">
         <v-card class="d-flex flex-column flex-lg-row my-2 px-1 justify-space-around" style="width:100%">
-           
+
             <v-col
                 cols="12"
                 md="12"
                 lg="8"
             >
-                <property-card :property="property"></property-card>            
+                <property-card :property="property"></property-card>
             </v-col>
             <v-col
                 cols="12"
                 md="12"
                 lg="4"
             >
-                       
+
                         <v-card
                             class="mx-auto px-4"
                             outlined
                         >
                             <v-list-item four-line>
-                            
+
                             <v-list-item-content >
                                 <div>
 
@@ -31,7 +31,7 @@
                                 Contactate con nosotros
                                 </v-list-item-title>
                                 <v-list-item-subtitle class="text-left mt-5">Si estás interesado en esta propiedad dejanos <br> tus datos para que pronto uno de nuestros <br> agentes se contacte contigo</v-list-item-subtitle>
-                                
+
                             </v-list-item-content>
 
                             </v-list-item>
@@ -72,30 +72,16 @@
                                 <v-btn color="danger" @click="user={}">Borrar</v-btn>
                                 <v-btn color="success" :disabled="!valid" @click="store()">Estoy interesado</v-btn>
                                 </v-form>
-                            
+
                             </v-card-actions>
                         </v-card>
-                        <v-row no-gutters class="my-3">
-
-                         <GmapMap
-                                :center="{lat:10, lng:10}"
-                                :zoom="7"
-                                map-type-id="terrain"
-                                style="width: 500px; height: 300px"
-                                >
-                                <GmapMarker
-                                    :key="index"
-                                    v-for="(m, index) in markers"
-                                    :position="m.position"
-                                    :clickable="true"
-                                    :draggable="true"
-                                    @click="center=m.position"
-                                />
-                        </GmapMap>
+                        <v-row no-gutters class="my-3" v-if="">
+                              <GmapMarker ref="myMarker"
+    :position="google && new google.maps.LatLng(1.38, 103.8)" />
                         </v-row>
             </v-col>
         </v-card>
-    <front-footer></front-footer>  
+    <front-footer></front-footer>
 
     </div>
 </template>
@@ -172,6 +158,6 @@ export default {
     computed: {
         google: gmapApi
     }
-    
+
 }
 </script>

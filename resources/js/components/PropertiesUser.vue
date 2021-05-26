@@ -24,7 +24,7 @@
           {{ types[item.type-1]['name'] }}
         </template>
         <template v-slot:item.action="{ item }">
-          <a v-if="rol==1" class="m-1 btn" style="background:#E53935;height:36px;min-width:64px;padding:4px 16px;" :href="'/admin/reports/property/'+item.id">
+          <a v-if="role==1" class="m-1 btn" style="background:#E53935;height:36px;min-width:64px;padding:4px 16px;" :href="'/admin/reports/property/'+item.id">
             <v-icon color="#fff">
                 mdi-file-pdf
             </v-icon>
@@ -34,7 +34,7 @@
                 mdi-pencil
             </v-icon>
           </v-btn>
-          <v-btn small  v-if="rol==1" color="#E53935" class="m-1" @click="delete_dialog(item.id)">
+          <v-btn small  v-if="role==1" color="#E53935" class="m-1" @click="delete_dialog(item.id)">
             <v-icon color="#fff">
                 mdi-delete
             </v-icon>
@@ -103,7 +103,7 @@
               <v-container grid-list-md>
                 <v-form ref="form" v-model="valid">
                   <v-layout wrap>
-                    <v-flex xs12 sm6 md4>
+                    <v-flex xs12 sm6 md4 style="align-self:center;">
                        <v-img :src="'../../'+imageprincipal" width="100%"></v-img>
                     </v-flex>
                     <v-flex xs12 sm6 md8>
@@ -119,12 +119,12 @@
                       <v-flex xs12>
                         <v-text-field label="Sub-división" :rules="inputRules" v-model="property.subdivision_1"></v-text-field>
                       </v-flex>
-                      <v-flex xs12>
-                        <v-text-field label="Sub-división"  v-model="property.subdivision_2"></v-text-field>
-                      </v-flex>
-                      <v-flex xs12>
-                        <v-checkbox class="pr-6" v-model="property.show_web" label="Mostrar en la Web" :value="1"></v-checkbox>
-                      </v-flex>
+                    </v-flex>
+                    <v-flex xs12 md4>
+                      <v-checkbox class="pr-6" v-model="property.show_web" label="Mostrar en la Web" :value="1"></v-checkbox>
+                    </v-flex>
+                    <v-flex xs12 md8>
+                      <v-text-field label="Sub-división"  v-model="property.subdivision_2"></v-text-field>
                     </v-flex>
                     <template>
                       <v-card>
@@ -136,11 +136,34 @@
                         <v-tabs-items v-model="tab">
                           <v-tab-item>
                             <v-card flat>
-                              <v-card-title class="headline">
-                                Información Básica
-                              </v-card-title>
-                              <v-card-text>
-                                <v-container>
+                              <v-container>
+                                <v-card-title class="headline">
+                                  Posición Geográfica
+                                </v-card-title>
+                                <v-card-text>
+                                  <v-layout wrap>
+                                    <v-flex xs6>
+                                      <v-text-field label="Longitud" v-model="property.longitude"></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs6>
+                                      <v-text-field label="Latitud" v-model="property.latitude"></v-text-field>
+                                    </v-flex>
+                                  </v-layout>
+                                  <v-row no-gutters class="my-3" v-show="property.longitude && property.latitude">
+                                    <GmapMap map-type-id="terrain" style="width:100%;" :center="{lat:10, lng:10}">
+                                      <GmapMarker :position="google && new google.maps.LatLng(property.latitude, property.longitude)"/>
+                                      />
+                                    </GmapMap>
+                                  </v-row>
+                                </v-card-text>
+                              </v-container>
+                            </v-card>
+                            <v-card flat>
+                              <v-container>
+                                <v-card-title class="headline">
+                                  Información Básica
+                                </v-card-title>
+                                <v-card-text>
                                   <v-form ref="form" v-model="valid">
                                     <v-layout wrap>
                                       <v-flex xs12>
@@ -195,8 +218,8 @@
                                       </v-flex>
                                     </v-layout>
                                   </v-form>
-                                </v-container>
-                              </v-card-text>
+                                </v-card-text>
+                              </v-container>
                             </v-card>
                             <v-divider></v-divider>
                             <v-card flat>
@@ -330,14 +353,20 @@
 </template>
 
 <script>
+  import {gmapApi} from 'vue2-google-maps';
   import jsPDF from 'jspdf';
   import 'jspdf-autotable'
   export default {
     props: {
-      rol: Number
+      role: Number
     },
     data() {
       return {
+        markers: [
+          {
+            position: 12
+          }
+        ],
         image: null,
         imageprincipal: '',
         property: {},
@@ -616,6 +645,7 @@
           },
         ];
       },
+      google: gmapApi,
     },
   }
 </script>
