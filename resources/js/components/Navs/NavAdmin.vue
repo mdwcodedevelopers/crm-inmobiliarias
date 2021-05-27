@@ -178,7 +178,7 @@
                         </v-list-item>
 
                         <v-list-item>
-                            <a href="/admin/properties-user/view-web">Vista Web</a>
+                            <a href="/properties">Vista Web</a>
                         </v-list-item>
                     </v-list-group>
 

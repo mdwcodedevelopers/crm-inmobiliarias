@@ -17,7 +17,7 @@
 
             <a class="mx-2 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#">Home</a>
             <a class="mx-2 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#we-are">Quienes somos</a>
-            <a class="mx-2 mr-5 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#properties">Propiedades</a>
+            <a class="mx-2 mr-5 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/properties">Propiedades</a>
             <a class="mx-2 mr-5 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#contacts">Contactos</a>
 
             <v-btn rounded color="success" href="/admin/login"  class="my-auto">Iniciar sesión</v-btn>

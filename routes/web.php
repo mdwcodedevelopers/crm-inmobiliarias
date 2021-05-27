@@ -17,13 +17,15 @@ Route::get('register/verify/{id}/{hash}', 'Auth\VerificationController@index')->
 Route::post('register/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 Auth::routes(['verify' => true]);
 Route::get('/','WelcomeController@index');
+Route::get('/politica-de-privacidad','WelcomeController@privacy');
+Route::get('/terminos-y-condiciones','WelcomeController@conditions');
 Route::post('/api-users-property', 'UsersController@propertyContact');
 Route::get('/api-user-info', 'UsersController@myUser');
+Route::get('/properties', 'PropertyController@web');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/property-images/{id}','ImageController@images');
     Route::put('/property-images-set/{id}','ImageController@setimage');
-    Route::get('/properties-user/view-web', 'PropertiesUserController@web');
 
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/property/{id}','PropertyController@property');

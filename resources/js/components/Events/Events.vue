@@ -29,7 +29,9 @@
     </v-tabs>
     <v-tabs-items class="w-100" v-model="tab">
         <v-tab-item>
-            <calendar :events="datas"></calendar>
+            <calendar 
+            :events="datas"
+             @editCalendar="view"></calendar>
         </v-tab-item>
         <v-tab-item>
             <v-data-table

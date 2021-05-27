@@ -101,19 +101,18 @@
               dark
             >
               <v-btn icon>
-                <v-icon>mdi-pencil</v-icon>
+                <v-icon @click="view(selectedEvent)">mdi-eye</v-icon>
               </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
+              
             </v-toolbar>
             <v-card-text>
-              <span v-html="selectedEvent.details"></span>
+              <div v-if="selectedEvent.report == null">
+                <span v-html="selectedEvent.report">Este evento ya ocurrió:</span>
+                
+                <span v-html="selectedEvent.report"></span>
+
+              </div>
             </v-card-text>
             <v-card-actions>
               <v-btn
@@ -121,7 +120,7 @@
                 color="secondary"
                 @click="selectedOpen = false"
               >
-                Cancel
+                Cerrar
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -150,6 +149,9 @@
       selectedOpen: false,
     }),
     methods: {
+      view(item){
+              this.$emit('editCalendar', item);
+      },
       viewDay ({ date }) {
         this.focus = date
         this.type = 'day'

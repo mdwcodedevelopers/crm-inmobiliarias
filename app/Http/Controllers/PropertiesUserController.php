@@ -24,13 +24,5 @@ class PropertiesUserController extends Controller
     return view('properties', ['rol' => $user->role_id] );
   }
 
-  public function web(Request $request)
-  {
-    $search = isset($request->search) ? $request->search : '';
-
-    $user = User::find(Auth::user()->id);
-
-    return view('properties-web', ['rol' => $user->role_id] );
-  }
-
+ 
 }

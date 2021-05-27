@@ -272,4 +272,18 @@ class PropertyController extends Controller
 
         return response()->json("success", 200);
     }
+
+    public function web(Request $request)
+    {
+      $search = isset($request->search) ? $request->search : '';
+  
+      if (!is_null(Auth::user())) {
+        $user = User::find(Auth::user()->id);
+        return view('properties-web', ['rol' => $user->role_id]);
+    } else {
+        return view('properties-web', ['rol' => 0]);
+    }
+
+    }
+  
 }
