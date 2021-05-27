@@ -465,6 +465,17 @@ export default {
     created() {
         this.getData();
         this.index();
+        this.$swal.fire({
+                header:'Ayuda rápida',
+                title: '<strong><u>Modulo de Eventos</u></strong>',
+                html:
+                    'Desde el Módulo de Eventos podrás crear eventos a los cuales podrás invitar a otros agentes '+
+                    'y a los clientes. Los tipos de eventos con sus detalles son creados por el superadministrador<br>' +
+                    '<strong>En este modulo solo verás los eventos que tu crees'+
+                    'si deseas revisar los eventos a los que fuiste invitado revisa el modulo de invitaciones a eventos</strong>' ,
+                showCloseButton: true,
+                focusConfirm: false,
+                })
     },
     methods:{
         index(){
@@ -474,8 +485,10 @@ export default {
              this.datas.forEach(element => {
               if (element.completed =="1") {
                 element.name = "Completado con exito";
+                element.color = "#4DCD12";
               }else if(element.completed =="2"){
                   element.name = "Fallido";
+                  element.color = "#F50000";
               };
               this.$emit('updateList', this.datas);
             });

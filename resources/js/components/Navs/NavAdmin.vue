@@ -180,6 +180,9 @@
                         <v-list-item>
                             <a href="/properties">Vista Web</a>
                         </v-list-item>
+                        <v-list-item>
+                            <a href="/admin/properties-favorites">Mis propiedades favoritas</a>
+                        </v-list-item>
                     </v-list-group>
 
                     <v-list-item v-if="role == 1 || role == 3 ">
@@ -188,12 +191,31 @@
                         </v-icon>
                         <a href="/admin/oportunities">Oportunidades</a>
                     </v-list-item>
-                    <v-list-item v-if="role == 1 || role == 3">
-                        <v-icon color="white" class="px-2">
-                            mdi-calendar
-                        </v-icon>
-                        <a href="/admin/events" >Mis Eventos</a>
-                    </v-list-item>
+
+
+                    <v-list-group no-action sub-group prepend-icon="" color="light-blue darken-3"
+                        class="text--white drop-custom-list">
+                        <template v-slot:activator>
+                            <v-list-item-content
+                                color="white"
+                                 >
+                                <v-list-item-title>
+                                    <v-icon color="white" class="px-2">
+                                        mdi-calendar
+                                    </v-icon>
+                                   Eventos
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </template>
+
+                        <v-list-item v-if="role == 1 || role == 3">
+                            <a href="/admin/events">Mis Eventos</a>
+                        </v-list-item>
+
+                        <v-list-item>
+                            <a href="/admin/events-1">Eventos invitados</a>
+                        </v-list-item>
+                    </v-list-group>
                     <!-- <v-list-item v-if="role == 1">
                         <v-icon color="white" class="px-2">
                             mdi-cog-transfer-outline

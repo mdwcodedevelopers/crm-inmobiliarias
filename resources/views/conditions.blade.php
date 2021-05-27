@@ -39,7 +39,7 @@
             <div class="container">
                 <h2 class="text-center  font-weight-bold pb-3 blue--text text--darken-4 my-5">Términos y Condiciones de Uso</h2>
                 <v-row no-gutters >
-                    <v-col cols="12" md="8">
+                    <v-col cols="12" md="8" class="pr-5" style="border-right: #c0c0c0 solid 1px;">
                         <h5 class="my-7">INFORMACIÓN RELEVANTE</h5>
                         <p class="my-5">Es requisito necesario para la adquisición de los productos que se ofrecen en este sitio, 
                             que lea y acepte los siguientes Términos y Condiciones que a continuación se redactan. 
@@ -114,7 +114,9 @@
                         <p class="my-5">Inmobiliaria Daniel Cánepa reserva los derechos de cambiar o de modificar estos términos sin previo aviso.</p>
 
                     </v-col>
-                    <v-col cols="12" md="4"></v-col>
+                    <v-col cols="12" md="4">
+                        <aside-terms></aside-terms>
+                    </v-col>
                 </v-row>
             </div>
         </div>

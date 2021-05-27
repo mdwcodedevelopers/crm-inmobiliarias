@@ -38,7 +38,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/contacts', "ContactController@view");
     Route::get('/contacts/tags', "TagController@view");
     Route::get('/config', "ConfigController@index");
-    Route::get('/events', "EventController@view");
+    Route::get('/events', "EventController@viewMyEvents");
+    Route::get('/events-1', "EventController@viewEvents");
     Route::resources([
     'api-properties' => PropertyController::class,
     'api-status'=>StatusController::class,
@@ -57,11 +58,13 @@ Route::group(['prefix' => 'admin'], function () {
     'api-group-tags'=>GroupTagController::class,
     'api-event-types'=>EventTypesController::class,
     'api-slider'=>SliderHomeController::class,
-    'api-fav-property'=>PropertyFavController::class,
+    // 'api-fav-property'=>PropertyFavController::class,
     'api-events'=>EventController::class]);
     Auth::routes();
 
     Route::get('/api-properties-user', 'PropertyController@properties');
+    Route::get('/api-properties-user/favorite/{id}', 'PropertyFavController@favorite');
+    Route::get('/properties-favorites', 'PropertyFavController@index');
     Route::get('/users', 'UserController@view');
     Route::get('/profile', 'UserController@profile');
     Route::get('/categories', 'CategorieController@categories')->name('categories');
@@ -78,6 +81,7 @@ Route::group(['prefix' => 'admin'], function () {
     // Route::get('/api-contacts','OportunityController@getContacts');
     Route::get('/api-notes/{id}','NoteController@show');
     Route::post('/api-notes','NoteController@store');
+    Route::post('/api-tags/unify','TagController@unify');
     Route::post('/api-oportunities/sendMail','OportunityController@sendEmail');
     Route::post('/api-oportunities/sendMail','OportunityController@sendEmail');
 

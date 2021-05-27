@@ -173,16 +173,17 @@ export default {
             return {
                 items:[],
                 environments:[],
+                favorite:'',
                 services:[],
                 situations:[],
                 antiquitys:[],
                 conditions:[],
                 locations:[],
-                favorite: false,
             }
         },
         created(){
                 this.index();
+                this.favorite = this.property.favorite == 1 ? true : false;
         },
         methods: {
             index() {
@@ -198,6 +199,12 @@ export default {
                 });
                 axios.get("/admin/api-service/" + this.property.id).then((response) => {
                     this.services = response.data.services;
+                });
+            },
+            favProperty(){
+                this.favorite = this.favorite == 1 ? 0 : 1;
+                axios.get("/admin/api-properties-user/favorite/" + this.property.id).then((response) => {
+                     this.favorite = (response.data == 1) ?  1 : 0;
                 });
             },
             helper_show(helper, id){

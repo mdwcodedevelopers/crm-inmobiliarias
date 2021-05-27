@@ -42,6 +42,19 @@ export default {
     }),
     created() {
         this.index();
+        this.$swal.fire({
+                header:'Ayuda rápida',
+                title: '<strong><u>Modulo de Oportunidades</u></strong>',
+                html:
+                    'El Modulo de oportunidades es un manejador de tiquets para los clientes '+
+                    'de la empresa, Aca puedes mantener un control de tus pendientes ademas de asignarles '+ 
+                    'Estatus o directamente cerrarlos.<br>'+
+                    'Desde aca puedes ver tambien los tiquets de oportunidades de otros agentes y puedes transferirles ' +
+                    'tus oportunidades<br>' + '<strong>Cuando un cliente se encuentra interesado en una propiedad que tu has publicado,'+
+                    'automaticamente se crea una oportunidad y se asigna a ti con un periodo de 3 dias de duracion, recuerda revisarlas.</strong>',
+                showCloseButton: true,
+                focusConfirm: false,
+                })
     },
     methods:{
         index(){

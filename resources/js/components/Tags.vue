@@ -465,6 +465,17 @@ export default {
             confirmButtonText: '¡Si, unificar!'
             }).then((result) => {
             if (result.isConfirmed) {
+                  axios.post("/admin/api-tags/unify", this.selected).then((response) => {
+                      console.log(response);
+                        this.index();
+                        //  this.$swal.fire("Se han unido las etiquetas en " + { response.datas. });
+                        result = true;
+
+                        }).catch(error => {
+                        result = false;
+                    });
+
+
                 this.$swal.fire(
                 '¡Eliminado!',
                 'La etiqueta fue eliminada.',

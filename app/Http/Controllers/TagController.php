@@ -22,6 +22,7 @@ class TagController extends Controller
     }
   
     public function index(){
+
         $groups = GroupTag::selectRaw('id, name')->get();
         $tags = Tag::selectRaw('id, name, group_tag_id')->get();
         foreach ($tags as $key => $value) {
@@ -37,6 +38,7 @@ class TagController extends Controller
         // $groups = GroupTag::selectRaw('group_tags.id As group_id, group_tags.name As groupName, tags.id, tags.name As tagName')
         // ->join('tags', 'tags.group_id', 'group_tags.id')->get();
         $rol=User::find(auth()->id())->role_id;
+        // dd(is_null(Contact_tag::whereTag_id(15)->whereContact_id(1)->get()));
 
         // foreach ($tags as $key => $value) {
         //     $value->count = Contact::whereTagId($value->id)->count();
@@ -92,4 +94,25 @@ class TagController extends Controller
         return response()->json("success", 200);
     }
 
+    public function unify(Request $request){
+        $tags = Tag::whereIn('id', $request)->get();
+        // $tags = Tag::whereIn('id', [1, 2, 3])->get();
+        $i = 1;
+        do{
+            $contacts = Contact_tag::whereTag_id($tags[$i]->id)->get();
+            foreach ($contacts as $key => $value) {
+                if (Contact_tag::whereTag_id($tags[0]->id)->whereContact_id($value->contact_id)->get()->count() == 0 ) {
+                   $contact = new Contact_tag();
+                   $contact->tag_id =  $tags[0]->id;
+                   $contact->contact_id =  $value->contact_id;
+                   $contact->save();
+                }
+            }
+            $tags[$i]->delete();
+            $i++;
+        }while(isset($tags[$i]));
+        return response()->json([
+            'tag' =>  $tags[0],
+    ]);
+    }
 }

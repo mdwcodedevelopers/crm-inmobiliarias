@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
     <div>
        
@@ -39,7 +40,7 @@
             <div class="container">
                 <h2 class="text-center  font-weight-bold pb-3 blue--text text--darken-4 my-5">Política de privacidad</h2>
                 <v-row no-gutters >
-                    <v-col cols="12" md="8">
+                    <v-col cols="12" md="8" class="pr-5" style="border-right: #c0c0c0 solid 1px;">
                         <h5 class="my-7">POLÍTICA DE PRIVACIDAD</h5>
                         <p class="my-5">El presente Política de Privacidad establece los términos en que Inmobiliaria Daniel Cánepa
                            usa y protege la información que es proporcionada por sus usuarios al momento de utilizar 
@@ -101,11 +102,14 @@
                             de la presente Política de Privacidad en cualquier momento.</p>
                         
                     </v-col>
-                    <v-col cols="12" md="4"></v-col>
+                    <v-col cols="12" md="4">
+                        <aside-terms></aside-terms>
+                    </v-col>
                 </v-row>
             </div>
         </div>
         <front-footer></front-footer>  
     </div>
 @endsection
+
 

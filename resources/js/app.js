@@ -37,8 +37,10 @@ Vue.use(VueGoogleMaps, {
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('aside-terms', require('./components/Front-aside.vue').default);
 Vue.component('sliders', require('./components/Sliders.vue').default);
 Vue.component('calendar', require('./components/Events/Calendar.vue').default);
+Vue.component('events-invite', require('./components/Events/Events-invite.vue').default);
 Vue.component('events', require('./components/Events/Events.vue').default);
 Vue.component('event-types', require('./components/Events/Events-types.vue').default);
 Vue.component('front-footer', require('./components/Front-footer.vue').default);
@@ -76,6 +78,7 @@ Vue.component('historical', require('./components/Historical.vue').default);
 Vue.component('services', require('./components/Services.vue').default);
 Vue.component('environments', require('./components/Environments.vue').default);
 Vue.component('properties-web', require('./components/Properties-web.vue').default);
+Vue.component('properties-fav', require('./components/Properties-fav.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

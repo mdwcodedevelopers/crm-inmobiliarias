@@ -13,7 +13,7 @@ use Auth;
 class EventController extends Controller
 {
        
-    public function view(Request $request){
+    public function viewMyEvents(Request $request){
         $user = User::find(Auth::user()->id);
         $events_types = Event_types::get();
         foreach ($events_types as $key => $value) {
@@ -22,6 +22,39 @@ class EventController extends Controller
         return view( 'events', [ 
             'role' => $user->role_id,  
             'events_types' => $events_types ] );
+    }
+   
+    public function viewEvents(Request $request){
+        $user = User::find(Auth::user()->id);
+        // $eventsRef = User_event::whereUser_id(Auth::user()->id)->get();
+        $events = Event::selectRaw('events.id, events.date AS start, events.completed, events.postponed,events.event_types_id, events.property_id, events.report, 
+        event_types.name, event_types.color AS color')
+        ->join('event_types', 'events.event_types_id', '=', 'event_types.id')
+        ->join('usersevents', 'events.id', '=', 'usersevents.event_id')
+        ->where('usersevents.user_id', $user->id)
+        ->where('usersevents.role_id', $user->role_id)->get();
+        // $events = Event::get();
+        // foreach ($events as $key => $value) {
+            //     $value->agents = User_event::whereEvent_id($value->id)->whereRole_id(3)->get();
+            //     $value->clients = User_event::whereEvent_id($value->id)->whereRole_id(2)->get();
+            // }
+            
+            $event_types = Event_types::get();
+            
+        foreach ($event_types as $key => $value) {
+            $value->count = 0;
+        }
+        // foreach ($event_types as $key => $value) {
+        //     $value->count = User_event::whereUser_id($user->id)->whereRole_id('role_id')
+        //     ->join('usersevents', 'events.id', '=', 'usersevents.event_id')
+        //     ->join('event_types', 'events.event_types_id', '=', 'event_types.id')
+        //     ->where('event_types.')->count();
+        // }
+        // dd($event_types);
+        return view( 'events-invite', [ 
+            'role' => $user->role_id,  
+            'events' => $events,  
+            'events_types' => $event_types ] );
     }
     /**
      * Display a listing of the resource.
