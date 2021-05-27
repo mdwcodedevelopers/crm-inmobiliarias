@@ -213,7 +213,7 @@
                         </v-list-item>
 
                         <v-list-item>
-                            <a href="/admin/events-1">Eventos invitados</a>
+                            <a href="/admin/events-1">invitaciones a Eventos</a>
                         </v-list-item>
                     </v-list-group>
                     <!-- <v-list-item v-if="role == 1">
