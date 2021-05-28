@@ -76,6 +76,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/api-contacts-search', 'ContactController@search');
     Route::patch('/property-user/{id}', 'PropertyController@update');
     Route::get('/properties-user', 'PropertiesUserController@index')->name('properties-user');
+    Route::get('/analytics', 'AnalyticsController@index')->name('analytics');
 
     Route::put('/api-oportunities/close/{id}', 'OportunityController@closeOportunity');
     // Route::get('/api-contacts','OportunityController@getContacts');
