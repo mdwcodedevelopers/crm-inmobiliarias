@@ -272,7 +272,7 @@
                     <v-flex xs12 sm4 md4>
                       <v-select v-model="status" :items="statuss" :rules="selectRules" item-value="id" label="Filtrar por Estatus:" attach color="blue-grey lighten-2" multiple style="max-height=42px">
                         <template v-slot:selection="data">
-                          <v-chip v-bind="data.attrs" :input-value="data.selected" close @click:close="agent = ''"> {{ data.item.name }}
+                          <v-chip v-bind="data.attrs" :input-value="data.selected" close @click:close="status = ''"> {{ data.item.name }}
                           </v-chip>
                         </template>
                         <template v-slot:item="data">

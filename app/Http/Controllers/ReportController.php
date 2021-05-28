@@ -40,13 +40,13 @@ class ReportController extends Controller
 
     $agents = User::where('role_id',3)->get();
 
-    $status = array(
-      [ "id" => "0", "name" => "En espera"],
-      [ "id" => "1", "name" => "Completado"],
-      [ "id" => "2", "name" => "Fallido"]
+    $statuss = array(
+      [ "id" => 0, "name" => "En espera"],
+      [ "id" => 1, "name" => "Completado"],
+      [ "id" => 2, "name" => "Fallido"]
     );
 
-    return response()->json(['tags' => $tags, 'agents' => $agents, 'status' => $status]);
+    return response()->json(['tags' => $tags, 'agents' => $agents, 'statuss' => $statuss]);
   }
 
   public function view()
@@ -105,7 +105,7 @@ class ReportController extends Controller
       $contacts = Oportunity::selectRaw("status.name AS status, oportunities.vigency AS vigency, users.name AS user, oportunities.name AS o_name, oportunities.description AS o_descr")->join('status','status.id','oportunities.status_id')->join('users','users.id','oportunities.user_id');
 
       if($init != '' && $end != '' && $init > $end):
-        $contacts = $contacts->whereDateBetween('created_at',[$init, $end]);
+        $contacts = $contacts->whereDateBetween('vigency',[$init, $end]);
       endif;
       if($agent != ''):
         $contacts = $contacts->where('oportunities.user_id', $agent);
@@ -117,7 +117,7 @@ class ReportController extends Controller
       $contacts = Event::selectRaw("users.name AS user, event_types.name AS event, properties.title AS property, CASE WHEN completed = 1 THEN 'Completado con Éxito' WHEN completed = 2 THEN 'Fallido' ELSE 'En Espera' END AS status")->join('users','users.id','events.user_id')->join('event_types','event_types.id','events.event_types_id')->join('properties','properties.id','events.property_id');
 
       if($status != ''):
-        $contacts = $contacts->where('events.event_types_id', $status);
+        $contacts = $contacts->where('events.completed', "$status");
       endif;
       $contacts = $contacts->get();
 
