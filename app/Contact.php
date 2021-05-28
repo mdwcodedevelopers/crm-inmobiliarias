@@ -19,6 +19,12 @@ class Contact extends Model
       return $this->belongsTo(User::class, "user_id");
   }
 
+  public function ContactStringTags()
+  {
+    $tags = Contact_tag::where('contact_id', $this->id)->pluck('id')->toArray();
+
+    return tagsToString($tags);
+  }
 
   public function getCreatedAtAttribute($value)
   {

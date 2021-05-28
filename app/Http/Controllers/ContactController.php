@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Exports\ContactsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\User;
 use App\Contact;
 use App\StatusOportunity;
@@ -211,6 +214,16 @@ class ContactController extends Controller
     ]);
     }
 
+    /**
+    * Botón Exportar Contactos.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function exportContacts(Request $request)
+    {
+        $export = new ContactsExport($request->agent == -1 ? 0 : $request->agent, $request->oportunity > 0 ? $request->oportunity : 0, $request->tag > 0 ? $request->tag : 0, $request->noTag > 0 ? $request->noTag : 0);
 
+        return Excel::download($export, "contactos.xlsx");
+    }
 }
 

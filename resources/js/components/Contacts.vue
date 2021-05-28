@@ -148,17 +148,13 @@
     <v-card color="blue darken-4">
       <v-card-title class="display-1 text-white titulo-custom">
         Agenda de contactos
-      <v-card-actions
-          style="position:absolute; right:0px"
-          >
-        <v-btn
-          @click="tableToExcel()"
-        >
-            <v-icon>
-                mdi-file-pdf
-            </v-icon>
-            Exportar a excel
-        </v-btn>
+      <v-card-actions style="position:absolute; right:0px">
+        <a class="m-1 btn bg-white text-dark mr-3" :href="'/admin/contacts/export?agent=' + filter.agent + '&oportunity=' + filter.oportunity + '&tag=' + filter.tag + '&noTag=' + filter.noTag">
+          <v-icon>
+              mdi-file-pdf
+          </v-icon>
+          Exportar a excel
+        </a>
         <v-btn color="success" dark fab class="mt-1" @click="create()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
@@ -469,17 +465,6 @@ export default {
                       name: element.name
                   });
                 });
-          });
-        },
-        tableToExcel() {
-          axios.post("/admin/api-contacts/export", this.contacts).then((response) => {
-              console.log(response);
-          }).catch(error => {
-            this.$swal.fire(
-              'Error',
-              'Ocurrío un error al tratar de descargar el archivo, por favor haga una busqueda primero.',
-              'error'
-            )
           });
         },
         filterSearch() {
