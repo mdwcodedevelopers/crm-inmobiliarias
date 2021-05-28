@@ -7,8 +7,13 @@ use Illuminate\Support\Collection;
 
 use App\Contact;
 use App\Contact_tag;
+use App\Event;
+use App\Event_types;
+use App\Oportunity;
 use App\Property;
 use App\Report;
+use App\Tag;
+use App\User;
 
 use Auth;
 use Datetime;
@@ -33,7 +38,15 @@ class ReportController extends Controller
     $tags = Tag::selectRaw('tags.id, tags.name, group_tags.name AS group_name')
         ->join('group_tags', 'tags.group_tag_id', '=', 'group_tags.id')->get();
 
-    return response()->json(['tags' => $tags]);
+    $agents = User::where('role_id',3)->get();
+
+    $status = array(
+      [ "id" => "0", "name" => "En espera"],
+      [ "id" => "1", "name" => "Completado"],
+      [ "id" => "2", "name" => "Fallido"]
+    );
+
+    return response()->json(['tags' => $tags, 'agents' => $agents, 'status' => $status]);
   }
 
   public function view()
@@ -63,6 +76,8 @@ class ReportController extends Controller
     $tags = isset($request->tag) ? explode(",",$request->tag) : '';
     $init = isset($request->date_init) ? $request->date_init : '';
     $end = isset($request->date_end) ? $request->date_end : '';
+    $agent = isset($request->agent) ? $request->agent : '';
+    $status = isset($request->status) ? $request->status : '';
 
     if( $request->report == 1 ):
       $contacts = Contact::join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id');
@@ -86,7 +101,26 @@ class ReportController extends Controller
       $contacts = User::selectRaw("users.name, COUNT(contacts.id) AS quantity")->join('contacts', 'contacts.user_id','users.id')->groupBy('users.name')->get();
 
     elseif( $request->report == 3 ):
-      $contacts = '';
+
+      $contacts = Oportunity::selectRaw("status.name AS status, oportunities.vigency AS vigency, users.name AS user, oportunities.name AS o_name, oportunities.description AS o_descr")->join('status','status.id','oportunities.status_id')->join('users','users.id','oportunities.user_id');
+
+      if($init != '' && $end != '' && $init > $end):
+        $contacts = $contacts->whereDateBetween('created_at',[$init, $end]);
+      endif;
+      if($agent != ''):
+        $contacts = $contacts->where('oportunities.user_id', $agent);
+      endif;
+      $contacts = $contacts->get();
+
+    elseif( $request->report == 4 ):
+
+      $contacts = Event::selectRaw("users.name AS user, event_types.name AS event, properties.title AS property, CASE WHEN completed = 1 THEN 'Completado con Éxito' WHEN completed = 2 THEN 'Fallido' ELSE 'En Espera' END AS status")->join('users','users.id','events.user_id')->join('event_types','event_types.id','events.event_types_id')->join('properties','properties.id','events.property_id');
+
+      if($status != ''):
+        $contacts = $contacts->where('events.event_types_id', $status);
+      endif;
+      $contacts = $contacts->get();
+
     endif;
 
     return response()->json(['contacts' => $contacts]);

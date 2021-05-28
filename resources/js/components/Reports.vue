@@ -58,8 +58,8 @@
                 </v-icon>
               </v-flex>
               <v-flex xs11>
-                <h6><a href="#" v-on:click="dialog = 3">MOVIMIENTO DE PROPIEDADES</a></h6>
-                <small>Cómo tus prpiedades disponibles están siendo involucradas en los diferentes tipos de eventos.</small>
+                <h6><a href="#" v-on:click="dialog = 3">OPORTUNIDADES POR AGENTES</a></h6>
+                <small>En este reporte podrás ver un listado de las oportunidades asociadas a cada agente.</small>
               </v-flex>
             </v-layout>
           </v-container>
@@ -78,8 +78,8 @@
                 </v-icon>
               </v-flex>
               <v-flex xs11>
-                <h6><a href="#" v-on:click="dialog = 4">PATRONES DE BÚSQUEDA</a></h6>
-                <small>Analiza el comportamiento de tus contactos basados en sus búsquedas.</small>
+                <h6><a href="#" v-on:click="dialog = 4">EVENTOS POR STATUS</a></h6>
+                <small>En este reporte podrás ver un listado de los eventos asociados a un estatus.</small>
               </v-flex>
             </v-layout>
           </v-container>
@@ -203,43 +203,93 @@
         </v-dialog>
       </v-layout>
     </template>
+    <!-- #3 REPORTE ------------->
     <template>
       <v-layout row justify-center>
-        <v-dialog v-model="dialog"  v-if="dialog === 3" persistent max-width="600px">
+        <v-dialog v-model="dialog"  v-if="dialog === 3" persistent max-width="100%">
           <v-card class="my-4">
             <v-card-title>
-              <span class="headline">Crear propiedad3</span>
+              <span class="headline">OPORTUNIDADES POR AGENTE</span>
             </v-card-title>
             <v-card-text>
               <v-container grid-list-md>
-
+                <v-form ref="form" v-model="valid">
+                  <v-layout wrap>
+                    <v-flex xs6 sm4 md4>
+                      <v-menu v-model="dateShowOne" transition="scale-transition" offset-y min-width="auto">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field v-model="dateOne" :rules="inputRules" label="Fecha desde" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
+                        </template>
+                        <v-date-picker v-model="dateOne" @input="dateShowOne = false"></v-date-picker>
+                      </v-menu>
+                    </v-flex>
+                    <v-flex xs6 sm4 md4>
+                      <v-menu v-model="dateShowTwo" transition="scale-transition" offset-y min-width="auto">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field v-model="dateTwo" :rules="inputRules" label="Fecha hasta" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
+                        </template>
+                        <v-date-picker v-model="dateTwo" @input="dateShowTwo = false"></v-date-picker>
+                      </v-menu>
+                    </v-flex>
+                    <v-flex xs12 sm4 md4>
+                      <v-select v-model="agent" :items="agents" :rules="selectRules" item-value="id" label="Filtrar por Agentes:" attach color="blue-grey lighten-2" multiple style="max-height=42px">
+                        <template v-slot:selection="data">
+                          <v-chip v-bind="data.attrs" :input-value="data.selected" close @click:close="agent = ''"> {{ data.item.name }}
+                          </v-chip>
+                        </template>
+                        <template v-slot:item="data">
+                          <v-list-item-content>
+                            <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                          </v-list-item-content>
+                        </template>
+                      </v-select>
+                    </v-flex>
+                  </v-layout>
+                </v-form>
               </v-container>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="danger" @click="dialog = 0">Cancelar</v-btn>
-              <v-btn color="success">Generar</v-btn>
+              <v-btn color="success" @click="getData()">Generar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </v-layout>
     </template>
+    <!-- #4 REPORTE ------------->
     <template>
       <v-layout row justify-center>
         <v-dialog v-model="dialog"  v-if="dialog === 4" persistent max-width="600px">
           <v-card class="my-4">
             <v-card-title>
-              <span class="headline">Crear propiedad4</span>
+              <span class="headline">Eventos por Estatus</span>
             </v-card-title>
             <v-card-text>
               <v-container grid-list-md>
-
+                <v-form ref="form" v-model="valid">
+                  <v-layout wrap>
+                    <v-flex xs12 sm4 md4>
+                      <v-select v-model="status" :items="statuss" :rules="selectRules" item-value="id" label="Filtrar por Estatus:" attach color="blue-grey lighten-2" multiple style="max-height=42px">
+                        <template v-slot:selection="data">
+                          <v-chip v-bind="data.attrs" :input-value="data.selected" close @click:close="agent = ''"> {{ data.item.name }}
+                          </v-chip>
+                        </template>
+                        <template v-slot:item="data">
+                          <v-list-item-content>
+                            <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                          </v-list-item-content>
+                        </template>
+                      </v-select>
+                    </v-flex>
+                  </v-layout>
+                </v-form>
               </v-container>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="danger" @click="dialog = 0">Cancelar</v-btn>
-              <v-btn color="success">Generar</v-btn>
+              <v-btn color="success" @click="getData()">Generar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -259,6 +309,10 @@ export default {
     return {
       contacts: [],
       tags: [],
+      agents: [],
+      agent: '',
+      statuss: [],
+      status: '',
       search: '',
       dialog: 0,
       valid: false,
@@ -280,13 +334,21 @@ export default {
   },
   methods: {
     getData() {
-      axios.get("/admin/reports/contacts-pdf" + "?report=" + this.dialog + "&tag=" + this.filter.tag + "&date_init=" + this.dateShowOne + "&date_end=" + this.dateShowTwo).then((response) => {
+      axios.get("/admin/reports/contacts-pdf" + "?report=" + this.dialog + "&tag=" + this.filter.tag + "&date_init=" + this.dateShowOne + "&date_end=" + this.dateShowTwo + "&agent=" + this.agent + "&status=" + this.status).then((response) => {
         this.contacts = response.data.contacts;
       });
-      if( this.dialog == 1 )
+      if( this.dialog == 1 ){
         this.contactsByTag();
-      else if( this.dialog == 2 )
+      }
+      else if( this.dialog == 2 ){
         this.contactsByUser();
+      }
+      else if( this.dialog == 3 ){
+        this.oportunitiesByUser();
+      }
+      else if( this.dialog == 4 ){
+        this.eventsByStatus();
+      }
     },
     closeDialog() {
       this.dialog = 0;
@@ -329,10 +391,45 @@ export default {
       });
       doc_2.save('reporte.pdf');
     },
+    oportunitiesByUser() {
+      let contactsbyuser = [
+      {   title: "Propietario",   dataKey: "user" },
+      {   title: "Oportunidad",   dataKey: "o_name" },
+      {   title: "Descripción",   dataKey: "o_descr" },
+      {   title: "Estatus",   dataKey: "status" },
+      {   title: "Vigencia",   dataKey: "vigency" }];
+
+      let doc_3 = new jsPDF('p', 'pt');
+      doc_3.text('Lista de Oportunidades por Agente', 40, 40);
+      doc_3.autoTable(contactsbyuser, this.contacts, {
+        margin: {
+          top: 60
+        },
+      });
+      doc_3.save('reporte.pdf');
+    },
+    eventsByStatus() {
+      let contactsbyuser = [
+      {   title: "Propietario",   dataKey: "user" },
+      {   title: "Evento",   dataKey: "event" },
+      {   title: "Propiedad",   dataKey: "property" },
+      {   title: "Estatus",   dataKey: "status" }];
+
+      let doc_4 = new jsPDF('p', 'pt');
+      doc_4.text('Lista de Eventos por Estatus', 40, 40);
+      doc_4.autoTable(contactsbyuser, this.contacts, {
+        margin: {
+          top: 60
+        },
+      });
+      doc_4.save('reporte.pdf');
+    }
   },
   created() {
     axios.get("/admin/reports/created").then((response) => {
       this.tags = response.data.tags;
+      this.agents = response.data.agents;
+      this.statuss = response.data.statuss;
     });
   },
 }
