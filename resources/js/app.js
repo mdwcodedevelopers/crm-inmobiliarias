@@ -37,6 +37,7 @@ Vue.use(VueGoogleMaps, {
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('analytics', require('./components/Analytics.vue').default);
 Vue.component('aside-terms', require('./components/Front-aside.vue').default);
 Vue.component('sliders', require('./components/Sliders.vue').default);
 Vue.component('calendar', require('./components/Events/Calendar.vue').default);

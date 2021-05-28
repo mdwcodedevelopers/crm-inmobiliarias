@@ -241,11 +241,11 @@
                         <a href="/admin/profile">Mi perfil</a>
                     </v-list-item>
 
-                    <v-list-item v-if="role == 1" disabled>
+                    <v-list-item v-if="role == 1" >
                         <v-icon color="white" class="px-2">
                             mdi-chart-bar
                         </v-icon>
-                        <a href="/admin/home" >Estaditicas</a>
+                        <a href="/admin/analytics" >Estaditicas</a>
                     </v-list-item>
                     <v-list-item v-if="role == 1">
                         <v-icon color="white" class="px-2">

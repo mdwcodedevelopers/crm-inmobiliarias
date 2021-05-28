@@ -75,10 +75,10 @@
 
                             </v-card-actions>
                         </v-card>
-                        <v-row no-gutters class="my-3" v-if="">
+                        <!-- <v-row no-gutters class="my-3" v-if="">
                               <GmapMarker ref="myMarker"
     :position="google && new google.maps.LatLng(1.38, 103.8)" />
-                        </v-row>
+                        </v-row> -->
             </v-col>
         </v-card>
     <front-footer></front-footer>

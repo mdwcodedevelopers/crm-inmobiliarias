@@ -16,8 +16,8 @@ class ContactSeeder extends Seeder
         Contact::Create([
             'name' => 'Contacto de prueba',
             'email' => 'prueba@mail.com',
-            'phone_1' => '11 22 33 45',
-            'phone_2' => '12 22 33 45',
+            'phone_1' => '11223345',
+            'phone_2' => '12223345',
             'direction' => 'Buenos aires',
             'province' => 'provincia de buenos aires',
 
