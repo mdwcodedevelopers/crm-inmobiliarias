@@ -22,7 +22,7 @@ import colors from 'vuetify/lib/util/colors'
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyBI7h0o6C37iAsKjAir-G-sBsoWkPSJiN4',
-    libraries: 'places', 
+    libraries: 'places',
     v: '3.26',
   },
 })
@@ -80,6 +80,7 @@ Vue.component('services', require('./components/Services.vue').default);
 Vue.component('environments', require('./components/Environments.vue').default);
 Vue.component('properties-web', require('./components/Properties-web.vue').default);
 Vue.component('properties-fav', require('./components/Properties-fav.vue').default);
+Vue.component('contacts-import', require('./components/Contacts-import.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

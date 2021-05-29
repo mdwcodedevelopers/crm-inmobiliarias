@@ -12,7 +12,7 @@
                 :close-on-content-click = "false"
                 >
                 <template v-slot:activator="{ on, attrs }">
-                    
+
                         <a href="#"
                         v-bind="attrs"
                         v-on="on"
@@ -80,15 +80,15 @@
                         color="primary"
                     >
                     <v-list-item v-for="(notify, index) in notifications" :key="index">
-                        
+
                         <v-list-item-content >
                             <v-list-item-title>{{notify.type}}</v-list-item-title>
                             <v-list-item-subtitle style="white-space: inherit;">{{notify.information}}</v-list-item-subtitle>
                         </v-list-item-content>
-                        
+
                     </v-list-item>
                     </v-list-item-group>
-                     
+
                     <v-list-item  v-if="notifications.length=== 0">
                          <v-list-item-content >
                             <v-list-item-title>No tienes notificaciones aún</v-list-item-title>
@@ -153,8 +153,8 @@
                             <a href="/admin/contacts/tags">Etiquetas</a>
                         </v-list-item>
 
-                        <v-list-item disabled>
-                            <a href="/admin/contacts">Migraciones</a>
+                        <v-list-item>
+                            <a href="/admin/contacts/importview">Importar Excel</a>
                         </v-list-item>
                     </v-list-group>
 
@@ -336,7 +336,7 @@ export default {
             axios.get("/admin/notify").then((response) => {
                 this.notifications = response.data.notifications;
                  this.notifications.forEach(element => {
-                     (element.status==1) ? count++ : ''; 
+                     (element.status==1) ? count++ : '';
                  });
                  this.countNotifications =count;
             });
