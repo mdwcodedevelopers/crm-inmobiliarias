@@ -24,8 +24,8 @@ class CreateEventTypesTable extends Migration
             $table->boolean('notify_after_agent')->default(0); //despues copia para agente
             $table->boolean('notify_before')->default(0); //antes
             $table->boolean('notify_before_agent')->default(0); //antes copia para agente
-            $table->text('message_after');
-            $table->text('message_before');
+            $table->text('message_after')->nullable();
+            $table->text('message_before')->nullable();
             $table->timestamps();
         });
     }

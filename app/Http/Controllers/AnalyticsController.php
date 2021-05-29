@@ -15,9 +15,18 @@ class AnalyticsController extends Controller
     }
 
     public function index(){
-        $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
-        dd($analyticsData);
+        // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+        // dd($analyticsData);
         return view('analytics');
     }
+
+    // public function prueba(){
+    //     return view('emails.confirmation',
+    // [
+    //     'name' => 'gabo',
+    //     'confirmation_code' => 1245124,
+    //     'id' =>2
+    // ]);
+    // }
 
 }

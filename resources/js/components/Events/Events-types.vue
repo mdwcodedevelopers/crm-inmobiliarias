@@ -28,8 +28,8 @@
                                             <v-checkbox class="m-0 p-0" light label="Notificar a los agentes" v-model="event.notify_before_agent">
                                             </v-checkbox>
                                         </div>
-                                        <v-textarea  class="my-1" label="Mensaje de notificación  de agentes*" :rules="inputRule" v-model="event.message_before" required></v-textarea>
-                                        <v-subheader class="black--text">Notificaciones despues del evento</v-subheader>
+                                        <!-- <v-textarea  class="my-1" label="Mensaje de notificación  de agentes*" :rules="inputRule" v-model="event.message_before" required></v-textarea> -->
+                                        <!-- <v-subheader class="black--text">Notificaciones despues del evento</v-subheader>
                                         <v-divider></v-divider>
                                         <div class="d-flex ">
                                             <v-checkbox class="m-0 p-0" light label="Notificar a los clientes" v-model="event.notify_after">
@@ -37,7 +37,7 @@
                                             <v-checkbox class="m-0 p-0" light label="Notificar a los agentes"  v-model="event.notify_after_agent">
                                             </v-checkbox>
                                         </div>
-                                        <v-textarea  class="my-1" label="Mensaje de notificación  de agentes*" :rules="inputRule" v-model="event.message_after" required></v-textarea>
+                                        <v-textarea  class="my-1" label="Mensaje de notificación  de agentes*" :rules="inputRule" v-model="event.message_after" required></v-textarea> -->
                                     </v-flex>
                                     <v-flex xs12 md6 class="px-3">
                                         <v-textarea  class="my-1" label="Descripcion*" :rules="inputRule" v-model="event.description" required></v-textarea>
@@ -144,19 +144,19 @@
                                                 <v-checkbox class="m-0 p-0" light label="Notificar a los agentes" v-model="event.notify_before_agent">
                                                 </v-checkbox>
                                             </div>
-                                            <v-textarea  class="my-1" label="Mensaje de notificación*" :rules="inputRule" v-model="event.message_before" required></v-textarea>
-                                            <v-subheader class="black--text">Notificaciones despues del evento</v-subheader>
+                                            <!-- <v-textarea  class="my-1" label="Mensaje de notificación*" :rules="inputRule" v-model="event.message_before" required></v-textarea> -->
+                                            <!-- <v-subheader class="black--text">Notificaciones despues del evento</v-subheader>
                                             <v-divider></v-divider>
                                             <div class="d-flex ">
                                                 <v-checkbox class="m-0 p-0" light label="Notificar a los clientes"  v-model="event.notify_after">
                                                 </v-checkbox>
                                                 <v-checkbox class="m-0 p-0" light label="Notificar a los agentes" v-model="event.notify_after_agent">
                                                 </v-checkbox>
-                                            </div>
-                                            <v-textarea  class="my-1" label="Mensaje de notificación*" :rules="inputRule" v-model="event.message_after" required></v-textarea>
+                                            </div> -->
+                                            <!-- <v-textarea  class="my-1" label="Mensaje de notificación*" :rules="inputRule" v-model="event.message_after" required></v-textarea> -->
                                         </v-flex>
                                         <v-flex xs12 md6 class="px-3">
-                                            <v-textarea  class="my-1" label="Descripcion*" :rules="inputRule" v-model="event.description" required></v-textarea>
+                                            <!-- <v-textarea  class="my-1" label="Descripcion*" :rules="inputRule" v-model="event.description" required></v-textarea> -->
                                             <p>Color del evento</p>
                                             <v-color-picker v-model="color" mode="hexa" mode.sync="hex"></v-color-picker>
                                         </v-flex>

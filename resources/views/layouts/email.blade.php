@@ -10,7 +10,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
       {{-- <script src="{{ secure_asset('js/app.js') }}" defer></script> --}}
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,18 +17,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
          {{-- <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet"> --}}
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
 
     <header class="w-100 blue">
         <div class="logo p-4 d-flex justify-content-between align-items-center">
-            <img src="{{asset('images/logo-footer-canepa.png')}}" alt="Logo canepa" width="150">
+            <img src="{{asset('images/logo-footer-canepa.png')}}" alt="Logo canepa" width="200">
             <h3><a href="{{  url('/')}}" class="text-white">Enlace al Sitio Web</a></h3>
         </div>
     </header>
-    <div class="container py-5">
+    <div class="container p-4">
         @yield('content')
 
     </div>
@@ -38,21 +35,21 @@
     padless
     style="width:100vw"
   >
-    <v-card
+    <div
       flat
       tile
-      class="blue darken-4 white--text text-center"
+      class="blue text-center"
       width="100%"
     >
 
-      <v-card-text class="white--text pt-0">
-          <v-row class="p-5 justify-content-center flex-column flex-sm-column  flex-md-row" >
+      <div class="text-white pt-0">
+          <v-row class="d-flex flex-column  p-5 justify-content-center " >
               <v-col
                 cols=12
                 sd=12
                 md=4
                >
-                    <v-img src="/images/logo-footer-canepa.png"  contain width="22rem" ></v-img>
+                    <img src="/images/logo-footer-canepa.png"  width="350px" >
                     <p class="text-left mt-5">
                         Contamos con más de 30 años
                         de experiencia en negocios inmobiliarios.
@@ -78,9 +75,9 @@
                 >
                     <ul class="list text-left ">
                         <li class=" font-weight-bold pb-3">Redes Cánepa</li>
-                        <li><a href="https://www.facebook.com/inmobiliariadanielcanepa/"><v-icon class="mr-2">mdi-facebook</v-icon>Facebook</a></li>
-                        <li><a href="https://www.instagram.com/inmobiliariadanielcanepa"><v-icon class="mr-2">mdi-instagram</v-icon>Instagram</a></li>
-                        <li><a href="#"><v-icon class="mr-2">mdi-shopping-outline</v-icon>Mercado Libre</a></li>
+                        <li><a href="https://www.facebook.com/inmobiliariadanielcanepa/">Facebook</a></li>
+                        <li><a href="https://www.instagram.com/inmobiliariadanielcanepa">Instagram</a></li>
+                        <li><a href="#">Mercado Libre</a></li>
                     </ul>
                 </v-col>
                 <v-col
@@ -96,20 +93,57 @@
               </v-col>
           </v-row>
       
-      </v-card-text>
+      </div>
 
         <v-divider></v-divider>
-      <v-card-text class="white--text">
+      <div class="text-white">
         <strong>Daniel Cánepa propiedades</strong>
-      </v-card-text>
-    </v-card>
+      </div>
+    <div>
   </v-footer>
     
     
-    </div>
 
 </body>
 <style>
+    @media only screen and (max-width: 600px) {
+    .flex-column{
+        flex-direction: column 
+    }
+
+    }
+    .font-weight-bold{
+        font-weight: bold;
+    }
+    .w-100{
+        width: 100vw;
+    }
+    .p-4{
+        padding: 4rem;
+    }
+    .p-5{
+        padding: 5rem;
+    }
+    .py-5{
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+    .px-3{
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+    .text-center{
+        text-align: center;
+    }
+    .d-flex{
+        display: flex;
+    }
+    .justify-content-center{
+        justify-content: center;
+    }
+    .justify-content-between{
+        justify-content: space-between;
+    }
     .text-white{
         color: #fff;
     }
@@ -124,7 +158,9 @@
         text-decoration: none;
         color:#fff;
     }
-
+    body{
+        margin: 0px;
+    }
     *{
         font-family: 'Heebo', sans-serif !important;
     }

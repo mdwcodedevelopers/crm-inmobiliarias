@@ -78,7 +78,7 @@
       15 => "Evento creado",
       16 => "Invitacion a evento:",
       17 => "Evento eliminado",
-      18=> "Evento pospuesto",
+      18 => "Evento pospuesto",
       19 => "Un Contacto está interesado en tu propiedad:",
     );
 
