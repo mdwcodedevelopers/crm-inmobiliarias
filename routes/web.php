@@ -105,4 +105,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('services', 'ServiceController');
 
     Route::get('/notify', 'ReportController@NotifyUser');
+    Route::put('/notify/{id}', 'ReportController@NotifyRead');
 });

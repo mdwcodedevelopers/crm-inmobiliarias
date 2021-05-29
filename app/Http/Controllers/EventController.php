@@ -43,7 +43,7 @@ class EventController extends Controller
             $event_types = Event_types::get();
             
         foreach ($event_types as $key => $value) {
-            $value->count = 0;
+            $value->count = $events->count();
         }
         // foreach ($event_types as $key => $value) {
         //     $value->count = User_event::whereUser_id($user->id)->whereRole_id('role_id')
@@ -201,10 +201,46 @@ class EventController extends Controller
                 $event->date = $request->start;
                 $event->postponed = (string)(((int)$event->postponed) +1);
                 saveReport(18, 3, 1, "El agente ". Auth::user()->name ." ha pospuesto un evento para el " . $request->start, $request->property_id);
+                $event->save();
+                
+                $event_type = Event_types::find($request->event_types_id)->name;
+                $agent_name =  Auth::user()->name;
+
+                foreach ($request->clients as $key => $value) {
+                    $contacto = Contact::find($value["user_id"]);
+                    (!is_null($contacto->user_id)) ? saveNotification($contacto->user_id, 18,"El agente ". $agent_name ." ha cambiado la fecha del evento para " . $request->date) : '';
+                   
+                    // Enviar correo
+                    $data['contact_name']=$contacto->name;
+                    $data['type_event']=$event_type;
+                    $data['date']= $request->start;
+                    $data['agent_name']= $agent_name;
+                                
+                    Mail::send('emails.event_postponed', $data, function($message) use ($contacto, $event_type) {
+                        $message->to($contacto->email)->subject('El evento de ' . $event_type . ' se ha pospuesto');
+                    });
+                    
+                }
+                foreach ($request->agents as $key => $value) {
+               
+                    $contacto = User::find($value["user_id"]);
+                    saveNotification($contacto->id, 18,"El agente ". $agent_name ." ha cambiado la fecha del evento para " . $request->date);
+                    // saveNotification($contacto->id, 18,"El agente ".$agent_name ." ha cambiado la fecha del evento para " . $request->date);
+                    
+                    // Enviar correo
+                    $data['contact_name']=$contacto->name;
+                    $data['type_event']=$event_type;
+                    $data['date']= $request->start;
+                    $data['agent_name']= $agent_name;
+                                
+                    Mail::send('emails.event_postponed', $data, function($message) use ($contacto, $event_type) {
+                        $message->to($contacto->email)->subject('El evento de ' . $event_type . ' se ha pospuesto');
+                    });
+                }
+            
             }
         }
         
-        $event->save();
 
         return response()->json("success", 200);
     }

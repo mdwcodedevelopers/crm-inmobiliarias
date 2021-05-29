@@ -58,7 +58,7 @@ class ReportController extends Controller
 
   public function historical(Request $request)
   {
-    $reports = Report::with('User')->get();
+    $reports = Report::where('table', '!=', 'Notificaciones')->with('User')->get();
 
     foreach ($reports as $key => $report):
       $date1 = new DateTime( date('Y-m-d H:i', strtotime($report->created_at)) );
@@ -141,6 +141,15 @@ class ReportController extends Controller
     // $notifications = Report::where('user_id',Auth::user()->id)->orderByRaw('updated_at - created_at DESC')->get();
     // $notifications->count =Report::where('user_id',Auth::user()->id)->where(function($query) {$query->where('table','Preguntas')->orWhere('table','Eventos');})->where->get()
     return response()->json(['notifications' => $notifications]);
+  }
+
+  public function NotifyRead($id){
+    $notify = Report::find($id);
+    $notify->status = "0";
+    $notify->save();
+
+    return response()->json("success", 200);
+
   }
 
 }

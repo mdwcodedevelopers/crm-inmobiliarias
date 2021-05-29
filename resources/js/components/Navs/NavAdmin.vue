@@ -79,9 +79,9 @@
                      <v-list-item-group
                         color="primary"
                     >
-                    <v-list-item v-for="(notify, index) in notifications" :key="index">
+                    <v-list-item v-for="(notify, index) in notifications" :class="{'blue lighten-3': notify.status == '1' }" :key="index" @click="notifyRead(notify)">
 
-                        <v-list-item-content >
+                        <v-list-item-content  >
                             <v-list-item-title>{{notify.type}}</v-list-item-title>
                             <v-list-item-subtitle style="white-space: inherit;">{{notify.information}}</v-list-item-subtitle>
                         </v-list-item-content>
@@ -340,6 +340,12 @@ export default {
                  });
                  this.countNotifications =count;
             });
+        },
+        notifyRead(item){
+            axios.put("/admin/notify/"+ item.id).then((response) => {
+                    item.status="0",
+                    this.countNotifications--
+                });
         }
     }
 

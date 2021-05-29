@@ -557,6 +557,10 @@ export default {
       },
       store() {
         this.valid = false; 
+        this.$swal.fire(
+                        'Haciendo la solicitud espere',
+                        'Esto puede demorar un minuto',
+                        'warning'); 
         axios.post("/admin/api-events", this.event).then((response) => {
             this.index();
             this.event = {};
@@ -572,7 +576,11 @@ export default {
         });
       },
       update() {
-        this.valid = false; 
+        this.valid = false;
+        this.$swal.fire(
+                        'Haciendo la solicitud espere',
+                        'Esto puede demorar un minuto',
+                        'warning'); 
         axios.patch("/admin/api-events/" +  this.event.id, this.event).then((response) => {
             this.index();
             this.event = {};
