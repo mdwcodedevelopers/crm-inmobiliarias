@@ -6,7 +6,7 @@
             <nav-admin title="Mi perfil" :role="{{$user->role_id}}" />
         </div>
         <div class="container">
-            <profile :profile={{$user}} />
+            <profile :profile="{{$user}}" />
         </div>
 
     </div>

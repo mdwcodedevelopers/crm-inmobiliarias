@@ -100,17 +100,21 @@
               :color="selectedEvent.color"
               dark
             >
-              <v-btn icon>
+              <v-btn icon v-if="view">
                 <v-icon @click="view(selectedEvent)">mdi-eye</v-icon>
               </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               
             </v-toolbar>
             <v-card-text>
-              <div v-if="selectedEvent.report == null">
-                <span v-html="selectedEvent.report">Este evento ya ocurrió:</span>
+              <ul>
+                <li><strong>Fecha:</strong> {{selectedEvent.start}}</li>
+                <li><strong>Status: </strong>{{status(selectedEvent.completed)}}</li>
+              </ul>
+              <div v-if="selectedEvent.report != null">
+                <span>Este evento ya ocurrió:</span>
                 
-                <span v-html="selectedEvent.report"></span>
+                <span></span>
 
               </div>
             </v-card-text>
@@ -134,6 +138,10 @@
   export default {
     props:{
       events: Array,
+      view:{
+        type: Boolean,
+        default: true,
+      }
     },
     data: () => ({
       focus: '',
@@ -149,6 +157,17 @@
       selectedOpen: false,
     }),
     methods: {
+      status(item){
+        if(item=="0"){
+          return "En espera a ocurrir";
+        }
+        if(item="1"){
+          return "Completado con exito";
+        }
+        if(item="3"){
+          return "Fallido";
+        }
+      },
       view(item){
               this.$emit('editCalendar', item);
       },

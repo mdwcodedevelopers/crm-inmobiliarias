@@ -522,17 +522,22 @@
         let params;
         item.forEach(element => {
           params={
-            name: element.contact,
+            name: element.contact.name,
+            email: element.contact.email,
             oportunity: element.name,
-            email: element.email,
             subject: this.emailText.asunto,
             text: this.emailText.texto
           }
           axios.post('/admin/api-oportunities/sendMail', params).then((response) =>{
+            this.$swal.fire(
+                      'Correo enviado con exito',
+                      '',
+                      'success'
+                    );
             console.log(response);
+            this.emailDialog=false;
           });
         });
-        this.emailDialog=false;
       },
       changeUser(){
         if (this.userSelected.length !== 0) {

@@ -7,6 +7,7 @@ use App\Event_types;
 use App\Event;
 use App\Contact;
 use App\User;
+use Illuminate\Support\Facades\Mail;
 use App\User_event;
 use Auth;
 
@@ -105,14 +106,29 @@ class EventController extends Controller
         $event->save();
         saveReport(15, 3, 1, "El agente ". Auth::user()->name ." ha creado un evento", $request->property_id);
 
+        $event_type = Event_types::find($request->event_types_id)->name;
+        $agent_name =  Auth::user()->name;
         foreach ($request->contacts as $key => $value) {
             $contact = new User_event();
             $contact->event_id = $event->id;
             $contact->user_id = $value;
             $contact->role_id = 2;
             $contact->save();
-            saveReport(16, 3, 1, "El agente ". Auth::user()->name ." ha invitado a un evento a " . Contact::find($value)->name, $request->property_id, $value);
-            (!is_null(Contact::find($value)->user_id)) ? saveNotification(Contact::find($value)->user_id, 16,"El agente ". Auth::user()->name ." te ha invitado a un evento el " . $request->date) : '';
+
+            $contacto = Contact::find($value);
+            saveReport(16, 3, 1, "El agente ".$agent_name ." ha invitado a un evento a " . $contacto->name, $request->property_id);
+            (!is_null($contacto->user_id)) ? saveNotification($contacto->user_id, 16,"El agente ". $agent_name ." te ha invitado a un evento el " . $request->date) : '';
+           
+            // Enviar correo
+            $data['contact_name']=$contacto->name;
+            $data['type_event']=$event_type;
+            $data['date']= $request->date;
+            $data['agent_name']= $agent_name;
+                        
+            Mail::send('emails.event_invitation', $data, function($message) use ($contacto, $event_type) {
+                $message->to($contacto->email)->subject('Invitación a ' . $event_type);
+            });
+            
         }
         foreach ($request->agents as $key => $value) {
             $contact = new User_event();
@@ -120,8 +136,20 @@ class EventController extends Controller
             $contact->user_id = $value;
             $contact->role_id = 3;
             $contact->save();
-            saveReport(16, 3, 1, "El agente ". Auth::user()->name ." ha invitado a un evento a " . User::find($value)->name, $request->property_id, $value);
-            saveNotification($value, 16,"El agente ". Auth::user()->name ." te ha invitado a un evento el " . $request->date);
+
+            $contacto = User::find($value);
+            saveReport(16, 3, 1, "El agente ". $agent_name ." ha invitado a un evento a " . $contacto->name, $request->property_id);
+            saveNotification($value, 16,"El agente ".$agent_name ." te ha invitado a un evento el " . $request->date);
+            
+            // Enviar correo
+            $data['contact_name']=$contacto->name;
+            $data['type_event']=$event_type;
+            $data['date']= $request->date;
+            $data['agent_name']= $agent_name;
+                        
+            Mail::send('emails.event_invitation', $data, function($message) use ($contacto, $event_type ) {
+                $message->to($contacto->email)->subject('Invitación a ' . $event_type);
+            });
         }
         return response()->json("success", 200);
     

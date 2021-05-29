@@ -130,7 +130,7 @@
                         sub-group
                         prepend-icon=""
                         color="light-blue darken-3"
-                        class="text--white drop-custom-list "
+                        class="text--white drop-custom-list " v-if="role == 1 || role == 3 "
                         >
                         <template v-slot:activator>
                             <v-list-item-content
@@ -159,7 +159,7 @@
                     </v-list-group>
 
                     <v-list-group no-action sub-group prepend-icon="" color="light-blue darken-3"
-                        class="text--white drop-custom-list" v-if="role == 1 || role == 3 ">
+                        class="text--white drop-custom-list" >
                         <template v-slot:activator>
                             <v-list-item-content
                                 color="white"
@@ -173,7 +173,7 @@
                             </v-list-item-content>
                         </template>
 
-                        <v-list-item>
+                        <v-list-item v-if="role == 1 || role == 3 ">
                             <a href="/admin/properties-user">Listado</a>
                         </v-list-item>
 
@@ -232,7 +232,7 @@
                         <v-icon color="white" class="px-2">
                             mdi-account-multiple
                         </v-icon>
-                        <a href="/admin/users">Lista de usuarios</a>
+                        <a href="/admin/users">Lista de clientes</a>
                     </v-list-item>
                     <v-list-item>
                         <v-icon color="white" class="px-2">
@@ -317,6 +317,7 @@ export default {
         // },
     },
     created() {
+        this.getNotifications();
         setInterval(function () {
 		    this.getNotifications();
 		 }.bind(this), 300000);

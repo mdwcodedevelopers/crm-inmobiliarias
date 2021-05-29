@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Roles;
 use App\User;
+use App\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -92,6 +93,11 @@ class UserController extends Controller
     }
     public function profile(){
         $user = User::find(auth()->id());
+        if($user->role_id == 2){
+            $contact = Contact::find($user->contact_id);
+            $user->phone_1 =  $contact->phone_1;
+            $user->phone_2 = $contact->phone_2;
+        }
         // dd($user->password);
         return view('profile', compact('user'));
     }

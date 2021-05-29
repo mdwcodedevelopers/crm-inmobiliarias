@@ -11,6 +11,9 @@
             <v-card-text>
                 <section id="properties">
                        <v-row>
+                    <div v-if ="properties.length == 0" >
+                        <h3 class="text-center p-4"> No tiene propiedades favoritas aun</h3>
+                    </div>
                     <v-col  v-for="card in properties" :key="card.id" cols="12" sm="12" md="4">
                         
                        <properties-card :card="card"></properties-card>

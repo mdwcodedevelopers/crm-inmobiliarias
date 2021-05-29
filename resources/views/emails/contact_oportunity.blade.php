@@ -1,10 +1,7 @@
 @extends('layouts.email')
 
 @section('content')
-    <h2 class="mb-5 text-primary">¡Hola {{$contact_name}}, te escribimos de parte de <strong>Daniel Canépa Inmobiliaria!</strong></h2>
-    <p>Muchas gracias por haber llenado el formulario de interes de una de nuestras propiedades,
-         muy pronto un agente se encargará de contactarte</p>
-    <p>Esperamos tengas un buen día.</p>
+    <h2 class="mb-5 text-primary">Hola, {{$contact_name}} te escribimos de parte de <strong>Daniel Canépa Inmobiliaria</strong> ya que tiene una oportunidad con nosotros!</h2>
+    <p>{{$text}}</p>
 
 @endsection
-

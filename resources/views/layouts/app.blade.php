@@ -52,6 +52,9 @@
         font-family: 'Heebo', sans-serif;
 
     }
+    .h-full{
+        min-height: 90vh;
+    }
     </style>
 
 </html>

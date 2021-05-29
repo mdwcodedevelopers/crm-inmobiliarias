@@ -152,9 +152,9 @@ class OportunityController extends Controller
         $data["text"]=$request->text;
         $data["oportunity"]=$request->oportunity;
         $data["contact_name"] = $request->name;
-        // Mail::send('emails.contact_oportunity', $data, function($message) use ($request) {
-        //     $message->to($request->email)->subject($request->subject);
-        // });
+        Mail::send('emails.contact_oportunity', $data, function($message) use ($request) {
+            $message->to($request->email)->subject($request->subject);
+        });
         return response()->json("success", 200);
     }
 }

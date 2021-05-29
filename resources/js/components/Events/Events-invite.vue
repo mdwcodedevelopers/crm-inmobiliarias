@@ -25,7 +25,9 @@
 
             <calendar 
             :events="datas"
-             @editCalendar="view"></calendar>
+            :view="false" 
+            @editCalendar="view"
+             ></calendar>
         </v-row>
   
         <!--Modal de ver evento -->

@@ -74,6 +74,15 @@ class UsersController extends Controller
             // 'password' => Hash::make( $data['confirmation_code']),
             'role_id'=>$request->role_id,
             ]);
+
+            if($user->role_id == 2){
+                $contact = Contact::find($user->contact_id);
+                $contact->phone_1 =  $request->phone_1;
+                $contact->phone_2 = $request->phone_2;
+                $contact->save();
+                $user->phone_1 =  $contact->phone_1;
+                $user->phone_2 = $contact->phone_2;
+            }
             
             // Mail::send('emails.password', $data, function($message) use ($request) {
             //     $message->to($request['email'])->subject('Contraseña');
@@ -100,10 +109,10 @@ class UsersController extends Controller
             $user->update([
                 'password' => Hash::make( $request->password),
                 ]);
-                
-                Mail::send('emails.password', $data, function($message) use ($user) {
-                    $message->to($user->email)->subject('Contraseña');
-                });
+            
+            Mail::send('emails.password', $data, function($message) use ($user) {
+                $message->to($user->email)->subject('Contraseña');
+            });
                 return compact('user');
         }else{
                 return response()->json("error", 401);
@@ -134,16 +143,24 @@ class UsersController extends Controller
 
         $oportunity = new Oportunity();
         $oportunity->user_id = $request->agent_id;
-        $oportunity->name = $request->name;
+        $oportunity->name = 'Oportunidad con '.$request->name;
         $oportunity->contact_id = $contact->id;
         $oportunity->property_id = $request->property_id;
         $oportunity->status_id = 1;
         $oportunity->description = "Mensaje de cliente: " . $request->information;
         $oportunity->vigency = date("Y-m-d",strtotime(date('Y-m-d')."+ 3 days")); ;
         $oportunity->save();
-        
+   
+        // Guardar reporte
         saveReport(14, 5, 1, "El cliente ". $request->name ." Está interesado en la propiedad " . $request->property_name , $request->property_id, $request->agent_id);
-        saveNotification(Auth::user()->id, 19,"El cliente ". $request->name ." Está interesado en tu propiedad " . $request->property_name . ". No olvides revisar las oportunidades", $request->property_id);
+        saveNotification($request->agent_id, 19,"El cliente ". $request->name ." Está interesado en tu propiedad " . $request->property_name . ". No olvides revisar las oportunidades", $request->property_id);
+        
+        // Enviar correo
+        $data['contact_name']=$request->name;
+                    
+        Mail::send('emails.contact_property', $data, function($message) use ($request) {
+            $message->to($request->email)->subject('Interesado en la propiedad');
+        });
 
         return response()->json("success", 200);
 

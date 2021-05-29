@@ -102,6 +102,7 @@ export default {
             dialogpass: false,
             dialogedit: false,
             passnew: '',
+            passold: '',
             cpassnew: '',
             error: '',
             error_edit: '',
