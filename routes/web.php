@@ -70,6 +70,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/categories', 'CategorieController@categories')->name('categories');
     Route::get('/status', 'StatusViewController@index')->name('status');
     Route::get('/api-properties-admin', 'PropertyController@propertiesAdmin');
+    Route::get('/api-properties-recomended', 'PropertyController@recomended');
 
     Route::get('/api-properties-user', 'PropertyController@properties');
     Route::get('/property-user/{id}', 'PropertyController@edit');
