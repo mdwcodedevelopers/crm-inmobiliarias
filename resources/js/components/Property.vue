@@ -75,10 +75,17 @@
 
                             </v-card-actions>
                         </v-card>
-                        <!-- <v-row no-gutters class="my-3" v-if="">
-                              <GmapMarker ref="myMarker"
-    :position="google && new google.maps.LatLng(1.38, 103.8)" />
-                        </v-row> -->
+                        <v-row no-gutters class="my-3" v-if="">
+                             <GmapMap :center='{lat: latitude, lng: longitude}' :zoom='12' style='width:100%;  height: 200px;'>
+                                 <GmapMarker
+                                        :position="{lat: latitude , lng:longitude }"
+                                        :clickable="true"
+                                        :draggable="true"
+                                        @click="center={lat: latitude, lng: longitude}"
+                                    />
+                            </GmapMap>
+
+                        </v-row>
 
                         <properties-recomended :property_id="property.id"></properties-recomended>
             </v-col>
@@ -96,13 +103,10 @@ export default {
     },
     data() {
         return {
+             latitude: (this.property.latitude != null) ? parseFloat(this.property.latitude) : -34.6156625,
+            longitude: (this.property.longitude != null) ? parseFloat(this.property.longitude) :-58.5033384,
             items:[],
             valid: false,
-            markers:[
-                {
-                    position: 12
-                }
-            ],
             province: '',
             direction: '',
             user: {
