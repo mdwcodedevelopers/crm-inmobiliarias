@@ -96,6 +96,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/api-contacts/export', 'ContactController@exportXLS');
     Route::get('/contacts/export', 'ContactController@exportContacts');
 
+    Route::get('/contacts/importview', 'ContactController@importView');
+    Route::post('/contacts/import', 'ContactController@import');
+
     Route::get('/environments/init', 'EnvironmentController@init');
     Route::resource('environments', 'EnvironmentController');
     Route::get('/services/init', 'ServiceController@init');

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Exports\ContactsExport;
+use App\Imports\ContactsImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Exceptions\NoTypeDetectedException;
 
 use App\User;
 use App\Contact;
@@ -224,6 +226,40 @@ class ContactController extends Controller
         $export = new ContactsExport($request->agent == -1 ? 0 : $request->agent, $request->oportunity > 0 ? $request->oportunity : 0, $request->tag > 0 ? $request->tag : 0, $request->noTag > 0 ? $request->noTag : 0);
 
         return Excel::download($export, "contactos.xlsx");
+    }
+
+    /**
+    * Vista con formulario de Importación.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function importView()
+    {
+        $role = Auth()->user()->role_id;
+
+        return view('contacts-import', compact('role'));
+    }
+
+    /**
+    * Proceso de Importación.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function import(Request $request)
+    {
+        try
+        {
+            Excel::import(new ContactsImport, $request->file("excel"));
+        }
+        catch (NoTypeDetectedException $e) {
+            return response()->json([
+                'error' => 'Lo siento, esta usando un archivo con el formato inadecuado. Intente nuevamente con un archivo .xls ó .xlsx!',
+            ]);
+        }
+
+        return response()->json([
+            'success' => 'Archivo importado con éxito!',
+        ]);
     }
 }
 
