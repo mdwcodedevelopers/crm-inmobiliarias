@@ -79,6 +79,8 @@
                               <GmapMarker ref="myMarker"
     :position="google && new google.maps.LatLng(1.38, 103.8)" />
                         </v-row> -->
+
+                        <properties-recomended :property_id="property.id"></properties-recomended>
             </v-col>
         </v-card>
     <front-footer></front-footer>

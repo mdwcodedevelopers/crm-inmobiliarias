@@ -98,7 +98,7 @@
                         </v-select>
                     </v-flex>
 
-                    <v-flex xs12  class="pr-3">
+                    <!-- <v-flex xs12  class="pr-3">
                       <h5 class="black--text text-left">Sin la etiqueta: </h5>
                         <v-select
                           v-model="filter.noTag"
@@ -112,7 +112,6 @@
                           chips
                         >
                         <template v-slot:selection="data">
-                        <!-- HTML that describe how select should render selected items -->
                       <v-chip
                           v-bind="data.attrs"
                           :input-value="data.selected"
@@ -129,7 +128,7 @@
                       </template>
 
                         </v-select>
-                    </v-flex>
+                    </v-flex> -->
 
                     <v-flex xs12 >
                         <v-btn  class="my-1" @click="filter.agent = '', filter.oportunity= '',filter.tag= '',filter.noTag= ''">Borrar</v-btn>

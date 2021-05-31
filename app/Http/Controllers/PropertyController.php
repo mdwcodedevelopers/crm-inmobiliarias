@@ -276,15 +276,30 @@ class PropertyController extends Controller
 
     public function web(Request $request)
     {
-      $search = isset($request->search) ? $request->search : '';
-  
-      if (!is_null(Auth::user())) {
-        $user = User::find(Auth::user()->id);
-        return view('properties-web', ['rol' => $user->role_id]);
-    } else {
-        return view('properties-web', ['rol' => 0]);
+        $search = isset($request->search) ? $request->search : '';
+    
+        if (!is_null(Auth::user())) {
+            $user = User::find(Auth::user()->id);
+            return view('properties-web', ['rol' => $user->role_id]);
+        } else {
+            return view('properties-web', ['rol' => 0]);
+        }
     }
 
+    public function recomended(Request $request)
+    {
+        $properties = Property::where('id',"!=",$request->not)->get()->random(1);
+        foreach ($properties as $property) {
+            if (Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first() != null) {
+                $property->image = Image::select('url')->whereProperty_id($property->id)->wherePrincipal(1)->first()->url;
+            }else{
+                $property->image = null;
+            }
+        }
+        return response()->json([
+            'properties' => $properties,
+        ]);
     }
+
   
 }
