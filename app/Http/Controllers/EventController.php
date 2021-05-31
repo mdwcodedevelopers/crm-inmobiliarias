@@ -106,7 +106,7 @@ class EventController extends Controller
         $event->save();
         saveReport(15, 3, 1, "El agente ". Auth::user()->name ." ha creado un evento", $request->property_id);
 
-        $event_type = Event_types::find($request->event_types_id)->name;
+        $event_type = Event_types::find($request->event_types_id);
         $agent_name =  Auth::user()->name;
         foreach ($request->contacts as $key => $value) {
             $contact = new User_event();
@@ -121,13 +121,14 @@ class EventController extends Controller
            
             // Enviar correo
             $data['contact_name']=$contacto->name;
-            $data['type_event']=$event_type;
+            $data['type_event']=$event_type->name;
             $data['date']= $request->date;
             $data['agent_name']= $agent_name;
-                        
-            Mail::send('emails.event_invitation', $data, function($message) use ($contacto, $event_type) {
-                $message->to($contacto->email)->subject('Invitación a ' . $event_type);
-            });
+            if ($event_type->notify_before == 1) {
+                Mail::send('emails.event_invitation', $data, function($message) use ($contacto, $event_type) {
+                    $message->to($contacto->email)->subject('Invitación a ' . $event_type);
+                });
+            }           
             
         }
         foreach ($request->agents as $key => $value) {
@@ -143,13 +144,14 @@ class EventController extends Controller
             
             // Enviar correo
             $data['contact_name']=$contacto->name;
-            $data['type_event']=$event_type;
+            $data['type_event']= $event_type->name;
             $data['date']= $request->date;
             $data['agent_name']= $agent_name;
-                        
-            Mail::send('emails.event_invitation', $data, function($message) use ($contacto, $event_type ) {
-                $message->to($contacto->email)->subject('Invitación a ' . $event_type);
-            });
+            if ($event_type->notify_before_agent == 1 ) {
+                Mail::send('emails.event_invitation', $data, function($message) use ($contacto, $event_type ) {
+                    $message->to($contacto->email)->subject('Invitación a ' . $event_type);
+                });
+            }  
         }
         return response()->json("success", 200);
     
