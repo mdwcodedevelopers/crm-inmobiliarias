@@ -6,6 +6,7 @@ use App\Currency;
 use App\Report;
 use App\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class CurrencyController extends Controller
 {
@@ -19,6 +20,8 @@ class CurrencyController extends Controller
         $currency->name = $request->name;
         $currency->save();
         Report::create([
+            'user_id' => Auth::user()->id,
+            'status' => "1",
             'type'=>'Creación',
             'table'=>'Moneda',
             'information'=>'Se creo la moneda: '.$request['name']
@@ -32,6 +35,8 @@ class CurrencyController extends Controller
         $currency->name = $request->name;
         $currency->save();
         Report::create([
+            'user_id' => Auth::user()->id,
+            'status' => "1",
             'type'=>'Actualizacion',
             'table'=>'Moneda',
             'information'=>'Se cambio el de '.$name .' nombre a: '. $request->name
@@ -50,6 +55,8 @@ class CurrencyController extends Controller
         $currency->delete();
         
         Report::create([
+            'user_id' => Auth::user()->id;
+            'status' => "1",
             'type'=>'Eliminación',
             'table'=>'Moneda',
             'information'=>'Se eliminó '.$name
