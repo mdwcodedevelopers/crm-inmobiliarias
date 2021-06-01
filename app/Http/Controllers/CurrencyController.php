@@ -55,7 +55,7 @@ class CurrencyController extends Controller
         $currency->delete();
         
         Report::create([
-            'user_id' => Auth::user()->id;
+            'user_id' => Auth::user()->id,
             'status' => "1",
             'type'=>'Eliminación',
             'table'=>'Moneda',
