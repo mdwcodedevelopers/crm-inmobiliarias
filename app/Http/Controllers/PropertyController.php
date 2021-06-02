@@ -129,7 +129,7 @@ class PropertyController extends Controller
     {
         $property = Property::where('id',$id)->with('Status','Currency','Categories','Images')->first();
 
-        $reports = Report::where('property_id', $id)->with('User')->get();
+        $reports = Report::where('property_id', $id)->with('User')->orderBy('id','DESC')->get();
 
         foreach ($reports as $key => $report):
           $date1 = new DateTime( date('Y-m-d H:i', strtotime($report->created_at)) );
@@ -250,7 +250,7 @@ class PropertyController extends Controller
         $property = Property::where('id',$id)->with('Status','Currency','Categories','Images','Environments','Services')->first();
         $property->price = number_format($property->price, 2, ',', '.');
         $property->dimension = number_format($property->dimension, 2, ',', '.');
-   
+
         if (!is_null(Auth::user())) {
             $user = User::find(Auth::user()->id);
             $property->favorite =  Fav_property::whereUser_id(Auth::user()->id)->whereProperty_id($property->id)->get()->count();
@@ -278,7 +278,7 @@ class PropertyController extends Controller
     public function web(Request $request)
     {
         $search = isset($request->search) ? $request->search : '';
-    
+
         if (!is_null(Auth::user())) {
             $user = User::find(Auth::user()->id);
             return view('properties-web', ['rol' => $user->role_id]);
@@ -302,5 +302,5 @@ class PropertyController extends Controller
         ]);
     }
 
-  
+
 }

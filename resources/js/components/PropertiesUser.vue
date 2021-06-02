@@ -287,7 +287,7 @@
                                   <v-form ref="form" v-model="valid">
                                     <v-layout wrap>
                                       <v-flex xs12 sm6 md6>
-                                      <image-propertie  :id="property.id" />
+                                      <image-propertie  :id="property.id" :key="property.id"/>
                                       </v-flex>
                                     </v-layout>
                                   </v-form>
@@ -590,7 +590,7 @@
                 html:
                     'Desde el Módulo de propiedades podrás crear y administrar las propiedades que se mostraran a los clientes. <br> '+
                     'Para crear una oportunidad primero deberas llenar la información básica y guardarla' +
-                    'y luego deberas editarla y llenar el resto de los datos requeridos <br> '+ 
+                    'y luego deberas editarla y llenar el resto de los datos requeridos <br> '+
                     '<strong>Recuerda que para que se muestren a los clientes deberas maracar la casilla de Mostrar en la web '+
                     'Desde aca puedes ver tambien los tiquets de oportunidades de otros agentes y puedes transferirles </strong>' ,
                 showCloseButton: true,
