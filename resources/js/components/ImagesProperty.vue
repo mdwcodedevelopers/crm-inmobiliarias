@@ -1,6 +1,6 @@
 <template>
     <div class="mt-4">
-        
+
         <v-btn color="success" @click="createmodal()" dark>Subir imagen</v-btn>
         <v-layout row justify-center>
             <v-dialog v-model="dialog" persistent max-width="600px">
@@ -36,7 +36,7 @@
                 </v-card>
             </v-dialog>
         </v-layout>
-     
+
         <template>
             <v-layout row justify-center>
                 <v-dialog v-model="dialogdelete" persistent max-width="600px">
@@ -78,7 +78,7 @@
         <v-row>
             <v-col  v-for="item in images" :key="item.id" cols="12" sd="12"  >
                 <v-card>
-                    
+
                     <v-img :src="'../../'+item.url" ></v-img>
 
                     <v-card-actions>
@@ -92,7 +92,7 @@
                     </v-btn>
                     <v-btn color="warning" small class="m-3"  v-else @click="setimage(item)">
                             Seleccionar como principal
-                    </v-btn>        
+                    </v-btn>
                         <v-btn color="#E53935" @click="delete_dialog(item.id,item.title)">
                             <v-icon color="#fff">
                                 mdi-delete
@@ -102,7 +102,7 @@
                 </v-card>
             </v-col>
         </v-row>
-     
+
     </div>
 </template>
 
@@ -127,7 +127,7 @@ export default {
             let InstFormData = new FormData();
             InstFormData.append('imagen' , this.archivo);
             InstFormData.append('property_id' , this.id);
-    
+
             if(!this.validarImagen(this.archivo)){
                 this.$swal.fire(
                       'Error',
@@ -213,13 +213,13 @@ export default {
                 this.error = 'El archivo a adjuntar no es una imagen de un formato valido';
                 return false;
             }
-            if (uploadFile.size > 500000)
+            if (uploadFile.size > 1000000)
             {
                 this.error='El peso de la imagen no puede exceder los 500kb';
                 return false;
             }
             return true;
-                         
+
         }
     },
     created(){
