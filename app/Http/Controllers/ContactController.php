@@ -188,7 +188,7 @@ class ContactController extends Controller
 
         if($request->oportunity != null):
             $query = $query->join('oportunities', 'oportunities.contact_id', '=', 'contacts.id')->where('oportunities.status_id',$request->oportunity);
-            $filtro .= "Oportunidad: ".oportunityToString($request->oportunity).". ";
+            $filtro .= "Estatus de Oportunidades: ".statusOpToString($request->oportunity).". ";
         endif;
 
         if($request->tag != null):

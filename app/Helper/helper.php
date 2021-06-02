@@ -155,6 +155,21 @@
     return $string;
   }
 
+  function statusOpToString($ids)
+  {
+    $string = '';
+
+    if( is_array($ids) ):
+      foreach ($ids as $value):
+        $string .= \App\StatusOportunity::select("name")->where("id",$value)->first()->name . " ";
+      endforeach;
+    else:
+      $string = \App\StatusOportunity::select("name")->where("id",$ids)->first()->name;
+    endif;
+
+    return $string;
+  }
+
   function userToString($id)
   {
     $string = \App\User::select("name")->where("id",$id)->first()->name;
