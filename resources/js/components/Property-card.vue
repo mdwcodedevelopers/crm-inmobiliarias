@@ -46,7 +46,7 @@
                 </v-carousel>
             </v-col>
             <v-col
-            class="d-flex justify-space-between mx-4"
+            class="d-flex flex-column flex-md-row justify-space-between mx-4"
             >
             <v-btn rounded class="purple darken-1 white--text" @click="favProperty()" >
                 <v-icon v-if="!favorite" class="white--text">mdi-star-outline</v-icon>
