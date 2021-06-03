@@ -20,13 +20,13 @@
 </head>
 <body>
 
-    <header class="w-100 blue">
-        <div class="logo p-4 d-flex justify-content-between align-items-center">
+    <header style="width: 100vw; background-color: #1A237E !important;">
+        <div class="logo" style="display:flex; justify-content: space-between; align-items:center">
             <img src="{{asset('images/logo-footer-canepa.png')}}" alt="Logo canepa" width="200">
-            <h3><a href="{{  url('/')}}" class="text-white">Enlace al Sitio Web</a></h3>
+            <h3><a href="{{  url('/')}}" style=" color: #fff;">Enlace al Sitio Web</a></h3>
         </div>
     </header>
-    <div class="container p-4">
+    <div class="container" style="padding: 4rem">
         @yield('content')
 
     </div>
@@ -38,19 +38,19 @@
     <div
       flat
       tile
-      class="blue text-center"
+      style="text-align:center; background-color: #1A237E !important;"
       width="100%"
     >
 
-      <div class="text-white pt-0">
-          <v-row class="d-flex flex-column  p-5 justify-content-center " >
+      <div style=" color: #fff; padding-top:0px">
+          <v-row style="display: flex; flex-direction: column; justify-content:center; padding: 5rem" >
               <v-col
                 cols=12
                 sd=12
                 md=4
                >
                     <img src="/images/logo-footer-canepa.png"  width="350px" >
-                    <p class="text-left mt-5">
+                    <p style="text-align: left; margin-top: 5rem">
                         Contamos con más de 30 años
                         de experiencia en negocios inmobiliarios.
                     </p>
@@ -59,11 +59,11 @@
               cols=12
                 sd=12
                 md=8
-                class="px-3 d-flex flex-column flex-sm-column  flex-md-row "
+                style="display: flex; flex-direction: column; justify-content:center; padding-left: 3rem;  padding-right: 3rem;" 
               >
                 <v-col>
 
-                    <ul class="list text-left ">
+                    <ul style="text-align: left; list-style:none" >
                         <li class=" font-weight-bold pb-3">Menu</li>
                         <li><a href="/#"> Home</a></li>
                         <li><a href="/#we-are">Quienes somos</a></li>
@@ -73,7 +73,7 @@
                 </v-col>
                 <v-col
                 >
-                    <ul class="list text-left ">
+                    <ul style="text-align: left; list-style:none">
                         <li class=" font-weight-bold pb-3">Redes Cánepa</li>
                         <li><a href="https://www.facebook.com/inmobiliariadanielcanepa/">Facebook</a></li>
                         <li><a href="https://www.instagram.com/inmobiliariadanielcanepa">Instagram</a></li>
@@ -82,7 +82,7 @@
                 </v-col>
                 <v-col
                 >
-                    <ul class="list text-left">
+                    <ul  style="text-align: left; list-style:none">
                         <li class=" font-weight-bold pb-3">Términos</li>
                         <li><a href="/politica-de-privacidad">Política de privacidad</a></li>
                         <li><a href="/terminos-y-condiciones">Términos y condiciones</a></li>
@@ -96,7 +96,7 @@
       </div>
 
         <v-divider></v-divider>
-      <div class="text-white">
+      <div style="color: #fff" >
         <strong>Daniel Cánepa propiedades</strong>
       </div>
     <div>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Analytics;
 use Spatie\Analytics\Period;
+use App\User;
+use App\Fav_property;
 
 class AnalyticsController extends Controller
 {
@@ -15,9 +17,13 @@ class AnalyticsController extends Controller
     }
 
     public function index(){
+        $rol=User::find(auth()->id())->role_id;
+        // $analytics = [];
         // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+        $users = User::count();
+        $favs = Fav_property::count();
         // dd($analyticsData);
-        return view('analytics');
+        return view('analytics', ['rol' => $rol, 'users' => $users, 'favs' => $favs]);
     }
 
     // public function prueba(){

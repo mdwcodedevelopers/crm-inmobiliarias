@@ -52,7 +52,7 @@
                                                 <v-text-field label="Telefono 1*" :rules="numberRule" v-model="user.phone_1" required></v-text-field>
                                             </v-flex>
                                             <v-flex xs12  >
-                                                <v-text-field label="Telefono 2*" :rules="numberRule" v-model="user.phone_2" required></v-text-field>
+                                                <v-text-field label="Telefono 2" :rules="numberRule2" v-model="user.phone_2" ></v-text-field>
                                             </v-flex>
                                             <v-flex xs12  >
                                                 <v-text-field label="Dirección*" :rules="inputRule" v-model="direction" required></v-text-field>
@@ -126,6 +126,9 @@ export default {
             ],
             numberRule: [
                 v => !!v || 'El campo es obligatorio',
+                v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
+            ],
+            numberRule2: [
                 v => /^[0-9]+([.][0-9]+)?$/.test(v)  || 'Debe ser un valor númerico',
             ],
         }

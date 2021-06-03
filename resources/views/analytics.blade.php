@@ -3,9 +3,9 @@
 @section('content')
 
     <div class="">
-        <nav-admin :title="'Estadisticas'"/>
+        <nav-admin :title="'Estadisticas'" :role="{{$rol}}"/>
     </div>
     <div class="container">
-        <analytics />
+        <analytics :users="{{$users}}" :favs="{{$favs}}"/>
     </div>
 @endsection

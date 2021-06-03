@@ -9,7 +9,7 @@
                         </h3> 
                     </v-card-title>
                     <v-card-subtitle></v-card-subtitle>
-                    <v-card-text class="d-flex">
+                    <v-card-text class="d-flex flex-column flex-md-row">
                         <v-card class="mx-auto text-white mt-3" width="300" max-width="600" color="blue darken-2">
                             <v-card-text>
                                 <p class="h3 text-white text-center">
@@ -22,6 +22,22 @@
                             <v-card-actions>
                                 <v-btn text dark>
                                     <a href="/admin/properties-user" class="text-white">Ver Propiedades</a>
+
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card> 
+                        <v-card class="mx-auto text-white mt-3" width="300" max-width="600" color="orange darken-2">
+                            <v-card-text>
+                                <p class="h3 text-white text-center">
+                                    Oportunidades
+                                </p>
+                                <p class="h3 text-white text-center">
+                                    {{oportunities}}
+                                </p>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn text dark>
+                                    <a href="/admin/oportunities" class="text-white">Ver Oportunidades</a>
 
                                 </v-btn>
                             </v-card-actions>
@@ -69,12 +85,14 @@ export default {
     data: () => ({
         properties: '',
         users: '',
+        oportunities: '',
         reports:''
     }),
     created() {
         axios.get("/admin/api-dashboard").then((response) => {
             this.properties = response.data.property;
             this.users = response.data.users;
+            this.oportunities = response.data.oportunities;
             this.reports=response.data.reports;
         });
     }

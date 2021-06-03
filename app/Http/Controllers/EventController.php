@@ -126,7 +126,7 @@ class EventController extends Controller
             $data['agent_name']= $agent_name;
             if ($event_type->notify_before == 1) {
                 Mail::send('emails.event_invitation', $data, function($message) use ($contacto, $event_type) {
-                    $message->to($contacto->email)->subject('Invitación a ' . $event_type);
+                    $message->to($contacto->email)->subject('Invitación a ' . $event_type->name);
                 });
             }           
             
@@ -149,7 +149,7 @@ class EventController extends Controller
             $data['agent_name']= $agent_name;
             if ($event_type->notify_before_agent == 1 ) {
                 Mail::send('emails.event_invitation', $data, function($message) use ($contacto, $event_type ) {
-                    $message->to($contacto->email)->subject('Invitación a ' . $event_type);
+                    $message->to($contacto->email)->subject('Invitación a ' . $event_type->name);
                 });
             }  
         }

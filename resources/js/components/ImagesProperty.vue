@@ -215,7 +215,7 @@ export default {
             }
             if (uploadFile.size > 1000000)
             {
-                this.error='El peso de la imagen no puede exceder los 500kb';
+                this.error='El peso de la imagen no puede exceder los 1MB';
                 return false;
             }
             return true;

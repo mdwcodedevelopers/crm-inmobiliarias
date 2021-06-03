@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Property;
 use App\Report;
 use App\User;
+use App\Oportunity;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,10 +14,12 @@ class DashboardController extends Controller
         $property = Property::count();
         $users=User::count();
         $reports=Report::count();
+        $oportunities=Oportunity::count();
         return response()->json([
             'property' => $property,
             'users'=>$users,
-            'reports'=>$reports
+            'reports'=>$reports,
+            'oportunities'=>$oportunities
     ]);
     }
 }

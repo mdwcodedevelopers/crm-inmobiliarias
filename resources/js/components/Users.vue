@@ -339,6 +339,10 @@ export default {
                     this.user.direction = "";
                     this.user.contact_id = false;
                 }
+                this.$swal.fire(
+                        'Haciendo la solicitud espere',
+                        'Esto puede demorar un minuto',
+                        'warning'); 
                 axios.post("/admin/api-users", this.user).then((response) => {
                         this.index();
                         this.dialog = false;
@@ -371,6 +375,10 @@ export default {
                     this.user.direction = '';
                     this.user.contact_id = false;
                 }
+                this.$swal.fire(
+                        'Haciendo la solicitud espere',
+                        'Esto puede demorar un minuto',
+                        'warning'); 
                 axios.put("/admin/api-users/" + this.user.id, this.user).then((response) => {
                     if (response.status == 200) {
                         this.index();
@@ -383,6 +391,10 @@ export default {
                 );
         },
         delete_model() {
+            this.$swal.fire(
+                        'Haciendo la solicitud espere',
+                        'Esto puede demorar un minuto',
+                        'warning'); 
             axios.delete("/admin/api-users/" + this.id_delete).then((response) => {
                 if (response.status == 200) {
                     this.index(0, '');

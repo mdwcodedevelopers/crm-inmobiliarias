@@ -77,13 +77,13 @@
                 <div class="title  font-weight-light p-2 mb-2">
                    <div class="title text-center black--text font-weight-light mb-2">
                     Usuarios registrados <br>
-                    <span>3</span>
+                    <span>{{users}}</span>
                   </div>
                 </div>
                 <div class="title  font-weight-light p-2 mb-2">
                    <div class="title text-center black--text font-weight-light mb-2">
                     Propiedades Favoritas <br>
-                    <span>7</span>
+                    <span>{{favs}}</span>
                   </div>
                 </div>
                 </v-card-text>
@@ -105,7 +105,6 @@
                   </th>
                   <th class="text-left">
                     Numero de páginas visitadas
-                  </th>
                   </th>
                   <th class="text-left">
                     Promedio de tiempo en la página
@@ -140,6 +139,10 @@
 
 <script>
 export default {
+  props:{
+    users: Number,
+    favs: Number,
+  },
     data: () => ({
       labels: [
         '12am',
