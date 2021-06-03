@@ -10,7 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//Clear Cache facade value:
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    return '<h1>Cache facade value cleared</h1>';
+});
 
 Route::get('register/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::get('register/verify/{id}/{hash}', 'Auth\VerificationController@index')->name('verification.verify');
