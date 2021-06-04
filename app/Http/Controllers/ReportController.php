@@ -136,13 +136,13 @@ class ReportController extends Controller
   }
   public function NotifyUser()
   {
-    $notifications = Report::where('user_id',Auth::user()->id)->where(function($query) {$query->where('table','Notificaciones');})->orderByRaw('updated_at - created_at ASC')->get();
+    $notifications = Report::where('user_id',Auth::user()->id)->where(function($query) {$query->where('table','Notificaciones');})->orderByRaw('created_at DESC')->get();
     foreach ($notifications as $key => $notify):
       $date1 = new DateTime( date('Y-m-d H:i', strtotime($notify->created_at)) );
       $date2 = new DateTime( date("Y-m-d H:i") );
       $diff = $date1->diff($date2);
-      $report->created = date('d/m/Y H:i', strtotime($notify->created_at));
-      $report->diff = 'hace ' . ($diff->d > 0 ? $diff->d.' días ' : '' ) . ($diff->h > 0 ? $diff->h.' horas ' : '') . ($diff->i > 0 ? $diff->i.' minutos ' : '');
+      $notify->created = date('d/m/Y H:i', strtotime($notify->created_at));
+      $notify->diff = 'hace ' . ($diff->d > 0 ? $diff->d.' días ' : '' ) . ($diff->h > 0 ? $diff->h.' horas ' : '') . ($diff->i > 0 ? $diff->i.' minutos ' : '');
     endforeach;
     
     return response()->json(['notifications' => $notifications]);

@@ -57,9 +57,9 @@
                 {{property.status.name}} | {{property.dimension}} mt2  | {{property.toilettes}}  baños | {{property.bedrooms}}  cuartos
             </v-card-text> -->
                 <v-card-actions absolute right>
-                    <v-btn color="blue darken-4"><v-icon class="white--text">mdi-facebook</v-icon></v-btn>
-                    <v-btn color="purple lighten-2"><v-icon class="white--text">mdi-instagram</v-icon></v-btn>
-                    <v-btn color="light-blue darken-2"><v-icon class="white--text">mdi-twitter</v-icon></v-btn>
+                    <v-btn color="blue darken-4" @click="facebook()"><v-icon class="white--text">mdi-facebook</v-icon></v-btn>
+                    <v-btn color="light-blue darken-2" @click="twitter()"><v-icon class="white--text">mdi-twitter</v-icon></v-btn>
+                    <v-btn color="green darken-2" @click="whatsapp()"><v-icon class="white--text">mdi-whatsapp</v-icon></v-btn>
                 </v-card-actions>
             </v-col>
                 <v-card elevation="2">
@@ -210,7 +210,21 @@ export default {
             helper_show(helper, id){
             let x = helper.filter(function (el) {return el.id == id});
                 return x[0];
+            },
+            facebook(){
+                var currentUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.href;
+                window.open(currentUrl, '_blank');
+            },
+            twitter(){
+                var currentUrl = 'https://twitter.com/intent/tweet?text=&url=' + window.location.href;
+                window.open(currentUrl, '_blank');
+            },
+            whatsapp(){
+                var currentUrl = 'https://api.whatsapp.com/send?text=' + window.location.href;
+                window.open(currentUrl, '_blank');
             }
+
+
             }
 }
 </script>
