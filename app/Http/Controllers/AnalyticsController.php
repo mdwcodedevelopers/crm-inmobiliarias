@@ -26,13 +26,13 @@ class AnalyticsController extends Controller
         return view('analytics', ['rol' => $rol, 'users' => $users, 'favs' => $favs]);
     }
 
-    // public function prueba(){
-    //     return view('emails.confirmation',
-    // [
-    //     'name' => 'gabo',
-    //     'confirmation_code' => 1245124,
-    //     'id' =>2
-    // ]);
-    // }
+    public function prueba(){
+        return view('emails.confirmation',
+    [
+        'name' => 'gabo',
+        'confirmation_code' => 1245124,
+        'id' =>2
+    ]);
+    }
 
 }
