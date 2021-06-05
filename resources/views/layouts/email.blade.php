@@ -18,10 +18,10 @@
     
          {{-- <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet"> --}}
 </head>
-<body>
+<body style="box-sizing: border-box; margin: 0px">
 
-    <header style="width: 100vw; background-color: #1A237E !important;">
-        <div class="logo" style="display:flex; justify-content: space-between; align-items:center">
+    <header style="background-color: #1A237E; padding: 3rem">
+        <div class="logo" style=" width: 100%; display:flex; justify-content: space-between; align-items:center">
             <img src="{{asset('images/logo-footer-canepa.png')}}" alt="Logo canepa" width="200">
             <h3><a href="{{  url('/')}}" style=" color: #fff;">Enlace al Sitio Web</a></h3>
         </div>
@@ -38,18 +38,18 @@
     <div
       flat
       tile
-      style="text-align:center; background-color: #1A237E !important;"
+      style="text-align:center; background-color: #1A237E !important; padding: 1rem"
       width="100%"
     >
 
       <div style=" color: #fff; padding-top:0px">
-          <v-row style="display: flex; flex-direction: column; justify-content:center; padding: 5rem" >
+          <v-row style="display: flex; flex-direction: column; justify-content:center;" >
               <v-col
                 cols=12
                 sd=12
                 md=4
                >
-                    <img src="/images/logo-footer-canepa.png"  width="350px" >
+            <img src="{{asset('images/logo-footer-canepa.png')}}" alt="Logo canepa" width="200">
                     <p style="text-align: left; margin-top: 5rem">
                         Contamos con más de 30 años
                         de experiencia en negocios inmobiliarios.
@@ -59,35 +59,35 @@
               cols=12
                 sd=12
                 md=8
-                style="display: flex; flex-direction: column; justify-content:center; padding-left: 3rem;  padding-right: 3rem;" 
+                style="display: flex; flex-direction: column; justify-content:center;" 
               >
                 <v-col>
 
                     <ul style="text-align: left; list-style:none" >
-                        <li class=" font-weight-bold pb-3">Menu</li>
-                        <li><a href="/#"> Home</a></li>
-                        <li><a href="/#we-are">Quienes somos</a></li>
-                        <li><a href="/properties">Propiedades</a></li>
-                        <li><a href="/#contacts">Contacto</a></li>
+                        <li class=" font-weight-bold pb-3" style="font-weight: bold; font-size:1.5rem">Menu</li>
+                        <li><a href="{{url('/')}}" style="color:#fff; padding-left: 1rem"> Home</a></li>
+                        <li><a href="{{url('/#we-are')}}" style="color:#fff; padding-left: 1rem">Quienes somos</a></li>
+                        <li><a href="{{url('/properties')}} " style="color:#fff; padding-left: 1rem">Propiedades</a></li>
+                        <li><a href="{{url('/#contacts')}}" style="color:#fff; padding-left: 1rem">Contacto</a></li>
                     </ul>
                 </v-col>
                 <v-col
                 >
                     <ul style="text-align: left; list-style:none">
-                        <li class=" font-weight-bold pb-3">Redes Cánepa</li>
-                        <li><a href="https://www.facebook.com/inmobiliariadanielcanepa/">Facebook</a></li>
-                        <li><a href="https://www.instagram.com/inmobiliariadanielcanepa">Instagram</a></li>
-                        <li><a href="#">Mercado Libre</a></li>
+                        <li class=" font-weight-bold pb-3" style="font-weight: bold; font-size:1.5rem">Redes Cánepa</li>
+                        <li><a href="https://www.facebook.com/inmobiliariadanielcanepa/" style="color:#fff; padding-left: 1rem">Facebook</a></li>
+                        <li><a href="https://www.instagram.com/inmobiliariadanielcanepa" style="color:#fff; padding-left: 1rem">Instagram</a></li>
+                        <li><a href="#" style="color:#fff; padding-left: 1rem">Mercado Libre</a></li>
                     </ul>
                 </v-col>
                 <v-col
                 >
                     <ul  style="text-align: left; list-style:none">
-                        <li class=" font-weight-bold pb-3">Términos</li>
-                        <li><a href="/politica-de-privacidad">Política de privacidad</a></li>
-                        <li><a href="/terminos-y-condiciones">Términos y condiciones</a></li>
-                        <li><a href="#">Trabajá con nosotros</a></li>
-                        <li><a href="#">FAQ's</a></li>
+                        <li class=" font-weight-bold pb-3" style="font-weight: bold; font-size:1.5rem">Términos</li>
+                        <li><a href="{{url('/politica-de-privacidad')}}" style="color:#fff; padding-left: 1rem">Política de privacidad</a></li>
+                        <li><a href="{{url('/terminos-y-condiciones')}}" style="color:#fff; padding-left: 1rem">Términos y condiciones</a></li>
+                        <li><a href="#" style="color:#fff; padding-left: 1rem">Trabajá con nosotros</a></li>
+                        <li><a href="#" style="color:#fff; padding-left: 1rem">FAQ's</a></li>
                     </ul>
                 </v-col>
               </v-col>
@@ -96,7 +96,7 @@
       </div>
 
         <v-divider></v-divider>
-      <div style="color: #fff" >
+      <div style="color: #fff; font-size:2rem" >
         <strong>Daniel Cánepa propiedades</strong>
       </div>
     <div>
@@ -105,68 +105,5 @@
     
 
 </body>
-<style>
-    @media only screen and (max-width: 600px) {
-    .flex-column{
-        flex-direction: column 
-    }
-
-    }
-    .font-weight-bold{
-        font-weight: bold;
-    }
-    .w-100{
-        width: 100vw;
-    }
-    .p-4{
-        padding: 4rem;
-    }
-    .p-5{
-        padding: 5rem;
-    }
-    .py-5{
-        padding-top: 5rem;
-        padding-bottom: 5rem;
-    }
-    .px-3{
-        padding-left: 3rem;
-        padding-right: 3rem;
-    }
-    .text-center{
-        text-align: center;
-    }
-    .d-flex{
-        display: flex;
-    }
-    .justify-content-center{
-        justify-content: center;
-    }
-    .justify-content-between{
-        justify-content: space-between;
-    }
-    .text-white{
-        color: #fff;
-    }
-   .list {
-        list-style: none;
-        height: 13rem;
-    }
-    .list li {
-        margin-bottom: 1rem;
-    }
-    .list li a{
-        text-decoration: none;
-        color:#fff;
-    }
-    body{
-        margin: 0px;
-    }
-    *{
-        font-family: 'Heebo', sans-serif !important;
-    }
-    .blue{
-        background-color: #1A237E !important;
-    }
-</style>
 
 </html>

@@ -79,11 +79,12 @@
                      <v-list-item-group
                         color="primary"
                     >
-                    <v-list-item v-for="(notify, index) in notifications" :class="{'blue lighten-3': notify.status == '1' }" :key="index" @click="notifyRead(notify)">
+                    <v-list-item v-for="(notify, index) in notifications" :class="{'blue lighten-3': notify.status == '1', 'white': notify.status == '0' }" :key="index" @click="notifyRead(notify)">
 
                         <v-list-item-content  >
-                            <v-list-item-title>{{notify.type}}</v-list-item-title>
+                            <v-list-item-title style="white-space: inherit;">{{notify.type}}</v-list-item-title>
                             <v-list-item-subtitle style="white-space: inherit;">{{notify.information}}</v-list-item-subtitle>
+                            <v-list-item-action-text v-text="notify.diff"></v-list-item-action-text>
                         </v-list-item-content>
 
                     </v-list-item>

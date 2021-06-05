@@ -158,9 +158,9 @@ class UsersController extends Controller
         // Enviar correo
         $data['contact_name']=$request->name;
                     
-        Mail::send('emails.contact_property', $data, function($message) use ($request) {
-            $message->to($request->email)->subject('Interesado en la propiedad');
-        });
+        // Mail::send('emails.contact_property', $data, function($message) use ($request) {
+        //     $message->to($request->email)->subject('Interesado en la propiedad');
+        // });
 
         return response()->json("success", 200);
 

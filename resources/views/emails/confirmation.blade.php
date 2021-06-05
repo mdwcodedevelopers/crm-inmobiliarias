@@ -7,6 +7,6 @@
 
     <a href="{{ url('/register/verify/'.$id .'/'. $confirmation_code) }}">
         Clic para confirmar tu email
-    </a>>
+    </a>
 @endsection
 
