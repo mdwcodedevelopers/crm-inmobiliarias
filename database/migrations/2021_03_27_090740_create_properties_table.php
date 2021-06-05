@@ -33,7 +33,7 @@ class CreatePropertiesTable extends Migration
             $table->enum('condition', [1, 2, 3, 4, 5, 6]);
             $table->enum('keys', [1, 2, 3, 4, 5]);
             $table->decimal('price',20,2);
-            $table->decimal('dimension',20,2)->nullable();
+            $table->string('dimension')->nullable();
 
             $table->smallInteger('environments')->nullable();
             $table->smallInteger('plants')->nullable();

@@ -190,6 +190,8 @@ class PropertyController extends Controller
         $property->toilettes = $request->prop["toilettes"];
         $property->dresser = $request->prop["dresser"];
         $property->chocheras = $request->prop["chocheras"];
+        $property->latitude = $request->prop["latitude"];
+        $property->longitude = $request->prop["longitude"];
         $property->save();
 
         //AMBIENTES
