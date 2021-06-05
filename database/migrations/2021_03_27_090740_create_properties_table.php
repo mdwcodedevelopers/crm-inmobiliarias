@@ -30,6 +30,7 @@ class CreatePropertiesTable extends Migration
             $table->enum('type', [1, 2]);
             $table->enum('situation', [1, 2]);
             $table->enum('antiquity', [1, 2, 3]);
+            $table->smallInteger('years')->nullable();
             $table->enum('condition', [1, 2, 3, 4, 5, 6]);
             $table->enum('keys', [1, 2, 3, 4, 5]);
             $table->decimal('price',20,2);

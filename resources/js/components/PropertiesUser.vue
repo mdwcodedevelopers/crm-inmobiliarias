@@ -190,6 +190,9 @@
                                       <v-flex xs12 sm6 md6>
                                         <v-select no-data-text="No existen antiguedades registradas" v-model="property.antiquity" :items="antiquitys" :rules="selectRules" item-text="name" item-value="id" label="Antigüedad" ></v-select>
                                       </v-flex>
+                                      <v-flex xs12 sm6 md6 v-if="property.antiquity == 2">
+                                        <v-text-field label="Cantidad de Años" min="0" type="number" v-model="property.years"></v-text-field>
+                                      </v-flex>
                                       <v-flex xs12 sm6 md6>
                                         <v-select no-data-text="No existen condiciones registradas" v-model="property.condition" :items="conditions" :rules="selectRules" item-text="name" item-value="id" label="Condición" ></v-select>
                                       </v-flex>
