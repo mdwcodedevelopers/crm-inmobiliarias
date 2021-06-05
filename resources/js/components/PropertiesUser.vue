@@ -114,17 +114,17 @@
                         <v-text-field label="Provincia" :rules="inputRules" v-model="property.province"></v-text-field>
                       </v-flex>
                       <v-flex xs12>
-                        <v-text-field label="Localidad" :rules="inputRules" v-model="property.location"></v-text-field>
+                        <v-text-field label="Ciudad" :rules="inputRules" v-model="property.subdivision_1"></v-text-field>
                       </v-flex>
                       <v-flex xs12>
-                        <v-text-field label="Sub-división" :rules="inputRules" v-model="property.subdivision_1"></v-text-field>
+                        <v-text-field label="Localidad" v-model="property.location"></v-text-field>
                       </v-flex>
                     </v-flex>
                     <v-flex xs12 md4>
                       <v-checkbox class="pr-6" v-model="property.show_web" label="Mostrar en la Web" :value="1"></v-checkbox>
                     </v-flex>
                     <v-flex xs12 md8>
-                      <v-text-field label="Sub-división"  v-model="property.subdivision_2"></v-text-field>
+                      <v-text-field label="Barrio"  v-model="property.subdivision_2"></v-text-field>
                     </v-flex>
                     <template>
                       <v-card>
@@ -176,7 +176,7 @@
                                         <v-select no-data-text="No existen monedas registradas" v-model="property.currency" :items="currencies" :rules="selectRules" item-text="name" item-value="id" label="Moneda" ></v-select>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Dimensiones" :rules="numberRules" v-model="property.dimension"></v-text-field>
+                                        <v-text-field label="Dimensiones" :rules="inputRules" v-model="property.dimension"></v-text-field>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
                                         <v-select no-data-text="No existen tipos de propiedad registradas" v-model="property.type" :items="types" :rules="selectRules" item-text="name" item-value="id" label="Tipo de Propiedad"></v-select>
@@ -197,21 +197,22 @@
                                         <v-select no-data-text="No existen ubicaciones registradas" v-model="property.keys" :items="locations" :rules="selectRules" item-text="name" item-value="id" label="Ubicación de llaves" ></v-select>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Cantidad de Ambientes" :rules="numberRules" v-model="property.environments"></v-text-field>
+                                        <v-text-field label="Cantidad de Ambientes" min="0" type="number" v-model="property.environments"></v-text-field>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Cantidad de Plantas" :rules="numberRules" v-model="property.plants"></v-text-field>
+                                        <v-text-field label="Cantidad de Plantas" min="0" type="number" v-model="property.plants"></v-text-field>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Cantidad de Baños" :rules="numberRules" v-model="property.bedrooms"></v-text-field>
+                                        <v-text-field label="Cantidad de Baños" min="0" type="number" v-model="property.bedrooms"></v-text-field>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Cantidad de Toilettes" :rules="numberRules" v-model="property.toilettes"></v-text-field>
+                                        <v-text-field label="Cantidad de Toilettes" min="0" type="number" v-model="property.toilettes"></v-text-field>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Cantidad de Tocadores" :rules="numberRules" v-model="property.dresser"></v-text-field>
-                                      </v-flex>                                                                         <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Cantidad de Cocheras" :rules="numberRules" v-model="property.chocheras"></v-text-field>
+                                        <v-text-field label="Cantidad de Tocadores" min="0" type="number" v-model="property.dresser"></v-text-field>
+                                      </v-flex>
+                                      <v-flex xs12 sm6 md6>
+                                        <v-text-field label="Cantidad de Cocheras" min="0" type="number" v-model="property.chocheras"></v-text-field>
                                       </v-flex>
                                       <v-flex xs12>
                                         {{error}}
@@ -588,11 +589,9 @@
                 header:'Ayuda rápida',
                 title: '<strong><u>Modulo de Propiedades</u></strong>',
                 html:
-                    'Desde el Módulo de propiedades podrás crear y administrar las propiedades que se mostraran a los clientes. <br> '+
-                    'Para crear una oportunidad primero deberas llenar la información básica y guardarla' +
-                    'y luego deberas editarla y llenar el resto de los datos requeridos <br> '+
-                    '<strong>Recuerda que para que se muestren a los clientes deberas maracar la casilla de Mostrar en la web '+
-                    'Desde aca puedes ver tambien los tiquets de oportunidades de otros agentes y puedes transferirles </strong>' ,
+                    'Desde el Módulo de propiedades podrás crear y administrar las propiedades que se mostrarán a los clientes. <br> '+
+                    'Para crear una oportunidad primero deberás llenar la información básica, guardarla, y luego deberás editarla y completar el resto de los datos requeridos. <br> '+
+                    '<strong>Recuerda que para que se muestre a los clientes deberás marcar la casilla de “Mostrar en la web”. Desde aquí puedes ver también los tickets de oportunidades de otros agentes y puedes transferirlos.</strong>',
                 showCloseButton: true,
                 focusConfirm: false,
                 })
