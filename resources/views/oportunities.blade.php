@@ -5,11 +5,15 @@
         <div class="">
             <nav-admin :title="'Oportunidades'" :role="{{$rol}}"/>
         </div>
-
-        <oportunities
-            :users="{{$users}}"
-            :rol="{{$rol}}"
-        />
+        <div class="d-flex">
+            <nav-aside :role="{{$rol}}" ></nav-aside>
+            <div style="width:80vw" >
+                <oportunities
+                    :users="{{$users}}"
+                    :rol="{{$rol}}"
+                />
+            </div>
+        </div>
 
     </div>
 @endsection

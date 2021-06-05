@@ -7,9 +7,13 @@
         <div class="">
             <nav-admin title="Mi Empresa" :role="{{$rol}}"/>
         </div>
-        <div>
-            <configuration :rol="{{$rol}}" />
+        <div class="d-flex">
+            <nav-aside :role="{{$rol}}" ></nav-aside>
+            <div style="width:80vw" >
+                <configuration :rol="{{$rol}}" />
+            </div>
         </div>
+      
         @endif
         @if ($rol==2)
         <div class="">

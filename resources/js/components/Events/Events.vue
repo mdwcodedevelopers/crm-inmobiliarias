@@ -469,10 +469,10 @@ export default {
                 header:'Ayuda rápida',
                 title: '<strong><u>Modulo de Eventos</u></strong>',
                 html:
-                    'Desde el Módulo de Eventos podrás crear eventos a los cuales podrás invitar a otros agentes '+
-                    'y a los clientes. Los tipos de eventos con sus detalles son creados por el superadministrador<br>' +
-                    '<strong>En este modulo solo verás los eventos que tu crees'+
-                    'si deseas revisar los eventos a los que fuiste invitado revisa el modulo de invitaciones a eventos</strong>' ,
+                    'Desde el Módulo de Eventos podrás crear eventos en los cuales podrás invitar a otros agentes y a los clientes. '+
+                    'Los tipos de eventos con sus detalles son creados por el superadministrador.<br>' +
+                    '<strong>En este módulo solo verás los eventos que tu hayas creado.'+
+                    ' Si deseas revisar los eventos a los que fuiste invitado, revisa el módulo de invitaciones a eventos.</strong>' ,
                 showCloseButton: true,
                 focusConfirm: false,
                 })

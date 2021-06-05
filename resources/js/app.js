@@ -68,6 +68,7 @@ Vue.component('company', require('./components/Company.vue').default);
 Vue.component('image-propertie', require('./components/ImagesProperty.vue').default);
 Vue.component('nav-guest', require('./components/Navs/NavGuest.vue').default);
 Vue.component('nav-admin', require('./components/Navs/NavAdmin.vue').default);
+Vue.component('nav-aside', require('./components/Navs/NavAside.vue').default);
 Vue.component('nav-user', require('./components/Navs/NavUser.vue').default);
 Vue.component('nav-agent', require('./components/Navs/NavAgent.vue').default);
 Vue.component('status', require('./components/Status.vue').default);

@@ -5,9 +5,13 @@
         <div class="">
             <nav-admin :title="'Mis Eventos'" :role="{{$role}}"/>
         </div>
-
-        <events :types="{{$events_types}}" :role="{{$role}}"
-        />
+        <div class="d-flex">
+            <nav-aside :role="{{$role}}" ></nav-aside>
+            <div style="width:80vw" >
+                <events :types="{{$events_types}}" :role="{{$role}}"
+                />
+            </div>
+        </div>
 
     </div>
 @endsection

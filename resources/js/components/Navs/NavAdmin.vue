@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <v-app-bar color="blue darken-4 " dark>
-            <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+            <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
             <v-toolbar-title>{{ title }}</v-toolbar-title>
 
             <v-spacer></v-spacer>
@@ -39,7 +39,6 @@
             </v-menu> -->
             <v-menu
                 bottom
-                offset-y
                 left
                 :close-on-content-click = "false"
                 >
@@ -103,172 +102,7 @@
 
             </button>
         </v-app-bar>
-        <v-navigation-drawer v-model="drawer" color="blue darken-4 " absolute bottom temporary>
-
-            <v-list color="white ">
-                <v-list-item>
-                    <v-list-item-content>
-                        <a href="/admin/" class="">
-
-                            <v-img src="/images/logo.png"  contain width="200" height="100"></v-img>
-
-                        </a>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list>
-
-            <v-list nav dense  class="nav-list my-6 list-nav-sidebar">
-
-                <v-list-item-group v-model="group" active-class=" text--accent-4">
-                    <v-list-item>
-                        <v-icon color="white" class="px-2">
-                            mdi-web
-                        </v-icon>
-                        <a href="/">Pagina web</a>
-                    </v-list-item>
-                    <v-list-group
-                        no-action
-                        sub-group
-                        prepend-icon=""
-                        color="light-blue darken-3"
-                        class="text--white drop-custom-list " v-if="role == 1 || role == 3 "
-                        >
-                        <template v-slot:activator>
-                            <v-list-item-content
-                                color="white"
-                                 >
-                                <v-list-item-title>
-                                    <v-icon color="white" class="px-2">
-                                        mdi-account-box-multiple
-                                    </v-icon>
-                                    Contactos
-                                </v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-
-                        <v-list-item>
-                            <a href="/admin/contacts">Listado</a>
-                        </v-list-item>
-
-                        <v-list-item>
-                            <a href="/admin/contacts/tags">Etiquetas</a>
-                        </v-list-item>
-
-                        <v-list-item>
-                            <a href="/admin/contacts/importview">Importar Excel</a>
-                        </v-list-item>
-                    </v-list-group>
-
-                    <v-list-group no-action sub-group prepend-icon="" color="light-blue darken-3"
-                        class="text--white drop-custom-list" >
-                        <template v-slot:activator>
-                            <v-list-item-content
-                                color="white"
-                                 >
-                                <v-list-item-title>
-                                    <v-icon color="white" class="px-2">
-                                        mdi-office-building
-                                    </v-icon>
-                                    Propiedades
-                                </v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-
-                        <v-list-item v-if="role == 1 || role == 3 ">
-                            <a href="/admin/properties-user">Listado</a>
-                        </v-list-item>
-
-                        <v-list-item>
-                            <a href="/properties">Vista Web</a>
-                        </v-list-item>
-                        <v-list-item>
-                            <a href="/admin/properties-favorites">Mis propiedades favoritas</a>
-                        </v-list-item>
-                    </v-list-group>
-
-                    <v-list-item v-if="role == 1 || role == 3 ">
-                        <v-icon color="white"  class="px-2">
-                            mdi-speedometer
-                        </v-icon>
-                        <a href="/admin/oportunities">Oportunidades</a>
-                    </v-list-item>
-
-
-                    <v-list-group no-action sub-group prepend-icon="" color="light-blue darken-3"
-                        class="text--white drop-custom-list">
-                        <template v-slot:activator>
-                            <v-list-item-content
-                                color="white"
-                                 >
-                                <v-list-item-title>
-                                    <v-icon color="white" class="px-2">
-                                        mdi-calendar
-                                    </v-icon>
-                                   Eventos
-                                </v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-
-                        <v-list-item v-if="role == 1 || role == 3">
-                            <a href="/admin/events">Mis Eventos</a>
-                        </v-list-item>
-
-                        <v-list-item>
-                            <a href="/admin/events-1">invitaciones a Eventos</a>
-                        </v-list-item>
-                    </v-list-group>
-                    <!-- <v-list-item v-if="role == 1">
-                        <v-icon color="white" class="px-2">
-                            mdi-cog-transfer-outline
-                        </v-icon>
-                        <a href="/admin/environments/init" >Ambientes</a>
-                    </v-list-item>
-                    <v-list-item v-if="role == 1">
-                        <v-icon color="white" class="px-2">
-                            mdi-cog-transfer-outline
-                        </v-icon>
-                        <a href="/admin/services/init" >Servicios</a>
-                    </v-list-item> -->
-                    <v-list-item v-if="role == 1 || role == 3 ">
-                        <v-icon color="white" class="px-2">
-                            mdi-account-multiple
-                        </v-icon>
-                        <a href="/admin/users">Lista de clientes</a>
-                    </v-list-item>
-                    <v-list-item>
-                        <v-icon color="white" class="px-2">
-                            mdi-account
-                        </v-icon>
-                        <a href="/admin/profile">Mi perfil</a>
-                    </v-list-item>
-
-                    <v-list-item v-if="role == 1" >
-                        <v-icon color="white" class="px-2">
-                            mdi-chart-bar
-                        </v-icon>
-                        <a href="/admin/analytics" >Estaditicas</a>
-                    </v-list-item>
-                    <v-list-item v-if="role == 1">
-                        <v-icon color="white" class="px-2">
-                            mdi-file-document
-                        </v-icon>
-                        <a href="/admin/reports" >Reportes</a>
-                    </v-list-item>
-                    <v-list-item v-if="role == 1">
-                        <v-icon color="white" class="px-2">
-                            mdi-chat-processing
-                        </v-icon>
-                        <a href="/admin/reports/view" >Notificaciones del Sistema</a>
-                    </v-list-item>
-                    <v-list-item v-if="role == 1">
-                        <v-icon color="white" class="px-2">
-                            mdi-cog
-                        </v-icon>
-                        <a href="/admin/config">Mi Empresa</a>
-                    </v-list-item>
-                </v-list-item-group>
-            </v-list>
-        </v-navigation-drawer>
+      
     </div>
 
 </template>
@@ -306,8 +140,7 @@ export default {
             role: Number,
         },
     data: () => ({
-        drawer: false,
-        group: null,
+        drawer: true,
         notifications: [],
         countNotifications: 0,
     }),

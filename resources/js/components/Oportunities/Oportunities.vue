@@ -46,12 +46,11 @@ export default {
                 header:'Ayuda rápida',
                 title: '<strong><u>Modulo de Oportunidades</u></strong>',
                 html:
-                    'El Modulo de oportunidades es un manejador de tiquets para los clientes '+
-                    'de la empresa, Aca puedes mantener un control de tus pendientes ademas de asignarles '+ 
-                    'Estatus o directamente cerrarlos.<br>'+
-                    'Desde aca puedes ver tambien los tiquets de oportunidades de otros agentes y puedes transferirles ' +
-                    'tus oportunidades<br>' + '<strong>Cuando un cliente se encuentra interesado en una propiedad que tu has publicado,'+
-                    'automaticamente se crea una oportunidad y se asigna a ti con un periodo de 3 dias de duracion, recuerda revisarlas.</strong>',
+                    'El Módulo de oportunidades es un manejador de tickets para los clientes de la empresa.'+
+                    'Aquí puedes mantener un control de tus pendientes además de asignarles un Estatus o directamente cerrarlos. '+ 
+                    'Desde aquí puedes ver también los tickets de oportunidades de otros agentes y puedes transferirles tus oportunidades.<br>'+
+                    '<strong>Cuando un cliente se encuentra interesado en una propiedad que tú has publicado,'+
+                    ' automáticamente se crea una oportunidad y se te asigna con un período de 3 días de duración. Recuerda revisarlas.</strong>',
                 showCloseButton: true,
                 focusConfirm: false,
                 })

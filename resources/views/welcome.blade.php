@@ -36,7 +36,12 @@
             <nav-admin title="Home" :role="{{$rol}}" />
         </div>
         @endguest
-        <front-page></front-page>
+        <div class="d-flex">
+            <nav-aside :role="{{$rol}}" ></nav-aside>
+            <div style="width:80vw" >
+                <front-page></front-page>
+            </div>
+        </div>
     </div>
 @endsection
 
