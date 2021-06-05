@@ -180,6 +180,7 @@ class PropertyController extends Controller
         $property->type = $request->prop["type"];
         $property->situation = $request->prop["situation"];
         $property->antiquity = $request->prop["antiquity"];
+        $property->years = $request->prop["antiquity"] == '2' ? $request->prop["years"] : NULL;
         $property->condition = $request->prop["condition"];
         $property->keys = $request->prop["keys"];
         $property->price = $request->prop["price"];
