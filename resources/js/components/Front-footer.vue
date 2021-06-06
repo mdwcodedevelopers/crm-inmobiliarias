@@ -3,7 +3,7 @@
   <v-footer
     dark
     padless
-    style="width:100vw"
+    style="width:100%"
   >
     <v-card
       flat

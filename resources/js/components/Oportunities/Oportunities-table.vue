@@ -18,12 +18,29 @@
       no-results-text="No hay resultados"
     >
       <template v-slot:top>
-        <v-toolbar
-          flat
-          height="100px"
+         <div class=" d-flex m-3">
+
+          <div >
+                <b>
+                Ver oportunidades de
+                </b>
+                <v-select
+              v-model="userSelected"
+              :items="users"
+              item-text="name"
+              item-value="id"
+              label=" Seleccione usuario"
+              @change="changeUser()"
+            ></v-select>
+            </div>
+         </div>
+        <div
+         
+          class="d-flex flex-column flex-md-row"
+       
         >
         <!-- Modal de delete -->
-          <div v-if="rol==1" style="height:100% !important" class="d-flex align-items-center">
+          <div v-if="rol==1"  class="d-flex align-items-center justify-content-center">
                       <v-btn
                           :disabled="selected.length=== 0"
                           small
@@ -38,7 +55,7 @@
                       </v-btn>
 
             <v-divider
-                class="mx-4"
+               
                 inset
                 vertical
               ></v-divider>
@@ -107,7 +124,7 @@
         </template>
 
           <v-divider
-            class="mx-4"
+           
             inset
             vertical
           ></v-divider>
@@ -168,7 +185,7 @@
         </template>
 
           <v-divider
-            class="mx-4"
+           
             inset
             vertical
           ></v-divider>
@@ -243,7 +260,7 @@
         </template>
 
           <v-divider
-            class="mx-4"
+           
             inset
             vertical
           ></v-divider>
@@ -312,28 +329,7 @@
               </v-dialog>
         </template>
 
-
-
-          <v-divider
-            class="mx-4"
-            inset
-            vertical
-          ></v-divider>
-          <div>
-              <b>
-              Ver oportunidades de
-              </b>
-              <v-select
-            v-model="userSelected"
-            :items="users"
-            item-text="name"
-            item-value="id"
-            label=" Seleccione usuario"
-            @change="changeUser()"
-          ></v-select>
-          </div>
-
-        </v-toolbar>
+        </div>
         <v-text-field v-model="search" label="Buscar" class="mx-4"></v-text-field>
 
       </template>

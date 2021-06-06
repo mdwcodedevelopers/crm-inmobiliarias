@@ -9,7 +9,7 @@
         </div>
         <div class="d-flex">
             <nav-aside :role="{{$rol}}" ></nav-aside>
-            <div style="width:80vw" >
+            <div class="main-desktop" >
                 <configuration :rol="{{$rol}}" />
             </div>
         </div>

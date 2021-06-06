@@ -1,7 +1,7 @@
 <template>
     <div class="">
      
-        <v-navigation-drawer permanent color="blue darken-4 " >
+        <v-navigation-drawer permanent color="blue darken-4 " class="d-none d-md-flex" >
 
             <v-list color="white ">
                 <v-list-item>

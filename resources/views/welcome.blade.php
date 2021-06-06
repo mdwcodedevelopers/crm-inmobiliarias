@@ -29,19 +29,20 @@
             </div>
             <div class="">
                 <nav-guest />
-
             </div>
+            <front-page></front-page>
         @else
         <div class="">
             <nav-admin title="Home" :role="{{$rol}}" />
         </div>
-        @endguest
+            
         <div class="d-flex">
             <nav-aside :role="{{$rol}}" ></nav-aside>
-            <div style="width:80vw" >
+            <div class="main-desktop" >
                 <front-page></front-page>
             </div>
         </div>
+        @endguest
     </div>
 @endsection
 

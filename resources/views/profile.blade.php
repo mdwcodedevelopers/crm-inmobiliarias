@@ -7,7 +7,7 @@
         </div>
         <div class="d-flex">
             <nav-aside :role="{{$user->role_id}}" ></nav-aside>
-            <div style="width:80vw" >
+            <div class="main-desktop" >
                 <div class="container">
                     <profile :profile="{{$user}}" />
                 </div>

@@ -9,8 +9,8 @@
                         </h3> 
                     </v-card-title>
                     <v-card-subtitle></v-card-subtitle>
-                    <v-card-text class="d-flex flex-column flex-md-row">
-                        <v-card class="mx-auto text-white mt-3" width="300" max-width="600" color="blue darken-2">
+                    <v-card-text class="d-flex flex-column flex-md-row flex-wrap">
+                        <v-card class="mx-auto text-white mt-3"  min-width="260" max-width="600" color="blue darken-2">
                             <v-card-text>
                                 <p class="h3 text-white text-center">
                                     Propiedades
@@ -26,7 +26,7 @@
                                 </v-btn>
                             </v-card-actions>
                         </v-card> 
-                        <v-card class="mx-auto text-white mt-3" width="300" max-width="600" color="orange darken-2">
+                        <v-card class="mx-auto text-white mt-3"  min-width="260" max-width="600" color="orange darken-2">
                             <v-card-text>
                                 <p class="h3 text-white text-center">
                                     Oportunidades
@@ -42,23 +42,7 @@
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
-                        <v-card class="mx-auto text-white mt-3" width="300" max-width="600" color="red darken-2">
-                            <v-card-text>
-                                <p class="h3 text-white text-center">
-                                    Cambios realizados
-                                </p>
-                                <p class="h3 text-white text-center">
-                                    {{reports}}
-                                </p>
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-btn text dark>
-                                    <a href="/admin/reports" class="text-white">Ver Reportes</a>
-
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                        <v-card class="mx-auto text-white mt-3" width="300" max-width="600" color="teal darken-1">
+                        <v-card class="mx-auto text-white mt-3" min-width="260" max-width="600" color="teal darken-1">
                             <v-card-text>
                                 <p class="h3 text-white text-center">
                                     Usuarios
@@ -70,6 +54,22 @@
                             <v-card-actions>
                                 <v-btn text dark>
                                 <a href="/admin/users" class="text-white">Ver Usuarios</a>
+
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                        <v-card class="mx-auto text-white mt-3" min-width="260"  max-width="600" color="red darken-2">
+                            <v-card-text>
+                                <p class="h3 text-white text-center">
+                                    Cambios realizados
+                                </p>
+                                <p class="h3 text-white text-center">
+                                    {{reports}}
+                                </p>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn text dark>
+                                    <a href="/admin/reports" class="text-white">Ver Reportes</a>
 
                                 </v-btn>
                             </v-card-actions>

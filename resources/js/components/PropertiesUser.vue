@@ -594,7 +594,7 @@
                 html:
                     'Desde el Módulo de propiedades podrás crear y administrar las propiedades que se mostrarán a los clientes. <br> '+
                     'Para crear una oportunidad primero deberás llenar la información básica, guardarla, y luego deberás editarla y completar el resto de los datos requeridos. <br> '+
-                    '<strong>Recuerda que para que se muestre a los clientes deberás marcar la casilla de “Mostrar en la web”. Desde aquí puedes ver también los tickets de oportunidades de otros agentes y puedes transferirlos.</strong>',
+                    '<strong>Recuerda que para que se muestre a los clientes deberás marcar la casilla de “Mostrar en la web”.</strong>',
                 showCloseButton: true,
                 focusConfirm: false,
                 })

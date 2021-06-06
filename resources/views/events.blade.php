@@ -7,7 +7,7 @@
         </div>
         <div class="d-flex">
             <nav-aside :role="{{$role}}" ></nav-aside>
-            <div style="width:80vw" >
+            <div class="main-desktop" >
                 <events :types="{{$events_types}}" :role="{{$role}}"
                 />
             </div>

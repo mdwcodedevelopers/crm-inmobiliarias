@@ -55,6 +55,11 @@
     .h-full{
         min-height: 90vh;
     }
+    @media screen and (min-width: 960px) {
+  .main-desktop {
+    width: 80vw;
+  }
+}
     </style>
 
 </html>

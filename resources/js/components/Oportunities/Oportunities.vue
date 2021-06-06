@@ -3,7 +3,7 @@
         
         
         <div>
-            <ul class="d-flex list-status flex-wrap justify-center  ">
+            <ul class="d-md-flex list-status flex-wrap justify-center d-none ">
                 <li v-for="state in status" :style="{ backgroundColor: state.color}" :key="state.id">
                     <span>{{state.count }}</span> 
                     <p>{{state.name}}</p>
