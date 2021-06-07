@@ -129,7 +129,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
                 <v-btn color="danger" @click="dialogLogin = false; userLogin=[]">Cancelar</v-btn>
-              <v-btn color="success" :disabled="!valid" @click.prevent="loggin()">Crear</v-btn>
+              <v-btn color="success" :disabled="!valid" @click.prevent="loggin()">Inciar Sesión</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
