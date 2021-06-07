@@ -24,7 +24,7 @@ class ContactsImport implements ToModel, WithHeadingRow, WithChunkReading, Shoul
   public function model(array $row)
   {
     $contact = Contact::updateOrCreate([
-      'user_id' => $row["agente"],
+      'user_id' => Auth::user()->id,
       'name' => $row["nombre"],
       'email' => $row["email"],
       'phone_1' => $row["telefono_1"],

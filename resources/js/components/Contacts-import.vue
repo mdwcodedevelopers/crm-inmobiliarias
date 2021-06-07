@@ -13,9 +13,9 @@
         <v-card-text>
             <v-container grid-list-md>
               <template>
-                <p class="text-left text-subtitle-1"><strong>agente:</strong> Agente al que pertenece el Contacto</p>
+                <!-- <p class="text-left text-subtitle-1"><strong>agente:</strong> Agente al que pertenece el Contacto</p> -->
                   <p class="text-left text-subtitle-1"><strong>nombre:</strong> Nombre del Contacto</p>
-                  <p class="text-left text-subtitle-1"><strong>email:</strong> Correo Eléctronico</p>
+                  <p class="text-left text-subtitle-1"><strong>email:</strong> Correo Electrónico</p>
                   <p class="text-left text-subtitle-1"><strong>telefono_1:</strong> Teléfono 1</p>
                   <p class="text-left text-subtitle-1"><strong>telefono_2:</strong> Teléfono 2</p>
                   <p class="text-left text-subtitle-1"><strong>direccion:</strong> Dirección</p>
