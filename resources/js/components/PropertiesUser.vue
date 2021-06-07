@@ -143,10 +143,10 @@
                                 <v-card-text>
                                   <v-layout wrap>
                                     <v-flex xs6>
-                                      <v-text-field label="Longitud" v-model="property.longitude"></v-text-field>
+                                      <v-text-field label="Latitud" v-model="property.latitude" hint="Ejemplo: -34.6156625"></v-text-field>
                                     </v-flex>
                                     <v-flex xs6>
-                                      <v-text-field label="Latitud" v-model="property.latitude"></v-text-field>
+                                      <v-text-field label="Longitud" v-model="property.longitude" hint="Ejemplo: -58.5033384"></v-text-field>
                                     </v-flex>
                                   </v-layout>
                                   <v-row no-gutters class="my-3" v-show="property.longitude && property.latitude">
@@ -176,7 +176,7 @@
                                         <v-select no-data-text="No existen monedas registradas" v-model="property.currency" :items="currencies" :rules="selectRules" item-text="name" item-value="id" label="Moneda" ></v-select>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Dimensiones" :rules="inputRules" v-model="property.dimension"></v-text-field>
+                                        <v-text-field label="Dimensiones" :rules="inputRules" v-model="property.dimension" hint="Ejemplo: 200 mt2"></v-text-field>
                                       </v-flex>
                                       <v-flex xs12 sm6 md6>
                                         <v-select no-data-text="No existen tipos de propiedad registradas" v-model="property.type" :items="types" :rules="selectRules" item-text="name" item-value="id" label="Tipo de Propiedad"></v-select>

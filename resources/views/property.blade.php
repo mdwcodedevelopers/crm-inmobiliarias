@@ -6,11 +6,12 @@
                 <div class="">
                     <nav-guest/>
                 </div>
+                <property :property="{{$property}}"/>
+
             @else
             <div class="">
                 <nav-admin title="Propiedad {{$property->name}}" :role="{{$rol}}"  />
             </div>
-            @endguest
             <div class="d-flex">
               <nav-aside :role="{{$rol}}" ></nav-aside>
               <div class="main-desktop" >
@@ -19,4 +20,5 @@
                   </div>
               </div>
           </div>
+            @endguest
 @endsection

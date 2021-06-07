@@ -91,7 +91,7 @@
                                     <li><strong>Región:</strong> {{property.location}}</li>                                
                                 </v-col>
                                 <v-col cols="12" sm="4" class="mb-2">
-                                    <li><strong>Antiguedad:</strong> {{helper_show(antiquitys,property.antiquity).name}}</li>
+                                    <li><strong>Antiguedad:</strong> {{property.antiquity=="2" ? property.years + " " : ''}}{{helper_show(antiquitys,property.antiquity).name}}</li>
                                 </v-col>
                                 <v-col cols="12" sm="4" class="mb-2">
                                     <li><strong>Condición:</strong> {{helper_show(conditions,property.condition).name}}</li>
@@ -112,7 +112,7 @@
                                     <li><strong>Cocheras:</strong> {{property.chocheras}}</li>
                                 </v-col>
                                  <v-col cols="12" sm="4" class="mb-2">
-                                    <li><strong>Tamaño:</strong> {{property.dimension}} mt2</li>
+                                    <li><strong>Tamaño:</strong> {{property.dimension}}</li>
                                 </v-col>
                              </v-row>
                         </ul>

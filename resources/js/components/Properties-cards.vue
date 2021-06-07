@@ -15,7 +15,7 @@
                             <span class="px-1" v-else> EUR</span>
                         </v-chip>
                         <v-chip color="#2979FF" text-color="#fff" class="m-1 font-weight-bold">
-                            {{card.dimension}} mt2
+                            {{card.dimension}}
                         </v-chip>
                     </div>
                     <v-btn
