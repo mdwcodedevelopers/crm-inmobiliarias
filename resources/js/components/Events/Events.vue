@@ -207,6 +207,34 @@
                         :min="today"
                         >
                         </v-date-picker>
+                        <v-menu
+                            ref="menu"
+                            v-model="menu2"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            :return-value.sync="event.time"
+                            transition="scale-transition"
+                            offset-y
+                            max-width="290px"
+                            min-width="290px"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="event.time"
+                                label="Seleccciona la hora"
+                                prepend-icon="mdi-clock-time-four-outline"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                            ></v-text-field>
+                            </template>
+                            <v-time-picker
+                            v-if="menu2"
+                            v-model="event.time"
+                            full-width
+                            @click:minute="$refs.menu.save(event.time)"
+                            ></v-time-picker>
+                        </v-menu>
                       
                     </v-col>
                     </v-row>
@@ -557,6 +585,7 @@ export default {
       },
       store() {
         this.valid = false; 
+        this.event.date = this.event.date + " " + this.event.time + ":00" ; 
         this.$swal.fire(
                         'Haciendo la solicitud espere',
                         'Esto puede demorar un minuto',

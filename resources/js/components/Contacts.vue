@@ -1,10 +1,10 @@
 <template>
-  <div class="text-center  d-flex">
+  <div class="text-center  d-flex flex-column flex-md-row">
 
 
  <v-col
     cols="12"
-    sm="3">
+    md="3">
     <v-card>
       <v-card-title class="display-1 titulo-custom">
           Filtros
@@ -142,18 +142,20 @@
 
   <v-col
       cols="12"
-      sm="9"
+      md="9"
   >
     <v-card color="blue darken-4">
       <v-card-title class="display-1 text-white titulo-custom">
-        Agenda de contactos
+        <div class="d-flex flex-column flex-md-row">
+          Agenda de contactos
+          <a class="mx-md-6 btn bg-white text-dark mr-3" :href="'/admin/contacts/export?agent=' + filter.agent + '&oportunity=' + filter.oportunity + '&tag=' + filter.tag + '&noTag=' + filter.noTag">
+            <v-icon>
+                mdi-file-pdf
+            </v-icon>
+            Exportar a excel
+          </a>
+        </div>
       <v-card-actions style="position:absolute; right:0px">
-        <a class="m-1 btn bg-white text-dark mr-3" :href="'/admin/contacts/export?agent=' + filter.agent + '&oportunity=' + filter.oportunity + '&tag=' + filter.tag + '&noTag=' + filter.noTag">
-          <v-icon>
-              mdi-file-pdf
-          </v-icon>
-          Exportar a excel
-        </a>
         <v-btn color="success" dark fab class="mt-1" @click="create()">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
@@ -235,7 +237,7 @@
                         <v-text-field label="Telefono 1*" :rules="numberRule" v-model="contact.phone_1" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 md6 >
-                        <v-text-field label="Telefono 2*" v-model="contact.phone_2" required></v-text-field>
+                        <v-text-field label="Telefono 2" v-model="contact.phone_2" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 md6 >
                         <v-text-field label="Dirección*" :rules="inputRule" v-model="contact.direction" required></v-text-field>
@@ -314,7 +316,7 @@
                         <v-text-field label="Telefono 1*" :rules="numberRule" v-model="contact.phone_1" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 md6 >
-                        <v-text-field label="Telefono 2*" v-model="contact.phone_2" required></v-text-field>
+                        <v-text-field label="Telefono 2" v-model="contact.phone_2" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 md6 >
                         <v-text-field label="Dirección*" :rules="inputRule" v-model="contact.direction" required></v-text-field>

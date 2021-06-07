@@ -15,7 +15,7 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->dateTime('date');
             $table->foreignId('user_id');  //Propietario 
             $table->foreignId('event_types_id');  
             $table->foreignId('property_id')->nullable();
