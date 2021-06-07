@@ -81,6 +81,7 @@
           :events="events"
           :event-color="getEventColor"
           :type="type"
+          locale="es"
           @click:event="showEvent"
           @click:more="viewDay"
           @click:date="viewDay"
@@ -157,6 +158,7 @@
       selectedOpen: false,
     }),
     methods: {
+      
       status(item){
         if(item=="0"){
           return "En espera a ocurrir";

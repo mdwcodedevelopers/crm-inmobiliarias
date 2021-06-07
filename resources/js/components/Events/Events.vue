@@ -31,6 +31,7 @@
         <v-tab-item>
             <calendar 
             :events="datas"
+            :view="true" 
              @editCalendar="view"></calendar>
         </v-tab-item>
         <v-tab-item>
@@ -203,8 +204,9 @@
                         <div class="text-overline">*Indica la Fecha del evento</div>
                         
                         <v-date-picker
-                        v-model="event.date"
+                        v-model="event.date_1"
                         :min="today"
+                        locale="es"
                         >
                         </v-date-picker>
                         <v-menu
@@ -392,12 +394,42 @@
                             Posponer
                         </v-btn>
                         <v-date-picker
-                        v-model="event.start"
+                        v-model="event.start_1"
+                        locale="es"
                         :min="today"
                         :disabled="!event.postponed"
                         >
                         </v-date-picker>
-                       
+                         <v-menu
+                            ref="menu"
+                            v-model="menu2"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            :return-value.sync="event.time"
+                            transition="scale-transition"
+                            offset-y
+                            :disabled="!event.postponed"
+                            max-width="290px"
+                            min-width="290px"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="event.time"
+                                label="Seleccciona la hora"
+                                prepend-icon="mdi-clock-time-four-outline"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                            ></v-text-field>
+                            </template>
+                            <v-time-picker
+                            v-if="menu2"
+                            v-model="event.time"
+                            full-width
+                            @click:minute="$refs.menu.save(event.time)"
+                            ></v-time-picker>
+                        </v-menu>
+                      
                     </v-col>
                     </v-row>
                     </v-form>
@@ -546,6 +578,10 @@ export default {
         },
         view(item){
             this.event = item;
+            //dividir fecha y hora
+            var elem = this.event.start.split(' ');
+            this.event.start_1 = elem[0];
+            this.event.time = elem[1];
             var i = 0;
             var j = 0;
             this.clients_events =[];
@@ -585,7 +621,7 @@ export default {
       },
       store() {
         this.valid = false; 
-        this.event.date = this.event.date + " " + this.event.time + ":00" ; 
+        this.event.date = this.event.date_1 + " " + this.event.time + ":00" ; 
         this.$swal.fire(
                         'Haciendo la solicitud espere',
                         'Esto puede demorar un minuto',
@@ -605,7 +641,8 @@ export default {
         });
       },
       update() {
-        this.valid = false;
+          this.valid = false;
+        this.event.start = this.event.start_1 + " " + this.event.time + ":00" ; 
         this.$swal.fire(
                         'Haciendo la solicitud espere',
                         'Esto puede demorar un minuto',

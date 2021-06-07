@@ -34,6 +34,7 @@ class EventController extends Controller
         ->join('usersevents', 'events.id', '=', 'usersevents.event_id')
         ->where('usersevents.user_id', $user->id)
         ->where('usersevents.role_id', $user->role_id)->get();
+        // dd($user->role_id);
         // $events = Event::get();
         // foreach ($events as $key => $value) {
             //     $value->agents = User_event::whereEvent_id($value->id)->whereRole_id(3)->get();
@@ -132,13 +133,13 @@ class EventController extends Controller
             
         }
         foreach ($request->agents as $key => $value) {
+            $contacto = User::find($value);
             $contact = new User_event();
             $contact->event_id = $event->id;
             $contact->user_id = $value;
-            $contact->role_id = 3;
+            $contact->role_id = $contacto->role_id;
             $contact->save();
 
-            $contacto = User::find($value);
             saveReport(16, 3, 1, "El agente ". $agent_name ." ha invitado a un evento a " . $contacto->name, $request->property_id);
             saveNotification($value, 16,"El agente ".$agent_name ." te ha invitado a un evento el " . $request->date);
             
