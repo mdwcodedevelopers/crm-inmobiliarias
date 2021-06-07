@@ -19,7 +19,16 @@
                             class="mx-auto px-4"
                             outlined
                         >
-                            <v-list-item four-line>
+                            <div
+                            v-if="!user.hasOwnProperty('name')"
+                            class="login-div mt-9 pt-9"
+                            >
+                                <div class="mt-9 d-flex flex-column px-5">
+                                    <v-btn rounded color="success" @click="dialogLogin = !dialogLogin">Iniciar sesión</v-btn>
+                                    <v-btn  rounded class="my-3 black--text " href="/admin/register">Registrarse</v-btn >
+                                </div>
+                            </div>
+                            <v-list-item four-line :class="{blur: !user.hasOwnProperty('name')}">
 
                             <v-list-item-content >
                                 <div>
@@ -36,7 +45,7 @@
 
                             </v-list-item>
 
-                            <v-card-actions>
+                            <v-card-actions :class="{blur: !user.hasOwnProperty('name')}">
                              <v-form
                                     ref="form"
                                     v-model="valid"
@@ -75,6 +84,7 @@
 
                             </v-card-actions>
                         </v-card>
+                        
                         <v-row no-gutters class="my-3" v-if="">
                              <GmapMap :center='{lat: latitude, lng: longitude}' :zoom='12' style='width:100%;  height: 200px;'>
                                  <GmapMarker
@@ -91,10 +101,52 @@
             </v-col>
         </v-card>
     <front-footer></front-footer>
+    <v-dialog
+      v-model="dialogLogin"
+      width="500"
+    >
+    
+      <v-card>
+        <v-card-title class="text-h5 white--text blue darken-4">
+          Inicia Sesión
+        </v-card-title>
 
+        <v-card-text>
+             <v-form ref="form" v-model="valid">
+                  <v-layout wrap>
+                    <v-flex xs12 >
+                        <v-text-field label="Correo"  v-model="userLogin.mail" required></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                        <v-text-field label="Contraseña" type="password" v-model="userLogin.password" required></v-text-field>
+                    </v-flex>
+                  </v-layout>
+                </v-form>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+                <v-btn color="danger" @click="dialogLogin = false; userLogin=[]">Cancelar</v-btn>
+              <v-btn color="success" :disabled="!valid" @click.prevent="loggin()">Crear</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </div>
 </template>
 
+<style scoped>
+    .login-div{
+        z-index: 5; 
+        position: absolute; 
+        width: 100%; 
+        height:100%;
+    }
+    .blur{
+        filter: blur(2px);
+    }
+</style>
 <script>
 import {gmapApi} from 'vue2-google-maps'
 export default {
@@ -103,12 +155,14 @@ export default {
     },
     data() {
         return {
-             latitude: (this.property.latitude != null) ? parseFloat(this.property.latitude) : -34.6156625,
+            dialogLogin: false,
+            latitude: (this.property.latitude != null) ? parseFloat(this.property.latitude) : -34.6156625,
             longitude: (this.property.longitude != null) ? parseFloat(this.property.longitude) :-58.5033384,
             items:[],
             valid: false,
             province: '',
             direction: '',
+            userLogin: [],
             user: {
                 information:'',
                 property_id:'',
@@ -159,6 +213,21 @@ export default {
             this.$swal.fire(
               'Error',
               'Ocurrío un error al tratar de registrar el contacto, el correo esta en uso.',
+              'error'
+            )
+          });
+          },
+          loggin() {
+           
+          axios.post("/admin/login", {
+                email: this.userLogin.mail, 
+                password: this.userLogin.password 
+            }).then((response) => {
+              location.reload();
+          }).catch(error => {
+            this.$swal.fire(
+              'Error',
+              'Correo o contraseña incorrectos.',
               'error'
             )
           });
