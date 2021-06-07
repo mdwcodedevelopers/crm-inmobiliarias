@@ -20,7 +20,7 @@
                         <v-text-field label="Telefono 1*" :rules="numberRule" v-model="user.phone_1" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 md6 class="px-3" >
-                        <v-text-field label="Telefono 2*" :rules="numberRule" v-model="user.phone_2" required></v-text-field>
+                        <v-text-field label="Telefono 2" v-model="user.phone_2" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 md6 class="px-3" >
                         <v-text-field label="Dirección*" :rules="inputRule" v-model="user.direction" required></v-text-field>
