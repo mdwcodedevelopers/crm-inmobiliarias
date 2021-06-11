@@ -415,7 +415,7 @@ export default {
       {   title: "Propiedad",   dataKey: "property" },
       {   title: "Estatus",   dataKey: "status" },
       {   title: "Fecha",   dataKey: "date" },
-      {   title: "Ultima Modificación",   dataKey: "update" }];
+      {   title: "Ultima Modificación",   dataKey: "updated_at" }];
 
       let doc_4 = new jsPDF('p', 'pt');
       doc_4.text('Lista de Eventos por Estatus', 40, 40);
