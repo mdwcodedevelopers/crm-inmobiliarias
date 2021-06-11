@@ -114,7 +114,7 @@ class ReportController extends Controller
 
     elseif( $request->report == 4 ):
 
-      $contacts = Event::selectRaw("users.name AS user, event_types.name AS event, properties.title AS property, CASE WHEN completed = 1 THEN 'Completado con Éxito' WHEN completed = 2 THEN 'Fallido' ELSE 'En Espera' END AS status, events.date AS date, DATE_FORMAT(events.updated_at,'%Y-%m-%d') AS update")->join('users','users.id','events.user_id')->join('event_types','event_types.id','events.event_types_id')->join('properties','properties.id','events.property_id');
+      $contacts = Event::selectRaw("users.name AS user, event_types.name AS event, properties.title AS property, CASE WHEN completed = 1 THEN 'Completado con Éxito' WHEN completed = 2 THEN 'Fallido' ELSE 'En Espera' END AS status, events.date AS date, DATE_FORMAT(events.updated_at,'%Y-%m-%d') AS updated_at")->join('users','users.id','events.user_id')->join('event_types','event_types.id','events.event_types_id')->join('properties','properties.id','events.property_id');
 
       if($status != ''):
         $contacts = $contacts->where('events.completed', "$status");
