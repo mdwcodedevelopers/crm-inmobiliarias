@@ -80,20 +80,22 @@ class ReportController extends Controller
     $status = isset($request->status) ? $request->status : '';
 
     if( $request->report == 1 ):
-      $contacts = Contact::join('contact_tag', 'contact_tag.contact_id', '=', 'contacts.id');
+      $contacts = Contact::where('id','>',0);
 
       if($tags != ''):
-        $contacts = $contacts->whereIn('contact_tag.tag_id', $tags);
+        $contacts = $contacts->whereHas('Tags', function($query) use ($tags){
+            $query->whereIn('tag_id', $tags);
+        });
       endif;
 
       if($init != '' && $end != '' && $init > $end):
-        $contacts = $contacts->whereDateBetween('created_at',[$init, $end]);
+        $contacts->whereDateBetween('created_at',[$init, $end]);
       endif;
 
       $contacts = $contacts->get();
 
-      foreach ($contacts as $key => $value):
-        $value->tags = Contact_tag::selectRaw('tag_id')->where('contact_id',$value->id)->first();
+      foreach ($contacts as $contact):
+        $contact->tags = $contact->ContactStringTags();
       endforeach;
 
     elseif( $request->report == 2 ):

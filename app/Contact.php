@@ -19,9 +19,14 @@ class Contact extends Model
       return $this->belongsTo(User::class, "user_id");
   }
 
+  public function Tags()
+  {
+      return $this->hasMany(Contact_tag::class, "contact_id");
+  }
+
   public function ContactStringTags()
   {
-    $tags = Contact_tag::where('contact_id', $this->id)->pluck('id')->toArray();
+    $tags = Contact_tag::where('contact_id', $this->id)->pluck('tag_id')->toArray();
 
     return tagsToString($tags);
   }
