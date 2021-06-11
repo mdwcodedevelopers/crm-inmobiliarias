@@ -46,7 +46,6 @@
                         <li class=" font-weight-bold pb-3">Redes Cánepa</li>
                         <li><a href="https://www.facebook.com/inmobiliariadanielcanepa/"  target="_blank"><v-icon class="mr-2">mdi-facebook</v-icon>Facebook</a></li>
                         <li><a href="https://www.instagram.com/inmobiliariadanielcanepa"  target="_blank"><v-icon class="mr-2">mdi-instagram</v-icon>Instagram</a></li>
-                        <li><a href="https://inmuebles.mercadolibre.com.ar/daniel-canepa-inmobiliaria"  target="_blank"><v-icon class="mr-2">mdi-shopping-outline</v-icon>Mercado Libre</a></li>
                     </ul>
                 </v-col>
                 <v-col

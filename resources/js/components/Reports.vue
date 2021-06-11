@@ -39,7 +39,7 @@
               </v-flex>
               <v-flex xs11>
                 <h6><a href="#" v-on:click="dialog = 2">ANALISIS DE CONTACTOS POR CADA USUARIO</a></h6>
-                <small>En este reporte podrás ver cuántos contactos fueron creados/asignados a cada usuario y como lo gestionaron en un periodo de tiempo.</small>
+                <small>En este reporte podrás ver cuántos contactos fueron creados/asignados a cada usuario</small>
               </v-flex>
             </v-layout>
           </v-container>
@@ -107,7 +107,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field v-model="dateOne" :rules="inputRules" label="Fecha desde" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
                         </template>
-                        <v-date-picker v-model="dateOne" @input="dateShowOne = false"></v-date-picker>
+                        <v-date-picker v-model="dateOne" @input="dateShowOne = false" locale="es" ></v-date-picker>
                       </v-menu>
                     </v-flex>
                     <v-flex xs6 sm4 md4>
@@ -115,7 +115,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field v-model="dateTwo" :rules="inputRules" label="Fecha hasta" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
                         </template>
-                        <v-date-picker v-model="dateTwo" @input="dateShowTwo = false"></v-date-picker>
+                        <v-date-picker v-model="dateTwo" @input="dateShowTwo = false" locale="es"></v-date-picker>
                       </v-menu>
                     </v-flex>
                     <v-flex xs12 sm4 md4>
@@ -160,7 +160,7 @@
             <v-card color="">
               <v-card-title class="display-1">
                 <h4>ANALISIS DE CONTACTOS POR CADA USUARIO</h4>
-                <small class="caption w-100 mt-2">En este reporte podrás ver cuántos contactos fueron creados/asignados a cada usuario y como lo gestionaron en un periodo de tiempo.</small>
+                <small class="caption w-100 mt-2">En este reporte podrás ver cuántos contactos fueron creados/asignados a cada usuario.</small>
               </v-card-title>
             </v-card>
             <v-card-text>
@@ -172,7 +172,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field v-model="dateOne" :rules="inputRules" label="Fecha desde" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
                         </template>
-                        <v-date-picker v-model="dateOne" @input="dateShowOne = false"></v-date-picker>
+                        <v-date-picker v-model="dateOne" @input="dateShowOne = false" locale="es"></v-date-picker>
                       </v-menu>
                     </v-flex>
                     <v-flex xs6 sm6 md6>
@@ -180,7 +180,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field v-model="dateTwo" :rules="inputRules" label="Fecha hasta" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
                         </template>
-                        <v-date-picker v-model="dateTwo" @input="dateShowTwo = false"></v-date-picker>
+                        <v-date-picker v-model="dateTwo" @input="dateShowTwo = false" locale="es"></v-date-picker>
                       </v-menu>
                     </v-flex>
                   </v-layout>
@@ -220,7 +220,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field v-model="dateOne" :rules="inputRules" label="Fecha desde" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
                         </template>
-                        <v-date-picker v-model="dateOne" @input="dateShowOne = false"></v-date-picker>
+                        <v-date-picker v-model="dateOne" @input="dateShowOne = false" locale="es"></v-date-picker>
                       </v-menu>
                     </v-flex>
                     <v-flex xs6 sm4 md4>
@@ -228,7 +228,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field v-model="dateTwo" :rules="inputRules" label="Fecha hasta" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on"></v-text-field>
                         </template>
-                        <v-date-picker v-model="dateTwo" @input="dateShowTwo = false"></v-date-picker>
+                        <v-date-picker v-model="dateTwo" @input="dateShowTwo = false" locale="es"></v-date-picker>
                       </v-menu>
                     </v-flex>
                     <v-flex xs12 sm4 md4>
@@ -336,26 +336,25 @@ export default {
     getData() {
       axios.get("/admin/reports/contacts-pdf" + "?report=" + this.dialog + "&tag=" + this.filter.tag + "&date_init=" + this.dateShowOne + "&date_end=" + this.dateShowTwo + "&agent=" + this.agent + "&status=" + this.status).then((response) => {
         this.contacts = response.data.contacts;
+        if( this.dialog == 1 ){
+          this.contactsByTag();
+        }
+        else if( this.dialog == 2 ){
+          this.contactsByUser();
+        }
+        else if( this.dialog == 3 ){
+          this.oportunitiesByUser();
+        }
+        else if( this.dialog == 4 ){
+          this.eventsByStatus();
+        }
       });
-      if( this.dialog == 1 ){
-        this.contactsByTag();
-      }
-      else if( this.dialog == 2 ){
-        this.contactsByUser();
-      }
-      else if( this.dialog == 3 ){
-        this.oportunitiesByUser();
-      }
-      else if( this.dialog == 4 ){
-        this.eventsByStatus();
-      }
     },
     closeDialog() {
       this.dialog = 0;
       this.dateOne = new Date().toISOString().substr(0, 10);
       this.dateTwo = new Date().toISOString().substr(0, 10);
       this.contacts = [];
-      this.tags = [];
     },
     contactsByTag() {
       let columns = [
