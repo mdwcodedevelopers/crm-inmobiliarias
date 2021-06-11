@@ -201,7 +201,7 @@
                         <v-icon color="white" class="px-2">
                             mdi-account-multiple
                         </v-icon>
-                        <a href="/admin/users">Lista de clientes</a>
+                        <a href="/admin/users">Módulo de Usuarios</a>
                     </v-list-item>
                     <v-list-item>
                         <v-icon color="white" class="px-2">

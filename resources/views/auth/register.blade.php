@@ -96,7 +96,7 @@
                         </div>
                     </form> --}}
                     <users-form></users-form>
-                </div>
+                </v-card>
             </div>
         </div>
     </div>

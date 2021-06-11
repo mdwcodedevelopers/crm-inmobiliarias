@@ -18,7 +18,6 @@
             <a class="mx-2 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#">Home</a>
             <a class="mx-2 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#we-are">Quienes somos</a>
             <a class="mx-2 mr-5 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/properties">Propiedades</a>
-            <a class="mx-2 mr-5 my-auto blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#contacts">Contactos</a>
 
             <v-btn rounded color="success" href="/admin/login"  class="my-auto">Iniciar sesión</v-btn>
             <!-- <a class="mx-2 my-auto black--text "  style="font-size:1rem"  href="/admin/login">Iniciar sesión</a> -->
@@ -55,10 +54,9 @@
             <v-list class="d-flex flex-column p-4  justify-space-between" height="60vh">
               
             <div class="d-flex flex-column">
-              <a class="my-3  blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#">Home</a>
-              <a class="my-3  blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#we-are">Quienes somos</a>
-              <a class="my-3  blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#properties">Propiedades</a>
-              <a class="my-3  blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#contacts">Contactos</a>
+              <a class="my-3  blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#" @click="dialog = false">Home</a>
+              <a class="my-3  blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/#we-are" @click="dialog = false">Quienes somos</a>
+              <a class="my-3  blue--text  text--darken-2 font-weight-medium " style="font-size:1rem"  href="/properties" @click="dialog = false">Propiedades</a>
             </div>
             
             <div>

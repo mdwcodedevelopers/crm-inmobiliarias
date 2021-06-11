@@ -240,10 +240,10 @@
                         <v-text-field label="Telefono 2" v-model="contact.phone_2" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 md6 >
-                        <v-text-field label="Dirección*" :rules="inputRule" v-model="contact.direction" required></v-text-field>
+                        <v-text-field label="Dirección"  v-model="contact.direction" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 md6 >
-                        <v-text-field label="Provincia*" :rules="inputRule" v-model="contact.province" required></v-text-field>
+                        <v-text-field label="Provincia"  v-model="contact.province" required></v-text-field>
                     </v-flex>
                     <v-flex xs12>
                       <v-select
@@ -319,10 +319,10 @@
                         <v-text-field label="Telefono 2" v-model="contact.phone_2" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 md6 >
-                        <v-text-field label="Dirección*" :rules="inputRule" v-model="contact.direction" required></v-text-field>
+                        <v-text-field label="Dirección" v-model="contact.direction" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 md6 >
-                        <v-text-field label="Provincia*" :rules="inputRule" v-model="contact.province" required></v-text-field>
+                        <v-text-field label="Provincia" v-model="contact.province" required></v-text-field>
                     </v-flex>
                     <v-flex xs12>
 

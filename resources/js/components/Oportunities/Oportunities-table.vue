@@ -466,11 +466,13 @@
                 },
                 {
                     text: 'Vigencia',
+                    width: '13rem',
                     value: 'vigency'
                 },
                 {
                     text: 'Notas',
                     sortable: false,
+                    width: '13rem',
                     value: 'actions'
                 },
                 {

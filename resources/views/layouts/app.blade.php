@@ -60,7 +60,7 @@
   }
     @media screen and (min-width: 960px) {
   .main-desktop {
-    width: 78vw;
+    min-width: 78vw;
   }
 }
     </style>

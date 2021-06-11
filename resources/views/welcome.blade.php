@@ -6,7 +6,7 @@
         @guest
             <div class="grey lighten-2 d-flex justify-space-between align-md-center py-3 px-7  flex-column flex-sm-column  flex-md-row  " width="100%">
                 <nav class="d-flex  align-start align-md-center ">
-                    <ul class="m-0 p-0 d-flex" style="list-style: none">
+                    {{-- <ul class="m-0 p-0 d-flex" style="list-style: none">
                         <li class="elemento"><a href="#" class="black--text">Trabajá con nosotros</a></li>
                         <v-divider
                         class="mx-4"
@@ -14,7 +14,7 @@
                         vertical
                     ></v-divider>
                         <li><a href="#" class="black--text">Institucional</a></li>
-                    </ul>
+                    </ul> --}}
                 </nav>
                 <div class="d-flex align-start align-md-center blue-grey--text font-weight-medium  flex-column flex-sm-column  flex-md-row mt-5 mt-lg-0 ">
                     <p class="m-0 mr-2">

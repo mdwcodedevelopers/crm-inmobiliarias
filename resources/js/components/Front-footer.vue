@@ -38,16 +38,15 @@
                         <li><a href="/#"> Home</a></li>
                         <li><a href="/#we-are">Quienes somos</a></li>
                         <li><a href="/properties">Propiedades</a></li>
-                        <li><a href="/#contacts">Contacto</a></li>
                     </ul>
                 </v-col>
                 <v-col
                 >
                     <ul class="list text-left ">
                         <li class=" font-weight-bold pb-3">Redes Cánepa</li>
-                        <li><a href="https://www.facebook.com/inmobiliariadanielcanepa/"><v-icon class="mr-2">mdi-facebook</v-icon>Facebook</a></li>
-                        <li><a href="https://www.instagram.com/inmobiliariadanielcanepa"><v-icon class="mr-2">mdi-instagram</v-icon>Instagram</a></li>
-                        <li><a href="#"><v-icon class="mr-2">mdi-shopping-outline</v-icon>Mercado Libre</a></li>
+                        <li><a href="https://www.facebook.com/inmobiliariadanielcanepa/"  target="_blank"><v-icon class="mr-2">mdi-facebook</v-icon>Facebook</a></li>
+                        <li><a href="https://www.instagram.com/inmobiliariadanielcanepa"  target="_blank"><v-icon class="mr-2">mdi-instagram</v-icon>Instagram</a></li>
+                        <li><a href="https://inmuebles.mercadolibre.com.ar/daniel-canepa-inmobiliaria"  target="_blank"><v-icon class="mr-2">mdi-shopping-outline</v-icon>Mercado Libre</a></li>
                     </ul>
                 </v-col>
                 <v-col
@@ -56,8 +55,6 @@
                         <li class=" font-weight-bold pb-3">Términos</li>
                         <li><a href="/politica-de-privacidad">Política de privacidad</a></li>
                         <li><a href="/terminos-y-condiciones">Términos y condiciones</a></li>
-                        <li><a href="#">Trabajá con nosotros</a></li>
-                        <li><a href="#">FAQ's</a></li>
                     </ul>
                 </v-col>
               </v-col>

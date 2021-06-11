@@ -9,7 +9,7 @@
         <nav-aside :role="{{$role}}" ></nav-aside>
         <div class="main-desktop" >
             <div class="container">
-                <reports/>
+                <reports rol="{{$role}}"/>
             </div>
         </div>
     </div>

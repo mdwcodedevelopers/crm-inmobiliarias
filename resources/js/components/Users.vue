@@ -26,13 +26,13 @@
                                                     <v-text-field label="Telefono 1*" :rules="numberRule" v-model="user.phone_1" required></v-text-field>
                                                 </v-flex>
                                                  <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
-                                                    <v-text-field label="Telefono 2*" :rules="numberRule" v-model="user.phone_2" required></v-text-field>
+                                                    <v-text-field label="Telefono 2" v-model="user.phone_2" required></v-text-field>
                                                 </v-flex>
                                                 <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
-                                                    <v-text-field label="Dirección*" :rules="inputRule" v-model="user.direction" required></v-text-field>
+                                                    <v-text-field label="Dirección"  v-model="user.direction" required></v-text-field>
                                                 </v-flex>
                                                 <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
-                                                    <v-text-field label="Provincia*" :rules="inputRule" v-model="user.province" required></v-text-field>
+                                                    <v-text-field label="Provincia"  v-model="user.province" required></v-text-field>
                                                 </v-flex>
 
                                                 <v-flex xs12 sm6 md6>
@@ -216,10 +216,10 @@
                                             <v-text-field label="Telefono 1*" :rules="numberRule" v-model="user.phone" required></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
-                                            <v-text-field label="Dirección*" :rules="inputRule" v-model="user.direction" required></v-text-field>
+                                            <v-text-field label="Dirección" v-model="user.direction" required></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md6 v-if="user.role_id==2 | rol==3">
-                                            <v-text-field label="Provincia*" :rules="inputRule" v-model="user.province" required></v-text-field>
+                                            <v-text-field label="Provincia" v-model="user.province" required></v-text-field>
                                         </v-flex>
 
                                         <v-flex xs12 sm6 md6>

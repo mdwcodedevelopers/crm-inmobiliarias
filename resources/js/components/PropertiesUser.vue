@@ -9,7 +9,17 @@
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-card-title>
-      <v-data-table :headers="headers"  no-results-text="No hay resultados" no-data-text="No hay propiedades " :items="properties" item-key="propeties-user" class="elevation-1" :search="search">
+      <v-data-table 
+        :headers="headers"  
+        no-results-text="No hay resultados" 
+        no-data-text="No hay propiedades"  
+        :footer-props="{
+            'items-per-page-text':'Propiedades por página:',
+        }" 
+        :items="properties" 
+        item-key="propeties-user" 
+        class="elevation-1" 
+        :search="search">
         <template v-slot:item.imagen="{ item }">
           <v-img :src="'../../'+item.image" height="100" width="100"></v-img>
         </template>
@@ -432,7 +442,7 @@
             this.index(0, '');
             this.property = {};
             this.dialog = false;
-            this.$swal.fire('Propiedad registrada con exito');
+            this.$swal.fire('Propiedad registrada con éxito');
           }
         }).catch(error => {
           this.$swal.fire(
@@ -478,8 +488,7 @@
             this.dialogedit = false;
             this.imageprincipal = '';
             this.$swal.fire(
-              'Propiedad actualizada con exito',
-              'success'
+              'Propiedad actualizada con éxito'
             );
           }
         })

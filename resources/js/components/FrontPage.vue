@@ -66,6 +66,7 @@
                 outlined
                 x-large
                 rounded
+                href="/properties"
                 color="white my-9"
                 >Ver más</v-btn>
                 </v-img>
