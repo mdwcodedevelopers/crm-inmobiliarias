@@ -25,15 +25,15 @@
               <v-form ref="form" v-model="valid">
                 <v-layout wrap>
                   <v-flex xs12>
-                    <v-file-input truncate-length="15" v-model="file"  label="Seleccione el archivo que desea importar:"></v-file-input>
+                    <v-file-input truncate-length="15" v-model="file" :rules="inputRules"  label="Seleccione el archivo que desea importar:"></v-file-input>
+                  </v-flex>
+                  <v-flex xs12>
+                      {{error}}
                   </v-flex>
                   <v-flex xs12>
                     <v-btn color="success" :disabled="!valid" @click.prevent="saveFile()">
                       <v-icon>mdi-plus</v-icon> Subir archivo excel
                     </v-btn>
-                  </v-flex>
-                  <v-flex xs12>
-                      {{error}}
                   </v-flex>
                 </v-layout>
               </v-form>
@@ -52,6 +52,7 @@
       return {
         file: null,
         valid: false,
+        error: '',
         inputRules: [
           v => !!v || 'El campo es obligatorio',
         ],
@@ -59,44 +60,58 @@
     },
     methods: {
       saveFile() {
-        let InstFormData = new FormData();
-        InstFormData.append('excel' , this.file);
 
-        axios.post('/admin/contacts/import', InstFormData , {headers : {'content-type': 'multipart/form-data'}}).then((response) => {
-          if (response.status == 200) {
-            this.file = null;
-            this.$swal.fire(
-            'Archivo subido con exito',
-            '',
-            'success'
-            );
-          }
-        }).catch(error => {
-          this.$swal.fire({
-            icon: 'Error',
-            title: 'Ocurrio un error al subir el archivo',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        });
+        if(!this.validateFile(this.file)){
+          this.$swal.fire(
+            'Error',
+            this.error,
+            'error'
+          )
+        }else{
+
+          let InstFormData = new FormData();
+          InstFormData.append('excel' , this.file);
+
+          axios.post('/admin/contacts/import', InstFormData , {headers : {'content-type': 'multipart/form-data'}}).then((response) => {
+            if (response.status == 200) {
+              this.file = null;
+              this.$swal.fire(
+              'Archivo subido con exito',
+              '',
+              'success'
+              );
+            }
+          }).catch(error => {
+            this.$swal.fire({
+              icon: 'Error',
+              title: 'Ocurrio un error al subir el archivo',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+        }
       },
-    },
-    validateFile(uploadFile)
-    {
-      if (!window.FileReader) {
-          this.error= 'El navegador no soporta la lectura de archivos';
-          return false;
-      }
-      if (!(/\.(xls|xlsx)$/i).test(uploadFile.name)) {
-          this.error = 'El archivo a adjuntar no es un formato valido';
-          return false;
-      }
-      if (uploadFile.size > 500000)
+      validateFile(uploadFile)
       {
-          this.error='El peso del archivo no puede exceder los 500kb';
-          return false;
-      }
-      return true;
+        if( !uploadFile || uploadFile == null ){
+            this.error= 'Debe seleccionar el archivo a subir';
+            return false;
+        }
+        if (!window.FileReader) {
+            this.error= 'El navegador no soporta la lectura de archivos';
+            return false;
+        }
+        if (!(/\.(xls|xlsx)$/i).test(uploadFile.name)) {
+            this.error = 'El archivo a adjuntar no es un formato valido';
+            return false;
+        }
+        if (uploadFile.size > 1000000)
+        {
+            this.error='El peso del archivo no puede exceder los 500kb';
+            return false;
+        }
+        return true;
+      },
     },
   }
 </script>

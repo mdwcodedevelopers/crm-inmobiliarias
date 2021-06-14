@@ -36,7 +36,7 @@ class ContactsImport implements ToModel, WithHeadingRow, WithChunkReading, Shoul
     $tags = explode(",", $row["etiquetas"]);
 
     foreach($tags as $tag):
-      $t = Tag::where('name', $tag)->first();
+      $t = Tag::where('name', trim($tag))->first();
       if( isset($t->name) ):
         Contact_tag::updateOrCreate([
           'contact_id' => $contact->id,
