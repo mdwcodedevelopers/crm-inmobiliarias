@@ -88,16 +88,16 @@ class ContactsExport implements WithHeadings, WithMapping, FromQuery, WithEvents
   public function headings(): array
   {
     return [
-      'Nombre',
-      'Email',
-      'Teléfono 1',
-      'Teléfono 2',
-      'Dirección',
-      'Provincia',
-      'Etiquetas',
-      'Agente',
-      'Create',
-      'Actualizado',
+      'nombre',
+      'email',
+      'telefono_1',
+      'telefono_2',
+      'direccion',
+      'provincia',
+      'etiquetas',
+      'agente',
+      'creado el',
+      'actualizado el',
     ];
   }
 }

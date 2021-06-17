@@ -148,7 +148,7 @@
       <v-card-title class="display-1 text-white titulo-custom">
         <div class="d-flex flex-column flex-md-row">
           Agenda de contactos
-          <a class="mx-md-6 btn bg-white text-dark mr-3" :href="'/admin/contacts/export?agent=' + filter.agent + '&oportunity=' + filter.oportunity + '&tag=' + filter.tag + '&noTag=' + filter.noTag">
+          <a class="mx-md-6 btn bg-white text-dark mr-3" @click="exportExcel()">
             <v-icon>
                 mdi-file-pdf
             </v-icon>
@@ -504,6 +504,18 @@ export default {
         },
         whatsapp(phone) {
             window.open('https://api.whatsapp.com/send?phone=' + phone, '_blank');
+        },
+        exportExcel() {
+          if (this.filter.agent == "") {
+            this.$swal.fire({
+                    icon: 'error',
+                    title: 'Seleccione primero un filtro y realice una busqueda para poder expotarla a excel',
+                    showConfirmButton: false,
+                    timer: 3000
+                  })
+                  return
+          }
+            window.open('/admin/contacts/export?agent=' + this.filter.agent + '&oportunity=' + this.filter.oportunity + '&tag=' + this.filter.tag + '&noTag=' + this.filter.noTag, '_self');
         },
         remove (item) {
             const index = this.contact_tag.indexOf(item.id)

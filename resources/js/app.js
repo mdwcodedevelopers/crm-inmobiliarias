@@ -21,7 +21,7 @@ import colors from 'vuetify/lib/util/colors'
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyBI7h0o6C37iAsKjAir-G-sBsoWkPSJiN4',
+    key: 'AIzaSyAZtZGXVnAqDvQXC2TaZz7dO_JQOQ8x7qE',
     libraries: 'places',
     v: '3.26',
   },

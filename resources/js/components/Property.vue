@@ -85,7 +85,7 @@
                             </v-card-actions>
                         </v-card>
                         
-                        <v-row no-gutters class="my-3" v-if="">
+                        <v-row no-gutters class="my-3">
                              <GmapMap :center='{lat: latitude, lng: longitude}' :zoom='12' style='width:100%;  height: 200px;'>
                                  <GmapMarker
                                         :position="{lat: latitude , lng:longitude }"
@@ -155,6 +155,7 @@ export default {
     },
     data() {
         return {
+            setPlace: [],
             dialogLogin: false,
             latitude: (this.property.latitude != null) ? parseFloat(this.property.latitude) : -34.6156625,
             longitude: (this.property.longitude != null) ? parseFloat(this.property.longitude) :-58.5033384,

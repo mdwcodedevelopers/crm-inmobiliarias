@@ -23,10 +23,10 @@ class ContactsImport implements ToModel, WithHeadingRow, WithChunkReading, Shoul
    */
   public function model(array $row)
   {
-    $contact = Contact::updateOrCreate([
-      'user_id' => Auth::user()->id,
+    $contact = Contact::updateOrCreate(
+      ['email' => $row["email"]],
+      ['user_id' => Auth::user()->id,
       'name' => $row["nombre"],
-      'email' => $row["email"],
       'phone_1' => $row["telefono_1"],
       'phone_2' => $row["telefono_2"],
       'direction' => $row["direccion"],

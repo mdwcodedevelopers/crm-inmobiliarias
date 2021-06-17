@@ -7,8 +7,9 @@
     </v-card>
     <div>
       <v-card>
-        <v-card-title class="display-1 titulo-custom">
+        <v-card-title class="display-1 titulo-custom d-flex flex-column align-start">
             <p class="text-h6">Las columnas requeridas para importación de Contactos son:</p>
+            <a href="/files/importacion-de-contacto.xlsx" class="btn btn-link" title="Descargar plantilla" download>Descargar plantilla</a>
         </v-card-title>
         <v-card-text>
             <v-container grid-list-md>

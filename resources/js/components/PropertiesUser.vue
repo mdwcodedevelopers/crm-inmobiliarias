@@ -134,7 +134,7 @@
                       <v-checkbox class="pr-6" v-model="property.show_web" label="Mostrar en la Web" :value="1"></v-checkbox>
                     </v-flex>
                     <v-flex xs12 md8>
-                      <v-text-field label="Barrio"  v-model="property.subdivision_2"></v-text-field>
+                      <v-text-field label="Dirección"  v-model="property.subdivision_2"></v-text-field>
                     </v-flex>
                     <template>
                       <v-card>
@@ -159,9 +159,38 @@
                                       <v-text-field label="Longitud" v-model="property.longitude" hint="Ejemplo: -58.5033384"></v-text-field>
                                     </v-flex>
                                   </v-layout>
-                                  <v-row no-gutters class="my-3" v-show="property.longitude && property.latitude">
-                                    <GmapMap map-type-id="terrain" style="width:100%;" :center="{lat:10, lng:10}">
-                                      <GmapMarker :position="google && new google.maps.LatLng(property.latitude, property.longitude)"/>
+                                  
+<!--                                     
+                                <v-row no-gutters class="my-3">
+                                    <GmapMap :center='{lat: latitude, lng: longitude}' :zoom='12' style='width:100%;  height: 200px;'>
+                                        <GmapMarker
+                                                :position="{lat: latitude , lng:longitude }"
+                                                :clickable="true"
+                                                :draggable="true"
+                                                @click="center={lat: latitude, lng: longitude}"
+                                            />
+                                    </GmapMap>
+
+                                </v-row> -->
+                                          
+                                  <v-row no-gutters class="my-3">
+                                     <div>
+                                        <h4>Busca y agrega una dirección</h4>
+                                        <label>
+                                            <div class="form-inline">
+                                                <gmap-autocomplete
+                                                    class="form-control"
+                                                    @place_changed="setPlace">
+                                                </gmap-autocomplete>
+                                            </div>
+                                        </label>
+                                        <br/>
+                                    </div>
+                                    <GmapMap ref="mapRef" map-type-id="terrain" :zoom='12' style='width:100%;  height: 200px;' :center="{lat:parseFloat(this.property.latitude), lng:parseFloat(this.property.longitude)}">
+                                      <GmapMarker :position="{lat: parseFloat(this.property.latitude) , lng:parseFloat(this.property.longitude) }"
+                                        :clickable="true"
+                                        :draggable="true"
+                                        @click="center={lat: this.property.latitude, lng: this.property.latitude}"/>
                                       />
                                     </GmapMap>
                                   </v-row>
@@ -367,7 +396,7 @@
 </template>
 
 <script>
-  import {gmapApi} from 'vue2-google-maps';
+  import {gmapApi} from 'vue2-google-maps'
   import jsPDF from 'jspdf';
   import 'jspdf-autotable'
   export default {
@@ -432,6 +461,11 @@
           this.locations = response.data.locations;
         });
       },
+    // receives a place object via the autocomplete component
+        setPlace(place) {
+            this.property.latitude = place.geometry.location.lat();
+            this.property.longitude = place.geometry.location.lng()
+        },
       create() {
         this.property = {};
         this.dialog = true;

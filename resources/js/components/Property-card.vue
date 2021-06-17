@@ -12,7 +12,7 @@
                         </div>
                         <div class="text-left grey--text text--lighten-1 ">
                             <v-icon class=" grey--text text--lighten-1 ">mdi-map-marker</v-icon>
-                            <span>{{property.province}}</span>
+                            <span>{{property.subdivision_2}}</span>
                         </div>
                         <div class="text-left mt-3">
                              {{property.dimension}} mt2  | {{property.toilettes}}  baños | {{property.bedrooms}}  cuartos
