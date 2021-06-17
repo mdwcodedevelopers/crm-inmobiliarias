@@ -59,6 +59,18 @@
         ],
       }
     },
+    created() {
+       this.$swal.fire({
+                header:'Ayuda rápida',
+                title: '<strong><u>Modulo de Importacion de contactos</u></strong>',
+                html:
+                    'Para poder importar contactos asegurese que el documento cumple con los nombres correctos en las columnas, '+
+                    'puede tomar de guía la planilla acá colocada. <br> '+
+                    '<strong>Si desea actualizar contactos ya agregados con el documento de exportación, recuerde que el identificador del contacto es el correo electrónico y que este es único para cada contacto.</strong>',
+                showCloseButton: true,
+                focusConfirm: false,
+                })
+    },
     methods: {
       saveFile() {
 
