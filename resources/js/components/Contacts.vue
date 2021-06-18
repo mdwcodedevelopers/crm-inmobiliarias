@@ -586,7 +586,7 @@ export default {
                 this.filterSearch();
                 this.dialogdelete = false;
                 this.$swal.fire(
-                  'Propiedad eliminada con exito',
+                  'Contacto eliminado con exito',
                   '',
                   'success'
                 );
